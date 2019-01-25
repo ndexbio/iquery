@@ -1,23 +1,30 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import './style.css'
 
-const SearchPanel = props => {
-  return (
-    <div>
+const SearchPanel = props => (
+  <Grid item className="search">
+    <Grid item>
       <TextField
         id="outlined-multiline-flexible"
-        label="Multiline"
+        label="e.g. TP53"
         multiline
-        rowsMax="4"
-        value={this.state.multiline}
-        onChange={this.handleChange('multiline')}
+        rowsMax="10"
+        value={props.query}
         margin="normal"
-        helperText="Search Query"
+        helperText="Query Genes"
         variant="outlined"
       />
-    </div>
-  )
-}
+    </Grid>
+
+    <Grid item>
+      <Button>Search</Button>
+      <Button>Clear</Button>
+    </Grid>
+  </Grid>
+)
 
 export default SearchPanel

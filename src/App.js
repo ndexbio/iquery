@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import logo from './logo.svg'
+import React from 'react'
 import MainContainer from './containers/MainContainer'
 
-const App = props => (<MainContainer { ...props } />)
+const App = props => <MainContainer {...props} />
 
 export default App

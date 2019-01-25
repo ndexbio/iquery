@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
+import HomePanel from '../../components/HomePanel'
 
-
-const MainContainer = () => ()
+const MainContainer = () => <HomePanel />
 
 function mapStateToProps(state) {
-  return {
-  }
+  return {}
 }
 
 export default connect(mapStateToProps)(MainContainer)
