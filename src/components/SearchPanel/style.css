@@ -1,8 +1,21 @@
 .search {
-  width: 100vmin;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    padding-top: 0;
 }
 
 .gene-list {
-  width: 100vmin;
+    width: 100%;
 }
 
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+}
+
+.search-button {
+    margin-left: 2em;
+    width: 6.5em;
+}

@@ -1,9 +1,8 @@
 import React from 'react'
 import './style.css'
-import { Link } from 'react-router-dom'
-
-import SearchPanel from '../SearchPanel'
-import Title from './Title'
+import InputPanel from '../InputPanel'
+import Results from '../Results'
+import TitleBar from './TitleBar'
 
 /**
  * Top page for the application
@@ -14,8 +13,11 @@ import Title from './Title'
  */
 const HomePanel = props => (
   <div className="home">
-    <Title />
-    <SearchPanel {...props} />
+    <TitleBar />
+    <div className="main-container">
+      <InputPanel className="input" {...props} />
+      <Results className="results" {...props} />
+    </div>
   </div>
 )
 

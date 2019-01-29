@@ -1,4 +1,3 @@
-import { delay } from 'redux-saga'
 import { call, put, takeLatest } from 'redux-saga/effects'
 import * as api from '../api/ndex'
 
@@ -13,23 +12,30 @@ export default function* rootSaga() {
   yield takeLatest(SEARCH_STARTED, watchSearch)
 }
 
+/**
+ * Calling NDEx network search and set state
+ *
+ * @param action
+ * @returns {IterableIterator<*>}
+ */
 function* watchSearch(action) {
+  const query = action.payload
   try {
-    const query = action.payload
-    console.log('---Calling-----', query)
     const res = yield call(api.searchNetwork, query)
     const json = yield call([res, 'json'])
-
-    console.log('---Called----', json)
     yield put({
       type: SEARCH_SUCCEEDED,
       payload: json
     })
   } catch (e) {
-    console.log('ERRRRRRRRRR', e)
+    console.warn('NDEx search error:', e)
     yield put({
       type: SEARCH_FAILED,
-      payload: { error: e.message }
+      payload: {
+        message: 'NDEx network search error',
+        query: query,
+        error: e.message
+      }
     })
   }
 }

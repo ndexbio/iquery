@@ -23,30 +23,35 @@ const SearchPanel = props => {
 
   return (
     <div className="search">
-      <Grid container alignItems={'center'} justify={'center'} spacing={16}>
-        <Grid item xs={4}>
-          <TextField
-            id="outlined-multiline-flexible"
-            label="e.g. TP53"
-            multiline
-            rows="15"
-            value={props.search.queryGenes}
-            onChange={handleSet}
-            margin="normal"
-            helperText="Gene List"
-            variant="outlined"
-          />
-        </Grid>
+      <TextField
+        id="gene-list"
+        label="Enter gene list (e.g. TP53)"
+        multiline
+        rows="15"
+        fullWidth
+        margin="normal"
+        variant="outlined"
+        value={props.search.queryGenes}
+        onChange={handleSet}
+      />
 
-        <Grid item xs={4}>
-          <Button variant="contained" color="primary" onClick={handleSearch}>
-            Search
-          </Button>
-          <Button variant="contained" onClick={handleClear}>
-            Clear
-          </Button>
-        </Grid>
-      </Grid>
+      <div className="buttons">
+        <Button
+          className="search-button"
+          variant="contained"
+          onClick={handleClear}
+        >
+          Clear
+        </Button>
+        <Button
+          className="search-button"
+          variant="contained"
+          color="primary"
+          onClick={handleSearch}
+        >
+          Search
+        </Button>
+      </div>
     </div>
   )
 }

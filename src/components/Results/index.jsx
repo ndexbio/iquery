@@ -4,17 +4,6 @@ import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Typography from '@material-ui/core/Typography'
-
-const Results = props => (
-  <Typography component="div" style={{ padding: 8 * 3 }}>
-    {props.children}
-  </Typography>
-)
-
-Results.propTypes = {
-  children: PropTypes.node.isRequired
-}
 
 const styles = theme => ({
   root: {
@@ -23,7 +12,7 @@ const styles = theme => ({
   }
 })
 
-class SimpleTabs extends React.Component {
+class Results extends React.Component {
   state = {
     value: 0
   }
@@ -45,16 +34,12 @@ class SimpleTabs extends React.Component {
             <Tab label="Interactome" />
           </Tabs>
         </AppBar>
-        {value === 0 && <Results>Item One</Results>}
-        {value === 1 && <Results>Item Two</Results>}
-        {value === 2 && <Results>Item Three</Results>}
+        {value === 0 && <h2>Item One</h2>}
+        {value === 1 && <h2>Item Two</h2>}
+        {value === 2 && <h2>Item Three</h2>}
       </div>
     )
   }
-}
-
-SimpleTabs.propTypes = {
-  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Results)

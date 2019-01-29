@@ -1,13 +1,26 @@
 .home {
-  height: 100vmin;
+  height: 100%;
+  width: 100%;
   background-color: #FFFFFF;
   color: #555555;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
+}
 
+.main-container {
+  width: 100%;
+    height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.input {
+  background-color: #FFFFFF;
+  flex-grow: 1;
+}
+
+.results {
+  flex-grow: 2;
+  background-color: #EEEEEE;
 }
 
 .home-logo {
