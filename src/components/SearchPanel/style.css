@@ -1,4 +1,8 @@
 .search {
-  height: 30vmin;
+  width: 100vmin;
+}
+
+.gene-list {
+  width: 100vmin;
 }
 

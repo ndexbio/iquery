@@ -5,8 +5,10 @@ import logo from '../../assets/images/cytoscape-logo.svg'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 
-
-const Title = props => (
+const test = () => {
+  return 'foo'
+}
+const Title = () => (
   <header className="home-header">
     <Grid container justify={'center'} alignItems={'center'}>
       <Grid item>

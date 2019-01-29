@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux'
 
 import search from './search'
+import applications from './applications'
 
-export default combineReducers({ search })
+const rootReducer = combineReducers({ search, applications})
+
+export default rootReducer

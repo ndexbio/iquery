@@ -1,49 +1,56 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import 'typeface-roboto'
+import { render } from 'react-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
+import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import 'typeface-roboto';
 
 import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 
-import search from './reducers/search'
+// Import root reducers
+import rootReducer from './reducers'
+import rootSaga from './sagas/ndexSaga'
 
-const rootReducer = (state = {}, action) => {
-  return {
-    search: search(state.search, action)
-  }
-}
+const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
-  rootReducer
+  rootReducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
 )
 
-ReactDOM.render(
+sagaMiddleware.run(rootSaga)
+
+const Root = ({ store }) => (
   <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+    <Router>
+      <Route path="/" component={App} />
+    </Router>
+  </Provider>
 )
 
-if (module.hot) {
-  module.hot.accept('./App', () => {
-    const NextApp = require('./App').default
-    ReactDOM.render(
-      <Provider store={store}>
-        <NextApp />
-      </Provider>,
-      document.getElementById('root')
-    )
-  })
+render(<Root store={store} />, document.getElementById('root'))
 
-  module.hot.accept('./reducers', () => {
-    const nextRootReducer = require('./reducers').default
-    store.replaceReducer(nextRootReducer)
-  })
-}
+// if (module.hot) {
+//   module.hot.accept('./App', () => {
+//     const NextApp = require('./App').default
+//     ReactDOM.render(
+//       <Provider store={store}>
+//         <NextApp />
+//       </Provider>,
+//       document.getElementById('root')
+//     )
+//   })
+//
+//   module.hot.accept('./reducers', () => {
+//     const nextRootReducer = require('./reducers').default
+//     store.replaceReducer(nextRootReducer)
+//   })
+// }
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

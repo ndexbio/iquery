@@ -1,11 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import HomePanel from '../../components/HomePanel'
 
-const MainContainer = () => <HomePanel />
+import * as searchActions from '../../actions/search'
+
+const MainContainer = props => <HomePanel {...props} />
 
 function mapStateToProps(state) {
-  return {}
+  return {
+    search: state.search
+  }
 }
 
-export default connect(mapStateToProps)(MainContainer)
+function mapDispatchToProps(dispatch) {
+  return {
+    // Main ontology tree
+    searchActions: bindActionCreators(searchActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MainContainer)
