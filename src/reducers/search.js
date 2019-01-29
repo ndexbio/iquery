@@ -16,7 +16,6 @@ const defaultState = {
 const search = handleActions(
   {
     [setQuery]: (state, payload) => {
-      console.log('SET;', payload)
       return { ...state, queryGenes: payload.payload }
     },
     [clearQuery]: (state, payload) => {
@@ -26,6 +25,7 @@ const search = handleActions(
       return { ...state, isSearching: true }
     },
     [searchSucceeded]: (state, payload) => {
+      console.log('Success!!!', payload.payload)
       return { ...state, results: payload.payload, isSearching: false }
     },
     [searchFailed]: (state, payload) => {

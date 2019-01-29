@@ -13,15 +13,20 @@ export default function* rootSaga() {
   yield takeLatest(SEARCH_STARTED, watchSearch)
 }
 
-function* watchSearch() {
+function* watchSearch(action) {
   try {
-    console.log('---Calling-----')
-    const { results } = yield call(param => api.searchNetwork(param))
+    const query = action.payload
+    console.log('---Calling-----', query)
+    const res = yield call(api.searchNetwork, query)
+    const json = yield call([res, 'json'])
+
+    console.log('---Called----', json)
     yield put({
       type: SEARCH_SUCCEEDED,
-      payload: { results }
+      payload: json
     })
   } catch (e) {
+    console.log('ERRRRRRRRRR', e)
     yield put({
       type: SEARCH_FAILED,
       payload: { error: e.message }
