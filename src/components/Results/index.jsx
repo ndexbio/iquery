@@ -5,10 +5,17 @@ import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
+import Empty from './Empty'
+import Hits from '../Hits'
+import Ndex from './Ndex'
+
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#FFFFFF',
+    display: 'flex',
+    flexDirection: 'column'
   }
 })
 
@@ -25,16 +32,21 @@ class Results extends React.Component {
     const { classes } = this.props
     const { value } = this.state
 
+    const searchResult = this.props.search.results
+
+    // Display message panel if no result is available
+    if (searchResult === null) {
+      return <Empty />
+    }
+
     return (
       <div className={classes.root}>
-        <AppBar position="static">
-          <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="Enrichment" />
-            <Tab label="NDEx" />
-            <Tab label="Interactome" />
-          </Tabs>
-        </AppBar>
-        {value === 0 && <h2>Item One</h2>}
+        <Tabs value={value} onChange={this.handleChange}>
+          <Tab label="NDEx (10)" />
+          <Tab label="Enrichment (22)" />
+          <Tab label="Interactome (102)" />
+        </Tabs>
+        {value === 0 && <Ndex />}
         {value === 1 && <h2>Item Two</h2>}
         {value === 2 && <h2>Item Three</h2>}
       </div>

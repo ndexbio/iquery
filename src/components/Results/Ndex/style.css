@@ -1,0 +1,9 @@
+.ndex-base {
+    background-color: #EFEFEF;
+    height: 100%;
+    padding: 0.3em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 0;
+    grid-template-rows: auto auto auto;
+}

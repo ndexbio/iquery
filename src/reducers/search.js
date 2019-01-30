@@ -4,12 +4,14 @@ import {
   clearQuery,
   searchStarted,
   searchSucceeded,
-  searchFailed
+  searchFailed,
+  clearAll
 } from '../actions/search'
 
 const defaultState = {
   isSearching: false,
   queryGenes: '',
+  queryList: [],
   results: null
 }
 
@@ -19,10 +21,17 @@ const search = handleActions(
       return { ...state, queryGenes: payload.payload }
     },
     [clearQuery]: (state, payload) => {
-      return { ...state, queryGenes: '' }
+      return { ...state, queryGenes: '', queryList: [] }
+    },
+    [clearAll]: (state, payload) => {
+      return { ...state, queryGenes: '', queryList: [], results: null }
     },
     [searchStarted]: (state, payload) => {
-      return { ...state, isSearching: true }
+      return {
+        ...state,
+        isSearching: true,
+        queryList: state.queryGenes.split(' ')
+      }
     },
     [searchSucceeded]: (state, payload) => {
       console.log('Success!!!', payload.payload)

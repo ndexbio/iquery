@@ -12,9 +12,9 @@ import TitleBar from './TitleBar'
  * @constructor
  */
 const HomePanel = props => (
-  <div className="home">
+  <div className="base">
     <TitleBar />
-    <div className="main-container">
+    <div className="container">
       <InputPanel className="input" {...props} />
       <Results className="results" {...props} />
     </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import './style.css'
 import SearchPanel from '../SearchPanel'
+import InputList from '../InputList'
 
 /**
  * Top page for the application
@@ -12,6 +13,7 @@ import SearchPanel from '../SearchPanel'
 const InputPanel = props => (
   <div className="base">
     <SearchPanel {...props} />
+    <InputList {...props} />
   </div>
 )
 

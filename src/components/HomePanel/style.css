@@ -1,26 +1,24 @@
-.home {
+.container {
   height: 100%;
-  width: 100%;
   background-color: #FFFFFF;
   color: #555555;
   font-size: calc(10px + 2vmin);
-}
-
-.main-container {
-  width: 100%;
-    height: 100%;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 0;
+  grid-auto-rows: 100%;
 }
 
 .input {
-  background-color: #FFFFFF;
-  flex-grow: 1;
+  grid-column: 1/2;
+  grid-row: 1;
+  background-color: blue;
 }
 
 .results {
-  flex-grow: 2;
-  background-color: #EEEEEE;
+  grid-column: 2/4;
+  grid-row: 1;
+  background-color: red;
 }
 
 .home-logo {

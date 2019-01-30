@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import * as api from '../api/ndex'
+import * as myGeneApi from '../api/mygene'
 
 import {
   SEARCH_STARTED,
@@ -21,11 +22,16 @@ export default function* rootSaga() {
 function* watchSearch(action) {
   const query = action.payload
   try {
+    const geneRes = yield call(myGeneApi.searchGenes, query.split(' ').join())
+    const geneJson = yield call([geneRes, 'json'])
     const res = yield call(api.searchNetwork, query)
     const json = yield call([res, 'json'])
+
+    const newMap = filterGenes(geneJson)
+
     yield put({
       type: SEARCH_SUCCEEDED,
-      payload: json
+      payload: { ndex: json, genes: newMap }
     })
   } catch (e) {
     console.warn('NDEx search error:', e)
@@ -38,4 +44,17 @@ function* watchSearch(action) {
       }
     })
   }
+}
+
+const filterGenes = resultList => {
+
+  const uniqueGeneMap = new Map()
+
+  let len = resultList.length
+  while(len--) {
+    const entry = resultList[len]
+    uniqueGeneMap.set(entry.query, entry)
+  }
+
+  return uniqueGeneMap
 }

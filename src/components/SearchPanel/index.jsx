@@ -1,11 +1,33 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
 import './style.css'
 
+import DeleteIcon from '@material-ui/icons/Delete'
+import RefreshIcon from '@material-ui/icons/Refresh'
+import SearchIcon from '@material-ui/icons/Search'
+import SettingsIcon from '@material-ui/icons/Settings'
+
+import { withStyles } from '@material-ui/core/styles'
+
+
+const EXAMPLES = [
+  'egfr cdk4 tp53',
+  'per1 per2 clock',
+  'mtor wnt1 igf1'
+]
+
+
+
+const styles = theme => ({
+  button: {
+    marginLeft: '0.5em'
+  }
+})
+
 const SearchPanel = props => {
+  const { classes } = props
+
   const handleSet = event => {
     const textData = event.target.value
     console.log('EVT = ', event.target.value)
@@ -13,13 +35,23 @@ const SearchPanel = props => {
   }
 
   const handleClear = event => {
-    props.searchActions.clearQuery('')
+    props.searchActions.clearQuery()
+  }
+
+  const handleStartOver = event => {
+    props.searchActions.clearAll()
   }
 
   const handleSearch = event => {
     const genes = props.search.queryGenes
     props.searchActions.searchStarted(genes)
   }
+
+  const handleExample = exampleIdx => {
+    console.log('Example:', exampleIdx)
+    props.searchActions.setQuery(EXAMPLES[exampleIdx])
+  }
+
 
   return (
     <div className="search">
@@ -37,23 +69,70 @@ const SearchPanel = props => {
 
       <div className="buttons">
         <Button
-          className="search-button"
+          className={classes.button}
           variant="contained"
+          color="secondary"
+          size="small"
           onClick={handleClear}
         >
-          Clear
+          <DeleteIcon />
         </Button>
         <Button
-          className="search-button"
+          className={classes.button}
+          variant="contained"
+          size="small"
+          onClick={event => handleExample(0)}
+        >
+          Ex 1
+        </Button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          size="small"
+          onClick={event => handleExample(1)}
+        >
+          Ex 2
+        </Button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          size="small"
+          onClick={event => handleExample(2)}
+        >
+          Ex 3
+        </Button>
+      </div>
+
+      <div className="buttons">
+        <Button
+          className={classes.button}
+          variant="contained"
+          size="large"
+        >
+          <SettingsIcon />
+
+        </Button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          size="large"
+          color="secondary"
+          onClick={handleStartOver}
+        >
+          <RefreshIcon />
+        </Button>
+        <Button
+          className={classes.button}
           variant="contained"
           color="primary"
+          size="large"
           onClick={handleSearch}
         >
-          Search
+          <SearchIcon />
         </Button>
       </div>
     </div>
   )
 }
 
-export default SearchPanel
+export default withStyles(styles)(SearchPanel)
