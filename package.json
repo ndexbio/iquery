@@ -9,6 +9,7 @@
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
+    "react-split": "^2.0.4",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
     "redux-saga": "^1.0.0",

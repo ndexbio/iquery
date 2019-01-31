@@ -1,5 +1,7 @@
-.matched {
-    padding-left: 0.3em;
-    padding-right: 0.3em;
-    height: 40vmin;
+.gene-list-wrapper {
+}
+
+.gene-list {
+  max-height: 45vmin;
+  overflow: auto;
 }

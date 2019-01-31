@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -7,17 +6,17 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
 
 import './style.css'
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
-  },
   inline: {
     display: 'inline'
+  },
+  subtitle: {
+    marginLeft: '1em',
+    marginTop: '0.5em'
   }
 })
 
@@ -27,12 +26,12 @@ const InputList = props => {
   const results = props.search.results
 
   if (!results) {
-    return <div />
+    return <div className="gene-list-wrapper" />
   }
 
   const geneList = results.genes
   if (!geneList) {
-    return <div />
+    return <div className="gene-list-wrapper" />
   }
 
   const values = []
@@ -40,13 +39,16 @@ const InputList = props => {
     values.push(value)
   }
   return (
-    <div className="matched">
-      <Typography variant="h6">
+    <div className="gene-list-wrapper">
+      <Typography className={classes.subtitle} variant="subtitle1">
         Matched Genes:
       </Typography>
-      <List className={classes.root}>
-        {values.map(entry => getListItem(entry, classes))}
-      </List>
+
+      <div className="gene-list">
+        <List>
+          {values.map(entry => getListItem(entry, classes))}
+        </List>
+      </div>
     </div>
   )
 }
@@ -68,9 +70,7 @@ const getListItem = (geneEntry, classes) => {
             >
               {geneEntry.name}
             </Typography>
-            <Typography variant="caption">
-              {'Species: ' + geneEntry.taxid}
-            </Typography>
+            <Typography variant="caption">{geneEntry.summary}</Typography>
           </React.Fragment>
         }
       />

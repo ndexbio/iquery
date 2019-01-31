@@ -59,7 +59,7 @@ const SearchPanel = props => {
         id="gene-list"
         label="Enter gene list (e.g. TP53)"
         multiline
-        rows="15"
+        rows="10"
         fullWidth
         margin="normal"
         variant="outlined"

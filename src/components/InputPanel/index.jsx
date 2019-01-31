@@ -1,7 +1,7 @@
 import React from 'react'
-import './style.css'
 import SearchPanel from '../SearchPanel'
 import InputList from '../InputList'
+import './style.css'
 
 /**
  * Top page for the application
@@ -11,9 +11,11 @@ import InputList from '../InputList'
  * @constructor
  */
 const InputPanel = props => (
-  <div className="base">
-    <SearchPanel {...props} />
-    <InputList {...props} />
+  <div className="input-container">
+    <div className="input-wrapper">
+      <SearchPanel {...props} />
+      <InputList {...props} />
+    </div>
   </div>
 )
 

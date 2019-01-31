@@ -1,6 +1,10 @@
 import React from 'react'
 import './style.css'
 
+import Split from 'react-split'
+import NetworkView from './NetworkView'
+import NetworkList from './NetworkList'
+
 /**
  * Top page for the application
  *
@@ -9,9 +13,10 @@ import './style.css'
  * @constructor
  */
 const Ndex = props => (
-  <div className="ndex-base">
-    <h5>NDEx search results will be here...</h5>
-  </div>
+  <Split sizes={[40, 60]} gutterSize={7} className="ndex-base">
+    <NetworkList {...props} />
+    <NetworkView {...props} />
+  </Split>
 )
 
 export default Ndex

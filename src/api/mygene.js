@@ -14,7 +14,8 @@ const searchGenes = geneList => {
 
   // const geneQuery = geneList.join()
 
-  const searchUrl = MYGENE_BASE_URL + '?q=' + geneList + '&scopes=symbol'
+  const fields = 'fields=symbol,name,taxid,entrezgene,summary'
+  const searchUrl = MYGENE_BASE_URL + '?q=' + geneList + '&scopes=symbol&' + fields
 
   console.log('Calling MyGene API:', searchUrl)
 

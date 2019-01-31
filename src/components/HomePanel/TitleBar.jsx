@@ -48,36 +48,38 @@ class TitleBar extends React.Component {
     const open = Boolean(anchorEl)
 
     return (
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <IconButton
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h5" color="inherit" className={classes.grow}>
-            Cytoscape Cloud &alpha;
-          </Typography>
-          <div>
+      <div className="toolbar-container">
+        <AppBar position="static">
+          <Toolbar variant="dense">
             <IconButton
-              aria-owns={open ? 'menu-appbar' : undefined}
-              aria-haspopup="true"
+              className={classes.menuButton}
               color="inherit"
+              aria-label="Menu"
             >
-              <AccountCircle />
+              <MenuIcon />
             </IconButton>
-            <IconButton
-              aria-owns={open ? 'menu-appbar' : undefined}
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <HelpIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
+            <Typography variant="h5" color="inherit" className={classes.grow}>
+              Cytoscape Cloud &alpha;
+            </Typography>
+            <div>
+              <IconButton
+                aria-owns={open ? 'menu-appbar' : undefined}
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <IconButton
+                aria-owns={open ? 'menu-appbar' : undefined}
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <HelpIcon />
+              </IconButton>
+            </div>
+          </Toolbar>
+        </AppBar>
+      </div>
     )
   }
 }

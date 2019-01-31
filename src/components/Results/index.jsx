@@ -10,12 +10,9 @@ import Hits from '../Hits'
 import Ndex from './Ndex'
 
 const styles = theme => ({
-  root: {
+  tabs: {
     width: '100%',
-    height: '100%',
-    backgroundColor: '#FFFFFF',
-    display: 'flex',
-    flexDirection: 'column'
+    backgroundColor: '#FFFFFF'
   }
 })
 
@@ -40,15 +37,22 @@ class Results extends React.Component {
     }
 
     return (
-      <div className={classes.root}>
-        <Tabs value={value} onChange={this.handleChange}>
-          <Tab label="NDEx (10)" />
-          <Tab label="Enrichment (22)" />
-          <Tab label="Interactome (102)" />
-        </Tabs>
-        {value === 0 && <Ndex />}
-        {value === 1 && <h2>Item Two</h2>}
-        {value === 2 && <h2>Item Three</h2>}
+      <div className="results-container">
+        <div className="results-wrapper">
+          <Tabs
+            value={value}
+            onChange={this.handleChange}
+          >
+            <Tab
+              label={'NDEx (' + this.props.search.results.ndex.numFound + ')'}
+            />
+            <Tab label="Enrichment (22)" />
+            <Tab label="Interactome (102)" />
+          </Tabs>
+          {value === 0 && <Ndex {...this.props} />}
+          {value === 1 && <h2>Enrichment</h2>}
+          {value === 2 && <h2>Interactome</h2>}
+        </div>
       </div>
     )
   }
