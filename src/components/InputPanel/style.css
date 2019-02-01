@@ -1,6 +1,6 @@
 .input-wrapper {
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-rows: min-content min-content;
+  display: flex;
+  flex-direction: column;
 }

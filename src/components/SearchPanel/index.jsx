@@ -61,6 +61,7 @@ const SearchPanel = props => {
         multiline
         rows="10"
         fullWidth
+        autoFocus={true}
         margin="normal"
         variant="outlined"
         value={props.search.queryGenes}

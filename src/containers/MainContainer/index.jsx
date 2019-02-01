@@ -4,19 +4,21 @@ import { bindActionCreators } from 'redux'
 import HomePanel from '../../components/HomePanel'
 
 import * as searchActions from '../../actions/search'
+import * as uiStateActions from '../../actions/uiState'
 
 const MainContainer = props => <HomePanel {...props} />
 
 function mapStateToProps(state) {
   return {
-    search: state.search
+    search: state.search,
+    uiState: state.uiState
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    // Main ontology tree
-    searchActions: bindActionCreators(searchActions, dispatch)
+    searchActions: bindActionCreators(searchActions, dispatch),
+    uiStateActions: bindActionCreators(uiStateActions, dispatch)
   }
 }
 

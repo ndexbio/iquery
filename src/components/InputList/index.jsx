@@ -16,7 +16,7 @@ const styles = theme => ({
   },
   subtitle: {
     marginLeft: '1em',
-    marginTop: '0.5em'
+    marginTop: '0.5em',
   }
 })
 

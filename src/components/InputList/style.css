@@ -1,7 +1,8 @@
 .gene-list-wrapper {
+    height: 100%;
+    overflow: auto;
 }
 
 .gene-list {
-  max-height: 45vmin;
   overflow: auto;
 }
