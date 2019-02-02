@@ -27,11 +27,15 @@ function* watchSearch(action) {
     const res = yield call(api.searchNetwork, query)
     const json = yield call([res, 'json'])
 
-    const newMap = filterGenes(geneJson)
+    const filtered = filterGenes(geneJson)
 
     yield put({
       type: SEARCH_SUCCEEDED,
-      payload: { ndex: json, genes: newMap }
+      payload: {
+        ndex: json,
+        genes: filtered.uniqueGeneMap,
+        notFound: filtered.notFound
+      }
     })
   } catch (e) {
     console.warn('NDEx search error:', e)
@@ -47,14 +51,21 @@ function* watchSearch(action) {
 }
 
 const filterGenes = resultList => {
-
   const uniqueGeneMap = new Map()
+  const notFound = []
 
   let len = resultList.length
-  while(len--) {
+  while (len--) {
     const entry = resultList[len]
-    uniqueGeneMap.set(entry.query, entry)
+    if (entry.notfound) {
+      notFound.push(entry.query)
+    } else {
+      uniqueGeneMap.set(entry.query, entry)
+    }
   }
 
-  return uniqueGeneMap
+  return {
+    uniqueGeneMap,
+    notFound
+  }
 }

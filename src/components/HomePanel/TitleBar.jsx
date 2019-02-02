@@ -11,6 +11,7 @@ import HelpIcon from '@material-ui/icons/Help'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import classNames from 'classnames'
+import logo from '../../assets/images/cytoscape-logo.svg'
 
 const drawerWidth = 240
 
@@ -41,11 +42,14 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     })
+  },
+  logo: {
+    height: '2.5em',
+    marginRight: '0.7em'
   }
 })
 
 class TitleBar extends React.Component {
-
   handleMenu = () => {
     this.props.uiStateActions.setSettingsOpen(
       !this.props.uiState.isSettingsOpen
@@ -73,6 +77,7 @@ class TitleBar extends React.Component {
           >
             <MenuIcon />
           </IconButton>
+          <img src={logo} className={classes.logo} />
           <Typography variant="h5" color="inherit" className={classes.grow}>
             Cytoscape Cloud &alpha;
           </Typography>

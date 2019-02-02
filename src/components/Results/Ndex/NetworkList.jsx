@@ -13,7 +13,14 @@ import Typography from '@material-ui/core/Typography'
 
 import deepOrange from '@material-ui/core/colors/deepOrange'
 
+import MenuList from '@material-ui/core/MenuList'
+import MenuItem from '@material-ui/core/MenuItem'
+
+import Tooltip from '@material-ui/core/Tooltip'
+
 import './style.css'
+
+const NDEX_LINK_URL = 'http://www.ndexbio.org/#/network/'
 
 const styles = theme => ({
   inline: {
@@ -27,20 +34,34 @@ const styles = theme => ({
     margin: 10,
     color: '#fff',
     backgroundColor: deepOrange[500]
+  },
+  menuItem: {
+    height: '4em',
+    '&:focus': {
+      backgroundColor: theme.palette.primary.light,
+      '& $primary, & $icon': {
+        color: theme.palette.common.white
+      }
+    }
+  },
+  menuText: {
+    '&:focus': {
+      '& $primary, & $icon': {
+        color: theme.palette.common.white
+      }
+    }
   }
 })
 
 const NetworkList = props => {
   const { classes } = props
-
-  console.log('SEARCH=======', props)
-  const results = props.search.results
+  const results = props.ndexResults
 
   if (!results) {
     return <div className="network-list-wrapper" />
   }
 
-  const networkList = results.ndex.networks
+  const networkList = results.networks
   if (!networkList) {
     return <div className="network-list-wrapper" />
   }
@@ -48,7 +69,9 @@ const NetworkList = props => {
   return (
     <div className="network-list-wrapper">
       <div className="network-list">
-        <List>{networkList.map(entry => getListItem(entry, classes))}</List>
+        <MenuList>
+          {networkList.map(entry => getListItem(entry, classes))}
+        </MenuList>
       </div>
     </div>
   )
@@ -56,11 +79,16 @@ const NetworkList = props => {
 
 const getListItem = (geneEntry, classes) => {
   return (
-    <ListItem alignItems="flex-start" key={geneEntry.externalId}>
+    <MenuItem
+      className={classes.menuItem}
+      alignItems="flex-start"
+      key={geneEntry.externalId}
+    >
       <ListItemAvatar>
         <Avatar className={classes.networkAvatar}>N</Avatar>
       </ListItemAvatar>
       <ListItemText
+        className={classes.menuText}
         primary={geneEntry.name}
         secondary={
           <React.Fragment>
@@ -81,11 +109,17 @@ const getListItem = (geneEntry, classes) => {
         }
       />
       <ListItemSecondaryAction>
-        <IconButton aria-label="Delete">
-          <LinkIcon />
-        </IconButton>
+        <Tooltip title="Open in NDEx" placement="bottom">
+          <IconButton
+            href={NDEX_LINK_URL + geneEntry.externalId}
+            target={'_blank'}
+            aria-label="Open in NDEx"
+          >
+            <LinkIcon />
+          </IconButton>
+        </Tooltip>
       </ListItemSecondaryAction>
-    </ListItem>
+    </MenuItem>
   )
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import SearchPanel from '../SearchPanel'
 import InputList from '../InputList'
+import LoadingPanel from '../LoadingPanel'
 import './style.css'
 
 /**
@@ -14,7 +15,7 @@ const InputPanel = props => (
   <div className="input-container">
     <div className="input-wrapper">
       <SearchPanel {...props} />
-      <InputList {...props} />
+      {props.search.isSearching ? <LoadingPanel /> : <InputList {...props} />}
     </div>
   </div>
 )

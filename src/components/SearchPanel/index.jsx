@@ -7,17 +7,11 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import SearchIcon from '@material-ui/icons/Search'
 import SettingsIcon from '@material-ui/icons/Settings'
+import Tooltip from '@material-ui/core/Tooltip'
 
 import { withStyles } from '@material-ui/core/styles'
 
-
-const EXAMPLES = [
-  'egfr cdk4 tp53',
-  'per1 per2 clock',
-  'mtor wnt1 igf1'
-]
-
-
+const EXAMPLES = ['kras egfr cdk4 tp53', 'per1 per2 clock', 'mtor wnt1 igf1']
 
 const styles = theme => ({
   button: {
@@ -30,7 +24,6 @@ const SearchPanel = props => {
 
   const handleSet = event => {
     const textData = event.target.value
-    console.log('EVT = ', event.target.value)
     props.searchActions.setQuery(textData)
   }
 
@@ -48,10 +41,8 @@ const SearchPanel = props => {
   }
 
   const handleExample = exampleIdx => {
-    console.log('Example:', exampleIdx)
     props.searchActions.setQuery(EXAMPLES[exampleIdx])
   }
-
 
   return (
     <div className="search">
@@ -69,15 +60,17 @@ const SearchPanel = props => {
       />
 
       <div className="buttons">
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="secondary"
-          size="small"
-          onClick={handleClear}
-        >
-          <DeleteIcon />
-        </Button>
+        <Tooltip title="Clear list" placement="bottom">
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="secondary"
+            size="small"
+            onClick={handleClear}
+          >
+            <DeleteIcon />
+          </Button>
+        </Tooltip>
         <Button
           className={classes.button}
           variant="contained"
@@ -105,14 +98,11 @@ const SearchPanel = props => {
       </div>
 
       <div className="buttons">
-        <Button
-          className={classes.button}
-          variant="contained"
-          size="large"
-        >
-          <SettingsIcon />
-
-        </Button>
+        <Tooltip title="Advanced options" placement="bottom">
+          <Button className={classes.button} variant="contained" size="large">
+            <SettingsIcon />
+          </Button>
+        </Tooltip>
         <Button
           className={classes.button}
           variant="contained"

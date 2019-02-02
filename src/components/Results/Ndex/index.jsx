@@ -14,7 +14,7 @@ import NetworkList from './NetworkList'
  */
 const Ndex = props => (
   <Split sizes={[40, 60]} gutterSize={7} className="ndex-base">
-    <NetworkList {...props} />
+    <NetworkList ndexResults={props.search.results.ndex} />
     <NetworkView {...props} />
   </Split>
 )

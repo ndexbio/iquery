@@ -1,6 +1,9 @@
 import React from 'react'
 import './style.css'
 import Split from 'react-split'
+
+import NetworkViewer from './NetworkViewer'
+
 /**
  * Top page for the application
  *
@@ -10,12 +13,8 @@ import Split from 'react-split'
  */
 const NetworkView = props => (
   <Split sizes={[70, 30]} direction="vertical" gutterSize={7}>
-    <div className="network-view">
-      <h2>Network view</h2>
-    </div>
-    <div className="network-view">
-      <h2>Properties</h2>
-    </div>
+    <NetworkViewer {...props} />
+    <div className="property-view" />
   </Split>
 )
 

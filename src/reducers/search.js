@@ -34,7 +34,6 @@ const search = handleActions(
       }
     },
     [searchSucceeded]: (state, payload) => {
-      console.log('Success!!!', payload.payload)
       return { ...state, results: payload.payload, isSearching: false }
     },
     [searchFailed]: (state, payload) => {
