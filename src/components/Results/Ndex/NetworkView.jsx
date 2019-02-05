@@ -12,7 +12,7 @@ import NetworkViewer from './NetworkViewer'
  * @constructor
  */
 const NetworkView = props => (
-  <Split sizes={[70, 30]} direction="vertical" gutterSize={7}>
+  <Split sizes={[70, 30]} direction="vertical" gutterSize={6}>
     <NetworkViewer {...props} />
     <div className="property-view" />
   </Split>

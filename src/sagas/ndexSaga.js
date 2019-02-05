@@ -29,6 +29,7 @@ function* watchSearch(action) {
 
     const filtered = filterGenes(geneJson)
 
+    console.log('MyGene: ', geneJson)
     yield put({
       type: SEARCH_SUCCEEDED,
       payload: {

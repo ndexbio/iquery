@@ -48,9 +48,9 @@ const SearchPanel = props => {
     <div className="search">
       <TextField
         id="gene-list"
-        label="Enter gene list (e.g. TP53)"
+        label="Enter a gene list (e.g. TP53)"
         multiline
-        rows="10"
+        rows="5"
         fullWidth
         autoFocus={true}
         margin="normal"

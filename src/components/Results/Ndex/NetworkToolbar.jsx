@@ -77,7 +77,7 @@ const NetworkToolbar = props => {
     <Toolbar className={classes.toolbar}>
       <IconButton
         className={classes.menuButton}
-        color="inherit"
+        color="primary"
         aria-label="Open drawer"
       >
         <MenuIcon />

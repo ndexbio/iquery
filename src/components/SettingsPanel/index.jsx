@@ -14,6 +14,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox'
 import MailIcon from '@material-ui/icons/Mail'
 import SettingIcon from '@material-ui/icons/Settings'
 import HelpIcon from '@material-ui/icons/Help'
+import './style.css'
 
 const drawerWidth = 240
 
@@ -24,13 +25,6 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth
-  },
-  drawerHeader: {
-    display: 'flex',
-    padding: '0 8px',
-    alignItems: 'center',
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-end'
   }
 })
 
@@ -54,7 +48,7 @@ class SettingsPanel extends React.Component {
           paper: classes.drawerPaper
         }}
       >
-        <div className={classes.drawerHeader}>
+        <div className="drawerHeader">
           <IconButton onClick={this.handleDrawerClose}>
             {theme.direction === 'ltr' ? (
               <ChevronLeftIcon />

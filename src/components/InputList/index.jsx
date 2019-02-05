@@ -10,12 +10,19 @@ import Divider from '@material-ui/core/Divider'
 import ErrorIcon from '@material-ui/icons/Error'
 import IconButton from '@material-ui/core/IconButton'
 import LinkIcon from '@material-ui/icons/Launch'
+import InfoIcon from '@material-ui/icons/Info'
+
+import ExpandLess from '@material-ui/icons/ExpandLess'
+import ExpandMore from '@material-ui/icons/ExpandMore'
 
 import Tooltip from '@material-ui/core/Tooltip'
 
 import './style.css'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import Collapse from '@material-ui/core/Collapse'
+
+const MAX_DESCRIPTION_LENGTH = 150
 
 const GENE_CARDS_URL = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene='
 
@@ -39,102 +46,201 @@ const styles = theme => ({
   },
   linkIcon: {
     paddingLeft: '1em'
+  },
+  nested: {
+    paddingLeft: theme.spacing.unit * 4
   }
 })
 
-const InputList = props => {
-  const { classes } = props
+class InputList extends React.Component {
+  state = {}
 
-  const results = props.search.results
+  componentDidMount() {}
 
-  if (!results) {
-    return <div className="gene-list-wrapper" />
+  handleClick = id => {
+    console.log('OPEN = = = ', id)
+    const tag = 'pw_' + id
+    const curState = this.state[tag]
+
+    if (curState === undefined || curState == null) {
+      this.setState(state => ({ [tag]: true }))
+    } else {
+      this.setState(state => ({ [tag]: !curState }))
+    }
   }
 
-  const geneList = results.genes
-  const notFound = results.notFound
+  render() {
+    console.log('STTTTT,', this.state)
+    const { classes } = this.props
 
-  if (!geneList) {
-    return <div className="gene-list-wrapper" />
-  }
+    const results = this.props.search.results
 
-  const values = []
-  for (let value of geneList.values()) {
-    values.push(value)
-  }
-  return (
-    <div className="gene-list-wrapper">
-      <Typography variant="h6">Search Result</Typography>
-      <Typography variant="body1">
-        {'Matched Genes: ' + values.length + ''}
-      </Typography>
+    if (!results) {
+      return <div className="gene-list-wrapper" />
+    }
 
-      <div className="gene-list">
-        <List>{values.map(entry => getListItem(entry, classes))}</List>
+    const geneList = results.genes
+    const notFound = results.notFound
+
+    if (!geneList) {
+      return <div className="gene-list-wrapper" />
+    }
+
+    const values = []
+    for (let value of geneList.values()) {
+      values.push(value)
+    }
+    return (
+      <div className="gene-list-wrapper">
+        <Typography variant="h6">Search Result</Typography>
+        <Typography variant="body1">
+          {'Matched Genes: ' + values.length + ''}
+        </Typography>
+
+        <div className="gene-list">
+          <List>{values.map(entry => this.getListItem(entry, classes))}</List>
+        </div>
+
+        {notFound.length !== 0 ? this.getNotFound(notFound, classes) : null}
       </div>
+    )
+  }
 
-      {notFound.length !== 0 ? getNotFound(notFound, classes) : null}
-    </div>
-  )
-}
-
-const getListItem = (geneEntry, classes) => {
-  return (
-    <ListItem alignItems="flex-start" key={geneEntry._id}>
-      <ListItemAvatar>
-        <Avatar className={classes.matched}>G</Avatar>
-      </ListItemAvatar>
-      <ListItemText
-        primary={geneEntry.symbol}
-        secondary={
-          <React.Fragment>
-            <Typography
-              component="span"
-              className={classes.inline}
-              color="textPrimary"
-            >
-              {geneEntry.name}
-            </Typography>
-            <Typography variant="caption">{geneEntry.summary}</Typography>
-          </React.Fragment>
-        }
-      />
-      <ListItemSecondaryAction className={classes.linkIcon}>
-        <IconButton
-          aria-label="Link to GeneCards"
-          href={GENE_CARDS_URL + geneEntry.symbol}
-          target="_blank"
+  getListItem = (geneEntry, classes) => {
+    let description = geneEntry.summary
+    if (description.length > MAX_DESCRIPTION_LENGTH) {
+      description = description.substring(0, MAX_DESCRIPTION_LENGTH - 1) + '...'
+    }
+    return (
+      <React.Fragment>
+        <ListItem
+          alignItems="flex-start"
+          key={geneEntry._id}
+          button
+          onClick={e => this.handleClick(geneEntry._id)}
         >
-          <Tooltip title="Open in GeneCards" placement="bottom">
-            <LinkIcon />
-          </Tooltip>
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>
-  )
+          <ListItemAvatar>
+            <Avatar className={classes.matched}>G</Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={geneEntry.symbol}
+            secondary={
+              <React.Fragment>
+                <Typography
+                  component="span"
+                  className={classes.inline}
+                  color="textPrimary"
+                >
+                  {geneEntry.name}
+                </Typography>
+                <Typography variant="caption">{description}</Typography>
+              </React.Fragment>
+            }
+          />
+          <ListItemSecondaryAction className={classes.linkIcon}>
+            <IconButton
+              aria-label="Link to GeneCards"
+              href={GENE_CARDS_URL + geneEntry.symbol}
+              target="_blank"
+            >
+              <Tooltip title="Open in GeneCards" placement="bottom">
+                <LinkIcon />
+              </Tooltip>
+            </IconButton>
+          </ListItemSecondaryAction>
+          {this.state['pw_' + geneEntry._id] ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        {this.getListChildren(geneEntry, classes)}
+      </React.Fragment>
+    )
+  }
+
+  getListChildren = (entry, classes) => {
+    const pathway = entry.pathway
+
+    const pathwaySources = Object.keys(pathway)
+
+    console.log('PW===', pathway)
+
+    return (
+      <Collapse
+        in={this.state[getPathwayStateTag(entry._id)]}
+        timeout="auto"
+        unmountOnExit
+      >
+        <List component="div" disablePadding>
+          {pathwaySources.map(dbName => {
+            const pathways = pathway[dbName]
+
+            if (!Array.isArray(pathways)) {
+              return (
+                <ListItem button className={classes.nested}>
+                  <ListItemIcon>
+                    <InfoIcon />
+                  </ListItemIcon>
+                  <ListItemText inset primary={pathways.name} />
+                </ListItem>
+              )
+            }
+
+            return (
+              <React.Fragment>
+                {pathways.map(pwEntry => (
+                  <ListItem button className={classes.nested}>
+                    <ListItemIcon>
+                      <InfoIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      inset
+                      primary={dbName + ': ' + pwEntry.id}
+                      secondary={
+                        <React.Fragment>
+                          <Typography
+                            component="span"
+                            className={classes.inline}
+                            color="textPrimary"
+                          >
+                            {pwEntry.name}
+                          </Typography>
+                        </React.Fragment>
+                      }
+                    />
+                  </ListItem>
+                ))}
+              </React.Fragment>
+            )
+          })}
+        </List>
+      </Collapse>
+    )
+  }
+
+  getNotFound = (notFound, classes) => {
+    return (
+      <div>
+        <Divider variant="middle" />
+        <Typography className={classes.title} variant="body1">
+          {'Unmatched: ' + notFound.length}
+        </Typography>
+        <List>
+          {notFound.map(entry => this.getUnmatchedListItem(entry, classes))}
+        </List>
+      </div>
+    )
+  }
+
+  getUnmatchedListItem = geneEntry => {
+    return (
+      <ListItem alignItems="flex-start" key={geneEntry}>
+        <ListItemIcon>
+          <ErrorIcon />
+        </ListItemIcon>
+        <ListItemText inset primary={geneEntry} />
+      </ListItem>
+    )
+  }
 }
 
-const getNotFound = (notFound, classes) => {
-  return (
-    <div>
-      <Divider variant="middle" />
-      <Typography className={classes.title} variant="body1">
-        {'Unmatched: ' + notFound.length}
-      </Typography>
-      <List>{notFound.map(entry => getUnmatchedListItem(entry, classes))}</List>
-    </div>
-  )
-}
-
-const getUnmatchedListItem = geneEntry => {
-  return (
-    <ListItem alignItems="flex-start" key={geneEntry}>
-      <ListItemIcon>
-        <ErrorIcon />
-      </ListItemIcon>
-      <ListItemText inset primary={geneEntry} />
-    </ListItem>
-  )
-}
+const getPathwayStateTag = id => 'pw_' + id
 
 export default withStyles(styles)(InputList)
