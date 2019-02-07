@@ -54,6 +54,59 @@ const styles = theme => ({
 })
 
 const NetworkList = props => {
+
+  const handleFetch = uuid => {
+    console.log('@@@@@@@@@@UUID;', uuid)
+    props.networkActions.networkFetchStarted(uuid)
+  }
+
+  const getListItem = (geneEntry, classes) => {
+    return (
+      <MenuItem
+        className={classes.menuItem}
+        alignItems="flex-start"
+        key={geneEntry.externalId}
+        onClick={val => handleFetch(geneEntry.externalId)}
+      >
+        <ListItemAvatar>
+          <Avatar className={classes.networkAvatar}>N</Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          className={classes.menuText}
+          primary={geneEntry.name}
+          secondary={
+            <React.Fragment>
+              <Typography
+                component="span"
+                className={classes.inline}
+                color="textPrimary"
+              >
+                {'Nodes: ' +
+                geneEntry.nodeCount +
+                ', Edges: ' +
+                geneEntry.edgeCount}
+              </Typography>
+              <Typography variant="caption">
+                {'UUID: ' + geneEntry.externalId}
+              </Typography>
+            </React.Fragment>
+          }
+        />
+        <ListItemSecondaryAction>
+          <Tooltip title="Open in NDEx" placement="bottom">
+            <IconButton
+              href={NDEX_LINK_URL + geneEntry.externalId}
+              target={'_blank'}
+              aria-label="Open in NDEx"
+            >
+              <LinkIcon />
+            </IconButton>
+          </Tooltip>
+        </ListItemSecondaryAction>
+      </MenuItem>
+    )
+  }
+
   const { classes } = props
   const results = props.ndexResults
 
@@ -77,50 +130,5 @@ const NetworkList = props => {
   )
 }
 
-const getListItem = (geneEntry, classes) => {
-  return (
-    <MenuItem
-      className={classes.menuItem}
-      alignItems="flex-start"
-      key={geneEntry.externalId}
-    >
-      <ListItemAvatar>
-        <Avatar className={classes.networkAvatar}>N</Avatar>
-      </ListItemAvatar>
-      <ListItemText
-        className={classes.menuText}
-        primary={geneEntry.name}
-        secondary={
-          <React.Fragment>
-            <Typography
-              component="span"
-              className={classes.inline}
-              color="textPrimary"
-            >
-              {'Nodes: ' +
-                geneEntry.nodeCount +
-                ', Edges: ' +
-                geneEntry.edgeCount}
-            </Typography>
-            <Typography variant="caption">
-              {'UUID: ' + geneEntry.externalId}
-            </Typography>
-          </React.Fragment>
-        }
-      />
-      <ListItemSecondaryAction>
-        <Tooltip title="Open in NDEx" placement="bottom">
-          <IconButton
-            href={NDEX_LINK_URL + geneEntry.externalId}
-            target={'_blank'}
-            aria-label="Open in NDEx"
-          >
-            <LinkIcon />
-          </IconButton>
-        </Tooltip>
-      </ListItemSecondaryAction>
-    </MenuItem>
-  )
-}
 
 export default withStyles(styles)(NetworkList)

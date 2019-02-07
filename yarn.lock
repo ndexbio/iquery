@@ -2970,6 +2970,27 @@ cyclist@~0.2.2:
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
   integrity sha1-GzN5LhHpFKL9bW7WRHRkRE5fpkA=
 
+cytoscape-canvas@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/cytoscape-canvas/-/cytoscape-canvas-3.0.1.tgz#7d963be51e6e5f3f2482b05d22562c8ee941d125"
+  integrity sha512-R1nCLnJHGTR5fWEpNQQBPyoigdnfhnk1lOHegzmzz1Kg6yxzVf0hfdRAMa0wPAhtC4kkgyoViiIfZ/zyCqMhEQ==
+
+cytoscape-cx2js@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/cytoscape-cx2js/-/cytoscape-cx2js-0.5.1.tgz#2a07fee1dcea98951ec791466e1a2be8ae4eb341"
+  integrity sha512-o/MwZSzMQ2lbt6AjWwcpUbiwi49KWLCmg1JGecVIfSpZjiaFtnVNosboMkRdy9Cbh0Rg/j3+FJ807mfXiWOPBw==
+  dependencies:
+    cytoscape-canvas "3.0.1"
+    lodash "^4.17.10"
+
+cytoscape@^3.2.19:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/cytoscape/-/cytoscape-3.4.0.tgz#269a148f14fc352d145b5355dc77ddd0fefd5816"
+  integrity sha512-uZNPGtAbm9fFPAwo3xW9zYC79TN1UUjmGj5fWnaUIVok5AbxObvGiuCosl6luInQC4vn0dvN8i2k2o6RBhXJfg==
+  dependencies:
+    heap "^0.2.6"
+    lodash.debounce "^4.0.8"
+
 damerau-levenshtein@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.4.tgz#03191c432cb6eea168bb77f3a55ffdccb8978514"
@@ -4621,6 +4642,11 @@ he@1.2.x:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
+
+heap@^0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/heap/-/heap-0.2.6.tgz#087e1f10b046932fc8594dd9e6d378afc9d1e5ac"
+  integrity sha1-CH4fELBGky/IWU3Z5tN4r8nR5aw=
 
 hex-color-regex@^1.1.0:
   version "1.1.0"
@@ -8292,6 +8318,14 @@ react-app-polyfill@^0.2.0:
     promise "8.0.2"
     raf "3.4.0"
     whatwg-fetch "3.0.0"
+
+react-cytoscapejs@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-cytoscapejs/-/react-cytoscapejs-1.1.0.tgz#2175e444f12f4023901a960f71e761cb5b5d0b3a"
+  integrity sha512-CdeEVsOQmw3Cqz47Hx83RelZLT9y3ct6t+YTQ0nRdAt7n+bYD/bTskAmfAm1GvQhzCKylYi2VcY05B8nC4u2Gw==
+  dependencies:
+    cytoscape "^3.2.19"
+    prop-types "^15.6.2"
 
 react-dev-utils@^7.0.1:
   version "7.0.1"

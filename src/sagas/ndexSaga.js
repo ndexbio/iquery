@@ -8,9 +8,16 @@ import {
   SEARCH_SUCCEEDED
 } from '../actions/search'
 
+import {
+  NETWORK_FETCH_STARTED,
+  NETWORK_FETCH_SUCCEEDED,
+  NETWORK_FETCH_FAILED
+} from '../actions/network'
+
 export default function* rootSaga() {
   console.log('rootSaga reporting for duty')
   yield takeLatest(SEARCH_STARTED, watchSearch)
+  yield takeLatest(NETWORK_FETCH_STARTED, fetchNetwork)
 }
 
 /**
@@ -48,6 +55,19 @@ function* watchSearch(action) {
         error: e.message
       }
     })
+  }
+}
+
+function* fetchNetwork(action) {
+  try {
+    const uuid = action.payload
+    const cx = yield call(api.fetchNetwork, uuid)
+    const json = yield call([cx, 'json'])
+
+    console.log('JSON~!!!!!!!!!!!!!!!!!!', json)
+    yield put({ type: NETWORK_FETCH_SUCCEEDED, cx: json })
+  } catch (error) {
+    yield put({ type: NETWORK_FETCH_FAILED, error })
   }
 }
 

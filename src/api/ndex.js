@@ -1,5 +1,6 @@
 const NDEX_BASE_URL = 'http://public.ndexbio.org/v2/'
 
+const METHOD_GET = 'GET'
 const METHOD_POST = 'POST'
 
 const searchNetwork = query => {
@@ -21,4 +22,19 @@ const searchNetwork = query => {
   })
 }
 
-export { searchNetwork }
+const fetchNetwork = uuid => {
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
+  const fetchUrl = NDEX_BASE_URL + 'network/' + uuid
+
+  console.log('Calling CX API:', uuid, fetchUrl)
+
+  return fetch(fetchUrl, {
+    method: METHOD_GET,
+    headers
+  })
+}
+
+export { searchNetwork, fetchNetwork }

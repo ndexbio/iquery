@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
 import search from './search'
-import applications from './applications'
 import uiState from './uiState'
+import network from './network'
 
-const rootReducer = combineReducers({ search, uiState })
+const rootReducer = combineReducers({ search, uiState, network })
 
 export default rootReducer
