@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Typography } from '@material-ui/core'
 
 import CytoscapeComponent from 'react-cytoscapejs'
@@ -9,51 +9,61 @@ import './style.css'
 
 let cy = null
 
-
 const utils = new CyNetworkUtils()
 const cx2js = new CxToJs(utils)
 
 /**
- * Simple wrapper for the Cytoscape viewer
+ *
+ * Simple wrapper for cytoscape.js react component
  *
  * @param props
  * @returns {*}
  * @constructor
  */
-const CytoscapeViewer = props => {
+class CytoscapeViewer extends Component {
+  componentDidMount() {
 
-  const rawCX = props.network.network
-  if(rawCX === null || rawCX === undefined) {
-    return null
+    if (this.cy !== undefined && this.cy !== null) {
+      const props = this.props
+      this.cy.on('tap', 'node', function() {
+        try {
+          // your browser may block popups
+          const selected = this.data()
+          console.log('TAP---------->', selected, props)
+          props.networkActions.selectNode(selected)
+
+        } catch (e) {
+          // fall back on url change
+        }
+      })
+    }
   }
 
-  const niceCX = utils.rawCXtoNiceCX(rawCX)
-  console.log('NICE ===', niceCX)
+  render() {
+    // Convert th
+    const rawCX = this.props.network.network
+    if (rawCX === null || rawCX === undefined) {
+      return null
+    }
 
-  const attributeNameMap = {}
-  const elements = cx2js.cyElementsFromNiceCX(niceCX, attributeNameMap)
-  const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
+    const niceCX = utils.rawCXtoNiceCX(rawCX)
+    console.log('NICE ===', niceCX)
 
-  console.log('CYJS ===', elements, style)
+    const attributeNameMap = {}
+    const elements = cx2js.cyElementsFromNiceCX(niceCX, attributeNameMap)
+    const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
 
-  const elementsArray = [...elements.nodes, ...elements.edges]
-  // const elements = [
-  //   { data: { id: 'one', label: 'Node 1' } },
-  //   { data: { id: 'two', label: 'Node 2' } },
-  //   {
-  //     data: { source: 'one', target: 'two', label: 'Edge from Node1 to Node2' }
-  //   }
-  // ]
-  console.log('Cy CAll----')
-  return (
-    <CytoscapeComponent
-      elements={elementsArray}
-      layout={{ name: 'cose' }}
-      style={{ width: '100%', height: '100%' }}
-      stylesheet={style}
-      cy={cy => (cy = cy)}
-    />
-  )
+    const elementsArray = [...elements.nodes, ...elements.edges]
+    return (
+      <CytoscapeComponent
+        elements={elementsArray}
+        layout={{ name: 'cose' }}
+        style={{ width: '100%', height: '100%' }}
+        stylesheet={style}
+        cy={cy => (this.cy = cy)}
+      />
+    )
+  }
 }
 
 export default CytoscapeViewer

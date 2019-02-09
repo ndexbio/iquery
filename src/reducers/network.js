@@ -2,13 +2,15 @@ import { handleActions, combineActions } from 'redux-actions'
 import {
   networkFetchStarted,
   networkFetchFailed,
-  networkFetchSucceeded
+  networkFetchSucceeded,
+  selectNode
 } from '../actions/network'
 
 const defaultState = {
   isFetching: false,
   uuid: '',
-  network: null
+  network: null,
+  selectedNode: null
 }
 
 const network = handleActions(
@@ -25,6 +27,9 @@ const network = handleActions(
     },
     [networkFetchFailed]: (state, payload) => {
       return { ...state, network: null, isFetching: false }
+    },
+    [selectNode]: (state, payload) => {
+      return { ...state, selectedNode: payload.payload}
     }
   },
   defaultState

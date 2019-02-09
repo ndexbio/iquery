@@ -3,6 +3,7 @@ import './style.css'
 import Split from 'react-split'
 
 import NetworkViewer from './NetworkViewer'
+import TableBrowser from '../TableBrowser'
 
 /**
  * Top page for the application
@@ -14,7 +15,7 @@ import NetworkViewer from './NetworkViewer'
 const NetworkView = props => (
   <Split sizes={[70, 30]} direction="vertical" gutterSize={6}>
     <NetworkViewer {...props} />
-    <div className="property-view" />
+    <TableBrowser className="property-view" {...props} />
   </Split>
 )
 
