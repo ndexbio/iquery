@@ -1,13 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-
 import Empty from './Empty'
-import Hits from '../Hits'
 import Ndex from './Ndex'
+import GeneDetails from './GeneDetails'
 
 const styles = theme => ({
   tabs: {
@@ -39,19 +36,24 @@ class Results extends React.Component {
     return (
       <div className="results-container">
         <div className="results-wrapper">
-          <Tabs
-            value={value}
-            onChange={this.handleChange}
-          >
+          <Tabs value={value} onChange={this.handleChange}>
+            <Tab
+              label={
+                'Matched Genes (' +
+                this.props.search.results.ndex.numFound +
+                ')'
+              }
+            />
             <Tab
               label={'NDEx (' + this.props.search.results.ndex.numFound + ')'}
             />
             <Tab label="Enrichment (22)" />
             <Tab label="Interactome (102)" />
           </Tabs>
-          {value === 0 && <Ndex {...this.props} />}
-          {value === 1 && <h2>Enrichment</h2>}
-          {value === 2 && <h2>Interactome</h2>}
+          {value === 0 && <GeneDetails {...this.props} />}
+          {value === 1 && <Ndex {...this.props} />}
+          {value === 2 && <h2>Enrichment</h2>}
+          {value === 3 && <h2>Interactome</h2>}
         </div>
       </div>
     )

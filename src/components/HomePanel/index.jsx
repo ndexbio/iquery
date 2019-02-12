@@ -9,7 +9,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 
 import classNames from 'classnames'
-import { AppBar, Toolbar } from "@material-ui/core";
+import { AppBar, Toolbar } from '@material-ui/core'
+import StartPanel from './StartPanel'
 
 const drawerWidth = 240
 
@@ -64,15 +65,24 @@ const HomePanel = props => {
         className={classNames(classes.content, {
           [classes.contentShift]: open
         })}
-      >
+      />
 
-        <div className="container">
-          <InputPanel className="input" {...props} />
-          <Results className="results" {...props} />
-        </div>
-      </div>
+      {getMainContents(props)}
     </div>
   )
+}
+
+const getMainContents = props => {
+  if (props.search.results === null) {
+    return <StartPanel {...props} />
+  } else {
+    return (
+      <div className="container">
+        <InputPanel className="input" {...props} />
+        <Results className="results" {...props} />
+      </div>
+    )
+  }
 }
 
 export default withStyles(styles, { withTheme: true })(HomePanel)

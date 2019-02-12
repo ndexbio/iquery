@@ -5,6 +5,41 @@
   grid-template-rows: min-content 1fr;
 }
 
+.start-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 10em;
+}
+
+.start-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+}
+
+.start-title-text {
+  color: #444444 !important;
+  font-weight: 300 !important;
+  font-style: italic !important;
+  font-size: 4em !important;
+}
+
+.start-logo {
+  height: 10em;
+}
+
+.search-text-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60vmin;
+  padding: 0.3em;
+}
+
 .input-container {
   padding-top: 6.5vmin;
   grid-column: 1/3;

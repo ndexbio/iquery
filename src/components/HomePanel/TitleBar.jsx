@@ -78,9 +78,7 @@ class TitleBar extends React.Component {
             <MenuIcon />
           </IconButton>
           <img src={logo} className={classes.logo} />
-          <Typography variant="h5" color="inherit" className={classes.grow}>
-            Cytoscape Cloud &alpha;
-          </Typography>
+          <Typography variant="h5" color="inherit" className={classes.grow} />
           <div>
             <IconButton
               aria-owns={open ? 'menu-appbar' : undefined}
