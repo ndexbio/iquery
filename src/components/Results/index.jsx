@@ -15,7 +15,7 @@ const styles = theme => ({
 
 class Results extends React.Component {
   state = {
-    value: 0
+    value: 1
   }
 
   handleChange = (event, value) => {
@@ -23,7 +23,7 @@ class Results extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, ...others } = this.props
     const { value } = this.state
 
     const searchResult = this.props.search.results
@@ -38,20 +38,12 @@ class Results extends React.Component {
         <div className="results-wrapper">
           <Tabs value={value} onChange={this.handleChange}>
             <Tab
-              label={
-                'Matched Genes (' +
-                this.props.search.results.ndex.numFound +
-                ')'
-              }
-            />
-            <Tab
               label={'NDEx (' + this.props.search.results.ndex.numFound + ')'}
             />
             <Tab label="Enrichment (22)" />
             <Tab label="Interactome (102)" />
           </Tabs>
-          {value === 0 && <GeneDetails {...this.props} />}
-          {value === 1 && <Ndex {...this.props} />}
+          {value === 1 && <Ndex {...others} />}
           {value === 2 && <h2>Enrichment</h2>}
           {value === 3 && <h2>Interactome</h2>}
         </div>

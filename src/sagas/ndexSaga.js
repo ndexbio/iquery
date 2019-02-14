@@ -36,7 +36,6 @@ function* watchSearch(action) {
 
     const filtered = filterGenes(geneJson)
 
-    console.log('MyGene: ', geneJson)
     yield put({
       type: SEARCH_SUCCEEDED,
       payload: {
@@ -64,7 +63,6 @@ function* fetchNetwork(action) {
     const cx = yield call(api.fetchNetwork, uuid)
     const json = yield call([cx, 'json'])
 
-    console.log('JSON~!!!!!!!!!!!!!!!!!!', json)
     yield put({ type: NETWORK_FETCH_SUCCEEDED, cx: json })
   } catch (error) {
     yield put({ type: NETWORK_FETCH_FAILED, error })

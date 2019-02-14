@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import ClearIcon from '@material-ui/icons/Refresh'
-import { Tooltip } from '@material-ui/core'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 
@@ -70,6 +69,7 @@ const SearchTextBox = props => {
 
   const handleSearch = event => {
     const genes = state.query
+    props.searchActions.setQuery(genes)
     props.searchActions.searchStarted(genes)
   }
 

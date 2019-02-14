@@ -9,13 +9,10 @@ const METHOD_POST = 'POST'
  * @returns {Promise<Response>}
  */
 const searchGenes = geneList => {
-  const headers = {
-  }
-
-  // const geneQuery = geneList.join()
-
-  const fields = 'fields=symbol,name,taxid,entrezgene,summary,genomic_pos,go,pathway'
-  const searchUrl = MYGENE_BASE_URL + '?q=' + geneList + '&scopes=symbol&' + fields
+  const fields =
+    'fields=symbol,name,taxid,entrezgene,summary,genomic_pos,go,pathway'
+  const searchUrl =
+    MYGENE_BASE_URL + '?q=' + geneList + '&scopes=symbol&' + fields
 
   console.log('Calling MyGene API:', searchUrl)
 

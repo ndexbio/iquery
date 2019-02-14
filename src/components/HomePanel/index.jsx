@@ -9,7 +9,6 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 
 import classNames from 'classnames'
-import { AppBar, Toolbar } from '@material-ui/core'
 import StartPanel from './StartPanel'
 
 const drawerWidth = 240
@@ -51,15 +50,15 @@ const styles = theme => ({
  * @constructor
  */
 const HomePanel = props => {
-  const { classes, theme } = props
+  const { classes, ...others } = props
 
   const open = props.uiState.isSettingsOpen
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <TitleBar {...props} />
-      <SettingsPanel {...props} />
+      <TitleBar {...others} />
+      <SettingsPanel {...others} />
 
       <div
         className={classNames(classes.content, {
@@ -67,7 +66,7 @@ const HomePanel = props => {
         })}
       />
 
-      {getMainContents(props)}
+      {getMainContents(others)}
     </div>
   )
 }

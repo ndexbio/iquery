@@ -12,13 +12,14 @@ const TableBrowser = props => {
   const network = props.network
 
   if (network === null) {
-    return <div/>
+    return <div />
   }
 
   const node = network.selectedNode
-  if (node === null || node == undefined) {
-    return <div/>
+  if (node === null || node === undefined) {
+    return <div />
   }
+
 
   return (
     <div>

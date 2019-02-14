@@ -13,7 +13,7 @@ const StartPanel = props => {
   return (
     <div className="start-container">
       <div className="start-title">
-        <img className="start-logo" src={logo} />
+        <img className="start-logo" src={logo} alt="Cytoscape logo" />
       </div>
       <SearchTextBox {...props} />
     </div>

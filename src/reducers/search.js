@@ -1,18 +1,20 @@
-import { handleActions, combineActions } from 'redux-actions'
+import { handleActions } from 'redux-actions'
 import {
   setQuery,
   clearQuery,
   searchStarted,
   searchSucceeded,
   searchFailed,
-  clearAll
+  clearAll,
+  setSelectedGenes
 } from '../actions/search'
 
 const defaultState = {
   isSearching: false,
   queryGenes: '',
   queryList: [],
-  results: null
+  results: null,
+  selectedGenes: []
 }
 
 const search = handleActions(
@@ -38,6 +40,10 @@ const search = handleActions(
     },
     [searchFailed]: (state, payload) => {
       return { ...state, isSearching: false }
+    },
+    [setSelectedGenes]: (state, payload) => {
+      console.log('Setting selected gene:', payload)
+      return { ...state, selectedGenes: payload.payload }
     }
   },
   defaultState

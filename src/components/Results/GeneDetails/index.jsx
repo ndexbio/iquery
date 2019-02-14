@@ -70,7 +70,6 @@ class GeneDetails extends React.Component {
   }
 
   render() {
-    console.log('STTTTT,', this.state)
     const { classes } = this.props
 
     const results = this.props.search.results
@@ -159,8 +158,6 @@ class GeneDetails extends React.Component {
     const pathway = entry.pathway
 
     const pathwaySources = Object.keys(pathway)
-
-    console.log('PW===', pathway)
 
     return (
       <Collapse

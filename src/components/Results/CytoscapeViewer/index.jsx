@@ -1,16 +1,8 @@
-import React, { Component } from 'react'
-import { Typography } from '@material-ui/core'
-
+import React, { useEffect, useState } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 
-import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
-
 import './style.css'
-
-let cy = null
-
-const utils = new CyNetworkUtils()
-const cx2js = new CxToJs(utils)
+let cyInstance = null
 
 /**
  *
@@ -20,50 +12,82 @@ const cx2js = new CxToJs(utils)
  * @returns {*}
  * @constructor
  */
-class CytoscapeViewer extends Component {
-  componentDidMount() {
+const CytoscapeViewer = props => {
+  const [cyStyle, setState] = useState({})
 
-    if (this.cy !== undefined && this.cy !== null) {
-      const props = this.props
-      this.cy.on('tap', 'node', function() {
-        try {
-          // your browser may block popups
-          const selected = this.data()
-          console.log('TAP---------->', selected, props)
-          props.networkActions.selectNode(selected)
+  useEffect(() => {
+    if (cyInstance === undefined || cyInstance === null) {
+      return
+    }
+    console.log('This should run only once:  CyViewer Mounted:', cyInstance)
 
-        } catch (e) {
-          // fall back on url change
+    cyInstance.on('tap', function(event) {
+      try {
+        const target = event.target
+        if (target === cyInstance) {
+          props.networkActions.deselectAll()
+          console.log('UNSELECT')
         }
-      })
+      } catch (e) {
+        console.warn(e)
+      }
+    })
+
+    cyInstance.on('tap', 'node', function() {
+      try {
+        const selected = this.data()
+        props.networkActions.selectNode(selected)
+      } catch (e) {
+        console.warn(e)
+      }
+    })
+
+    cyInstance.on('tap', 'edge', function() {
+      try {
+        const selected = this.data()
+        props.networkActions.selectEdge(selected)
+      } catch (e) {
+        console.warn(e)
+      }
+    })
+
+    return () => {
+      console.log('unmount')
     }
+  }, [])
+
+  const cyjs = props.network.network
+  const selectedGenes = props.search.selectedGenes
+
+  if (cyjs === null || cyjs === undefined) {
+    return null
   }
 
-  render() {
-    // Convert th
-    const rawCX = this.props.network.network
-    if (rawCX === null || rawCX === undefined) {
-      return null
+  console.log('Rendering Cyjs ===', cyjs, selectedGenes)
+  if (selectedGenes.length !== 0) {
+    console.log('=========== SL found:', selectedGenes)
+    cyjs.style.push({
+      style: {
+        'background-color': 'red'
+      },
+      selector: 'node:selected'
+    })
+
+    if(cyInstance !== undefined) {
+      // test reaction
+      cyInstance.nodes().style('background-color', 'pink')
     }
-
-    const niceCX = utils.rawCXtoNiceCX(rawCX)
-    console.log('NICE ===', niceCX)
-
-    const attributeNameMap = {}
-    const elements = cx2js.cyElementsFromNiceCX(niceCX, attributeNameMap)
-    const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
-
-    const elementsArray = [...elements.nodes, ...elements.edges]
-    return (
-      <CytoscapeComponent
-        elements={elementsArray}
-        layout={{ name: 'cose' }}
-        style={{ width: '100%', height: '100%' }}
-        stylesheet={style}
-        cy={cy => (this.cy = cy)}
-      />
-    )
   }
+  console.log('=========== Style:', cyjs.style)
+  return (
+    <CytoscapeComponent
+      elements={cyjs.elements}
+      layout={{ name: 'preset' }}
+      style={{ width: '100%', height: '100%' }}
+      stylesheet={cyjs.style}
+      cy={cy => (cyInstance = cy)}
+    />
+  )
 }
 
 export default CytoscapeViewer
