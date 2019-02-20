@@ -1,6 +1,7 @@
 {
   "name": "cytoscape-cloud-portal",
   "version": "0.1.0",
+  "homepage": "http://chianti.ucsd.edu/~kono/ci/app/portal/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.0",
