@@ -1,6 +1,5 @@
 import './style.css'
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
@@ -10,12 +9,28 @@ import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import OpenIcon from '@material-ui/icons/OpenInNew'
-import logo from '../../../assets/images/cytoscape-logo.svg'
-import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import MenuItem from '@material-ui/core/MenuItem'
+
+const ranges = [
+  {
+    value: 'name',
+    label: 'Name'
+  },
+  {
+    value: 'numNodes',
+    label: 'Number of Nodes'
+  },
+  {
+    value: 'overlap',
+    label: '% Overlap'
+  }
+]
 
 const styles = theme => ({
   toolbar: {
-    background: '#EFEFEF'
+    background: '#FFFFFF'
   },
   grow: {
     flexGrow: 1
@@ -29,6 +44,9 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block'
     }
+  },
+  sortBy: {
+    width: '15em'
   },
   search: {
     position: 'relative',
@@ -70,55 +88,39 @@ const styles = theme => ({
         width: 200
       }
     }
-  },
-  buttonIcon: {
-    height: '2.5em',
-    paddingLeft: '0.5em'
   }
 })
 
-const NetworkToolbar = props => {
+const Sorter = props => {
   const { classes } = props
+
+  const [values, setValues] = React.useState({
+    sortBy: 'name'
+  })
+
+  const handleChange = prop => event => {
+    setValues({ ...values, [prop]: event.target.value })
+  }
+
   return (
     <Toolbar className={classes.toolbar}>
-      <IconButton
-        className={classes.menuButton}
-        color="primary"
-        aria-label="Open drawer"
-      >
-        <MenuIcon />
-      </IconButton>
-      <Typography
-        className={classes.title}
-        variant="subtitle1"
-        color="inherit"
-        noWrap
-      >
-        {props.network.networkName}
-      </Typography>
       <div className={classes.grow} />
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div>
-        <InputBase
-          placeholder="Search…"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput
-          }}
-        />
-      </div>
-      <Button color="default" variant="outlined">
-        Open in
-        <img src={logo} className={classes.buttonIcon} />
-      </Button>
+
+      <TextField
+        select
+        label="Sort by:"
+        value={values.sortBy}
+        onChange={handleChange('sortBy')}
+        className={classes.sortBy}
+      >
+        {ranges.map(option => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
     </Toolbar>
   )
 }
 
-NetworkToolbar.propTypes = {
-  classes: PropTypes.object.isRequired
-}
-
-export default withStyles(styles)(NetworkToolbar)
+export default withStyles(styles)(Sorter)

@@ -15,7 +15,7 @@ const styles = theme => ({
 
 class Results extends React.Component {
   state = {
-    value: 1
+    value: 0
   }
 
   handleChange = (event, value) => {
@@ -37,15 +37,17 @@ class Results extends React.Component {
       <div className="results-container">
         <div className="results-wrapper">
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab
-              label={'NDEx (' + this.props.search.results.ndex.numFound + ')'}
-            />
             <Tab label="Enrichment (22)" />
-            <Tab label="Interactome (102)" />
+            <Tab label="Neighborhoods (102)" />
+            <Tab
+              label={
+                'Keywords (' + this.props.search.results.ndex.numFound + ')'
+              }
+            />
           </Tabs>
-          {value === 1 && <Ndex {...others} />}
-          {value === 2 && <h2>Enrichment</h2>}
-          {value === 3 && <h2>Interactome</h2>}
+          {value === 0 && <Ndex {...others} panelType={'enrichment'} />}
+          {value === 1 && <h2>Neighborhoods</h2>}
+          {value === 2 && <Ndex {...others} />}
         </div>
       </div>
     )

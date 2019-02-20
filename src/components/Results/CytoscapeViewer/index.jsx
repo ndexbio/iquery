@@ -73,9 +73,10 @@ const CytoscapeViewer = props => {
       selector: 'node:selected'
     })
 
-    if(cyInstance !== undefined) {
+    if(cyInstance !== undefined || cyInstance !== null) {
       // test reaction
-      cyInstance.nodes().style('background-color', 'pink')
+      const name = selectedGenes[0]
+      cyInstance.elements('node[name = "'+ name + '"]').style('background-color', 'red')
     }
   }
   console.log('=========== Style:', cyjs.style)

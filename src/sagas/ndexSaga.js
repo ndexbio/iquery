@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import * as api from '../api/ndex'
 import * as myGeneApi from '../api/mygene'
+import * as cySearchApi from '../api/search'
 
 import {
   SEARCH_STARTED,
@@ -34,6 +35,11 @@ function* watchSearch(action) {
     const res = yield call(api.searchNetwork, query)
     const json = yield call([res, 'json'])
 
+    const resCySearch = yield call(cySearchApi.getResult, 'foo')
+    const cySearchJson = yield call([resCySearch, 'json'])
+
+    console.log('Fake result:', cySearchJson)
+
     const filtered = filterGenes(geneJson)
 
     yield put({
@@ -59,7 +65,7 @@ function* watchSearch(action) {
 
 function* fetchNetwork(action) {
   try {
-    const uuid = action.payload
+    const uuid = action.payload.uuid
     const cx = yield call(api.fetchNetwork, uuid)
     const json = yield call([cx, 'json'])
 

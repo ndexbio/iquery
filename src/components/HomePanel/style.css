@@ -28,8 +28,12 @@
   font-size: 4em !important;
 }
 
+.start-logo-main {
+  height: 12em;
+}
+
 .start-logo {
-  height: 10em;
+  height: 5em;
 }
 
 .search-text-box {
@@ -70,4 +74,22 @@
 
 .title {
   color: red;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 4em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+}
+
+.footer-logo {
+  height: 2em;
+  padding-left: 1em;
+  cursor: pointer;
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
+
 import FaceIcon from '@material-ui/icons/Face'
 import DoneIcon from '@material-ui/icons/Done'
 
@@ -20,10 +21,12 @@ const handleClick = (geneSymbol, props) => {
   props.searchActions.setSelectedGenes([geneSymbol])
 }
 
+const handleClear = (event) => {
+  console.log('Clear selection', event.target.value)
+}
 
 const GeneList = props => {
   const { classes } = props
-
 
   const results = props.search.results
 
@@ -44,7 +47,7 @@ const GeneList = props => {
   }
 
   return (
-    <div className="gene-list-wrapper">
+    <div className="gene-list-wrapper" onClick={event => handleClear(event)}>
       {values.map(value => getChip(value, true, classes, props))}
     </div>
   )

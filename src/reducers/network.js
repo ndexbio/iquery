@@ -13,6 +13,7 @@ import {
 const defaultState = {
   isFetching: false,
   uuid: '',
+  networkName: '',
   network: null,
   selectedNode: null,
   selectedEdge: null
@@ -27,7 +28,8 @@ const network = handleActions(
       return {
         ...state,
         isFetching: true,
-        uuid: payload
+        uuid: payload.payload.uuid,
+        networkName: payload.payload.networkName
       }
     },
     [networkFetchSucceeded]: (state, payload) => {

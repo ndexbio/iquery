@@ -18,7 +18,20 @@ import MenuItem from '@material-ui/core/MenuItem'
 
 import Tooltip from '@material-ui/core/Tooltip'
 
+import lightGreen from '@material-ui/core/colors/lightGreen'
+
 import './style.css'
+import Sorter from './Sorter'
+import {
+  XYPlot,
+  XAxis,
+  YAxis,
+  VerticalGridLines,
+  HorizontalGridLines,
+  HorizontalBarSeries,
+  HorizontalBarSeriesCanvas
+} from 'react-vis'
+import BarSeries from 'react-vis/es/plot/series/bar-series'
 
 const NDEX_LINK_URL = 'http://www.ndexbio.org/#/network/'
 
@@ -38,7 +51,7 @@ const styles = theme => ({
   menuItem: {
     height: '4em',
     '&:focus': {
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: 'rgba(200,205,200,0.5)',
       '& $primary, & $icon': {
         color: theme.palette.common.white
       }
@@ -50,23 +63,33 @@ const styles = theme => ({
         color: theme.palette.common.white
       }
     }
+  },
+  secondary: {
+    width: '15em',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0.2em'
+  },
+  plot: {
+    width: '80%',
+    background: 'teal'
   }
 })
 
 const NetworkList = props => {
-
-  const handleFetch = uuid => {
-    console.log('@@@@@@@@@@UUID;', uuid)
-    props.networkActions.networkFetchStarted(uuid)
+  const handleFetch = (uuid, networkName) => {
+    props.networkActions.networkFetchStarted({ uuid, networkName })
   }
 
   const getListItem = (geneEntry, classes) => {
+    const dummyOverlap = Math.random() * 100
+
     return (
       <MenuItem
         className={classes.menuItem}
         alignItems="flex-start"
         key={geneEntry.externalId}
-        onClick={val => handleFetch(geneEntry.externalId)}
+        onClick={val => handleFetch(geneEntry.externalId, geneEntry.name)}
       >
         <ListItemAvatar>
           <Avatar className={classes.networkAvatar}>N</Avatar>
@@ -82,9 +105,9 @@ const NetworkList = props => {
                 color="textPrimary"
               >
                 {'Nodes: ' +
-                geneEntry.nodeCount +
-                ', Edges: ' +
-                geneEntry.edgeCount}
+                  geneEntry.nodeCount +
+                  ', Edges: ' +
+                  geneEntry.edgeCount}
               </Typography>
               <Typography variant="caption">
                 {'UUID: ' + geneEntry.externalId}
@@ -92,7 +115,7 @@ const NetworkList = props => {
             </React.Fragment>
           }
         />
-        <ListItemSecondaryAction>
+        <ListItemSecondaryAction className={classes.secondary}>
           <Tooltip title="Open in NDEx" placement="bottom">
             <IconButton
               href={NDEX_LINK_URL + geneEntry.externalId}
@@ -102,6 +125,18 @@ const NetworkList = props => {
               <LinkIcon />
             </IconButton>
           </Tooltip>
+          <div
+            style={{
+              background: 'lightGreen',
+              color: 'white',
+              height: '2em',
+              width: dummyOverlap + '%'
+            }}
+          >
+            <Typography variant="h6">
+              {dummyOverlap.toFixed(1) + '%'}
+            </Typography>
+          </div>
         </ListItemSecondaryAction>
       </MenuItem>
     )
@@ -121,6 +156,7 @@ const NetworkList = props => {
 
   return (
     <div className="network-list-wrapper">
+      <Sorter />
       <div className="network-list">
         <MenuList>
           {networkList.map(entry => getListItem(entry, classes))}
@@ -129,6 +165,5 @@ const NetworkList = props => {
     </div>
   )
 }
-
 
 export default withStyles(styles)(NetworkList)

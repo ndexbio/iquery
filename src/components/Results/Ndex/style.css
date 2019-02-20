@@ -33,3 +33,9 @@
   background-color: rgba(230, 230, 230, 0.5);
   background-repeat: no-repeat;
 }
+
+.sorter-container {
+  background: red;
+  height: 3em;
+  width: 100%;
+}

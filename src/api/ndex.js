@@ -1,7 +1,5 @@
+import { METHOD_GET, METHOD_POST } from './apiConstants'
 const NDEX_BASE_URL = 'http://public.ndexbio.org/v2/'
-
-const METHOD_GET = 'GET'
-const METHOD_POST = 'POST'
 
 const searchNetwork = query => {
   const headers = {
@@ -13,7 +11,7 @@ const searchNetwork = query => {
   })
   const searchUrl = NDEX_BASE_URL + 'search/network'
 
-  console.log('Calling NDEx API:', query, body, searchUrl)
+  console.log('*******Calling NDEx API:', query, body, searchUrl)
 
   return fetch(searchUrl, {
     method: METHOD_POST,
