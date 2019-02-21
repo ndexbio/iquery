@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './style.css'
 import InputPanel from '../InputPanel'
 import Results from '../Results'
@@ -51,6 +51,14 @@ const styles = theme => ({
  */
 const HomePanel = props => {
   const { classes, ...others } = props
+
+  useEffect(() => {
+    props.sourceActions.findSourceStarted()
+    console.log('Base component mounted:')
+    return () => {
+      console.log('Page unmounted')
+    }
+  }, [])
 
   const open = props.uiState.isSettingsOpen
 

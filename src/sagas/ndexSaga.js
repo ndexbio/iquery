@@ -10,6 +10,12 @@ import {
 } from '../actions/search'
 
 import {
+  FIND_SOURCE_STARTED,
+  FIND_SOURCE_FAILED,
+  FIND_SOURCE_SUCCEEDED
+} from '../actions/source'
+
+import {
   NETWORK_FETCH_STARTED,
   NETWORK_FETCH_SUCCEEDED,
   NETWORK_FETCH_FAILED
@@ -19,6 +25,7 @@ export default function* rootSaga() {
   console.log('rootSaga reporting for duty')
   yield takeLatest(SEARCH_STARTED, watchSearch)
   yield takeLatest(NETWORK_FETCH_STARTED, fetchNetwork)
+  yield takeLatest(FIND_SOURCE_STARTED, fetchSource)
 }
 
 /**
@@ -72,6 +79,18 @@ function* fetchNetwork(action) {
     yield put({ type: NETWORK_FETCH_SUCCEEDED, cx: json })
   } catch (error) {
     yield put({ type: NETWORK_FETCH_FAILED, error })
+  }
+}
+
+function* fetchSource(action) {
+  try {
+    const sources = yield call(cySearchApi.getSource, null)
+    const json = yield call([sources, 'json'])
+    console.log('Data Source:', json.results)
+
+    yield put({ type: FIND_SOURCE_SUCCEEDED, sources: json.results })
+  } catch (error) {
+    yield put({ type: FIND_SOURCE_FAILED, error })
   }
 }
 

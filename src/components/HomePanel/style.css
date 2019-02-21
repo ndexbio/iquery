@@ -52,6 +52,24 @@
   height: 100vh;
 }
 
+.source-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  background-color: #FFFFFF;
+}
+
+.source-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:70%;
+  margin-top: 2em;
+  padding: 3em;
+}
+
 .results-container {
   padding-top: 6.5vmin;
   grid-column: 2/13;

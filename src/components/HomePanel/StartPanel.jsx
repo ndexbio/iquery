@@ -3,11 +3,10 @@ import './style.css'
 import SearchTextBox from './SearchTextBox'
 import Footer from './Footer'
 
-import dna from '../../assets/images/dna.svg'
-import idea from '../../assets/images/idea.svg'
 import ndex from '../../assets/images/ndex-logo.svg'
 import LoadingPanel from '../LoadingPanel'
-import { Typography } from "@material-ui/core";
+import { Typography } from '@material-ui/core'
+import SourcePanel from './SourcePanel'
 
 const StartPanel = props => {
   if (props.search.isSearching) {
@@ -16,7 +15,6 @@ const StartPanel = props => {
 
   return (
     <div className="start-container">
-
       <div className="start-title">
         <img className="start-logo-main" src={ndex} alt="logo" />
         {/*<img className="start-logo" src={dna} alt="logo" />*/}
@@ -25,9 +23,7 @@ const StartPanel = props => {
       </div>
       <SearchTextBox {...props} />
 
-      <Typography variant="subtitle1">
-
-      </Typography>
+      <SourcePanel {...props} />
       <Footer />
     </div>
   )

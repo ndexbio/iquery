@@ -3,6 +3,17 @@ import { METHOD_GET, METHOD_POST } from './apiConstants'
 const SEARCH_BASE_URL =
   'http://secret.ndexbio.org/fake_cytoscapesearch/rest/v1/cytoscapesearch/'
 
+
+const getSource = () => {
+  const searchUrl = SEARCH_BASE_URL + 'source'
+  console.log('Calling sources:', searchUrl)
+
+  return fetch(searchUrl, {
+    method: METHOD_GET,
+    mode: 'cors'
+  })
+}
+
 const SOURCES = []
 const BASE_QUERY = {
   geneList: [],
@@ -35,4 +46,4 @@ const getResult = searchId => {
   })
 }
 
-export { getResult }
+export { getResult, getSource }
