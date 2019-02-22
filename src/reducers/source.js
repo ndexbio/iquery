@@ -7,7 +7,8 @@ import {
 
 const defaultState = {
   isFetchingSource: false,
-  sources: []
+  sources: [],
+  error: null
 }
 
 const source = handleActions(
@@ -16,15 +17,27 @@ const source = handleActions(
       return {
         ...state,
         isFetchingSource: true,
+        error: null,
         sources: []
       }
     },
     [findSourceSucceeded]: (state, payload) => {
       console.log('SOURCE===', payload)
-      return { ...state, sources: payload.sources, isFetchingSource: false }
+      return {
+        ...state,
+        sources: payload.sources,
+        isFetchingSource: false,
+        error: null
+      }
     },
     [findSourceFailed]: (state, payload) => {
-      return { ...state, isFetchingSource: false, sources: [] }
+      console.warn('Error===', payload.error)
+      return {
+        ...state,
+        isFetchingSource: false,
+        error: payload.error,
+        sources: []
+      }
     }
   },
   defaultState

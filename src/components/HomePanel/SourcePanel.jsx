@@ -1,21 +1,22 @@
 import React from 'react'
 import './style.css'
 import SourceCard from './SourceCard'
-
-const cards = [...Array(3).keys()]
+import ErrorCard from './ErrorCard'
 
 const SourcePanel = props => {
-  if (props.source === undefined) {
-    return null
-  }
-
-  if (!props.source.sources) {
+  if (props.source === undefined || !props.source.sources) {
     return null
   }
 
   const sources = props.source.sources
 
-  console.log("Final source", sources)
+  if (props.source.error !== null) {
+    return (
+      <div className="source-container">
+        <ErrorCard />
+      </div>
+    )
+  }
 
   return (
     <div className="source-container">

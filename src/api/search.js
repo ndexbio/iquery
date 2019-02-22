@@ -3,7 +3,6 @@ import { METHOD_GET, METHOD_POST } from './apiConstants'
 const SEARCH_BASE_URL =
   'http://secret.ndexbio.org/fake_cytoscapesearch/rest/v1/cytoscapesearch/'
 
-
 const getSource = () => {
   const searchUrl = SEARCH_BASE_URL + 'source'
   console.log('Calling sources:', searchUrl)
@@ -12,6 +11,13 @@ const getSource = () => {
     method: METHOD_GET,
     mode: 'cors'
   })
+    .then(response => {
+      if (!response.ok) {
+        throw Error('Failed to fetch source list:' + response.status)
+      }
+      return response
+    })
+    .catch(error => ({ error }))
 }
 
 const SOURCES = []
@@ -31,7 +37,8 @@ const postQuery = query => {
   })
 }
 
-const FAKE_RESULT_URL = 'http://secret.ndexbio.org/fake_cytoscapesearch/rest/v1/cytoscapesearch/'
+const FAKE_RESULT_URL =
+  'http://secret.ndexbio.org/fake_cytoscapesearch/rest/v1/cytoscapesearch/'
 const FAKE_UUID = 'bb50d9cd-b40c-45ab-965c-4b7c7d1bdb5f'
 
 const getResult = searchId => {
