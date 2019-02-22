@@ -12,6 +12,7 @@ import SearchIcon from '@material-ui/icons/Search'
 import OpenIcon from '@material-ui/icons/OpenInNew'
 import logo from '../../../assets/images/cytoscape-logo.svg'
 import Button from '@material-ui/core/Button'
+import OpenInButton from './OpenInButton'
 
 const styles = theme => ({
   toolbar: {
@@ -78,7 +79,7 @@ const styles = theme => ({
 })
 
 const NetworkToolbar = props => {
-  const { classes } = props
+  const { classes, ...others } = props
   return (
     <Toolbar className={classes.toolbar}>
       <IconButton
@@ -109,10 +110,7 @@ const NetworkToolbar = props => {
           }}
         />
       </div>
-      <Button color="default" variant="outlined">
-        Open in
-        <img src={logo} className={classes.buttonIcon} />
-      </Button>
+      <OpenInButton {...others} />
     </Toolbar>
   )
 }

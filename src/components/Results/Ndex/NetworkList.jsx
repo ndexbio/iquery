@@ -76,8 +76,36 @@ const styles = theme => ({
   }
 })
 
+const CYTOSCAPE_URL = 'http://localhost:2607/status/'
+
+const checkCytoscapeConnection = (props) => {
+  fetch(CYTOSCAPE_URL, { mode: 'no-cors' })
+    .catch(e => {
+      throw Error(e)
+    })
+    .then(res => handleErrors(res))
+    .then(running => {
+      console.log('8888888888888888888888', running)
+      props.uiStateActions.setCytoscapeStatus(true)
+
+    })
+    .catch(error => {
+      props.uiStateActions.setCytoscapeStatus(false)
+    })
+}
+
+const handleErrors = res => {
+  console.log('Calling!!', res)
+  if (res !== undefined) {
+    return true
+  }
+
+  return false
+}
+
 const NetworkList = props => {
   const handleFetch = (uuid, networkName) => {
+    checkCytoscapeConnection(props)
     props.networkActions.networkFetchStarted({ uuid, networkName })
   }
 
