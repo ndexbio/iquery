@@ -21,7 +21,7 @@ const SourcePanel = props => {
   return (
     <div className="source-container">
       {sources.map(sourceEntry => (
-        <SourceCard source={sourceEntry} />
+        <SourceCard key={sourceEntry.uuid} source={sourceEntry} />
       ))}
     </div>
   )

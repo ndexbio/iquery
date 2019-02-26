@@ -43,7 +43,6 @@ const SourceCard = props => {
           className={classes.media}
           height="140"
           src={randomImage()}
-          key={source.uuid}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
@@ -52,12 +51,8 @@ const SourceCard = props => {
           <Typography gutterBottom variant="subheading">
             {'(v' + source.version + ')'}
           </Typography>
-          <Typography component="p">
-            {source.description}
-          </Typography>
-          <Typography variant={"h6"}>
-            {'Status: ' + source.status}
-          </Typography>
+          <Typography component="p">{source.description}</Typography>
+          <Typography variant={'h6'}>{'Status: ' + source.status}</Typography>
         </CardContent>
       </CardActionArea>
       <CardActions />

@@ -69,9 +69,21 @@ const SearchTextBox = props => {
 
   const handleSearch = event => {
     const genes = state.query
-    props.searchActions.setQuery(genes)
-    props.searchActions.searchStarted(genes)
+    if(genes.length === 0) {
+      // TODO: add better error message
+      return
+    }
+
+    const validatedGenes = repaceDelimiters(genes)
+    props.searchActions.setQuery(validatedGenes)
+    props.searchActions.searchStarted(validatedGenes)
   }
+
+  const repaceDelimiters = query => {
+    // TODO: what's the supported set of delimiters?
+    return query.replace(',', ' ')
+  }
+
 
   return (
     <Paper className={'search-text-box'} elevation={1}>
