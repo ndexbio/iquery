@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { all, call, put, takeLatest } from 'redux-saga/effects'
 import * as api from '../api/ndex'
 import * as myGeneApi from '../api/mygene'
 import * as cySearchApi from '../api/search'
@@ -29,23 +29,33 @@ export default function* rootSaga() {
 }
 
 /**
- * Calling NDEx network search and set state
+ * Calls Cytoscape Search service and set state
  *
  * @param action
  * @returns {IterableIterator<*>}
  */
 function* watchSearch(action) {
-  const query = action.payload
+  const geneList = action.payload.geneList
+  const sourceNames = action.payload.sourceNames
+  const geneListString = geneList.join()
+
   try {
-    const geneRes = yield call(myGeneApi.searchGenes, query.split(' ').join())
+    // Parallel call
+    const [geneRes, ndexRes, searchRes] = yield all([
+      call(myGeneApi.searchGenes, geneListString),
+      call(api.searchNetwork, geneListString),
+      call(cySearchApi.postQuery, geneList, sourceNames)
+    ])
+
     const geneJson = yield call([geneRes, 'json'])
-    const res = yield call(api.searchNetwork, query)
-    const json = yield call([res, 'json'])
+    const json = yield call([ndexRes, 'json'])
 
-    const resCySearch = yield call(cySearchApi.getResult, 'foo')
-    const cySearchJson = yield call([resCySearch, 'json'])
+    const resultLocation = searchRes.headers.get('Location')
+    console.log('Fake search result:', resultLocation)
 
-    console.log('Fake result:', cySearchJson)
+    const parts = resultLocation.split('/')
+    const jobId = parts[parts.length - 1]
+    // TODO: Parallelize this!
 
     const filtered = filterGenes(geneJson)
 
@@ -54,7 +64,9 @@ function* watchSearch(action) {
       payload: {
         ndex: json,
         genes: filtered.uniqueGeneMap,
-        notFound: filtered.notFound
+        notFound: filtered.notFound,
+        resultLocation,
+        jobId
       }
     })
   } catch (e) {
@@ -63,7 +75,7 @@ function* watchSearch(action) {
       type: SEARCH_FAILED,
       payload: {
         message: 'NDEx network search error',
-        query: query,
+        query: geneListString,
         error: e.message
       }
     })

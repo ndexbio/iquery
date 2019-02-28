@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import HomePanel from '../../components/HomePanel'
+import { withRouter } from 'react-router-dom'
 
 import * as searchActions from '../../actions/search'
 import * as uiStateActions from '../../actions/uiState'
@@ -28,7 +29,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MainContainer)
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(MainContainer)
+)

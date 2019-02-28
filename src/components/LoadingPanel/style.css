@@ -1,10 +1,19 @@
 .loading-container {
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.2);
     color: #FFFFFF;
 
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+.loading-title {
+    padding-bottom: 1em;
+}
+
+.loading-message {
+    padding-bottom: 2em;
 }

@@ -40,15 +40,19 @@ const checkStatus = jobId => {
     .catch(error => ({ error }))
 }
 
-const postQuery = query => {
+const postQuery = (geneList, sourceList) => {
   const searchUrl = SEARCH_BASE_URL
 
-  console.log('Sending query:', searchUrl)
+  const queryObject = {
+    geneList,
+    sourceList
+  }
+
+  console.log('Sending query to search service:', queryObject)
 
   return fetch(searchUrl, {
     method: METHOD_POST,
-    mode: 'cors',
-    body: query
+    body: queryObject
   })
     .then(response => {
       if (!response.ok) {
@@ -76,4 +80,4 @@ const getResult = searchId => {
   })
 }
 
-export { getResult, getSource }
+export { getResult, getSource, postQuery }
