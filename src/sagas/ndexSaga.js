@@ -40,7 +40,7 @@ function* watchSearch(action) {
   const geneListString = geneList.join()
 
   try {
-    // Parallel call
+    // Call 1: Send query and get JobID w/ gene props from MyGene
     const [geneRes, ndexRes, searchRes] = yield all([
       call(myGeneApi.searchGenes, geneListString),
       call(api.searchNetwork, geneListString),
@@ -48,13 +48,12 @@ function* watchSearch(action) {
     ])
 
     const geneJson = yield call([geneRes, 'json'])
-    const json = yield call([ndexRes, 'json'])
+    // const json = yield call([ndexRes, 'json'])
 
     const resultLocation = searchRes.headers.get('Location')
-    console.log('Fake search result:', resultLocation)
-
     const parts = resultLocation.split('/')
     const jobId = parts[parts.length - 1]
+
     // TODO: Parallelize this!
 
     const filtered = filterGenes(geneJson)
@@ -62,7 +61,6 @@ function* watchSearch(action) {
     yield put({
       type: SEARCH_SUCCEEDED,
       payload: {
-        ndex: json,
         genes: filtered.uniqueGeneMap,
         notFound: filtered.notFound,
         resultLocation,

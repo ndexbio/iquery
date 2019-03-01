@@ -54,7 +54,6 @@ const HomePanel = props => {
 
   useEffect(() => {
     props.sourceActions.findSourceStarted()
-    console.log('Base component mounted:')
     return () => {
       console.log('Page unmounted')
     }
@@ -83,6 +82,7 @@ const getMainContents = props => {
   if (props.search.results === null) {
     return <StartPanel {...props} />
   } else {
+    // Result object is available
     return (
       <div className="container">
         <InputPanel className="input" {...props} />
