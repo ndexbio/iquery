@@ -14,16 +14,19 @@ const Footer = props => (
       &copy; 2019 UC, San Diego Ideker Lab
     </Typography>
     <img
+      alt="NDEx logo"
       src={ndexLogo}
       className="footer-logo"
       onClick={() => openLink(NDEX_URL)}
     />
     <img
+      alt="Cytoscape logo"
       src={cyLogo}
       className="footer-logo"
       onClick={() => openLink(CY_URL)}
     />
     <img
+      alt="UCSD logo"
       src={ucsdLogo}
       className="footer-logo"
       onClick={() => openLink(UCSD_URL)}

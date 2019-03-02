@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 
 import './style.css'
@@ -13,7 +13,6 @@ let cyInstance = null
  * @constructor
  */
 const CytoscapeViewer = props => {
-  const [cyStyle, setState] = useState({})
 
   useEffect(() => {
     if (cyInstance === undefined || cyInstance === null) {

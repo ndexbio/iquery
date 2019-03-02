@@ -9,9 +9,6 @@ import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
-import OpenIcon from '@material-ui/icons/OpenInNew'
-import logo from '../../../assets/images/cytoscape-logo.svg'
-import Button from '@material-ui/core/Button'
 import OpenInButton from './OpenInButton'
 
 const styles = theme => ({

@@ -10,8 +10,6 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import disconnected from '../../assets/images/disconnected.svg'
 
-import Warning from '@material-ui/icons/Warning'
-
 const styles = {
   card: {
     minWidth: 345,

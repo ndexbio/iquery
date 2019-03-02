@@ -1,7 +1,5 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
@@ -15,23 +13,10 @@ import deepOrange from '@material-ui/core/colors/deepOrange'
 
 import MenuList from '@material-ui/core/MenuList'
 import MenuItem from '@material-ui/core/MenuItem'
-
 import Tooltip from '@material-ui/core/Tooltip'
-
-import lightGreen from '@material-ui/core/colors/lightGreen'
 
 import './style.css'
 import Sorter from './Sorter'
-import {
-  XYPlot,
-  XAxis,
-  YAxis,
-  VerticalGridLines,
-  HorizontalGridLines,
-  HorizontalBarSeries,
-  HorizontalBarSeriesCanvas
-} from 'react-vis'
-import BarSeries from 'react-vis/es/plot/series/bar-series'
 
 const NDEX_LINK_URL = 'http://www.ndexbio.org/#/network/'
 

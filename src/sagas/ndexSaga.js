@@ -96,7 +96,6 @@ function* fetchSource(action) {
   try {
     const sources = yield call(cySearchApi.getSource, null)
     const json = yield call([sources, 'json'])
-    console.log('Data Source:', json.results)
 
     yield put({ type: FIND_SOURCE_SUCCEEDED, sources: json.results })
   } catch (error) {

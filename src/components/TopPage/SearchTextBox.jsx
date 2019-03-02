@@ -10,7 +10,6 @@ import SearchIcon from '@material-ui/icons/Search'
 import ClearIcon from '@material-ui/icons/Refresh'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
 
 const EXAMPLES = ['kras egfr cdk4 tp53', 'per1 per2 clock', 'mtor wnt1 igf1']
 
@@ -43,6 +42,8 @@ const SearchTextBox = props => {
     if (props.search.results !== null) {
       const jobId = props.search.results.jobId
 
+      const pathParam = props
+      console.log('** Search route:', jobId, pathParam)
       props.history.push(`/${jobId}`)
     }
     return () => {

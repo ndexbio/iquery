@@ -32,7 +32,6 @@ const StartPanel = props => {
         <img className="start-logo-main" src={ndex} alt="logo" />
       </div>
       <SearchTextBox {...props} />
-
       <SourcePanel {...props} />
       <Footer />
     </div>

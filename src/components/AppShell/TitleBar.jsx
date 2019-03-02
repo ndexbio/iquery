@@ -98,7 +98,11 @@ class TitleBar extends React.Component {
               color="inherit"
               onClick={() => openLink(GITHUB_URL)}
             >
-              <img src={github} className={classes.headerLogo} />
+              <img
+                alt="GitHub logo"
+                src={github}
+                className={classes.headerLogo}
+              />
             </IconButton>
           </div>
         </Toolbar>

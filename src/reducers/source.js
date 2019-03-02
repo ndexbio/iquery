@@ -22,7 +22,6 @@ const source = handleActions(
       }
     },
     [findSourceSucceeded]: (state, payload) => {
-      console.log('SOURCE===', payload)
       return {
         ...state,
         sources: payload.sources,
@@ -31,7 +30,7 @@ const source = handleActions(
       }
     },
     [findSourceFailed]: (state, payload) => {
-      console.warn('Error===', payload.error)
+      console.warn('Error:', payload.error)
       return {
         ...state,
         isFetchingSource: false,

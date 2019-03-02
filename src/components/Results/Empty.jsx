@@ -14,7 +14,7 @@ import './style.css'
 const Empty = props => (
   <div className="results-container">
     <div className="message">
-      <img src={logo} className="home-logo" />
+      <img alt="Home logo" src={logo} className="home-logo" />
       <Typography variant="h2">Cytoscape Cloud &alpha;</Typography>
       <Typography variant="subtitle1">
         Enter / drag & drop a gene list to the text area

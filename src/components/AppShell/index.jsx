@@ -37,7 +37,6 @@ const styles = theme => ({
   }
 })
 
-
 const AppShell = props => {
   const { classes, ...others } = props
 
@@ -54,7 +53,6 @@ const AppShell = props => {
           [classes.contentShift]: open
         })}
       />
-
       {props.children}
     </div>
   )

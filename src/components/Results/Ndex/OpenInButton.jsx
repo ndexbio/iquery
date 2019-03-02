@@ -22,7 +22,7 @@ const OpenInButton = props => {
       disabled={!uiState.isCytoscapeRunning}
     >
       Open in
-      <img src={logo} className={classes.buttonIcon} />
+      <img alt="Cytoscape logo" src={logo} className={classes.buttonIcon} />
     </Button>
   )
 }
