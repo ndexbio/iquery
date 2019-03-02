@@ -13,15 +13,15 @@ const styles = theme => ({
 })
 
 const Results = props => {
-  useEffect(() => {
-    if (props.search.results !== null) {
-      const jobId = props.search.results.jobId
-      props.history.push(`/${jobId}`)
-    }
-    return () => {
-      console.log('Page unmounted')
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (props.search.results !== null) {
+  //     const jobId = props.search.results.jobId
+  //     props.history.push(`/${jobId}`)
+  //   }
+  //   return () => {
+  //     console.log('Page unmounted')
+  //   }
+  // }, [])
 
   const [value, setValue] = useState(0)
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import './style.css'
 
+// SVG images for links
 import cyLogo from '../../assets/images/cytoscape-logo.svg'
 import ndexLogo from '../../assets/images/ndex-logo.svg'
 import ucsdLogo from '../../assets/images/ucsd-logo.svg'
@@ -30,7 +31,7 @@ const Footer = props => (
   </footer>
 )
 
-const CY_URL = 'https://www.cytoscape.org/'
+const CY_URL = 'https://cytoscape.org/'
 const NDEX_URL = 'https://www.ndexbio.org/'
 const UCSD_URL =
   'https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx'

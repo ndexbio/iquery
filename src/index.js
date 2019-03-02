@@ -9,7 +9,7 @@ import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import './index.css'
-import App from './App'
+import { App, Top } from './App'
 import * as serviceWorker from './serviceWorker'
 
 // Import root reducers
@@ -29,7 +29,7 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route exact path="/" component={App} />
+        <Route exact path="/" component={Top} />
         <Route path="/:jobid/:sourceId/:networkId" component={App} />
         <Route path="/:jobid/:sourceId" component={App} />
         <Route path="/:jobid" component={App} />

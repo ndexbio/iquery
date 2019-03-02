@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -38,6 +38,17 @@ const SearchTextBox = props => {
   const { classes } = props
 
   const [state, setState] = useState({ anchorEl: null, query: '' })
+
+  useEffect(() => {
+    if (props.search.results !== null) {
+      const jobId = props.search.results.jobId
+
+      props.history.push(`/${jobId}`)
+    }
+    return () => {
+      console.log('Page unmounted')
+    }
+  }, [])
 
   const open = Boolean(state.anchorEl)
 

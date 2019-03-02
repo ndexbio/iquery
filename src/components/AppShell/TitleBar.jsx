@@ -6,7 +6,6 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import HelpIcon from '@material-ui/icons/Help'
 import classNames from 'classnames'
 import github from '../../assets/images/github.svg'
@@ -111,10 +110,6 @@ class TitleBar extends React.Component {
 // TODO: replace this to the actual help page
 const HELP_URL = 'https://www.cytoscape.org/'
 const GITHUB_URL = 'https://github.com/idekerlab/cytoscape-cloud-portal'
-const CY_URL = 'https://www.cytoscape.org/'
-const NDEX_URL = 'https://www.ndexbio.org/'
-const UCSD_URL =
-  'https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx'
 
 const openLink = url => {
   window.open(url, '_blank')
