@@ -6,14 +6,20 @@ import {
   searchSucceeded,
   searchFailed,
   clearAll,
-  setSelectedGenes
+  setSelectedGenes,
+  fetchResultStarted,
+  fetchResultSucceeded,
+  fetchResultFailed
 } from '../actions/search'
 
 const defaultState = {
   isSearching: false,
+  isFetching: false,
   queryGenes: '',
   queryList: [],
   results: null,
+  searchStatus: null,
+  searchResults: null,
   selectedGenes: []
 }
 
@@ -44,6 +50,20 @@ const search = handleActions(
     [setSelectedGenes]: (state, payload) => {
       console.log('Setting selected gene:', payload)
       return { ...state, selectedGenes: payload.payload }
+    },
+    [fetchResultStarted]: (state, payload) => {
+      return {
+        ...state,
+        isFetching: true,
+        searchStatus: null,
+        searchResults: null
+      }
+    },
+    [fetchResultSucceeded]: (state, payload) => {
+      return { ...state, searchResults: payload.payload, isFetching: false }
+    },
+    [fetchResultFailed]: (state, payload) => {
+      return { ...state, isFetching: false }
     }
   },
   defaultState

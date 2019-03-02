@@ -80,4 +80,4 @@ const getResult = searchId => {
   })
 }
 
-export { getResult, getSource, postQuery }
+export { getResult, getSource, postQuery, checkStatus }

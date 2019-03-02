@@ -7,6 +7,14 @@ import AppShell from '../AppShell'
 
 const HomePanel = props => {
   useEffect(() => {
+    // Call search
+
+    if(props.search.results !== null) {
+      const jobId = props.search.results.jobId
+      console.log('Fetching res')
+      props.searchActions.fetchResultStarted({ jobId })
+    }
+
     window.onpopstate = onBackButtonEvent
     return () => {
       console.log('Page unmounted')

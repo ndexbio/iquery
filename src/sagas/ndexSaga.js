@@ -6,7 +6,10 @@ import * as cySearchApi from '../api/search'
 import {
   SEARCH_STARTED,
   SEARCH_FAILED,
-  SEARCH_SUCCEEDED
+  SEARCH_SUCCEEDED,
+  FETCH_RESULT_STARTED,
+  FETCH_RESULT_SUCCEEDED,
+  FETCH_RESULT_FAILED
 } from '../actions/search'
 
 import {
@@ -24,6 +27,7 @@ import {
 export default function* rootSaga() {
   console.log('rootSaga reporting for duty')
   yield takeLatest(SEARCH_STARTED, watchSearch)
+  yield takeLatest(FETCH_RESULT_STARTED, watchSearchResult)
   yield takeLatest(NETWORK_FETCH_STARTED, fetchNetwork)
   yield takeLatest(FIND_SOURCE_STARTED, fetchSource)
 }
@@ -74,6 +78,35 @@ function* watchSearch(action) {
       payload: {
         message: 'NDEx network search error',
         query: geneListString,
+        error: e.message
+      }
+    })
+  }
+}
+
+function* watchSearchResult(action) {
+  const jobId = action.payload.jobId
+  console.log('SR fetch:', jobId)
+
+  try {
+    const statusRes = yield call(cySearchApi.checkStatus, jobId)
+    const statusJson = yield call([statusRes, 'json'])
+
+    console.log('SR fetch result:', statusJson)
+
+    yield put({
+      type: FETCH_RESULT_SUCCEEDED,
+      payload: {
+        searchStatus: statusJson
+      }
+    })
+  } catch (e) {
+    console.warn('NDEx search error:', e)
+    yield put({
+      type: FETCH_RESULT_FAILED,
+      payload: {
+        message: 'Failed to fetch search result',
+        jobId,
         error: e.message
       }
     })
