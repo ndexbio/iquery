@@ -60,7 +60,11 @@ const search = handleActions(
       }
     },
     [fetchResultSucceeded]: (state, payload) => {
-      return { ...state, searchResults: payload.payload, isFetching: false }
+      return {
+        ...state,
+        searchResults: payload.payload.searchResults,
+        isFetching: false
+      }
     },
     [fetchResultFailed]: (state, payload) => {
       return { ...state, isFetching: false }

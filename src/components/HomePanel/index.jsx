@@ -4,12 +4,13 @@ import InputPanel from '../InputPanel'
 import Results from '../Results'
 
 import AppShell from '../AppShell'
+import LoadingPanel from '../LoadingPanel'
 
 const HomePanel = props => {
   useEffect(() => {
     // Call search
 
-    if(props.search.results !== null) {
+    if (props.search.results !== null) {
       const jobId = props.search.results.jobId
       console.log('Fetching res')
       props.searchActions.fetchResultStarted({ jobId })
@@ -28,6 +29,11 @@ const HomePanel = props => {
   }
 
   console.log('----------------------- New Home Panel ------------------')
+
+  if (props.search.isFetching) {
+    return <LoadingPanel title="Loading Search Results" />
+  }
+
   return (
     <AppShell {...props}>
       <div className="container">

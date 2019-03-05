@@ -40,6 +40,21 @@ const checkStatus = jobId => {
     .catch(error => ({ error }))
 }
 
+const getResult = jobId => {
+  const resultUrl = SEARCH_BASE_URL + jobId
+
+  return fetch(resultUrl, {
+    method: METHOD_GET
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw Error('Failed to fetch search result:' + response.status)
+      }
+      return response
+    })
+    .catch(error => ({ error }))
+}
+
 const postQuery = (geneList, sourceList) => {
   const searchUrl = SEARCH_BASE_URL
 
@@ -68,16 +83,16 @@ const FAKE_RESULT_URL =
   'http://secret.ndexbio.org/fake_cytoscapesearch/rest/v1/cytoscapesearch/'
 const FAKE_UUID = 'bb50d9cd-b40c-45ab-965c-4b7c7d1bdb5f'
 
-const getResult = searchId => {
-  // const searchUrl = SEARCH_BASE_URL + searchId
-  const searchUrl = FAKE_RESULT_URL + FAKE_UUID
-
-  console.log('Calling SEARCH API:', searchUrl)
-
-  return fetch(searchUrl, {
-    method: METHOD_GET,
-    mode: 'cors'
-  })
-}
+// const getResult = searchId => {
+//   // const searchUrl = SEARCH_BASE_URL + searchId
+//   const searchUrl = FAKE_RESULT_URL + FAKE_UUID
+//
+//   console.log('Calling SEARCH API:', searchUrl)
+//
+//   return fetch(searchUrl, {
+//     method: METHOD_GET,
+//     mode: 'cors'
+//   })
+// }
 
 export { getResult, getSource, postQuery, checkStatus }
