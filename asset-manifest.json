@@ -1,0 +1,23 @@
+{
+  "main.css": "/search-portal-web/static/css/main.4c8ccf24.chunk.css",
+  "main.js": "/search-portal-web/static/js/main.17bf4fba.chunk.js",
+  "main.js.map": "/search-portal-web/static/js/main.17bf4fba.chunk.js.map",
+  "runtime~main.js": "/search-portal-web/static/js/runtime~main.d83264e9.js",
+  "runtime~main.js.map": "/search-portal-web/static/js/runtime~main.d83264e9.js.map",
+  "static/css/2.c21dc60b.chunk.css": "/search-portal-web/static/css/2.c21dc60b.chunk.css",
+  "static/js/2.fa5f68be.chunk.js": "/search-portal-web/static/js/2.fa5f68be.chunk.js",
+  "static/js/2.fa5f68be.chunk.js.map": "/search-portal-web/static/js/2.fa5f68be.chunk.js.map",
+  "index.html": "/search-portal-web/index.html",
+  "precache-manifest.a177eb72be1135bbbf8e4685d89b1631.js": "/search-portal-web/precache-manifest.a177eb72be1135bbbf8e4685d89b1631.js",
+  "service-worker.js": "/search-portal-web/service-worker.js",
+  "static/css/2.c21dc60b.chunk.css.map": "/search-portal-web/static/css/2.c21dc60b.chunk.css.map",
+  "static/css/main.4c8ccf24.chunk.css.map": "/search-portal-web/static/css/main.4c8ccf24.chunk.css.map",
+  "static/media/cytoscape-logo.svg": "/search-portal-web/static/media/cytoscape-logo.4aa4c296.svg",
+  "static/media/disconnected.svg": "/search-portal-web/static/media/disconnected.243cf575.svg",
+  "static/media/dna.svg": "/search-portal-web/static/media/dna.9c807c9d.svg",
+  "static/media/github.svg": "/search-portal-web/static/media/github.617870e4.svg",
+  "static/media/idea.svg": "/search-portal-web/static/media/idea.c30260f3.svg",
+  "static/media/ndex-logo.svg": "/search-portal-web/static/media/ndex-logo.04d7bf44.svg",
+  "static/media/index.css": "/search-portal-web/static/media/roboto-latin-900italic.bc833e72.woff",
+  "static/media/ucsd-logo.svg": "/search-portal-web/static/media/ucsd-logo.5838f23e.svg"
+}
