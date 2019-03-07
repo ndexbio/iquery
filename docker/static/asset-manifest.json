@@ -1,0 +1,23 @@
+{
+  "main.css": "/static/css/main.4c8ccf24.chunk.css",
+  "main.js": "/static/js/main.ad9ed8b2.chunk.js",
+  "main.js.map": "/static/js/main.ad9ed8b2.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.c5541365.js",
+  "runtime~main.js.map": "/static/js/runtime~main.c5541365.js.map",
+  "static/css/2.32afccf7.chunk.css": "/static/css/2.32afccf7.chunk.css",
+  "static/js/2.28546cfb.chunk.js": "/static/js/2.28546cfb.chunk.js",
+  "static/js/2.28546cfb.chunk.js.map": "/static/js/2.28546cfb.chunk.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.2561d2e104f6b7653e283dd054d19984.js": "/precache-manifest.2561d2e104f6b7653e283dd054d19984.js",
+  "service-worker.js": "/service-worker.js",
+  "static/css/2.32afccf7.chunk.css.map": "/static/css/2.32afccf7.chunk.css.map",
+  "static/css/main.4c8ccf24.chunk.css.map": "/static/css/main.4c8ccf24.chunk.css.map",
+  "static/media/cytoscape-logo.svg": "/static/media/cytoscape-logo.4aa4c296.svg",
+  "static/media/disconnected.svg": "/static/media/disconnected.243cf575.svg",
+  "static/media/dna.svg": "/static/media/dna.9c807c9d.svg",
+  "static/media/github.svg": "/static/media/github.617870e4.svg",
+  "static/media/idea.svg": "/static/media/idea.c30260f3.svg",
+  "static/media/ndex-logo.svg": "/static/media/ndex-logo.04d7bf44.svg",
+  "static/media/index.css": "/static/media/roboto-latin-900italic.bc833e72.woff",
+  "static/media/ucsd-logo.svg": "/static/media/ucsd-logo.5838f23e.svg"
+}

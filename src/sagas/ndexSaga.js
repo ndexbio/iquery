@@ -41,8 +41,21 @@ export default function* rootSaga() {
  * @returns {IterableIterator<*>}
  */
 function* watchSearch(action) {
+  console.log('## Search started.', action)
+
   const geneList = action.payload.geneList
-  const sourceNames = action.payload.sourceNames
+  let sourceNames = action.payload.sourceNames
+
+  // If source names are missing, find them:
+  if (sourceNames === undefined) {
+    const sources = yield call(cySearchApi.getSource, null)
+    const sourceJson = yield call([sources, 'json'])
+
+    const sourceList = sourceJson.results
+    sourceNames = sourceList.map(source => source.name)
+    console.log('* Fetched sources:', sourceNames)
+  }
+
   const geneListString = geneList.join()
 
   console.log('## genes and sources:', geneList, sourceNames)

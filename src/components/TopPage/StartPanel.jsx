@@ -20,9 +20,12 @@ const StartPanel = props => {
     const genes = params.genes
 
     if(genes !== undefined) {
-      const geneNames = genes.split(',')
-      console.log('Got genes.  Start search now!', geneNames)
+      const geneList = genes.split(',')
       //TODO: call actual API
+      props.searchActions.setQuery(genes)
+      console.log('Got genes.  Start search now!', geneList)
+      props.searchActions.searchStarted({ geneList })
+
     }
 
     props.sourceActions.findSourceStarted()
