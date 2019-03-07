@@ -24,6 +24,8 @@ import {
   NETWORK_FETCH_FAILED
 } from '../actions/network'
 
+const API_CALL_INTERVAL = 1000
+
 export default function* rootSaga() {
   console.log('rootSaga reporting for duty')
   yield takeLatest(SEARCH_STARTED, watchSearch)
@@ -43,6 +45,8 @@ function* watchSearch(action) {
   const sourceNames = action.payload.sourceNames
   const geneListString = geneList.join()
 
+  console.log('## genes and sources:', geneList, sourceNames)
+
   try {
     // Call 1: Send query and get JobID w/ gene props from MyGene
     const [geneRes, searchRes] = yield all([
@@ -51,12 +55,9 @@ function* watchSearch(action) {
     ])
 
     const geneJson = yield call([geneRes, 'json'])
-
     const resultLocation = searchRes.headers.get('Location')
     const parts = resultLocation.split('/')
     const jobId = parts[parts.length - 1]
-
-    // TODO: Parallelize this!
 
     const filtered = filterGenes(geneJson)
 
@@ -84,21 +85,43 @@ function* watchSearch(action) {
   }
 }
 
+const checkStatus = statusJson => {
+  console.log(statusJson.progress, statusJson.sources)
+
+  const { progress } = statusJson
+  if (progress === 100) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// Simple sleep function using Promise
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 function* watchSearchResult(action) {
   const jobId = action.payload.jobId
-  console.log('SR fetch:', jobId)
 
   try {
-    const statusRes = yield call(cySearchApi.checkStatus, jobId)
-    const statusJson = yield call([statusRes, 'json'])
+    let finished = false
+    let statusJson = null
 
-    // TODO: insert status checker w/ interval
+    while (!finished) {
+      const statusRes = yield call(cySearchApi.checkStatus, jobId)
+      statusJson = yield call([statusRes, 'json'])
+      finished = checkStatus(statusJson)
+
+      if (finished) {
+        break
+      } else {
+        yield call(sleep, API_CALL_INTERVAL)
+      }
+    }
 
     const resultRes = yield call(cySearchApi.getResult, jobId)
     const resultJson = yield call([resultRes, 'json'])
 
-
-    console.log('## SR fetch result:', statusJson, resultJson)
+    console.log('## Result fetch:', statusJson, resultJson)
 
     yield put({
       type: FETCH_RESULT_SUCCEEDED,
@@ -121,8 +144,14 @@ function* watchSearchResult(action) {
 
 function* fetchNetwork(action) {
   try {
-    const uuid = action.payload.uuid
-    const cx = yield call(api.fetchNetwork, uuid)
+    console.log('Action cont----------', action)
+
+    const params = action.payload
+    const id = params.id
+    const sourceUUID = params.sourceUUID
+    const networkUUID = params.networkUUID
+
+    const cx = yield call(api.fetchNetwork, id, sourceUUID, networkUUID)
     const json = yield call([cx, 'json'])
 
     yield put({ type: NETWORK_FETCH_SUCCEEDED, cx: json })

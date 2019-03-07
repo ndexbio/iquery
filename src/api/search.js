@@ -1,7 +1,8 @@
 import { METHOD_GET, METHOD_POST } from './apiConstants'
 
-const SEARCH_BASE_URL =
-  'http://secret.ndexbio.org/fake_cytoscapesearch/rest/v1/cytoscapesearch/'
+// const SEARCH_BASE_URL =
+//   'http://secret.ndexbio.org/fake_cytoscapesearch/rest/v1/cytoscapesearch/'
+const SEARCH_BASE_URL = 'http://secret.ndexbio.org:8090/'
 
 /**
  * Check the status of the services.
@@ -65,9 +66,15 @@ const postQuery = (geneList, sourceList) => {
 
   console.log('Sending query to search service:', queryObject)
 
+  const header = new Headers({
+    'Content-Type': 'application/json'
+  })
+
+
   return fetch(searchUrl, {
     method: METHOD_POST,
-    body: queryObject
+    headers: header,
+    body: JSON.stringify(queryObject)
   })
     .then(response => {
       if (!response.ok) {
@@ -77,22 +84,5 @@ const postQuery = (geneList, sourceList) => {
     })
     .catch(error => ({ error }))
 }
-
-// TODO: remove this and replace it with real service URL
-const FAKE_RESULT_URL =
-  'http://secret.ndexbio.org/fake_cytoscapesearch/rest/v1/cytoscapesearch/'
-const FAKE_UUID = 'bb50d9cd-b40c-45ab-965c-4b7c7d1bdb5f'
-
-// const getResult = searchId => {
-//   // const searchUrl = SEARCH_BASE_URL + searchId
-//   const searchUrl = FAKE_RESULT_URL + FAKE_UUID
-//
-//   console.log('Calling SEARCH API:', searchUrl)
-//
-//   return fetch(searchUrl, {
-//     method: METHOD_GET,
-//     mode: 'cors'
-//   })
-// }
 
 export { getResult, getSource, postQuery, checkStatus }

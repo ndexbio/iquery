@@ -3,8 +3,6 @@ import { withStyles } from '@material-ui/core/styles'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import IconButton from '@material-ui/core/IconButton'
-import LinkIcon from '@material-ui/icons/Launch'
 
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
@@ -13,7 +11,6 @@ import deepOrange from '@material-ui/core/colors/deepOrange'
 
 import MenuList from '@material-ui/core/MenuList'
 import MenuItem from '@material-ui/core/MenuItem'
-import Tooltip from '@material-ui/core/Tooltip'
 
 import './style.css'
 import Sorter from './Sorter'
@@ -87,11 +84,17 @@ const handleErrors = res => {
 }
 
 const NetworkList = props => {
-  const { classes, hits } = props
+  const { classes, hits, sourceUUID } = props
 
-  const handleFetch = (uuid, networkName) => {
+  const id = props.search.results.jobId
+  const handleFetch = (networkUUID, networkName) => {
     checkCytoscapeConnection(props)
-    props.networkActions.networkFetchStarted({ uuid, networkName })
+    props.networkActions.networkFetchStarted({
+      id,
+      sourceUUID,
+      networkUUID,
+      networkName
+    })
   }
 
   const getListItem = (networkEntry, classes) => {
@@ -132,15 +135,6 @@ const NetworkList = props => {
           }
         />
         <ListItemSecondaryAction className={classes.secondary}>
-          <Tooltip title="Open in NDEx" placement="bottom">
-            <IconButton
-              href={NDEX_LINK_URL + networkUUID}
-              target={'_blank'}
-              aria-label="Open in NDEx"
-            >
-              <LinkIcon />
-            </IconButton>
-          </Tooltip>
           <div
             style={{
               background: 'lightGreen',

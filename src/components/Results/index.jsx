@@ -61,12 +61,12 @@ const getTabContent = (index, sources, props) => {
   }
 
   const source = sources[index]
-  if(!source) {
+  if (!source) {
     return null
   }
 
-  const hits = source.results
-  return <Ndex hits={hits} {...props} />
+  const { results, sourceUUID } = source
+  return <Ndex hits={results} sourceUUID={sourceUUID} {...props} />
 }
 
 export default withStyles(styles)(Results)

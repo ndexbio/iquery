@@ -12,7 +12,7 @@ import {
   fetchResultFailed
 } from '../actions/search'
 
-const defaultState = {
+const EMPTY_STATE = {
   isSearching: false,
   isFetching: false,
   queryGenes: '',
@@ -23,6 +23,7 @@ const defaultState = {
   selectedGenes: []
 }
 
+
 const search = handleActions(
   {
     [setQuery]: (state, payload) => {
@@ -32,7 +33,8 @@ const search = handleActions(
       return { ...state, queryGenes: '', queryList: [] }
     },
     [clearAll]: (state, payload) => {
-      return { ...state, queryGenes: '', queryList: [], results: null }
+      // return { ...state, queryGenes: '', queryList: [], results: null }
+      return EMPTY_STATE
     },
     [searchStarted]: (state, payload) => {
       return {
@@ -70,7 +72,7 @@ const search = handleActions(
       return { ...state, isFetching: false }
     }
   },
-  defaultState
+  EMPTY_STATE
 )
 
 export default search

@@ -13,6 +13,8 @@ import {
 const defaultState = {
   isFetching: false,
   uuid: '',
+  jobId: '',
+  sourceId: '',
   networkName: '',
   network: null,
   selectedNode: null,
@@ -28,7 +30,9 @@ const network = handleActions(
       return {
         ...state,
         isFetching: true,
-        uuid: payload.payload.uuid,
+        jobId: payload.payload.id,
+        sourceId: payload.payload.sourceUUID,
+        uuid: payload.payload.networkUUID,
         networkName: payload.payload.networkName
       }
     },
