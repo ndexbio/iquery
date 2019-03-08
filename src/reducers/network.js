@@ -67,11 +67,44 @@ const convertCx2cyjs = cx => {
   const elementsObj = cx2js.cyElementsFromNiceCX(niceCX, attributeNameMap)
   const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
 
+  const updatedStyle = styleUpdater(style)
+
   const elements = [...elementsObj.nodes, ...elementsObj.edges]
   return {
     elements,
-    style
+    style: updatedStyle
   }
+}
+
+const styleUpdater = style => {
+  const newStyle = []
+
+  const len = style.length
+
+  const filtered = style.filter(element => element.selector !== 'node:selected')
+
+  filtered.push({
+    selector: 'node:selected',
+    css: {
+      'background-color': 'red',
+      width: 100,
+      height: 100
+    }
+  })
+  // for (let idx = 0; i < len; i++) {
+  //   const element = style[idx]
+  //
+  //   const { css, selector } = element
+  //
+  //   if (selector !== 'node:selected') {
+  //     console.log('EL**Style:', element)
+  //     newStyle.push(element)
+  //   } else {
+  //     element.css['background'] = 'red'
+  //     newStyle.push(element)
+  //   }
+  // }
+  return filtered
 }
 
 export default network

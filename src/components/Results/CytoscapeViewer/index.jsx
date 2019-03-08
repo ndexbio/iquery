@@ -63,22 +63,26 @@ const CytoscapeViewer = props => {
   }
 
   console.log('Rendering Cyjs ===', cyjs, selectedGenes)
-  if (selectedGenes.length !== 0) {
-    console.log('=========== SL found:', selectedGenes)
-    cyjs.style.push({
-      style: {
-        'background-color': 'red'
-      },
-      selector: 'node:selected'
-    })
+  // if (selectedGenes.length !== 0) {
+  //   console.log('=========== SL found:', selectedGenes)
+  //   cyjs.style.push({
+  //     style: {
+  //       'background-color': 'red'
+  //     },
+  //     selector: 'node:selected'
+  //   })
+  //
+  //   if(cyInstance !== undefined || cyInstance !== null) {
+  //     // test reaction
+  //     const name = selectedGenes[0]
+  //     cyInstance.elements('node[name = "'+ name + '"]').style('background-color', 'red')
+  //   }
+  // }
 
-    if(cyInstance !== undefined || cyInstance !== null) {
-      // test reaction
-      const name = selectedGenes[0]
-      cyInstance.elements('node[name = "'+ name + '"]').style('background-color', 'red')
-    }
-  }
-  console.log('=========== Style:', cyjs.style)
+
+
+  console.log('=========== **Style:', cyjs.style)
+
   return (
     <CytoscapeComponent
       elements={cyjs.elements}
@@ -89,5 +93,6 @@ const CytoscapeViewer = props => {
     />
   )
 }
+
 
 export default CytoscapeViewer
