@@ -39,7 +39,7 @@ const SearchTextBox = props => {
   const [state, setState] = useState({ anchorEl: null, query: '' })
 
   useEffect(() => {
-    if (props.search.results !== null) {
+    if (props.search !== undefined && props.search.results !== null) {
       const jobId = props.search.results.jobId
 
       const pathParam = props

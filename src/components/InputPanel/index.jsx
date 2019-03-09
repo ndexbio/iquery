@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchPanel from '../SearchPanel'
+import SearchPanel from '../CommandPanel'
 import InputList from '../InputList'
 import LoadingPanel from '../LoadingPanel'
 import './style.css'

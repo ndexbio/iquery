@@ -15,7 +15,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import './style.css'
 import Sorter from './Sorter'
 
-const NDEX_LINK_URL = 'http://www.ndexbio.org/#/network/'
 
 const styles = theme => ({
   inline: {
@@ -86,6 +85,8 @@ const handleErrors = res => {
 const NetworkList = props => {
   const { classes, hits, sourceUUID } = props
 
+  const geneList = props.search.geneList
+
   const id = props.search.results.jobId
   const handleFetch = (networkUUID, networkName) => {
     checkCytoscapeConnection(props)
@@ -93,7 +94,8 @@ const NetworkList = props => {
       id,
       sourceUUID,
       networkUUID,
-      networkName
+      networkName,
+      geneList
     })
   }
 

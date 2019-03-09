@@ -1,8 +1,4 @@
-import { METHOD_GET, METHOD_POST } from './apiConstants'
-
-// const SEARCH_BASE_URL =
-//   'http://secret.ndexbio.org/fake_cytoscapesearch/rest/v1/cytoscapesearch/'
-const SEARCH_BASE_URL = 'http://secret.ndexbio.org:8090/'
+import { METHOD_GET, METHOD_POST, BASE_URL } from './apiConstants'
 
 /**
  * Check the status of the services.
@@ -10,7 +6,7 @@ const SEARCH_BASE_URL = 'http://secret.ndexbio.org:8090/'
  * @returns {Promise<Response | never | {error: any}>}
  */
 const getSource = () => {
-  const searchUrl = SEARCH_BASE_URL + 'source'
+  const searchUrl = BASE_URL + 'source'
   console.log('Calling sources:', searchUrl)
 
   return fetch(searchUrl, {
@@ -27,7 +23,7 @@ const getSource = () => {
 }
 
 const checkStatus = jobId => {
-  const checkJobStatusUrl = SEARCH_BASE_URL + jobId + '/status'
+  const checkJobStatusUrl = BASE_URL + jobId + '/status'
 
   return fetch(checkJobStatusUrl, {
     method: METHOD_GET
@@ -42,7 +38,7 @@ const checkStatus = jobId => {
 }
 
 const getResult = jobId => {
-  const resultUrl = SEARCH_BASE_URL + jobId
+  const resultUrl = BASE_URL + jobId
 
   return fetch(resultUrl, {
     method: METHOD_GET
@@ -57,7 +53,7 @@ const getResult = jobId => {
 }
 
 const postQuery = (geneList, sourceList) => {
-  const searchUrl = SEARCH_BASE_URL
+  const searchUrl = BASE_URL
 
   const queryObject = {
     geneList,
@@ -69,7 +65,6 @@ const postQuery = (geneList, sourceList) => {
   const header = new Headers({
     'Content-Type': 'application/json'
   })
-
 
   return fetch(searchUrl, {
     method: METHOD_POST,

@@ -1,32 +1,12 @@
-import { METHOD_GET, METHOD_POST } from './apiConstants'
-const NDEX_BASE_URL = 'http://public.ndexbio.org/v2/'
+import { METHOD_GET, BASE_URL } from './apiConstants'
 
-// const SEARCH_BASE_URL = 'http://public.ndexbio.org/v2/'
-const SEARCH_BASE_URL = 'http://secret.ndexbio.org:8090/'
-
-const searchNetwork = query => {
-  const headers = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
-  const body = JSON.stringify({
-    searchString: query
-  })
-  const searchUrl = NDEX_BASE_URL + 'search/network'
-
-  return fetch(searchUrl, {
-    method: METHOD_POST,
-    headers,
-    body
-  })
-}
 
 const fetchNetwork = (id, sourceUUID, networkUUID) => {
   const headers = {
     'Content-Type': 'application/json'
   }
   const fetchUrl =
-    SEARCH_BASE_URL +
+    BASE_URL +
     id +
     '/overlaynetwork?sourceUUID=' +
     sourceUUID +
@@ -41,4 +21,4 @@ const fetchNetwork = (id, sourceUUID, networkUUID) => {
   })
 }
 
-export { searchNetwork, fetchNetwork }
+export { fetchNetwork }

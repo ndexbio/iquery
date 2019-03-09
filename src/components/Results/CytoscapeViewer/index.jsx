@@ -4,6 +4,8 @@ import CytoscapeComponent from 'react-cytoscapejs'
 import './style.css'
 let cyInstance = null
 
+const BASE_STYLE = { width: '100%', height: '100%', background: '#555566' }
+
 /**
  *
  * Simple wrapper for cytoscape.js react component
@@ -13,7 +15,6 @@ let cyInstance = null
  * @constructor
  */
 const CytoscapeViewer = props => {
-
   useEffect(() => {
     if (cyInstance === undefined || cyInstance === null) {
       return
@@ -62,37 +63,16 @@ const CytoscapeViewer = props => {
     return null
   }
 
-  console.log('Rendering Cyjs ===', cyjs, selectedGenes)
-  // if (selectedGenes.length !== 0) {
-  //   console.log('=========== SL found:', selectedGenes)
-  //   cyjs.style.push({
-  //     style: {
-  //       'background-color': 'red'
-  //     },
-  //     selector: 'node:selected'
-  //   })
-  //
-  //   if(cyInstance !== undefined || cyInstance !== null) {
-  //     // test reaction
-  //     const name = selectedGenes[0]
-  //     cyInstance.elements('node[name = "'+ name + '"]').style('background-color', 'red')
-  //   }
-  // }
-
-
-
-  console.log('=========== **Style:', cyjs.style)
 
   return (
     <CytoscapeComponent
       elements={cyjs.elements}
       layout={{ name: 'preset' }}
-      style={{ width: '100%', height: '100%' }}
+      style={BASE_STYLE}
       stylesheet={cyjs.style}
       cy={cy => (cyInstance = cy)}
     />
   )
 }
-
 
 export default CytoscapeViewer

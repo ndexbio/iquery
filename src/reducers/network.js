@@ -1,6 +1,9 @@
 import { handleActions } from 'redux-actions'
 import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
 
+import * as vs from '../assets/data/custom-visual-style.json'
+
+
 import {
   networkFetchStarted,
   networkFetchFailed,
@@ -16,13 +19,32 @@ const defaultState = {
   jobId: '',
   sourceId: '',
   networkName: '',
+  queryGenes: [],
   network: null,
   selectedNode: null,
   selectedEdge: null
 }
 
+
+
 const utils = new CyNetworkUtils()
 const cx2js = new CxToJs(utils)
+
+
+const PRESET_VS = vs.default[0].style
+
+// Standard selection
+PRESET_VS.push({
+  selector: 'node:selected',
+  css: {
+    'background-color': 'red',
+    color: '#FFFFFF',
+    'background-opacity': 1,
+    'border-width': 0,
+    width: 100,
+    height: 100
+  }
+})
 
 const network = handleActions(
   {
@@ -33,13 +55,14 @@ const network = handleActions(
         jobId: payload.payload.id,
         sourceId: payload.payload.sourceUUID,
         uuid: payload.payload.networkUUID,
-        networkName: payload.payload.networkName
+        networkName: payload.payload.networkName,
+        queryGenes: payload.payload.geneList
       }
     },
     [networkFetchSucceeded]: (state, payload) => {
       return {
         ...state,
-        network: convertCx2cyjs(payload.cx),
+        network: convertCx2cyjs(payload.cx, state.queryGenes),
         isFetching: false
       }
     },
@@ -59,7 +82,7 @@ const network = handleActions(
   defaultState
 )
 
-const convertCx2cyjs = cx => {
+const convertCx2cyjs = (cx, queryGenes) => {
   const niceCX = utils.rawCXtoNiceCX(cx)
   console.log('NICE ===', niceCX)
 
@@ -67,7 +90,7 @@ const convertCx2cyjs = cx => {
   const elementsObj = cx2js.cyElementsFromNiceCX(niceCX, attributeNameMap)
   const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
 
-  const updatedStyle = styleUpdater(style)
+  const updatedStyle = styleUpdater(PRESET_VS, queryGenes)
 
   const elements = [...elementsObj.nodes, ...elementsObj.edges]
   return {
@@ -77,20 +100,18 @@ const convertCx2cyjs = cx => {
 }
 
 const styleUpdater = style => {
-  const newStyle = []
 
-  const len = style.length
 
-  const filtered = style.filter(element => element.selector !== 'node:selected')
 
-  filtered.push({
-    selector: 'node:selected',
-    css: {
-      'background-color': 'red',
-      width: 100,
-      height: 100
-    }
-  })
+
+  // PRESET_VS.push({
+  //   selector: 'node:selected',
+  //   css: {
+  //     'background-color': 'red',
+  //     width: 100,
+  //     height: 100
+  //   }
+  // })
   // for (let idx = 0; i < len; i++) {
   //   const element = style[idx]
   //
@@ -104,7 +125,7 @@ const styleUpdater = style => {
   //     newStyle.push(element)
   //   }
   // }
-  return filtered
+  return PRESET_VS
 }
 
 export default network

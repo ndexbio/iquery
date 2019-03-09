@@ -9,6 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import HelpIcon from '@material-ui/icons/Help'
 import classNames from 'classnames'
 import github from '../../assets/images/github.svg'
+import GeneTextBox from './GeneTextBox'
 
 const drawerWidth = 240
 
@@ -57,7 +58,7 @@ class TitleBar extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, ...others } = this.props
     const open = this.props.uiState.isSettingsOpen
 
     return (
@@ -77,7 +78,7 @@ class TitleBar extends React.Component {
           >
             <MenuIcon />
           </IconButton>
-          <div className={classes.grow}>
+          <div>
             <Typography variant="h6" color="inherit">
               NDEx Network Search:
             </Typography>
@@ -85,6 +86,15 @@ class TitleBar extends React.Component {
               Pathway Enrichment / Gene Neighborhoods / Keywords
             </Typography>
           </div>
+
+          {this.props.search.results === null ? (
+            <div />
+          ) : (
+            <GeneTextBox {...others} />
+          )}
+
+          <div className={classes.grow} />
+
           <div>
             <IconButton
               aria-haspopup="true"
