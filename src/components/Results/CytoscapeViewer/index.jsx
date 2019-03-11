@@ -1,10 +1,25 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 
 import './style.css'
 let cyInstance = null
 
-const BASE_STYLE = { width: '100%', height: '100%', background: '#555566' }
+const BASE_STYLE = { width: '100%', height: '100%', background: '#222233' }
+
+const PRESET_LAYOUT = {
+  name: 'preset'
+}
+const COSE_SETTING = {
+  name: 'cose',
+  padding: 6,
+  nodeRepulsion: function(node) {
+    return 10080000
+  },
+  nodeOverlap: 400000,
+  idealEdgeLength: function(edge) {
+    return 10
+  }
+}
 
 /**
  *
@@ -63,11 +78,17 @@ const CytoscapeViewer = props => {
     return null
   }
 
+  const isLayoutAvailable = cyjs.isLayout
+
+  let layout = PRESET_LAYOUT
+  if (!isLayoutAvailable) {
+    layout = COSE_SETTING
+  }
 
   return (
     <CytoscapeComponent
       elements={cyjs.elements}
-      layout={{ name: 'preset' }}
+      layout={layout}
       style={BASE_STYLE}
       stylesheet={cyjs.style}
       cy={cy => (cyInstance = cy)}

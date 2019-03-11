@@ -3,7 +3,6 @@ import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
 
 import * as vs from '../assets/data/custom-visual-style.json'
 
-
 import {
   networkFetchStarted,
   networkFetchFailed,
@@ -13,6 +12,8 @@ import {
   deselectAll
 } from '../actions/network'
 
+const LAYOUT_SCALING_FACTOR = 2.0
+
 const defaultState = {
   isFetching: false,
   uuid: '',
@@ -21,15 +22,13 @@ const defaultState = {
   networkName: '',
   queryGenes: [],
   network: null,
+  isLayoutComplete: false,
   selectedNode: null,
   selectedEdge: null
 }
 
-
-
 const utils = new CyNetworkUtils()
 const cx2js = new CxToJs(utils)
-
 
 const PRESET_VS = vs.default[0].style
 
@@ -56,7 +55,8 @@ const network = handleActions(
         sourceId: payload.payload.sourceUUID,
         uuid: payload.payload.networkUUID,
         networkName: payload.payload.networkName,
-        queryGenes: payload.payload.geneList
+        queryGenes: payload.payload.geneList,
+        isLayoutComplete: false
       }
     },
     [networkFetchSucceeded]: (state, payload) => {
@@ -92,18 +92,44 @@ const convertCx2cyjs = (cx, queryGenes) => {
 
   const updatedStyle = styleUpdater(PRESET_VS, queryGenes)
 
-  const elements = [...elementsObj.nodes, ...elementsObj.edges]
+  const updatedNodes = adjustLayout(elementsObj.nodes)
+  const elements = [...updatedNodes, ...elementsObj.edges]
   return {
     elements,
-    style: updatedStyle
+    style: updatedStyle,
+    isLayout: checkLayout(elementsObj.nodes)
+  }
+}
+
+// Utility function to get better results
+const adjustLayout = nodes => {
+  let len = nodes.length
+
+  while (len--) {
+    const node = nodes[len]
+    const position = node.position
+
+    if (position !== undefined) {
+      node.position = {
+        x: position.x * LAYOUT_SCALING_FACTOR,
+        y: position.y * LAYOUT_SCALING_FACTOR
+      }
+    }
+  }
+
+  return nodes
+}
+const checkLayout = nodes => {
+  // Just checks first node only!
+  const node = nodes[0]
+  if (node.position === undefined) {
+    return false
+  } else {
+    return true
   }
 }
 
 const styleUpdater = style => {
-
-
-
-
   // PRESET_VS.push({
   //   selector: 'node:selected',
   //   css: {
