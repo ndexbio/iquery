@@ -12,14 +12,21 @@ const styles = theme => ({
   }
 })
 
-const OpenInButton = props => {
-  const { classes, uiState } = props
+const OpenInButton = (props) => {
+  const { classes, uiState, network } = props
+
+  console.log(props)
+
+  const handleImportNetwork = () => {
+    props.cyrestActions.importNetworkStarted(network.uuid)
+  }
 
   return (
     <Button
       variant="contained"
       color="default"
       disabled={!uiState.isCytoscapeRunning}
+      onClick={handleImportNetwork}
     >
       Open in
       <img alt="Cytoscape logo" src={logo} className={classes.buttonIcon} />

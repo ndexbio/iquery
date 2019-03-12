@@ -8,6 +8,7 @@ import * as searchActions from '../../actions/search'
 import * as uiStateActions from '../../actions/uiState'
 import * as networkActions from '../../actions/network'
 import * as sourceActions from '../../actions/source'
+import * as cyrestActions from '../../actions/cyrest'
 
 const MainContainer = props => <HomePanel {...props} />
 
@@ -25,7 +26,8 @@ function mapDispatchToProps(dispatch) {
     searchActions: bindActionCreators(searchActions, dispatch),
     uiStateActions: bindActionCreators(uiStateActions, dispatch),
     networkActions: bindActionCreators(networkActions, dispatch),
-    sourceActions: bindActionCreators(sourceActions, dispatch)
+    sourceActions: bindActionCreators(sourceActions, dispatch),
+    cyrestActions: bindActionCreators(cyrestActions, dispatch),
   }
 }
 
