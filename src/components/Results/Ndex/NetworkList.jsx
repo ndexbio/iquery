@@ -12,6 +12,7 @@ import deepOrange from '@material-ui/core/colors/deepOrange'
 import MenuList from '@material-ui/core/MenuList'
 import MenuItem from '@material-ui/core/MenuItem'
 
+import * as cyRESTApi from '../../../api/cyrest'
 import './style.css'
 import Sorter from './Sorter'
 
@@ -61,7 +62,13 @@ const styles = theme => ({
 const CYTOSCAPE_URL = 'http://localhost:2607/status/'
 
 const checkCytoscapeConnection = props => {
-  fetch(CYTOSCAPE_URL, { mode: 'no-cors' })
+  console.log(props.uiState.urlParams)
+  cyRESTApi
+    .status(
+      props.uiState.urlParams.has('cyrestport')
+        ? props.uiState.urlParams.get('cyrestport')
+        : 1234
+    )
     .catch(e => {
       throw Error(e)
     })

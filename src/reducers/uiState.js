@@ -2,8 +2,9 @@ import { handleActions } from 'redux-actions'
 import { setSettingsOpen, setCytoscapeStatus } from '../actions/uiState'
 
 const DEF_STATE = {
+  isCytoscapeRunning: false,
   isSettingsOpen: false,
-  isCytoscapeRunning: false
+  urlParams: new URLSearchParams(window.location.search)
 }
 
 const uiState = handleActions(
