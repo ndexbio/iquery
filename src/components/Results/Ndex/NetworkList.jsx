@@ -15,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import './style.css'
 import Sorter from './Sorter'
 
+const NETWORK_SIZE_TH = 5000
 
 const styles = theme => ({
   inline: {
@@ -85,10 +86,23 @@ const handleErrors = res => {
 const NetworkList = props => {
   const { classes, hits, sourceUUID } = props
 
-  const geneList = props.search.geneList
+  const geneList = props.search.queryList
 
   const id = props.search.results.jobId
-  const handleFetch = (networkUUID, networkName) => {
+
+  const handleFetch = (networkUUID, networkName, nodeCount, edgeCount) => {
+    props.networkActions.setNetworkSize({
+      nodeCount,
+      edgeCount
+    })
+
+    const networkSize = nodeCount + edgeCount
+
+    // Do not load if size is too big to render!
+    if (networkSize > NETWORK_SIZE_TH) {
+      return
+    }
+
     checkCytoscapeConnection(props)
     props.networkActions.networkFetchStarted({
       id,
@@ -113,7 +127,7 @@ const NetworkList = props => {
         className={classes.menuItem}
         alignItems="flex-start"
         key={networkUUID}
-        onClick={val => handleFetch(networkUUID, description)}
+        onClick={val => handleFetch(networkUUID, description, nodes, edges)}
       >
         <ListItemAvatar>
           <Avatar className={classes.networkAvatar}>N</Avatar>

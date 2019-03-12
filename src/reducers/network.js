@@ -9,7 +9,8 @@ import {
   networkFetchSucceeded,
   selectNode,
   selectEdge,
-  deselectAll
+  deselectAll,
+  setNetworkSize
 } from '../actions/network'
 
 const LAYOUT_SCALING_FACTOR = 2.0
@@ -22,6 +23,8 @@ const defaultState = {
   networkName: '',
   queryGenes: [],
   network: null,
+  nodeCount: 0,
+  edgeCount: 0,
   isLayoutComplete: false,
   selectedNode: null,
   selectedEdge: null
@@ -48,9 +51,12 @@ PRESET_VS.push({
 const network = handleActions(
   {
     [networkFetchStarted]: (state, payload) => {
+      console.log('Query start: genes = ', payload)
       return {
         ...state,
         isFetching: true,
+        nodeCount: 0,
+        edgeCount: 0,
         jobId: payload.payload.id,
         sourceId: payload.payload.sourceUUID,
         uuid: payload.payload.networkUUID,
@@ -67,7 +73,20 @@ const network = handleActions(
       }
     },
     [networkFetchFailed]: (state, payload) => {
-      return { ...state, network: null, isFetching: false }
+      return {
+        ...state,
+        network: null,
+        isFetching: false,
+        nodeCount: 0,
+        edgeCount: 0
+      }
+    },
+    [setNetworkSize]: (state, payload) => {
+      return {
+        ...state,
+        nodeCount: payload.payload.nodeCount,
+        edgeCount: payload.payload.edgeCount
+      }
     },
     [selectNode]: (state, payload) => {
       return { ...state, selectedNode: payload.payload }
@@ -84,7 +103,7 @@ const network = handleActions(
 
 const convertCx2cyjs = (cx, queryGenes) => {
   const niceCX = utils.rawCXtoNiceCX(cx)
-  console.log('NICE ===', niceCX)
+  console.log('query & NICE 　===', queryGenes, niceCX)
 
   const attributeNameMap = {}
   const elementsObj = cx2js.cyElementsFromNiceCX(niceCX, attributeNameMap)
@@ -92,7 +111,7 @@ const convertCx2cyjs = (cx, queryGenes) => {
 
   const updatedStyle = styleUpdater(PRESET_VS, queryGenes)
 
-  const updatedNodes = adjustLayout(elementsObj.nodes)
+  const updatedNodes = adjustLayout(elementsObj.nodes, queryGenes)
   const elements = [...updatedNodes, ...elementsObj.edges]
   return {
     elements,
@@ -102,12 +121,19 @@ const convertCx2cyjs = (cx, queryGenes) => {
 }
 
 // Utility function to get better results
-const adjustLayout = nodes => {
+const adjustLayout = (nodes, queryGenes) => {
   let len = nodes.length
+
+  const upperQuery = new Set(queryGenes.map(gene => gene.toUpperCase()))
 
   while (len--) {
     const node = nodes[len]
     const position = node.position
+
+    const name = node.data.name.toUpperCase()
+    if (upperQuery.has(name)) {
+      node.data['query'] = 'true'
+    }
 
     if (position !== undefined) {
       node.position = {
@@ -130,28 +156,27 @@ const checkLayout = nodes => {
 }
 
 const styleUpdater = style => {
-  // PRESET_VS.push({
-  //   selector: 'node:selected',
-  //   css: {
-  //     'background-color': 'red',
-  //     width: 100,
-  //     height: 100
-  //   }
-  // })
-  // for (let idx = 0; i < len; i++) {
-  //   const element = style[idx]
-  //
-  //   const { css, selector } = element
-  //
-  //   if (selector !== 'node:selected') {
-  //     console.log('EL**Style:', element)
-  //     newStyle.push(element)
-  //   } else {
-  //     element.css['background'] = 'red'
-  //     newStyle.push(element)
-  //   }
-  // }
-  return PRESET_VS
+  PRESET_VS.push({
+    selector: "node[query = 'true']",
+    css: {
+      'background-color': 'darkorange',
+      'background-opacity': 1.0,
+      'border-width': 0.0,
+      color: '#FFFFFF',
+      width: 80,
+      height: 80
+    }
+  })
+
+  PRESET_VS.push({
+    selector: 'node:selected',
+    css: {
+      'background-color': 'red',
+      width: 100,
+      height: 100
+    }
+  })
+  return style
 }
 
 export default network
