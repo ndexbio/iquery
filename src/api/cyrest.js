@@ -1,4 +1,5 @@
 import { METHOD_GET, METHOD_POST } from './apiConstants'
+
 const CYREST_BASE_URL = 'http://127.0.0.1'
 
 const status = cyRESTPort => {
@@ -24,8 +25,8 @@ const cyNDExStatus = cyRESTPort => {
 
 const importNetwork = (cyRESTPort, payload) => {
   const importNetworkUrl =
-    CYREST_BASE_URL + ':' + cyRESTPort + '/cyndex2/v1/networks'
-  console.log('Calling CyREST POST:', importNetworkUrl, payload)
+    CYREST_BASE_URL + ':' + cyRESTPort + '/cyndex2/v1/networks/cx'
+  console.log('Calling CyREST POST:', importNetworkUrl)
 
   return fetch(importNetworkUrl, {
     method: METHOD_POST,
