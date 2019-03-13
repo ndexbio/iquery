@@ -15,10 +15,10 @@ const styles = theme => ({
 const OpenInButton = (props) => {
   const { classes, uiState, network } = props
 
-  console.log(props)
+  console.log('OpenInButton props', props)
 
   const handleImportNetwork = () => {
-    props.cyrestActions.importNetworkStarted(network.uuid)
+    props.cyrestActions.importNetworkStarted(network.originalCX)
   }
 
   return (
