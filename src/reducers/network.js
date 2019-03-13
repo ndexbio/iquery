@@ -89,10 +89,10 @@ const network = handleActions(
       }
     },
     [selectNode]: (state, payload) => {
-      return { ...state, selectedNode: payload.payload }
+      return { ...state, selectedNode: payload.payload, selectedEdge: null }
     },
     [selectEdge]: (state, payload) => {
-      return { ...state, selectedEdge: payload.payload }
+      return { ...state, selectedNode: null, selectedEdge: payload.payload }
     },
     [deselectAll]: (state, payload) => {
       return { ...state, selectedNode: null, selectedEdge: null }
@@ -174,6 +174,22 @@ const styleUpdater = style => {
       'background-color': 'red',
       width: 100,
       height: 100
+    }
+  })
+
+  PRESET_VS.push({
+    selector: 'edge:selected',
+    css: {
+      'line-color': 'red',
+      opacity: 1.0
+    }
+  })
+
+  PRESET_VS.push({
+    selector: '.connected',
+    css: {
+      'background-color': 'red',
+      'background-opacity': 1.0
     }
   })
   return style

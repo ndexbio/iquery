@@ -1,17 +1,27 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Typography } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
+import List from '@material-ui/core/List'
+import NodeProperties from './NodeProperties'
+import EdgeProperties from './EdgeProperties'
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   container: {
-    padding: '1em',
-    backgroundColor: '#FAFAFA'
+    width: '100%',
+    height: '100%',
+    padding: '0.2em',
+    backgroundColor: '#FFFFFF',
+    overflow: 'auto'
+  },
+  list: {
+    height: '100%',
+    width: '100%'
   },
   subtitle: {
     marginLeft: '1em',
     marginTop: '0.5em'
   }
-})
+}))
 
 /**
  *
@@ -22,7 +32,7 @@ const styles = theme => ({
  * @constructor
  */
 const TableBrowser = props => {
-  const { classes } = props
+  const classes = useStyles()
   const network = props.network
 
   if (network === null) {
@@ -34,24 +44,27 @@ const TableBrowser = props => {
 
   console.log('Selected: ', node, edge)
 
-  if (node === null || node === undefined) {
-    return <div />
+  if (!node && !edge) {
+    return (
+      <div className={classes.container}>
+        <Typography variant="h6">
+          (Select a node/edge to show the details)
+        </Typography>
+      </div>
+    )
   }
-
-  const keys = Object.keys(node)
 
   return (
     <div className={classes.container}>
-      <Typography variant="h5">
-        {'Properties for node: ' + node.name}
-      </Typography>
-      {keys.map(key => (
-        <Typography key={key} variant="h6">
-          {key + ': ' + node[key]}
-        </Typography>
-      ))}
+      <List component="nav" className={classes.list}>
+        {node !== null ? (
+          <NodeProperties node={node} {...props} />
+        ) : (
+          <EdgeProperties edge={edge} />
+        )}
+      </List>
     </div>
   )
 }
 
-export default withStyles(styles)(TableBrowser)
+export default TableBrowser

@@ -13,9 +13,14 @@ import TableBrowser from '../TableBrowser'
  * @constructor
  */
 const NetworkView = props => (
-  <Split sizes={[70, 30]} direction="vertical" gutterSize={6}>
+  <Split
+    sizes={[70, 30]}
+    direction="vertical"
+    gutterSize={6}
+    className={'nv-container'}
+  >
     <NetworkViewer {...props} />
-    <TableBrowser className="property-view" {...props} />
+    <TableBrowser {...props} />
   </Split>
 )
 

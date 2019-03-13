@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 
 import './style.css'
-import Warning from "./Warning";
+import Warning from './Warning'
 let cyInstance = null
 
 const BASE_STYLE = { width: '100%', height: '100%', background: '#222233' }
@@ -46,6 +46,7 @@ const CytoscapeViewer = props => {
 
     cyInstance.on('tap', function(event) {
       try {
+        cyInstance.nodes().removeClass('connected')
         const target = event.target
         if (target === cyInstance) {
           props.networkActions.deselectAll()
@@ -58,6 +59,7 @@ const CytoscapeViewer = props => {
 
     cyInstance.on('tap', 'node', function() {
       try {
+        cyInstance.nodes().removeClass('connected')
         const selected = this.data()
         props.networkActions.selectNode(selected)
       } catch (e) {
@@ -67,7 +69,12 @@ const CytoscapeViewer = props => {
 
     cyInstance.on('tap', 'edge', function() {
       try {
+        cyInstance.nodes().removeClass('connected')
         const selected = this.data()
+        const { source, target } = selected
+
+        cyInstance.$('#' + source + ', #' + target).addClass('connected')
+
         props.networkActions.selectEdge(selected)
       } catch (e) {
         console.warn(e)
@@ -90,8 +97,6 @@ const CytoscapeViewer = props => {
   if (cyjs === null || cyjs === undefined) {
     return null
   }
-
-
 
   const isLayoutAvailable = cyjs.isLayout
 

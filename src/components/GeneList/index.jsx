@@ -4,9 +4,6 @@ import { withStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
 
-import FaceIcon from '@material-ui/icons/Face'
-import DoneIcon from '@material-ui/icons/Done'
-
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -35,8 +32,6 @@ const GeneList = props => {
   }
 
   const geneList = results.genes
-  const notFound = results.notFound
-
   if (!geneList) {
     return <div className="gene-list-wrapper" />
   }
@@ -62,7 +57,6 @@ const getChip = (value, isValid, classes, props) => {
         label={value.symbol}
         onClick={() => handleClick(value.symbol, props)}
         variant="outlined"
-        color="primary"
         key={value.symbol}
       />
     )
