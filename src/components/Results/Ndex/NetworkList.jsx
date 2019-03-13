@@ -125,7 +125,8 @@ const NetworkList = props => {
       networkUUID,
       percentOverlap,
       nodes,
-      edges
+      edges,
+      imageURL
     } = networkEntry
 
     return (
@@ -136,7 +137,7 @@ const NetworkList = props => {
         onClick={val => handleFetch(networkUUID, description, nodes, edges)}
       >
         <ListItemAvatar>
-          <Avatar className={classes.networkAvatar}>N</Avatar>
+          <Avatar className={classes.networkAvatar} src={imageURL}>N</Avatar>
         </ListItemAvatar>
         <ListItemText
           className={classes.menuText}
