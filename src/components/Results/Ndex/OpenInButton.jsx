@@ -13,12 +13,12 @@ const styles = theme => ({
 })
 
 const OpenInButton = (props) => {
-  const { classes, uiState, network, sourceUUID, search } = props
+  const { classes, uiState, network } = props
 
   console.log('OpenInButton props', props)
 
   const handleImportNetwork = () => {
-    props.cyrestActions.importNetworkStarted({id: search.results.jobId, sourceUUID: sourceUUID, networkUUID: network.uuid})
+    props.cyrestActions.importNetworkStarted(network.originalCX)
   }
 
   return (
