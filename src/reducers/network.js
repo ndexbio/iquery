@@ -22,6 +22,7 @@ const defaultState = {
   sourceId: '',
   networkName: '',
   queryGenes: [],
+  originalCX: null,
   network: null,
   nodeCount: 0,
   edgeCount: 0,
@@ -62,12 +63,15 @@ const network = handleActions(
         uuid: payload.payload.networkUUID,
         networkName: payload.payload.networkName,
         queryGenes: payload.payload.geneList,
+        originalCX: null,
+        network: null,
         isLayoutComplete: false
       }
     },
     [networkFetchSucceeded]: (state, payload) => {
       return {
         ...state,
+        originalCX: payload.cx,
         network: convertCx2cyjs(payload.cx, state.queryGenes),
         isFetching: false
       }
@@ -76,6 +80,7 @@ const network = handleActions(
       return {
         ...state,
         network: null,
+        originalCX: null,
         isFetching: false,
         nodeCount: 0,
         edgeCount: 0
