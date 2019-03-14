@@ -26,9 +26,16 @@
   margin: 0;
 }
 
-.network-list {
+
+.network-list-wrapper {
+  width: 100%;
   height: 100%;
-  overflow: auto;
+  padding-bottom: 2em;
+}
+
+.network-list {
+    height: 100%;
+  overflow-y: auto;
 }
 
 .gutter {

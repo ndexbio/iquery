@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
 
-import * as vs from '../assets/data/custom-visual-style.json'
+import * as vs from '../assets/data/styles.json'
 
 import {
   networkFetchStarted,
@@ -35,6 +35,8 @@ const utils = new CyNetworkUtils()
 const cx2js = new CxToJs(utils)
 
 const PRESET_VS = vs.default[0].style
+
+const SELECTION_COLOR = '#F2355B'
 
 // Standard selection
 PRESET_VS.push({
@@ -108,14 +110,11 @@ const network = handleActions(
 
 const convertCx2cyjs = (cx, queryGenes) => {
   const niceCX = utils.rawCXtoNiceCX(cx)
-  console.log('query & NICE 　===', queryGenes, niceCX)
-
   const attributeNameMap = {}
   const elementsObj = cx2js.cyElementsFromNiceCX(niceCX, attributeNameMap)
   const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
 
   const updatedStyle = styleUpdater(PRESET_VS, queryGenes)
-
   const updatedNodes = adjustLayout(elementsObj.nodes, queryGenes)
   const elements = [...updatedNodes, ...elementsObj.edges]
   return {
@@ -161,39 +160,30 @@ const checkLayout = nodes => {
 }
 
 const styleUpdater = style => {
-  PRESET_VS.push({
-    selector: "node[query = 'true']",
-    css: {
-      'background-color': 'darkorange',
-      'background-opacity': 1.0,
-      'border-width': 0.0,
-      color: '#FFFFFF',
-      width: 80,
-      height: 80
-    }
-  })
 
   PRESET_VS.push({
     selector: 'node:selected',
     css: {
-      'background-color': 'red',
-      width: 100,
-      height: 100
+      'background-color': SELECTION_COLOR,
+      width: ele => ele.width() * 1.3,
+      height: ele => ele.height() * 1.3
     }
   })
 
   PRESET_VS.push({
     selector: 'edge:selected',
     css: {
-      'line-color': 'red',
-      opacity: 1.0
+      'line-color': SELECTION_COLOR,
+      'target-arrow-color': SELECTION_COLOR,
+      opacity: 1.0,
+      width: 6
     }
   })
 
   PRESET_VS.push({
     selector: '.connected',
     css: {
-      'background-color': 'red',
+      'background-color': SELECTION_COLOR,
       'background-opacity': 1.0
     }
   })
