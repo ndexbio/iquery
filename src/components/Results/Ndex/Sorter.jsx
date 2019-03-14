@@ -96,23 +96,19 @@ const Sorter = props => {
   }
 
   return (
-    <Toolbar className={classes.toolbar}>
-      <div className={classes.grow} />
-
-      <TextField
-        select
-        label="Sort by:"
-        value={values.sortBy}
-        onChange={handleChange('sortBy')}
-        className={classes.sortBy}
-      >
-        {ranges.map(option => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
-    </Toolbar>
+    <TextField
+      select
+      label="Sort by:"
+      value={values.sortBy}
+      onChange={handleChange('sortBy')}
+      className={classes.sortBy}
+    >
+      {ranges.map(option => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label}
+        </MenuItem>
+      ))}
+    </TextField>
   )
 }
 

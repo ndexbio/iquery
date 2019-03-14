@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles'
 import List from '@material-ui/core/List'
 import NodeProperties from './NodeProperties'
 import EdgeProperties from './EdgeProperties'
+import NetworkProperties from "./NetworkProperties";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -39,17 +40,22 @@ const TableBrowser = props => {
     return <div />
   }
 
+  const { originalCX } = network
+  if (originalCX === null) {
+    return <div />
+  }
+
   const node = network.selectedNode
   const edge = network.selectedEdge
 
-  console.log('Selected: ', node, edge)
+  console.log('Selected: ', node, edge, originalCX, network)
 
   if (!node && !edge) {
     return (
       <div className={classes.container}>
-        <Typography variant="h6">
-          (Select a node/edge to show the details)
-        </Typography>
+        <List component="nav" className={classes.list}>
+          <NetworkProperties originalCX={originalCX} />
+        </List>
       </div>
     )
   }

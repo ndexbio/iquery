@@ -15,7 +15,7 @@ import * as cyRESTApi from '../../../api/cyrest'
 import './style.css'
 import Sorter from './Sorter'
 import ListItem from '@material-ui/core/ListItem'
-import MenuItem from "@material-ui/core/MenuItem";
+import MenuItem from '@material-ui/core/MenuItem'
 
 const NETWORK_SIZE_TH = 5000
 
@@ -35,18 +35,11 @@ const styles = theme => ({
   menuItem: {
     height: '4em',
     '&:focus': {
-      backgroundColor: 'rgba(200,205,200,0.5)',
-      '& $primary, & $icon': {
-        color: theme.palette.common.white
-      }
+      backgroundColor: 'rgba(200,205,200,0.5)'
     }
   },
   menuText: {
-    '&:focus': {
-      '& $primary, & $icon': {
-        color: theme.palette.common.white
-      }
-    }
+    '&:focus': {}
   },
   secondary: {
     width: '15em',
@@ -137,7 +130,9 @@ const NetworkList = props => {
         onClick={val => handleFetch(networkUUID, description, nodes, edges)}
       >
         <ListItemAvatar>
-          <Avatar className={classes.networkAvatar} src={imageURL}>N</Avatar>
+          <Avatar className={classes.networkAvatar} src={imageURL}>
+            N
+          </Avatar>
         </ListItemAvatar>
         <ListItemText
           className={classes.menuText}
@@ -157,16 +152,17 @@ const NetworkList = props => {
             </React.Fragment>
           }
         />
+
         <ListItemSecondaryAction className={classes.secondary}>
           <div
             style={{
-              background: 'lightGreen',
+              background: 'teal',
               color: 'white',
               height: '2em',
               width: percentOverlap * 3 + 'px'
             }}
           >
-            <Typography variant="h6">{percentOverlap + '%'}</Typography>
+            <Typography variant="body2" style={{color: '#AAAAAA'}}>{percentOverlap + '%'}</Typography>
           </div>
         </ListItemSecondaryAction>
       </MenuItem>

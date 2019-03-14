@@ -1,0 +1,121 @@
+[ {
+  "format_version" : "1.0",
+  "generated_by" : "cytoscape-3.7.1",
+  "target_cytoscapejs_version" : "~2.1",
+  "title" : "dark4",
+  "style" : [ {
+    "selector" : "node",
+    "css" : {
+      "background-opacity" : 1.0,
+      "shape" : "ellipse",
+      "height" : 70.0,
+      "text-opacity" : 1.0,
+      "font-size" : 18,
+      "border-opacity" : 1.0,
+      "color" : "rgb(255,255,255)",
+      "border-width" : 0.0,
+      "text-valign" : "center",
+      "text-halign" : "center",
+      "font-family" : "SFProText-Medium",
+      "font-weight" : "normal",
+      "background-color" : "rgb(0,102,102)",
+      "width" : 110.0,
+      "border-color" : "rgb(255,102,102)",
+      "content" : "data(name)"
+    }
+  }, {
+    "selector" : "node[type = 'phenotype']",
+    "css" : {
+      "background-opacity" : 0.39215686274509803,
+      "shape" : "roundrectangle",
+      "background-color" : "rgb(255,255,255)",
+      "width" : 220.0
+    }
+  }, {
+    "selector" : "node[type = 'smallmolecule']",
+    "css" : {
+      "width" : 20.0
+    }
+  }, {
+    "selector" : "node[type = 'complex']",
+    "css" : {
+      "width" : 180.0
+    }
+  }, {
+    "selector" : "node[type = 'smallmolecule']",
+    "css" : {
+      "shape" : "octagon"
+    }
+  }, {
+    "selector" : "node[type = 'proteinfamily']",
+    "css" : {
+      "shape" : "rectangle"
+    }
+  }, {
+    "selector" : "node[type = 'smallmolecule']",
+    "css" : {
+      "height" : 20.0
+    }
+  }, {
+    "selector" : "node[type = 'complex']",
+    "css" : {
+      "height" : 180.0
+    }
+  }, {
+    "selector" : "node[type = 'proteinfamily']",
+    "css" : {
+      "color" : "rgb(153,153,153)"
+    }
+  }, {
+    "selector" : "node[type = 'smallmolecule']",
+    "css" : {
+      "background-color" : "rgb(255,255,255)"
+    }
+  }, {
+    "selector" : "node[type = 'complex']",
+    "css" : {
+      "background-color" : "rgb(0,153,204)"
+    }
+  }, {
+    "selector" : "node[type = 'proteinfamily']",
+    "css" : {
+      "background-color" : "rgb(255,255,255)"
+    }
+  }, {
+    "selector" : "node[querynode]",
+    "css" : {
+      "border-width" : 20.0
+    }
+  }, {
+    "selector" : "node[type = 'smallmolecule']",
+    "css" : {
+      "text-valign" : "bottom"
+    }
+  }, {
+    "selector" : "edge",
+    "css" : {
+      "curve-style": "bezier",
+      "line-style": "solid",
+      "target-arrow-color": "#FFFFFF",
+      "line-color" : "#FFFFFF",
+      "width" : 2.0,
+      "opacity" : 0.39215686274509803
+    }
+  }, {
+    "selector" : "edge[directed]",
+    "css" : {
+      "target-arrow-shape" : "triangle"
+    }
+  }, {
+    "selector" : "node:selected",
+    "css" : {
+      "background-color" : "rgb(255,102,102)"
+    }
+  }, {
+    "selector" : "edge:selected",
+    "css" : {
+      "target-arrow-shape" : "triangle",
+      "line-color" : "rgb(255,0,0)"
+    }
+  } ]
+} ]
