@@ -76,6 +76,13 @@ const SearchTextBox = props => {
     })
   }
 
+  const handleKeyPress = event => {
+    if (event.key === 'Enter') {
+      // TODO: add validator here
+      handleSearch()
+    }
+  }
+
   const handleClear = () => {
     setState({ ...state, query: '' })
   }
@@ -134,6 +141,7 @@ const SearchTextBox = props => {
         className={classes.input}
         placeholder="Enter gene list (...or click menu for examples)"
         onChange={handleChange('query')}
+        onKeyDown={handleKeyPress}
         value={state.query}
       />
       <IconButton
