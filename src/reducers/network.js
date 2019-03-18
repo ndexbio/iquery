@@ -119,7 +119,7 @@ const convertCx2cyjs = (cx, queryGenes) => {
   const elements = [...updatedNodes, ...elementsObj.edges]
   return {
     elements,
-    style: updatedStyle,
+    style: style,
     isLayout: checkLayout(elementsObj.nodes)
   }
 }
