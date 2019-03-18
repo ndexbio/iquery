@@ -17,7 +17,7 @@ const styles = {
   card: {
     minWidth: 345,
     maxWidth: 345,
-    minHeight: 380,
+    minHeight: 150,
     marginLeft: '1em'
   },
   media: {
@@ -37,13 +37,6 @@ const SourceCard = props => {
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia
-          component="img"
-          alt="Contemplative Reptile"
-          className={classes.media}
-          height="140"
-          src={randomImage()}
-        />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {source.name}
@@ -52,7 +45,9 @@ const SourceCard = props => {
             {'(v' + source.version + ')'}
           </Typography>
           <Typography component="p">{source.description}</Typography>
-          <Typography variant={'h6'}>{'Status: ' + source.status}</Typography>
+          <Typography variant="subtitle1">
+            {'Service Status: ' + source.status}
+          </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions />
