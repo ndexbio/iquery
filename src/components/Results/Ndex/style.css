@@ -1,22 +1,25 @@
 .ndex-base {
   background-color: #ffffff;
   display: flex;
-
   height: 100vmin;
-  position: relative;
-
 }
+
+.network-view-top {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 3em;
+}
+
 .nv-container {
   width: 100%;
   height: 100%;
-}
-
-.network-view {
-  width: 100%;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
+}
+
+.network-viewer {
+  width: 100%;
+  height: 100%;
 }
 
 .property-view {

@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './style.css'
 import Split from 'react-split'
 
 import NetworkViewer from './NetworkViewer'
 import TableBrowser from '../TableBrowser'
+import NetworkToolbar from './NetworkToolbar'
+
+const DEFAULT_RATIO = [60, 40]
 
 /**
  * Top page for the application
@@ -12,16 +15,32 @@ import TableBrowser from '../TableBrowser'
  * @returns {*}
  * @constructor
  */
-const NetworkView = props => (
-  <Split
-    sizes={[70, 30]}
-    direction="vertical"
-    gutterSize={6}
-    className={'nv-container'}
-  >
-    <NetworkViewer {...props} />
-    <TableBrowser {...props} />
-  </Split>
-)
+const NetworkView = props => {
+  const [resized, setResize] = useState(null)
+
+  const handleResizeEnd = e => {
+    console.log('+++++++!!!!! resizeE', e)
+    setResize(e)
+  }
+
+  return (
+    <div className={'network-view-top'}>
+      <NetworkToolbar {...props} />
+      <Split
+        sizes={DEFAULT_RATIO}
+        direction="vertical"
+        gutterSize={6}
+        className={'nv-container'}
+        onDragEnd={handleResizeEnd}
+      >
+        <NetworkViewer
+          resized={resized}
+          {...props}
+        />
+        <TableBrowser {...props} />
+      </Split>
+    </div>
+  )
+}
 
 export default NetworkView

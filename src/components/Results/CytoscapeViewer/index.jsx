@@ -14,7 +14,8 @@ const PRESET_LAYOUT = {
 
 const COCENTRIC_LAYOUT = {
   name: 'concentric',
-  padding: 6
+  padding: 6,
+  minNodeSpacing: 100
 }
 
 const COSE_SETTING = {
@@ -101,10 +102,18 @@ const CytoscapeViewer = props => {
   const isLayoutAvailable = cyjs.isLayout
 
   let layout = PRESET_LAYOUT
-  if (!isLayoutAvailable) {
+  if (!isLayoutAvailable && cyjs.elements.length < 500) {
     layout = COSE_SETTING
-  } else if (cyjs.elements.length > 1000) {
+  } else if (!isLayoutAvailable) {
     layout = COCENTRIC_LAYOUT
+  }
+
+  const { resized } = props
+
+  console.log('%%%%%%%%%%resize:', resized)
+
+  if(cyInstance !== null) {
+    cyInstance.resize()
   }
 
   return (

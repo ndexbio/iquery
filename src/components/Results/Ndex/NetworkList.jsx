@@ -7,7 +7,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 
-import deepOrange from '@material-ui/core/colors/deepOrange'
 
 import MenuList from '@material-ui/core/MenuList'
 
@@ -30,7 +29,7 @@ const styles = theme => ({
   networkAvatar: {
     margin: 10,
     color: '#fff',
-    backgroundColor: deepOrange[500]
+    backgroundColor: '#FAFAFA'
   },
   menuItem: {
     height: '4em',
@@ -130,9 +129,7 @@ const NetworkList = props => {
         onClick={val => handleFetch(networkUUID, description, nodes, edges)}
       >
         <ListItemAvatar>
-          <Avatar className={classes.networkAvatar} src={imageURL}>
-            N
-          </Avatar>
+          <Avatar className={classes.networkAvatar} src={imageURL} />
         </ListItemAvatar>
         <ListItemText
           className={classes.menuText}

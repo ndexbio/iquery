@@ -11,7 +11,7 @@
   width: 100%;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 10em;
+  padding-top: 8em;
 }
 
 .start-title {
@@ -29,11 +29,11 @@
 }
 
 .start-logo-main {
-  height: 12em;
+  height: 11em;
 }
 
 .start-logo {
-  height: 5em;
+  height: 4em;
 }
 
 .search-text-box {
@@ -45,7 +45,7 @@
 }
 
 .input-container {
-  padding-top: 6.5vmin;
+  padding-top: 4.5em;
   grid-column: 1/2;
   grid-row: 2/3;
   grid-gap: 0;
@@ -66,12 +66,12 @@
   align-items: center;
   justify-content: center;
   width:70%;
-  margin-top: 2em;
+  margin-top: 1em;
   padding: 3em;
 }
 
 .results-container {
-  padding-top: 6.5vmin;
+  padding-top: 4.5em;
   grid-column: 2/13;
   grid-row: 2/3;
   margin: 0;

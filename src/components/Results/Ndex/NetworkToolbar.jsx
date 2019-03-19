@@ -11,7 +11,12 @@ import OpenInButton from './OpenInButton'
 
 const styles = theme => ({
   toolbar: {
-    background: '#EFEFEF'
+    background: '#EFEFEF',
+    height: '4em',
+    padding: '0.5em',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   grow: {
     flexGrow: 1
@@ -76,7 +81,7 @@ const styles = theme => ({
 const NetworkToolbar = props => {
   const { classes, ...others } = props
   return (
-    <Toolbar className={classes.toolbar}>
+    <div className={classes.toolbar}>
       <IconButton
         className={classes.menuButton}
         color="primary"
@@ -94,7 +99,7 @@ const NetworkToolbar = props => {
       </Typography>
       <div className={classes.grow} />
       <OpenInButton {...others} />
-    </Toolbar>
+    </div>
   )
 }
 

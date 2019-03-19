@@ -1,21 +1,17 @@
 import React, { useRef } from 'react'
-import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import List from '@material-ui/core/List'
 import NodeProperties from './NodeProperties'
 import EdgeProperties from './EdgeProperties'
-import NetworkProperties from "./NetworkProperties";
+import NetworkProperties from './NetworkProperties'
 
 const useStyles = makeStyles(theme => ({
   container: {
-    width: '100%',
-    height: '100%',
     padding: '0.2em',
     backgroundColor: '#FFFFFF',
     overflow: 'auto'
   },
   list: {
-    height: '100%',
     width: '100%'
   },
   subtitle: {
@@ -24,6 +20,9 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const DISABLED_STYLE = {
+  width: '100%'
+}
 /**
  *
  * Basic property viewer for nodes and edges
@@ -37,12 +36,12 @@ const TableBrowser = props => {
   const network = props.network
 
   if (network === null) {
-    return <div />
+    return <div style={DISABLED_STYLE} />
   }
 
   const { originalCX } = network
   if (originalCX === null) {
-    return <div />
+    return <div style={DISABLED_STYLE} />
   }
 
   const node = network.selectedNode
