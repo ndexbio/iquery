@@ -99,7 +99,7 @@ function* watchSearch(action) {
 }
 
 const checkStatus = statusJson => {
-  console.log(statusJson.progress, statusJson.sources)
+  console.log("Status check:", statusJson)
 
   const { progress } = statusJson
   if (progress === 100) {
