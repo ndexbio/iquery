@@ -51,7 +51,6 @@ const getTabs = sources => {
     <Tab key={source.sourceUUID} label={source.sourceName} />
   ))
 
-  console.log('TABBS = ', tabs)
   return tabs
 }
 

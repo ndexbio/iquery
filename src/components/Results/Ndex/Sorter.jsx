@@ -8,12 +8,20 @@ import MenuItem from '@material-ui/core/MenuItem'
 
 const ranges = [
   {
+    value: 'rank',
+    label: 'Rank'
+  },
+  {
     value: 'name',
     label: 'Name'
   },
   {
     value: 'numNodes',
     label: 'Number of Nodes'
+  },
+  {
+    value: 'numEdges',
+    label: 'Number of Edges'
   },
   {
     value: 'overlap',
@@ -88,7 +96,7 @@ const Sorter = props => {
   const { classes } = props
 
   const [values, setValues] = React.useState({
-    sortBy: 'name'
+    sortBy: 'rank'
   })
 
   const handleChange = prop => event => {

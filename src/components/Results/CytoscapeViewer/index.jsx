@@ -108,6 +108,14 @@ const CytoscapeViewer = props => {
     layout = COCENTRIC_LAYOUT
   }
 
+  const { resized } = props
+
+  console.log('%%%%%%%%%%resize:', resized)
+
+  if(cyInstance !== null) {
+    cyInstance.resize()
+  }
+
   return (
     <CytoscapeComponent
       elements={cyjs.elements}
