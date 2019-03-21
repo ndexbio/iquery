@@ -7,8 +7,6 @@ import { METHOD_GET, METHOD_POST, BASE_URL } from './apiConstants'
  */
 const getSource = () => {
   const searchUrl = BASE_URL + 'source'
-  console.log('Calling sources:', searchUrl)
-
   return fetch(searchUrl, {
     method: METHOD_GET,
     mode: 'cors'

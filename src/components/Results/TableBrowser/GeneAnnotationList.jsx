@@ -11,19 +11,13 @@ import ErrorIcon from '@material-ui/icons/Error'
 import IconButton from '@material-ui/core/IconButton'
 import LinkIcon from '@material-ui/icons/Launch'
 import InfoIcon from '@material-ui/icons/Info'
-
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-
 import Tooltip from '@material-ui/core/Tooltip'
-
 import './style.css'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Collapse from '@material-ui/core/Collapse'
-import Chip from '../../GeneList'
 
-const MAX_DESCRIPTION_LENGTH = 150
+// For external link
 
 const GENE_CARDS_URL = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene='
 
@@ -57,7 +51,7 @@ class GeneAnnotationList extends React.Component {
   state = {}
 
   handleClick = id => {
-    console.log('OPEN = = = ', id)
+    console.log('OPEN === ', id)
     const tag = 'pw_' + id
     const curState = this.state[tag]
 

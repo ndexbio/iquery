@@ -10,8 +10,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import MailIcon from '@material-ui/icons/Mail'
 import SettingIcon from '@material-ui/icons/Settings'
 import HelpIcon from '@material-ui/icons/Help'
 import './style.css'
@@ -59,31 +57,44 @@ class SettingsPanel extends React.Component {
         </div>
         <Divider />
         <List>
-          {['This', 'panel is', 'for advanced', 'options'].map(
-            (text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            )
-          )}
+          {['Settings'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>
+                <SettingIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
         </List>
         <Divider />
         <List>
-          {['More options', 'Help', '??'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <SettingIcon /> : <HelpIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+          {LINKS.map(link => (
+            <ListItem button key={link.name} onClick={() => openLink(link.url)}>
+              <ListItemIcon>{link.icon}</ListItemIcon>
+              <ListItemText primary={link.name} />
             </ListItem>
           ))}
         </List>
       </Drawer>
     )
   }
+}
+
+const LINKS = [
+  {
+    name: 'Help',
+    url: 'https://github.com/idekerlab/search-portal/wiki',
+    icon: <HelpIcon />
+  },
+  {
+    name: 'Source Code',
+    url: 'https://github.com/idekerlab/search-portal',
+    icon: <SettingIcon />
+  }
+]
+
+const openLink = url => {
+  window.open(url, '_blank')
 }
 
 SettingsPanel.propTypes = {

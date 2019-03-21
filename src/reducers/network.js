@@ -112,7 +112,9 @@ const convertCx2cyjs = (cx, queryGenes) => {
   const niceCX = utils.rawCXtoNiceCX(cx)
   const attributeNameMap = {}
   const elementsObj = cx2js.cyElementsFromNiceCX(niceCX, attributeNameMap)
-  const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
+
+  // This contains original style.
+  // const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
 
   const updatedStyle = styleUpdater(PRESET_VS, queryGenes)
   const updatedNodes = adjustLayout(elementsObj.nodes, queryGenes)
@@ -146,9 +148,9 @@ const adjustLayout = (nodes, queryGenes) => {
       }
     }
   }
-
   return nodes
 }
+
 const checkLayout = nodes => {
   // Just checks first node only!
   const node = nodes[0]
@@ -160,7 +162,6 @@ const checkLayout = nodes => {
 }
 
 const styleUpdater = style => {
-
   PRESET_VS.push({
     selector: 'node:selected',
     css: {
