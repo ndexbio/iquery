@@ -123,7 +123,7 @@ class TitleBar extends React.Component {
 }
 
 // TODO: replace this to the actual help page
-const HELP_URL = 'https://www.cytoscape.org/'
+const HELP_URL = 'https://cytoscape.org/'
 const GITHUB_URL = 'https://github.com/idekerlab/cytoscape-cloud-portal'
 
 const openLink = url => {
