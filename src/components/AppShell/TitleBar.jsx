@@ -9,7 +9,6 @@ import MenuIcon from '@material-ui/icons/Menu'
 import HelpIcon from '@material-ui/icons/Help'
 import classNames from 'classnames'
 import Tooltip from '@material-ui/core/Tooltip'
-import github from '../../assets/images/github.svg'
 import GeneTextBox from './GeneTextBox'
 
 const drawerWidth = 240
@@ -102,18 +101,7 @@ class TitleBar extends React.Component {
               color="inherit"
               onClick={() => openLink(HELP_URL)}
             >
-              <HelpIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              aria-haspopup="true"
-              color="inherit"
-              onClick={() => openLink(GITHUB_URL)}
-            >
-              <img
-                alt="GitHub logo"
-                src={github}
-                className={classes.headerLogo}
-              />
+              <HelpIcon fontSize="medium" />
             </IconButton>
           </div>
         </Toolbar>
@@ -124,7 +112,6 @@ class TitleBar extends React.Component {
 
 // TODO: replace this to the actual help page
 const HELP_URL = 'https://cytoscape.org/'
-const GITHUB_URL = 'https://github.com/idekerlab/cytoscape-cloud-portal'
 
 const openLink = url => {
   window.open(url, '_blank')

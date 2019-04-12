@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import SettingIcon from '@material-ui/icons/Settings'
+import github from '../../assets/images/github.svg'
 import HelpIcon from '@material-ui/icons/Help'
 import './style.css'
 
@@ -70,7 +71,9 @@ class SettingsPanel extends React.Component {
         <List>
           {LINKS.map(link => (
             <ListItem button key={link.name} onClick={() => openLink(link.url)}>
-              <ListItemIcon>{link.icon}</ListItemIcon>
+              <ListItemIcon>
+                <img src={link.src} height="24px" width="24px" />
+              </ListItemIcon>
               <ListItemText primary={link.name} />
             </ListItem>
           ))}
@@ -82,14 +85,9 @@ class SettingsPanel extends React.Component {
 
 const LINKS = [
   {
-    name: 'Help',
-    url: 'https://github.com/idekerlab/search-portal/wiki',
-    icon: <HelpIcon />
-  },
-  {
     name: 'Source Code',
     url: 'https://github.com/idekerlab/search-portal',
-    icon: <SettingIcon />
+    src: github
   }
 ]
 
