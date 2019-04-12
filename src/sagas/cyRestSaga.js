@@ -8,7 +8,6 @@ import {
 } from '../actions/cyrest'
 
 export default function* cyrestSaga() {
-  console.log('cyrestSaga reporting for duty')
   yield takeLatest(IMPORT_NETWORK_STARTED, watchImportNetwork)
 }
 
@@ -22,9 +21,6 @@ export const getUIState = state => state.uiState
  */
 function* watchImportNetwork(action) {
   const originalCX = action.payload
-
-  console.log('watchImportNetwork', action.payload)
-
   try {
     const uiState = yield select(getUIState)
     const cyrestport = uiState.urlParams.has('cyrestport')

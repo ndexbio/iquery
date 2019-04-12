@@ -9,23 +9,17 @@ import SourcePanel from './SourcePanel'
 
 import queryString from 'query-string'
 
-
 const StartPanel = props => {
   useEffect(() => {
-
-
     const params = queryString.parse(props.location.search)
-    console.log('**MOUNTED: path params:', params)
-
     const genes = params.genes
 
-    if(genes !== undefined) {
+    if (genes !== undefined) {
       const geneList = genes.split(',')
       //TODO: call actual API
       props.searchActions.setQuery(genes)
       console.log('Got genes.  Start search now!', geneList)
       props.searchActions.searchStarted({ geneList })
-
     }
 
     props.sourceActions.findSourceStarted()
