@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import HelpIcon from '@material-ui/icons/Help'
 import classNames from 'classnames'
+import Tooltip from '@material-ui/core/Tooltip'
 import github from '../../assets/images/github.svg'
 import GeneTextBox from './GeneTextBox'
 
@@ -78,14 +79,14 @@ class TitleBar extends React.Component {
           >
             <MenuIcon />
           </IconButton>
-          <div>
-            <Typography variant="h6" color="inherit">
-              NDEx Network Search:
-            </Typography>
-            <Typography variant="body1">
-              Pathway Enrichment / Gene Neighborhoods / Keywords
-            </Typography>
-          </div>
+          <Tooltip title="Search by Pathway Enrichment / Gene Neighborhoods / Keywords" aria-label="NDEx_tooltip">
+            <div>
+              <Typography variant="h6" color="inherit">
+                NDEx
+              </Typography>
+              <Typography variant="body1">Network Search</Typography>
+            </div>
+          </Tooltip>
 
           {this.props.search.results === null ? (
             <div />
