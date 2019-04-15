@@ -31,17 +31,14 @@ const styles = theme => ({
     width: drawerWidth
   },
   nested: {
-    paddingLeft: theme.spacing.unit * 4,
+    paddingLeft: theme.spacing.unit * 4
   }
 })
 
 class SettingsPanel extends React.Component {
-  state = {
-    servicesOpen: true
-  }
-
-  handleClick = () => {
-    this.setState(state => ({ servicesOpen: !state.servicesOpen }))
+  handleServicesItemClick = () => {
+    const servicesListOpen = this.props.uiState.servicesListOpen
+    this.props.uiStateActions.setServicesListOpen(!servicesListOpen)
   }
 
   handleDrawerClose = () => {
@@ -53,6 +50,7 @@ class SettingsPanel extends React.Component {
     const { classes, theme } = this.props
     const isOpen = this.props.uiState.isSettingsOpen
     const sources = this.props.source.sources
+    const servicesListOpen = this.props.uiState.servicesListOpen
 
     return (
       <Drawer
@@ -75,21 +73,26 @@ class SettingsPanel extends React.Component {
         </div>
         <Divider />
         <List className={classes.root}>
-          <ListItem button onClick={this.handleClick}>
+          <ListItem button onClick={this.handleServicesItemClick}>
             <ListItemIcon>
               <CloudIcon />
             </ListItemIcon>
             <ListItemText inset primary="Services" />
-            {this.state.servicesOpen ? <ExpandLess /> : <ExpandMore />}
+            {servicesListOpen ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={this.state.servicesOpen} timeout="auto" unmountOnExit>
-            <List component="div" key="0">
+          <Collapse in={servicesListOpen} timeout="auto" unmountOnExit>
+            <List component="div">
               {sources.map(sourceEntry => (
                 <Tooltip
                   title={'Version: ' + sourceEntry.version}
                   placement="right"
+                  key={sourceEntry.uuid}
                 >
-                  <ListItem button key={sourceEntry.uuid} className={classes.nested}>
+                  <ListItem
+                    button
+                    key={sourceEntry.uuid}
+                    className={classes.nested}
+                  >
                     <ListItemIcon>
                       <CloudIcon />
                     </ListItemIcon>
