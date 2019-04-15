@@ -1,9 +1,6 @@
 import React from 'react'
 import SearchPanel from '../CommandPanel'
-import InputList from '../InputList'
-import LoadingPanel from '../LoadingPanel'
 import './style.css'
-import Typography from '@material-ui/core/Typography'
 import GeneList from '../GeneList'
 
 /**

@@ -11,10 +11,9 @@
     width: 100%;
 }
 
-.buttons {
+.gene-list-header {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    margin-bottom: 0.4em;
-
+    justify-content: flex-start;
+    margin-top: 0.4em;
 }
