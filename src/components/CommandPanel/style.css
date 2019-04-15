@@ -1,0 +1,20 @@
+.search {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    padding-top: 0;
+    margin: 0;
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+
+.gene-list {
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 0.4em;
+
+}
