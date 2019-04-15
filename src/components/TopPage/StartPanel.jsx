@@ -5,7 +5,6 @@ import Footer from './Footer'
 
 import ndex from '../../assets/images/ndex-logo.svg'
 import LoadingPanel from '../LoadingPanel'
-import SourcePanel from './SourcePanel'
 
 import queryString from 'query-string'
 
@@ -43,7 +42,6 @@ const StartPanel = props => {
         <img className="start-logo-main" src={ndex} alt="logo" />
       </div>
       <SearchTextBox {...props} />
-      <SourcePanel {...props} />
       <Footer />
     </div>
   )
