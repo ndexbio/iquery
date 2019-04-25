@@ -71,10 +71,20 @@ const network = handleActions(
       }
     },
     [networkFetchSucceeded]: (state, payload) => {
+      const originalCX = payload.cx
+      let network = {}
+      try {
+        const cyjsNetwork = convertCx2cyjs(originalCX, state.queryGenes)
+        network = cyjsNetwork
+      } catch (err) {
+        // This is an error state
+        console.warn('Could not convert given CX to CYJS:', err)
+        throw new Error('Could not convert given CX to CYJS:', err)
+      }
       return {
         ...state,
-        originalCX: payload.cx,
-        network: convertCx2cyjs(payload.cx, state.queryGenes),
+        originalCX,
+        network,
         isFetching: false
       }
     },

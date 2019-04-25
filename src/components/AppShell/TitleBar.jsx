@@ -120,7 +120,7 @@ class TitleBar extends React.Component {
               color="inherit"
               onClick={() => openLink(HELP_URL)}
             >
-              <HelpIcon fontSize="medium" />
+              <HelpIcon fontSize="default" />
             </IconButton>
           </div>
         </Toolbar>

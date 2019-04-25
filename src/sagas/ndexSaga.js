@@ -150,6 +150,9 @@ function* fetchNetwork(action) {
     const cx = yield call(api.fetchNetwork, id, sourceUUID, networkUUID)
     const json = yield call([cx, 'json'])
 
+
+    console.log('Network fetched: ',json)
+
     yield put({ type: NETWORK_FETCH_SUCCEEDED, cx: json })
   } catch (error) {
     yield put({ type: NETWORK_FETCH_FAILED, error })
