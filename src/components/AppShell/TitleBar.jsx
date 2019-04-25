@@ -4,12 +4,14 @@ import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import HelpIcon from '@material-ui/icons/Help'
 import classNames from 'classnames'
-import github from '../../assets/images/github.svg'
+import logo from '../../assets/images/ndex-logo.svg'
 import GeneTextBox from './GeneTextBox'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const drawerWidth = 240
 
@@ -26,6 +28,11 @@ const styles = theme => ({
   menuButton: {
     marginLeft: 12,
     marginRight: 10
+  },
+  homeButton: {
+    height: '2.5em',
+    paddingLeft: '0.5em',
+    paddingRight: '0.5em'
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -57,6 +64,11 @@ class TitleBar extends React.Component {
     )
   }
 
+  handleHomeButton = () => {
+    this.props.searchActions.clearAll()
+    this.props.history.push('/')
+  }
+
   render() {
     const { classes, ...others } = this.props
     const open = this.props.uiState.isSettingsOpen
@@ -78,14 +90,21 @@ class TitleBar extends React.Component {
           >
             <MenuIcon />
           </IconButton>
-          <div>
-            <Typography variant="h6" color="inherit">
-              NDEx Network Search:
-            </Typography>
-            <Typography variant="body1">
-              Pathway Enrichment / Gene Neighborhoods / Keywords
-            </Typography>
-          </div>
+          <Button
+            color="inherit"
+            aria-label="Home"
+            onClick={this.handleHomeButton}
+          >
+            <img alt="NDEx logo" src={logo} className={classes.homeButton} />
+          </Button>
+          <Tooltip title="Search by Pathway Enrichment / Gene Neighborhoods / Keywords" aria-label="NDEx_tooltip">
+            <div>
+              <Typography variant="h6" color="inherit">
+                NDEx
+              </Typography>
+              <Typography variant="body1">Network Search</Typography>
+            </div>
+          </Tooltip>
 
           {this.props.search.results === null ? (
             <div />
@@ -101,18 +120,7 @@ class TitleBar extends React.Component {
               color="inherit"
               onClick={() => openLink(HELP_URL)}
             >
-              <HelpIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              aria-haspopup="true"
-              color="inherit"
-              onClick={() => openLink(GITHUB_URL)}
-            >
-              <img
-                alt="GitHub logo"
-                src={github}
-                className={classes.headerLogo}
-              />
+              <HelpIcon fontSize="medium" />
             </IconButton>
           </div>
         </Toolbar>
@@ -122,8 +130,7 @@ class TitleBar extends React.Component {
 }
 
 // TODO: replace this to the actual help page
-const HELP_URL = 'https://www.cytoscape.org/'
-const GITHUB_URL = 'https://github.com/idekerlab/cytoscape-cloud-portal'
+const HELP_URL = 'https://cytoscape.org/'
 
 const openLink = url => {
   window.open(url, '_blank')

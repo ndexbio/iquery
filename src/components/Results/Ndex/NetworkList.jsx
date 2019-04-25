@@ -143,9 +143,6 @@ const NetworkList = props => {
               >
                 {'Nodes: ' + nodes + ', Edges: ' + edges}
               </Typography>
-              <Typography variant="caption">
-                {'UUID: ' + networkUUID}
-              </Typography>
             </React.Fragment>
           }
         />
@@ -155,7 +152,7 @@ const NetworkList = props => {
             style={{
               background: 'teal',
               color: 'white',
-              height: '2em',
+              height: '1.5em',
               width: percentOverlap * 3 + 'px'
             }}
           >
