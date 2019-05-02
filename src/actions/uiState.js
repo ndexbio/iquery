@@ -14,3 +14,6 @@ export const setCytoscapeStatus = createAction(SET_CYTOSCAPE_STATUS)
 
 export const SET_SERVICES_LIST_OPEN = 'SET_SERVICES_LIST_OPEN'
 export const setServicesListOpen = createAction(SET_SERVICES_LIST_OPEN)
+
+export const SET_HIGHLIGHTS = 'SET_HIGHLIGHTS'
+export const setHighlights = createAction(SET_HIGHLIGHTS)

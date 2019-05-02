@@ -2,13 +2,15 @@ import { handleActions } from 'redux-actions'
 import {
   setSettingsOpen,
   setCytoscapeStatus,
-  setServicesListOpen
+  setServicesListOpen,
+  setHighlights
 } from '../actions/uiState'
 
 const DEF_STATE = {
   isCytoscapeRunning: false,
   isSettingsOpen: false,
   servicesListOpen: false,
+  highlights: true,
   urlParams: new URLSearchParams(window.location.search)
 }
 
@@ -24,6 +26,9 @@ const uiState = handleActions(
     },
     [setServicesListOpen]: (state, payload) => {
       return { ...state, servicesListOpen: payload.payload }
+    },
+    [setHighlights]: (state, payload) => {
+      return { ...state, highlights: payload.payload }
     }
   },
   DEF_STATE

@@ -8,6 +8,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 import OpenInButton from './OpenInButton'
+import Highlighter from './Highlighter'
 
 const styles = theme => ({
   toolbar: {
@@ -98,6 +99,7 @@ const NetworkToolbar = props => {
         {props.network.networkName}
       </Typography>
       <div className={classes.grow} />
+      <Highlighter {...others} />
       <OpenInButton {...others} />
     </div>
   )
