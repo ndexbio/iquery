@@ -82,86 +82,7 @@ const handleErrors = res => {
 }
 
 const NetworkList = props => {
-  const { classes, hits, sourceUUID } = props
-
-  const geneList = props.search.queryList
-
-  const id = props.search.results.jobId
-
-  const handleFetch = (networkUUID, networkName, nodeCount, edgeCount) => {
-    props.networkActions.setNetworkSize({
-      nodeCount,
-      edgeCount
-    })
-
-    const networkSize = nodeCount + edgeCount
-
-    // Do not load if size is too big to render!
-    if (networkSize > NETWORK_SIZE_TH) {
-      return
-    }
-
-    checkCytoscapeConnection(props)
-    props.networkActions.networkFetchStarted({
-      id,
-      sourceUUID,
-      networkUUID,
-      networkName,
-      geneList
-    })
-  }
-
-  const getListItem = (networkEntry, classes) => {
-    const {
-      description,
-      networkUUID,
-      percentOverlap,
-      nodes,
-      edges,
-      imageURL
-    } = networkEntry
-
-    return (
-      <MenuItem
-        className={classes.menuItem}
-        alignItems="flex-start"
-        key={networkUUID}
-        onClick={val => handleFetch(networkUUID, description, nodes, edges)}
-      >
-        <ListItemAvatar>
-          <Avatar className={classes.networkAvatar} src={imageURL} />
-        </ListItemAvatar>
-        <ListItemText
-          className={classes.menuText}
-          primary={description}
-          secondary={
-            <React.Fragment>
-              <Typography
-                component="span"
-                className={classes.inline}
-                color="textPrimary"
-              >
-                {'Nodes: ' + nodes + ', Edges: ' + edges}
-              </Typography>
-            </React.Fragment>
-          }
-        />
-
-        <ListItemSecondaryAction className={classes.secondary}>
-          <div
-            style={{
-              background: 'teal',
-              color: 'white',
-              height: '1.5em',
-              width: percentOverlap * 3 + 'px'
-            }}
-          >
-            <Typography variant="body2" style={{color: '#AAAAAA'}}>{percentOverlap + '%'}</Typography>
-          </div>
-        </ListItemSecondaryAction>
-      </MenuItem>
-    )
-  }
+  const { classes, hits, renderNetworkListItem, network } = props
 
   if (!hits) {
     return <div className="network-list-wrapper" />
@@ -170,8 +91,11 @@ const NetworkList = props => {
   return (
     <div className="network-list-wrapper">
       <Sorter />
+
       <div className="network-list">
-        <MenuList>{hits.map(entry => getListItem(entry, classes))}</MenuList>
+        <MenuList>
+          {hits.map(entry => renderNetworkListItem(entry, classes))}
+        </MenuList>
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './style.css'
 import TitleBar from './TitleBar'
 import SettingsPanel from '../SettingsPanel'
@@ -38,6 +38,14 @@ const styles = theme => ({
 })
 
 const AppShell = props => {
+  useEffect(() => {
+    const urlParams = new URLSearchParams(props.history.location.search)
+    const cyrestport = urlParams.get('cyrestport')
+    if (cyrestport) {
+      props.cyrestActions.setPort(cyrestport)
+    }
+    return () => {}
+  }, [])
   const { classes, ...others } = props
 
   const open = props.uiState.isSettingsOpen
