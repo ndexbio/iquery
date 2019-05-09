@@ -12,18 +12,14 @@ const styles = theme => ({
   }
 })
 
-const OpenInButton = props => {
-  const { classes, uiState, network } = props
-
-  const handleImportNetwork = () => {
-    props.cyrestActions.importNetworkStarted(network.originalCX)
-  }
+const OpenInButton = (props) => {
+  const { classes, cyrest, handleImportNetwork } = props
 
   return (
     <Button
       variant="contained"
       color="default"
-      disabled={!uiState.isCytoscapeRunning}
+      disabled={!cyrest.available}
       onClick={handleImportNetwork}
     >
       Open in

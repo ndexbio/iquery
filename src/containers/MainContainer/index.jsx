@@ -17,7 +17,8 @@ function mapStateToProps(state) {
     search: state.search,
     uiState: state.uiState,
     network: state.network,
-    source: state.source
+    source: state.source,
+    cyrest: state.cyrest
   }
 }
 

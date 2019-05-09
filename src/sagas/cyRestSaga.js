@@ -11,7 +11,7 @@ export default function* cyrestSaga() {
   yield takeLatest(IMPORT_NETWORK_STARTED, watchImportNetwork)
 }
 
-export const getUIState = state => state.uiState
+export const getCyRESTPort = state => state.cyrest.port
 
 /**
  * Calling CyREST network import
@@ -22,10 +22,7 @@ export const getUIState = state => state.uiState
 function* watchImportNetwork(action) {
   const originalCX = action.payload
   try {
-    const uiState = yield select(getUIState)
-    const cyrestport = uiState.urlParams.has('cyrestport')
-      ? uiState.urlParams.get('cyrestport')
-      : 1234
+    const cyrestport = yield select(getCyRESTPort)
 
     let addNumberVerification = true
 
