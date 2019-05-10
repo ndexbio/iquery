@@ -11,5 +11,8 @@ export const importNetworkFailed = createAction(IMPORT_NETWORK_FAILED)
 export const SET_PORT = 'SET_PORT'
 export const setPort = createAction(SET_PORT)
 
+export const QUERY_AVAILABLE = 'QUERY_AVAILABLE'
+export const queryAvailable = createAction(QUERY_AVAILABLE)
+
 export const SET_AVAILABLE = 'SET_AVAILABLE'
 export const setAvailable = createAction(SET_AVAILABLE)

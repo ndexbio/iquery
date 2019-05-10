@@ -3,12 +3,13 @@ import {
   importNetworkFailed,
   importNetworkStarted,
   importNetworkSucceeded,
+  queryAvailable,
   setAvailable,
   setPort
 } from '../actions/cyrest'
 
 const defaultState = {
-  available: false,
+  available: undefined,
   port: 1234,
   error: null
 }
@@ -37,6 +38,9 @@ const source = handleActions(
     [setPort]: (state, payload) => {
       console.log('CyREST port = ', payload.payload)
       return { ...state, port: payload.payload }
+    },
+    [queryAvailable]: (state, payload) => {
+      return { ...state }
     },
     [setAvailable]: (state, payload) => {
       console.log('CyREST available = ', payload.payload)

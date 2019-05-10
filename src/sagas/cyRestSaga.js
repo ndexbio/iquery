@@ -4,14 +4,41 @@ import * as cyrest from '../api/cyrest'
 import {
   IMPORT_NETWORK_STARTED,
   IMPORT_NETWORK_FAILED,
-  IMPORT_NETWORK_SUCCEEDED
+  IMPORT_NETWORK_SUCCEEDED,
+  QUERY_AVAILABLE,
+  SET_AVAILABLE
 } from '../actions/cyrest'
 
 export default function* cyrestSaga() {
   yield takeLatest(IMPORT_NETWORK_STARTED, watchImportNetwork)
+  yield takeLatest(QUERY_AVAILABLE, watchQueryAvailable)
 }
 
 export const getCyRESTPort = state => state.cyrest.port
+
+/**
+ * Querying CyREST availability
+ *
+ * @param action
+ * @returns {IterableIterator<*>}
+ */
+function* watchQueryAvailable(action) {
+  const cyrestport = yield select(getCyRESTPort)
+  try {
+    const response = yield call(cyrest.status, cyrestport)
+    const responseJson = yield call([response, 'json'])
+    console.log(responseJson)
+    yield put({
+      type: SET_AVAILABLE,
+      payload: true
+    })
+  } catch (error) {
+    yield put({
+      type: SET_AVAILABLE,
+      payload: false
+    })
+  }
+}
 
 /**
  * Calling CyREST network import
