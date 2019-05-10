@@ -5,8 +5,6 @@ import './style.css'
 import Warning from './Warning'
 let cyInstance = null
 
-const BASE_STYLE = { width: '100%', height: '100%', background: '#222233' }
-
 const PRESET_LAYOUT = {
   name: 'preset',
   padding: 6
@@ -39,7 +37,6 @@ const COSE_SETTING = {
  * @constructor
  */
 const CytoscapeViewer = props => {
-
   useEffect(() => {
     if (cyInstance === undefined || cyInstance === null) {
       return
@@ -88,18 +85,20 @@ const CytoscapeViewer = props => {
     }
   }, [])
 
-  console.log('** Network rendering start:', props)
-
   const numObjects = props.network.nodeCount + props.network.edgeCount
   if (numObjects > 5000) {
     return <Warning />
   }
 
   const cyjs = props.network.network
-  const selectedGenes = props.search.selectedGenes
-
   if (cyjs === null || cyjs === undefined) {
     return null
+  }
+
+  const networkAreaStyle = {
+    width: '100%',
+    height: '100%',
+    background: props.network.backgroundColor
   }
 
   const isLayoutAvailable = cyjs.isLayout
@@ -111,19 +110,17 @@ const CytoscapeViewer = props => {
     layout = COCENTRIC_LAYOUT
   }
 
-  const { resized } = props
-
-  console.log('%%%%%%%%%%resize:', resized)
-
-  if(cyInstance !== null) {
+  if (cyInstance !== null) {
     cyInstance.resize()
+
+    cyInstance.nodes().addClass('faded')
   }
 
   return (
     <CytoscapeComponent
       elements={cyjs.elements}
       layout={layout}
-      style={BASE_STYLE}
+      style={networkAreaStyle}
       stylesheet={cyjs.style}
       cy={cy => (cyInstance = cy)}
     />

@@ -13,7 +13,7 @@ const Highlighter = props => {
     <FormGroup row>
       <FormControlLabel
         control={<Switch checked={highlights} onChange={handleChange} />}
-        label="Highlight query genes"
+        label="Query Genes"
       />
     </FormGroup>
   )

@@ -51,6 +51,21 @@ PRESET_VS.push({
   }
 })
 
+// For class-based style update
+PRESET_VS.push({
+  selector: 'node.faded',
+  css: {
+    opacity: 0.2
+  }
+})
+
+PRESET_VS.push({
+  selector: 'edge.faded',
+  css: {
+    opacity: 0.2
+  }
+})
+
 const network = handleActions(
   {
     [networkFetchStarted]: (state, payload) => {
@@ -67,7 +82,8 @@ const network = handleActions(
         queryGenes: payload.payload.geneList,
         originalCX: null,
         network: null,
-        isLayoutComplete: false
+        isLayoutComplete: false,
+        backgroundColor: 'blue'
       }
     },
     [networkFetchSucceeded]: (state, payload) => {
@@ -75,16 +91,21 @@ const network = handleActions(
       let network = {}
       try {
         const cyjsNetwork = convertCx2cyjs(originalCX, state.queryGenes)
+
         network = cyjsNetwork
       } catch (err) {
         // This is an error state
         console.warn('Could not convert given CX to CYJS:', err)
         throw new Error('Could not convert given CX to CYJS:', err)
       }
+
+      const backgroundColor = getBackGround(originalCX)
+
       return {
         ...state,
         originalCX,
         network,
+        backgroundColor,
         isFetching: false
       }
     },
@@ -124,15 +145,30 @@ const convertCx2cyjs = (cx, queryGenes) => {
   const elementsObj = cx2js.cyElementsFromNiceCX(niceCX, attributeNameMap)
 
   // This contains original style.
-  // const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
+  const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
 
-  const updatedStyle = styleUpdater(PRESET_VS, queryGenes)
+  // const updatedStyle = styleUpdater(PRESET_VS, queryGenes)
   const updatedNodes = adjustLayout(elementsObj.nodes, queryGenes)
   const elements = [...updatedNodes, ...elementsObj.edges]
   return {
     elements,
-    style: updatedStyle,
+    style: style,
     isLayout: checkLayout(elementsObj.nodes)
+  }
+}
+
+const VS_TAG = 'cyVisualProperties'
+const getBackGround = cx => {
+  let color = 'pink'
+
+  const vps = cx.filter(entry => entry[VS_TAG])
+  if (vps !== undefined && vps !== null && vps.length !== 0) {
+    const vp = vps[0]
+    const allVp = vp[VS_TAG]
+    const networkVp = allVp.filter(p => p['properties_of'] === 'network')
+    return networkVp[0].properties['NETWORK_BACKGROUND_PAINT']
+  } else {
+    return color
   }
 }
 

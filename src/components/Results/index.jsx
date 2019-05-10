@@ -23,7 +23,6 @@ const Results = props => {
 
   const searchResults = props.search.searchResults
 
-  console.log('Current Result:', searchResults)
 
   // Display message panel if no result is available
   if (searchResults === null) {

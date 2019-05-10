@@ -47,8 +47,6 @@ const TableBrowser = props => {
   const node = network.selectedNode
   const edge = network.selectedEdge
 
-  console.log('Selected: ', node, edge, originalCX, network)
-
   if (!node && !edge) {
     return (
       <div className={classes.container}>
