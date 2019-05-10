@@ -52,19 +52,19 @@ PRESET_VS.push({
 })
 
 // For class-based style update
-PRESET_VS.push({
+const fadedNode = {
   selector: 'node.faded',
   css: {
     opacity: 0.2
   }
-})
+}
 
-PRESET_VS.push({
+const fadedEdge = {
   selector: 'edge.faded',
   css: {
     opacity: 0.2
   }
-})
+}
 
 const network = handleActions(
   {
@@ -147,12 +147,14 @@ const convertCx2cyjs = (cx, queryGenes) => {
   // This contains original style.
   const style = cx2js.cyStyleFromNiceCX(niceCX, attributeNameMap)
 
+  const newStyle = styleUpdater(style)
+
   // const updatedStyle = styleUpdater(PRESET_VS, queryGenes)
   const updatedNodes = adjustLayout(elementsObj.nodes, queryGenes)
   const elements = [...updatedNodes, ...elementsObj.edges]
   return {
     elements,
-    style: style,
+    style: newStyle,
     isLayout: checkLayout(elementsObj.nodes)
   }
 }
@@ -208,32 +210,34 @@ const checkLayout = nodes => {
 }
 
 const styleUpdater = style => {
-  PRESET_VS.push({
-    selector: 'node:selected',
-    css: {
-      'background-color': SELECTION_COLOR,
-      width: ele => ele.width() * 1.3,
-      height: ele => ele.height() * 1.3
-    }
-  })
-
-  PRESET_VS.push({
-    selector: 'edge:selected',
-    css: {
-      'line-color': SELECTION_COLOR,
-      'target-arrow-color': SELECTION_COLOR,
-      opacity: 1.0,
-      width: 6
-    }
-  })
-
-  PRESET_VS.push({
-    selector: '.connected',
-    css: {
-      'background-color': SELECTION_COLOR,
-      'background-opacity': 1.0
-    }
-  })
+  style.push(fadedNode)
+  style.push(fadedEdge)
+  // PRESET_VS.push({
+  //   selector: 'node:selected',
+  //   css: {
+  //     'background-color': SELECTION_COLOR,
+  //     width: ele => ele.width() * 1.3,
+  //     height: ele => ele.height() * 1.3
+  //   }
+  // })
+  //
+  // PRESET_VS.push({
+  //   selector: 'edge:selected',
+  //   css: {
+  //     'line-color': SELECTION_COLOR,
+  //     'target-arrow-color': SELECTION_COLOR,
+  //     opacity: 1.0,
+  //     width: 6
+  //   }
+  // })
+  //
+  // PRESET_VS.push({
+  //   selector: '.connected',
+  //   css: {
+  //     'background-color': SELECTION_COLOR,
+  //     'background-opacity': 1.0
+  //   }
+  // })
   return style
 }
 

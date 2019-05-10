@@ -8,7 +8,7 @@ import {
 const DEF_STATE = {
   isSettingsOpen: false,
   servicesListOpen: false,
-  highlights: true
+  highlights: false
 }
 
 const uiState = handleActions(
