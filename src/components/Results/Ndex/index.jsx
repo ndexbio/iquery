@@ -69,6 +69,10 @@ const Ndex = props => {
     }
 
     checkCytoscapeConnection(props)
+
+    // Reset the UI state (hilight)
+    props.uiStateActions.setHighlights(false)
+
     props.networkActions.networkFetchStarted({
       id,
       sourceUUID,
