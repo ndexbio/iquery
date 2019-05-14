@@ -120,9 +120,7 @@ const Ndex = props => {
                 {'Nodes: ' + nodes + ', Edges: ' + edges}
               </Typography>
               <Tooltip
-                title={
-                  percentOverlap + '% Coverage of network by search genes.'
-                }
+                title={percentOverlap + '% overlap of network by search genes.'}
                 placement="right"
                 key={networkUUID}
               >
