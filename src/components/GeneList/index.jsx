@@ -19,7 +19,8 @@ const handleClick = (geneSymbol, props) => {
 }
 
 const handleClear = (event) => {
-  console.log('Clear selection', event.target.value)
+  console.log('#### Clear selection', event.target.value)
+  // props.searchActions.setSelectedGenes([])
 }
 
 const GeneList = props => {
@@ -27,6 +28,7 @@ const GeneList = props => {
 
   const results = search.results
   const hits = network.hitGenes
+  const hitSets = new Set(hits)
 
   if (!results) {
     return <div className="gene-list-wrapper" />
@@ -37,24 +39,41 @@ const GeneList = props => {
     return <div className="gene-list-wrapper" />
   }
 
-  const values = []
+  const matched = []
+  const unmatched = []
+
   for (let value of geneList.values()) {
-    values.push(value)
+    if (hitSets.has(value.symbol)) {
+      matched.push(value)
+    } else {
+      unmatched.push(value)
+    }
   }
+
+  const sortBySymbol = (a, b) => {
+    if (a.symbol < b.symbol) {
+      return -1
+    }
+    if (a.symbol > b.symbol) {
+      return 1
+    }
+    return 0
+  }
+
+  const matchedSorted = matched.sort(sortBySymbol)
+  const unmatchedSorted = unmatched.sort(sortBySymbol)
+  const sorted = [...matchedSorted, ...unmatchedSorted]
 
   return (
     <div className="gene-list-wrapper" onClick={event => handleClear(event)}>
-      {values.map(value => getChip(value, true, classes, props, hits))}
+      {sorted.map(value => getChip(value, true, classes, props, hitSets))}
     </div>
   )
 }
 
-const getChip = (value, isValid, classes, props, hits) => {
-
-  const hitSets = new Set(hits)
-
+const getChip = (value, isValid, classes, props, hitSets) => {
   let color = 'default'
-  if(hitSets.has(value.symbol)) {
+  if (hitSets.has(value.symbol)) {
     color = 'secondary'
   }
 

@@ -72,6 +72,9 @@ const Ndex = props => {
     // Reset the UI state (hilight)
     props.uiStateActions.setHighlights(false)
 
+    // Reset selection
+    props.searchActions.setSelectedGenes([])
+
     props.networkActions.networkFetchStarted({
       id,
       sourceUUID,

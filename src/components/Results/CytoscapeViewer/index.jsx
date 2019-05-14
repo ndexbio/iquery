@@ -87,6 +87,48 @@ const CytoscapeViewer = props => {
     }
   }, [])
 
+  useEffect(() => {
+    if (cyInstance === undefined || cyInstance === null) {
+      return
+    }
+
+    const targets = props.search.selectedGenes
+    if(targets === null || targets === undefined || targets.length === 0) {
+      return
+    }
+
+    const selected = cyInstance.elements(
+      'node[name = "' + targets[0] + '"]'
+    )
+
+
+    if(selected.length !== 0) {
+      cyInstance.animate(
+        {
+          zoom: 2,
+          center: {
+            eles: selected[0]
+          }
+        },
+        {
+          duration: 500
+        }
+      )
+    } else {
+      cyInstance.animate(
+        {
+          fit: {
+            eles: cyInstance.elements(),
+            padding: 10
+          }
+        },
+        {
+          duration: 500
+        }
+      )
+    }
+  }, [props.search.selectedGenes])
+
   const numObjects = props.network.nodeCount + props.network.edgeCount
   if (numObjects > 5000) {
     return <Warning />
