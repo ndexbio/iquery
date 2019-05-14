@@ -37,6 +37,8 @@ const COSE_SETTING = {
  * @constructor
  */
 const CytoscapeViewer = props => {
+  const { highlights } = props.uiState
+
   useEffect(() => {
     if (cyInstance === undefined || cyInstance === null) {
       return
@@ -113,7 +115,13 @@ const CytoscapeViewer = props => {
   if (cyInstance !== null) {
     cyInstance.resize()
 
-    cyInstance.nodes().addClass('faded')
+    if (highlights) {
+      cyInstance.elements().addClass('faded')
+      const query = cyInstance.filter('node[querynode = "true"]')
+      query.addClass('highlight')
+    } else {
+      cyInstance.elements().removeClass('faded')
+    }
   }
 
   return (
