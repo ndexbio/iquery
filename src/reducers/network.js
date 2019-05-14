@@ -191,7 +191,7 @@ const adjustLayout = (nodes, queryGenes) => {
     const node = nodes[len]
     const position = node.position
 
-    const name = node.data.name.toUpperCase()
+    const name = node.data.name ? node.data.name.toUpperCase() : null
     if (upperQuery.has(name)) {
       node.data['query'] = 'true'
     }
