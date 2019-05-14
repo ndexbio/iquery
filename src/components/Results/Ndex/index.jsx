@@ -118,24 +118,23 @@ const Ndex = props => {
               >
                 {'Nodes: ' + nodes + ', Edges: ' + edges}
               </Typography>
+              <div
+                style={{
+                  background: 'teal',
+                  color: 'white',
+                  height: '1.5em',
+                  width: percentOverlap * 3 + 'px'
+                }}
+              >
+                <Typography variant="body2" style={{ color: '#AAAAAA' }}>
+                  {percentOverlap + '%'}
+                </Typography>
+              </div>
             </React.Fragment>
           }
         />
 
-        <ListItemSecondaryAction className={classes.secondary}>
-          <div
-            style={{
-              background: 'teal',
-              color: 'white',
-              height: '1.5em',
-              width: percentOverlap * 3 + 'px'
-            }}
-          >
-            <Typography variant="body2" style={{ color: '#AAAAAA' }}>
-              {percentOverlap + '%'}
-            </Typography>
-          </div>
-        </ListItemSecondaryAction>
+        <ListItemSecondaryAction className={classes.secondary} />
       </MenuItem>
     )
   }
