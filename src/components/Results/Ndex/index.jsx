@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
 
 import * as cyRESTApi from '../../../api/cyrest'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const NETWORK_SIZE_TH = 5000
 
@@ -118,18 +119,26 @@ const Ndex = props => {
               >
                 {'Nodes: ' + nodes + ', Edges: ' + edges}
               </Typography>
-              <div
-                style={{
-                  background: 'teal',
-                  color: 'white',
-                  height: '1.5em',
-                  width: percentOverlap * 3 + 'px'
-                }}
+              <Tooltip
+                title={
+                  percentOverlap + '% Coverage of network by search genes.'
+                }
+                placement="right"
+                key={networkUUID}
               >
-                <Typography variant="body2" style={{ color: '#AAAAAA' }}>
-                  {percentOverlap + '%'}
-                </Typography>
-              </div>
+                <div
+                  style={{
+                    background: 'teal',
+                    color: 'white',
+                    height: '1.5em',
+                    width: percentOverlap * 3 + 'px'
+                  }}
+                >
+                  <Typography variant="body2" style={{ color: '#AAAAAA' }}>
+                    {percentOverlap + '%'}
+                  </Typography>
+                </div>
+              </Tooltip>
             </React.Fragment>
           }
         />
