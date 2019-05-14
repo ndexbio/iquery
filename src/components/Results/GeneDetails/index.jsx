@@ -70,9 +70,10 @@ class GeneDetails extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, network, search } = this.props
 
-    const results = this.props.search.results
+    const results = search.results
+    const hits = network.hitGenes
 
     if (!results) {
       return <div className="gene-list-wrapper" />
@@ -97,7 +98,7 @@ class GeneDetails extends React.Component {
         </Typography>
 
         <div className="gene-list">
-          <List>{values.map(entry => this.getListItem(entry, classes))}</List>
+          <List>{values.map(entry => this.getListItem(entry, classes, hits))}</List>
         </div>
 
         {notFound.length !== 0 ? this.getNotFound(notFound, classes) : null}
@@ -105,11 +106,13 @@ class GeneDetails extends React.Component {
     )
   }
 
-  getListItem = (geneEntry, classes) => {
+  getListItem = (geneEntry, classes, hits) => {
     let description = geneEntry.summary
     if (description.length > MAX_DESCRIPTION_LENGTH) {
       description = description.substring(0, MAX_DESCRIPTION_LENGTH - 1) + '...'
     }
+
+    console.log('HITS:', hits)
     return (
       <React.Fragment>
         <ListItem

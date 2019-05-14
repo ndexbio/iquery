@@ -23,9 +23,10 @@ const handleClear = (event) => {
 }
 
 const GeneList = props => {
-  const { classes } = props
+  const { classes, search, network } = props
 
-  const results = props.search.results
+  const results = search.results
+  const hits = network.hitGenes
 
   if (!results) {
     return <div className="gene-list-wrapper" />
@@ -43,12 +44,20 @@ const GeneList = props => {
 
   return (
     <div className="gene-list-wrapper" onClick={event => handleClear(event)}>
-      {values.map(value => getChip(value, true, classes, props))}
+      {values.map(value => getChip(value, true, classes, props, hits))}
     </div>
   )
 }
 
-const getChip = (value, isValid, classes, props) => {
+const getChip = (value, isValid, classes, props, hits) => {
+
+  const hitSets = new Set(hits)
+
+  let color = 'default'
+  if(hitSets.has(value.symbol)) {
+    color = 'secondary'
+  }
+
   if (isValid) {
     return (
       <Chip
@@ -57,6 +66,7 @@ const getChip = (value, isValid, classes, props) => {
         label={value.symbol}
         onClick={() => handleClick(value.symbol, props)}
         variant="outlined"
+        color={color}
         key={value.symbol}
       />
     )
