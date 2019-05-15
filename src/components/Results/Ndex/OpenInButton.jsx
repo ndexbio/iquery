@@ -13,13 +13,13 @@ const styles = theme => ({
 })
 
 const OpenInButton = (props) => {
-  const { classes, cyrest, handleImportNetwork } = props
+  const { classes, cyrest, network, handleImportNetwork } = props
 
   return (
     <Button
       variant="contained"
       color="default"
-      disabled={!cyrest.available}
+      disabled={!network.originalCX || !cyrest.available}
       onClick={handleImportNetwork}
     >
       Open in

@@ -32,29 +32,6 @@ const Ndex = props => {
 
   const id = props.search.results.jobId
 
-  const checkCytoscapeConnection = props => {
-    cyRESTApi
-      .status(props.cyrest.port)
-      .catch(e => {
-        throw Error(e)
-      })
-      .then(res => handleErrors(res))
-      .then(running => {
-        props.cyrestActions.setAvailable(true)
-      })
-      .catch(error => {
-        props.cyrestActions.setAvailable(false)
-      })
-  }
-
-  const handleErrors = res => {
-    console.log('Calling!!', res)
-    if (res !== undefined) {
-      return true
-    }
-    return false
-  }
-
   const handleFetch = (networkUUID, networkName, nodeCount, edgeCount) => {
     props.networkActions.setNetworkSize({
       nodeCount,
@@ -68,8 +45,7 @@ const Ndex = props => {
       return
     }
 
-    checkCytoscapeConnection(props)
-
+    props.cyrestActions.queryAvailable()
     // Reset the UI state (hilight)
     props.uiStateActions.setHighlights(false)
 
