@@ -17,6 +17,7 @@ const Results = props => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
+    props.networkActions.networkClear()
   }
 
   const { classes, ...others } = props

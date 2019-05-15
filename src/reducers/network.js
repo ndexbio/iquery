@@ -7,6 +7,7 @@ import {
   networkFetchStarted,
   networkFetchFailed,
   networkFetchSucceeded,
+  networkClear,
   selectNode,
   selectEdge,
   deselectAll,
@@ -132,6 +133,18 @@ const network = handleActions(
         ...state,
         network: null,
         originalCX: null,
+        isFetching: false,
+        nodeCount: 0,
+        edgeCount: 0
+      }
+    },
+    [networkClear]: (state, payload) => {
+      return {
+        ...state,
+        uuid: '',
+        originalCX: null,
+        network: null,
+        backgroundColor: null,
         isFetching: false,
         nodeCount: 0,
         edgeCount: 0
