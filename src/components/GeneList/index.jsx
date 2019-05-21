@@ -19,8 +19,6 @@ const handleClick = (geneSymbol, props) => {
 }
 
 const handleClear = (event) => {
-  console.log('#### Clear selection', event.target.value)
-  // props.searchActions.setSelectedGenes([])
 }
 
 const GeneList = props => {
