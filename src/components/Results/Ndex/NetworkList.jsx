@@ -49,8 +49,6 @@ const NetworkList = props => {
 
   return (
     <div className="network-list-wrapper">
-      <Sorter />
-
       <div className="network-list">
         <MenuList>
           {hits.map(entry => renderNetworkListItem(entry, classes))}

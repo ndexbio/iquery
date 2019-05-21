@@ -83,13 +83,6 @@ const NetworkToolbar = props => {
   const { classes, ...others } = props
   return (
     <div className={classes.toolbar}>
-      <IconButton
-        className={classes.menuButton}
-        color="primary"
-        aria-label="Open drawer"
-      >
-        <MenuIcon />
-      </IconButton>
       <Typography
         className={classes.title}
         variant="subtitle1"
