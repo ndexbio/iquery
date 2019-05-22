@@ -15,14 +15,13 @@ const styles = theme => ({
     marginTop: '0.5em'
   },
   networkAvatar: {
-    margin: 10,
+    margin: 5,
     color: '#fff',
     backgroundColor: '#FAFAFA'
   },
   menuItem: {
-    height: '4em',
     '&:focus': {
-      backgroundColor: 'rgba(200,205,200,0.5)'
+      backgroundColor: 'rgba(230,230,230,0.6)'
     }
   },
   menuText: {
