@@ -55,7 +55,13 @@ const Ndex = props => {
     return false
   }
 
-  const handleFetch = (networkUUID, networkName, nodeCount, edgeCount, hitGenes) => {
+  const handleFetch = (
+    networkUUID,
+    networkName,
+    nodeCount,
+    edgeCount,
+    hitGenes
+  ) => {
     props.networkActions.setNetworkSize({
       nodeCount,
       edgeCount
@@ -90,7 +96,7 @@ const Ndex = props => {
     props.cyrestActions.importNetworkStarted(props.network.originalCX)
   }
 
-  const renderNetworkListItem = (networkEntry, classes) => {
+  const renderNetworkListItem = (querySize, networkEntry, classes) => {
     const {
       description,
       networkUUID,
@@ -123,26 +129,15 @@ const Ndex = props => {
                 className={classes.inline}
                 color="textPrimary"
               >
-                {'Nodes: ' + nodes + ', Edges: ' + edges}
+                {'Nodes: ' +
+                  nodes +
+                  ', Edges: ' +
+                  edges +
+                  '  Hit/Query = ' +
+                  hitGenes.length +
+                  '/' +
+                  querySize}
               </Typography>
-              <Tooltip
-                title={percentOverlap + '% overlap of network by search genes.'}
-                placement="right"
-                key={networkUUID}
-              >
-                <div
-                  style={{
-                    background: 'teal',
-                    color: 'white',
-                    height: '1.5em',
-                    width: percentOverlap * 3 + 'px'
-                  }}
-                >
-                  <Typography variant="body2" style={{ color: '#AAAAAA' }}>
-                    {percentOverlap + '%'}
-                  </Typography>
-                </div>
-              </Tooltip>
             </React.Fragment>
           }
         />

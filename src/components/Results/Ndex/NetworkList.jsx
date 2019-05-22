@@ -41,17 +41,20 @@ const styles = theme => ({
 })
 
 const NetworkList = props => {
-  const { classes, hits, renderNetworkListItem, network } = props
+  const { classes, hits, renderNetworkListItem, network, search } = props
 
   if (!hits) {
     return <div className="network-list-wrapper" />
   }
 
+  const query = search.results.genes
+  console.log('LIST val:::', query.size, props)
+
   return (
     <div className="network-list-wrapper">
       <div className="network-list">
         <MenuList>
-          {hits.map(entry => renderNetworkListItem(entry, classes))}
+          {hits.map(entry => renderNetworkListItem(query.size, entry, classes))}
         </MenuList>
       </div>
     </div>
