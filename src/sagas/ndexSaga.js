@@ -171,7 +171,7 @@ function* fetchSource(action) {
 
     const orderedSources = reducedSources.sort(
       (firstEl, secondEl) =>
-        SELECTED_SOURCES.indexOf(firstEl['name']) >
+        SELECTED_SOURCES.indexOf(firstEl['name']) -
         SELECTED_SOURCES.indexOf(secondEl['name'])
     )
 
