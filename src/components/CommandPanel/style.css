@@ -13,7 +13,8 @@
 
 .gene-list-header {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-top: 0.4em;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3em;
 }

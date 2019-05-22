@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
 import OpenInButton from './OpenInButton'
 import Highlighter from './Highlighter'
+import { Tooltip } from '@material-ui/core'
 
 const styles = theme => ({
   toolbar: {
@@ -83,14 +84,16 @@ const NetworkToolbar = props => {
   const { classes, ...others } = props
   return (
     <div className={classes.toolbar}>
-      <Typography
-        className={classes.title}
-        variant="subtitle1"
-        color="inherit"
-        noWrap
-      >
-        {props.network.networkName}
-      </Typography>
+      <Tooltip title={props.network.networkName}>
+        <Typography
+          className={classes.title}
+          variant="subtitle1"
+          color="inherit"
+          noWrap
+        >
+          {props.network.networkName}
+        </Typography>
+      </Tooltip>
       <div className={classes.grow} />
       <Highlighter {...others} />
       <OpenInButton {...others} />

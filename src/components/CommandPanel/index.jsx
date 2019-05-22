@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './style.css'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
@@ -15,7 +15,7 @@ const CommandPanel = props => {
 
   return (
     <div className="gene-list-header">
-      <Typography variant="subtitle2">Search genes:</Typography>
+      <Typography variant="subtitle1">Query Genes</Typography>
     </div>
   )
 }
