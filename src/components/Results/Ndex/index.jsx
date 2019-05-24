@@ -59,18 +59,6 @@ const Ndex = props => {
     edgeCount,
     hitGenes
   ) => {
-    props.networkActions.setNetworkSize({
-      nodeCount,
-      edgeCount
-    })
-
-    const networkSize = nodeCount + edgeCount
-
-    // Do not load if size is too big to render!
-    if (networkSize > NETWORK_SIZE_TH) {
-      return
-    }
-
     checkCytoscapeConnection(props)
 
     // Reset the UI state (hilight)
@@ -85,7 +73,9 @@ const Ndex = props => {
       networkUUID,
       networkName,
       geneList,
-      hitGenes
+      hitGenes,
+      nodeCount,
+      edgeCount
     })
   }
 

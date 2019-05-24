@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions'
 import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
-
+import { MAX_NETWORK_SIZE } from '../components/Results/CytoscapeViewer'
 import * as vs from '../assets/data/styles.json'
 
 import {
@@ -10,8 +10,7 @@ import {
   networkClear,
   selectNode,
   selectEdge,
-  deselectAll,
-  setNetworkSize
+  deselectAll
 } from '../actions/network'
 
 const LAYOUT_SCALING_FACTOR = 2.0
@@ -91,8 +90,8 @@ const network = handleActions(
       return {
         ...state,
         isFetching: true,
-        nodeCount: 0,
-        edgeCount: 0,
+        nodeCount: payload.payload.nodeCount,
+        edgeCount: payload.payload.edgeCount,
         jobId: payload.payload.id,
         sourceId: payload.payload.sourceUUID,
         uuid: payload.payload.networkUUID,
@@ -108,17 +107,19 @@ const network = handleActions(
     [networkFetchSucceeded]: (state, payload) => {
       const originalCX = payload.cx
       let network = {}
-      try {
-        const cyjsNetwork = convertCx2cyjs(originalCX, state.queryGenes)
+      let backgroundColor = {}
+      if (state.nodeCount + state.edgeCount <= MAX_NETWORK_SIZE) {
+        try {
+          const cyjsNetwork = convertCx2cyjs(originalCX, state.queryGenes)
+          network = cyjsNetwork
+        } catch (err) {
+          // This is an error state
+          console.warn('Could not convert given CX to CYJS:', err)
+          throw new Error('Could not convert given CX to CYJS:', err)
+        }
 
-        network = cyjsNetwork
-      } catch (err) {
-        // This is an error state
-        console.warn('Could not convert given CX to CYJS:', err)
-        throw new Error('Could not convert given CX to CYJS:', err)
+        backgroundColor = getBackGround(originalCX)
       }
-
-      const backgroundColor = getBackGround(originalCX)
 
       return {
         ...state,
@@ -134,8 +135,8 @@ const network = handleActions(
         network: null,
         originalCX: null,
         isFetching: false,
-        nodeCount: 0,
-        edgeCount: 0
+        nodeCount: undefined,
+        edgeCount: undefined
       }
     },
     [networkClear]: (state, payload) => {
@@ -146,15 +147,8 @@ const network = handleActions(
         network: null,
         backgroundColor: null,
         isFetching: false,
-        nodeCount: 0,
-        edgeCount: 0
-      }
-    },
-    [setNetworkSize]: (state, payload) => {
-      return {
-        ...state,
-        nodeCount: payload.payload.nodeCount,
-        edgeCount: payload.payload.edgeCount
+        nodeCount: undefined,
+        edgeCount: undefined
       }
     },
     [selectNode]: (state, payload) => {
