@@ -51,6 +51,11 @@ function* watchSearch(action) {
     const sourceJson = yield call([sources, 'json'])
     const sourceList = sourceJson.results
     sourceNames = sourceList.map(source => source.name)
+    sourceNames = sourceNames.filter(name => name !== 'keyword')
+
+    // TODO: this is a hack
+
+    console.log('Getting source list: ', sourceNames)
   }
   const geneListString = geneList.join()
 
