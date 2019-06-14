@@ -20,7 +20,7 @@ export const getCyRESTPort = state => state.cyrest.port
  * @returns {IterableIterator<*>}
  */
 function* watchImportNetwork(action) {
-  const originalCX = action.payload
+  const originalCX = action.payload.cx
   try {
     const cyrestport = yield select(getCyRESTPort)
 

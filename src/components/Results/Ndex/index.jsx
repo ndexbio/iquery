@@ -87,10 +87,20 @@ const Ndex = props => {
       geneList,
       hitGenes
     })
+
+
+    const jobId = props.match.params.jobid
+
+    console.log('** Network selected route:', props)
+    props.history.push(`/${jobId}/${networkUUID}`)
   }
 
   const handleImportNetwork = () => {
-    props.cyrestActions.importNetworkStarted(props.network.originalCX)
+    props.cyrestActions.importNetworkStarted({
+      cx: props.network.originalCX,
+      source: props.network.sourceId,
+      uuid: props.network.uuid
+    })
   }
 
   const renderNetworkListItem = (querySize, networkEntry, classes) => {
