@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -15,9 +15,26 @@ const styles = theme => ({
 const Results = props => {
   const [value, setValue] = useState(0)
 
+  useEffect(() => {
+    updateHistory(0)
+  }, [])
+
   const handleChange = (event, newValue) => {
     setValue(newValue)
+    updateHistory(newValue)
     props.networkActions.networkClear()
+  }
+
+  const updateHistory = (newValue) => {
+    // Update URL
+    const jobId = props.search.results.jobId
+    const searchResults = props.search.searchResults
+    if(searchResults !== undefined && searchResults !== null) {
+      const source = searchResults.sources[newValue]
+      console.log('** Tab change:', jobId, source)
+      props.uiStateActions.setSelectedSource(source.sourceName)
+      props.history.push(`/${jobId}/${source.sourceName}`)
+    }
   }
 
   const { classes, ...others } = props
@@ -29,6 +46,7 @@ const Results = props => {
   if (searchResults === null) {
     return <Empty />
   }
+
 
   return (
     <div className="results-container">

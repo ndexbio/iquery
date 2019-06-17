@@ -2,13 +2,15 @@ import { handleActions } from 'redux-actions'
 import {
   setSettingsOpen,
   setServicesListOpen,
-  setHighlights
+  setHighlights,
+  setSelectedSource
 } from '../actions/uiState'
 
 const DEF_STATE = {
   isSettingsOpen: false,
   servicesListOpen: false,
-  highlights: false
+  highlights: false,
+  selectedSource: ''
 }
 
 const uiState = handleActions(
@@ -22,6 +24,9 @@ const uiState = handleActions(
     },
     [setHighlights]: (state, payload) => {
       return { ...state, highlights: payload.payload }
+    },
+    [setSelectedSource]: (state, payload) => {
+      return { ...state, selectedSource: payload.payload }
     }
   },
   DEF_STATE

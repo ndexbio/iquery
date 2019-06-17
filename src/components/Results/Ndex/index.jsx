@@ -89,10 +89,19 @@ const Ndex = props => {
     })
 
 
-    const jobId = props.match.params.jobid
+    updateHistory(networkUUID)
+  }
 
-    console.log('** Network selected route:', props)
-    props.history.push(`/${jobId}/${networkUUID}`)
+  const updateHistory = networkUUID => {
+    // Update URL
+    const jobId = props.search.results.jobId
+    const searchResults = props.search.searchResults
+    const sourceName = props.uiState.selectedSource
+
+    if (searchResults !== undefined && searchResults !== null) {
+      console.log('** network changed:', jobId, sourceName)
+      props.history.push(`/${jobId}/${sourceName}/${networkUUID}`)
+    }
   }
 
   const handleImportNetwork = () => {
@@ -129,10 +138,7 @@ const Ndex = props => {
           primary={description}
           secondary={
             <React.Fragment>
-              <Typography
-                component="span"
-                className={classes.inline}
-              >
+              <Typography component="span" className={classes.inline}>
                 {'Nodes: ' + nodes + ', Edges: ' + edges}
               </Typography>
               {'  Hit/Query = ' + hitGenes.length + '/' + querySize}

@@ -22,6 +22,7 @@ import { SET_QUERY } from './actions/search'
 
 // For Google Analygtics
 const GA_DEV_ID = 'UA-62588031-6' // Dev server
+const GA_STAGING_ID = 'UA-62588031-7' // Production
 
 ReactGA.initialize(GA_DEV_ID)
 
@@ -67,14 +68,13 @@ const handleEvent = event => {
       action: eventType,
       label: event.payload
     })
-  } else if(eventType === 'IMPORT_NETWORK_STARTED') {
+  } else if (eventType === 'IMPORT_NETWORK_STARTED') {
     console.log('*** FIRE22', event)
     ReactGA.event({
       category: 'User Action',
       action: 'OPEN_IN_CYTOSCAPE',
       label: event.payload.uuid
     })
-
   }
 }
 
