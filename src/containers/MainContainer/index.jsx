@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import HomePanel from '../../components/HomePanel'
@@ -10,7 +10,20 @@ import * as networkActions from '../../actions/network'
 import * as sourceActions from '../../actions/source'
 import * as cyrestActions from '../../actions/cyrest'
 
-const MainContainer = props => <HomePanel {...props} />
+import ReactGA from 'react-ga'
+
+const MainContainer = props => {
+  useEffect(() => {
+    const { history } = props
+
+    history.listen(({ pathname }) => {
+      console.log('(((((((((((((MainPathname =  ====', pathname)
+      ReactGA.set({ page: pathname })
+      ReactGA.pageview(pathname)
+    })
+  }, [])
+  return <HomePanel {...props} />
+}
 
 function mapStateToProps(state) {
   return {
@@ -28,7 +41,7 @@ function mapDispatchToProps(dispatch) {
     uiStateActions: bindActionCreators(uiStateActions, dispatch),
     networkActions: bindActionCreators(networkActions, dispatch),
     sourceActions: bindActionCreators(sourceActions, dispatch),
-    cyrestActions: bindActionCreators(cyrestActions, dispatch),
+    cyrestActions: bindActionCreators(cyrestActions, dispatch)
   }
 }
 

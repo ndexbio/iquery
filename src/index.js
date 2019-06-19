@@ -20,60 +20,49 @@ import ReactGA from 'react-ga'
 
 import { SET_QUERY } from './actions/search'
 
-// For Google Analygtics
-const GA_DEV_ID = 'UA-62588031-6' // Dev server
-const GA_STAGING_ID = 'UA-62588031-7' // Production
+import { GA_DEV_ID, GA_STAGING_ID } from './analytics'
 
-ReactGA.initialize(GA_DEV_ID)
+ReactGA.initialize(GA_DEV_ID, {
+  gaOptions: {
+    siteSpeedSampleRate: 100
+  }
+})
 
-const options = {}
-
-const trackPage = page => {
-  ReactGA.set({
-    page,
-    ...options
-  })
-  ReactGA.pageview(page)
+const EventActions = {
+  SetQuery: SET_QUERY,
+  OpenInCytoscape: 'OPEN_IN_CYTOSCAPE',
+  NetworkSelected: 'NETWORK_FETCH_STARTED'
 }
 
-let currentPage = ''
-
 const gaMiddleware = store => next => action => {
-  console.log('!!! Page Tracker:::', action)
   handleEvent(action)
-
-  if (action.type === '@@router/LOCATION_CHANGE') {
-    const nextPage = `${action.payload.location.pathname}${
-      action.payload.location.search
-    }`
-
-    console.log('*** Page Tracker:::', nextPage)
-    if (currentPage !== nextPage) {
-      currentPage = nextPage
-      trackPage(nextPage)
-    }
-  }
-
   return next(action)
 }
 
 const handleEvent = event => {
   const eventType = event.type
-  console.log('*** handler:::', event, eventType)
+  console.log('*** Event handler:::', event)
 
   if (eventType === SET_QUERY) {
-    console.log('*** FIRE', event)
     ReactGA.event({
       category: 'User Action',
-      action: eventType,
+      action: EventActions.SetQuery,
       label: event.payload
     })
   } else if (eventType === 'IMPORT_NETWORK_STARTED') {
-    console.log('*** FIRE22', event)
     ReactGA.event({
       category: 'User Action',
-      action: 'OPEN_IN_CYTOSCAPE',
+      action: EventActions.OpenInCytoscape,
       label: event.payload.uuid
+    })
+  } else if ('NETWORK_FETCH_STARTED') {
+    if (event.payload === undefined) {
+      return
+    }
+    ReactGA.event({
+      category: 'User Action',
+      action: EventActions.NetworkSelected,
+      label: `${event.payload.sourceUUID}/${event.payload.networkUUID}`
     })
   }
 }

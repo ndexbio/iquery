@@ -11,17 +11,19 @@ import * as sourceActions from '../../actions/source'
 import * as cyrestActions from '../../actions/cyrest'
 import ReactGA from 'react-ga'
 
-// For Google Analygtics
-const GA_DEV_ID = 'UA-62588031-6' // Dev server
-
-ReactGA.initialize(GA_DEV_ID)
 
 const TopPageContainer = props => {
+
   useEffect(() => {
     const { pathname } = props.location
     ReactGA.set({ page: pathname })
     ReactGA.pageview(pathname)
-    console.log('Root component mounted', pathname)
+
+    const { history } = props
+    history.listen(({ pathname }) => {
+      ReactGA.set({ page: pathname })
+      ReactGA.pageview(pathname)
+    })
   }, [])
   return <TopPage {...props} />
 }
