@@ -28,6 +28,8 @@ const COSE_SETTING = {
   }
 }
 
+export const MAX_NETWORK_SIZE = 5000
+
 /**
  *
  * Simple wrapper for cytoscape.js react component
@@ -130,7 +132,7 @@ const CytoscapeViewer = props => {
   }, [props.search.selectedGenes])
 
   const numObjects = props.network.nodeCount + props.network.edgeCount
-  if (numObjects > 5000) {
+  if (numObjects > MAX_NETWORK_SIZE) {
     return <Warning />
   }
 
