@@ -10,13 +10,16 @@ import Tooltip from '@material-ui/core/Tooltip'
 import classNames from 'classnames'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
+import DeleteIcon from '@material-ui/icons/Delete'
+
+import MessageSnackbar from './MessageSnackbar'
 
 const styles = {
   root: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '30vmin',
+    width: '50vmin',
     padding: '0.3em',
     background: '#f1f1f1',
     marginLeft: '1em'
@@ -42,14 +45,14 @@ const GeneTextBox = props => {
   const geneTextRef = useRef(null)
 
   const [queryText, setQuery] = useState(props.search.queryGenes)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     loadCSS(
       'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
       document.querySelector('#insertion-point-jss')
     )
-    return () => {
-    }
+    return () => {}
   }, [])
 
   const handleCopy = () => {
@@ -57,11 +60,12 @@ const GeneTextBox = props => {
     const copyText = document.getElementById(ORIGINAL_GENE_TEXT)
     copyText.select()
     document.execCommand('copy')
+
+    // Show message
+    setOpen(true)
   }
 
-  const handleSearch = (evt, val) => {
-    console.log('Search start:', queryText)
-
+  const handleSearch = evt => {
     const genes = queryText
     const sources = props.source.sources
 
@@ -81,46 +85,71 @@ const GeneTextBox = props => {
     props.searchActions.searchStarted({ geneList, sourceNames })
   }
 
-  const handleChange = (evt) => {
+  const handleChange = evt => {
     const value = evt.target.value
     setQuery(value)
   }
 
+  const handleClear = evt => {
+    setQuery('')
+  }
+
+  const handleKeyPress = event => {
+    if (event.key === 'Enter') {
+      handleSearch(event)
+    }
+  }
+
   return (
-    <Paper className={classes.root} elevation={0}>
-      <InputBase
-        id={ORIGINAL_GENE_TEXT}
-        className={classes.input}
-        placeholder="Genes entered"
-        value={queryText}
-        onChange={handleChange}
-        ref={geneTextRef}
-      />
-      <Divider className={classes.divider} />
-      <Tooltip title="Copy" placement="bottom">
-        <IconButton
-          color="default"
-          className={classes.iconButton}
-          aria-label="Directions"
-          onClick={handleCopy}
-        >
-          <Icon className={classNames(classes.icon, 'far fa-clipboard')} />
-        </IconButton>
-      </Tooltip>
+    <div>
+      <MessageSnackbar open={open} setOpen={setOpen} />
+      <Paper className={classes.root} elevation={0}>
+        <Tooltip title="Copy" placement="bottom">
+          <IconButton
+            color="default"
+            className={classes.iconButton}
+            aria-label="Copy"
+            onClick={handleCopy}
+          >
+            <Icon className={classNames(classes.icon, 'far fa-clipboard')} />
+          </IconButton>
+        </Tooltip>
+        <Divider className={classes.divider} />
+        <InputBase
+          id={ORIGINAL_GENE_TEXT}
+          className={classes.input}
+          placeholder="Genes entered"
+          value={queryText}
+          onChange={handleChange}
+          onKeyDown={handleKeyPress}
+          ref={geneTextRef}
+        />
 
-      <Divider className={classes.divider} />
+        <Tooltip title="Clear gene list" placement="bottom">
+          <IconButton
+            color="default"
+            className={classes.iconButton}
+            aria-label="Clear"
+            onClick={handleClear}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
 
-      <Tooltip title="Start new search" placement="bottom">
-        <IconButton
-          color="primary"
-          className={classes.iconButton}
-          aria-label="Directions"
-          onClick={handleSearch}
-        >
-          <SearchIcon />
-        </IconButton>
-      </Tooltip>
-    </Paper>
+        <Divider className={classes.divider} />
+
+        <Tooltip title="Start new search" placement="bottom">
+          <IconButton
+            color="primary"
+            className={classes.iconButton}
+            aria-label="Directions"
+            onClick={handleSearch}
+          >
+            <SearchIcon />
+          </IconButton>
+        </Tooltip>
+      </Paper>
+    </div>
   )
 }
 

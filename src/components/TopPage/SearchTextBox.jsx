@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
-import ClearIcon from '@material-ui/icons/Refresh'
+import DeleteIcon from '@material-ui/icons/Delete'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 
@@ -145,20 +145,21 @@ const SearchTextBox = props => {
         value={state.query}
       />
       <IconButton
+        color={'default'}
+        className={classes.iconButton}
+        aria-label="Directions"
+        onClick={handleClear}
+      >
+        <DeleteIcon />
+      </IconButton>
+      <Divider className={classes.divider} />
+      <IconButton
+        color={'primary'}
         className={classes.iconButton}
         aria-label="Search"
         onClick={handleSearch}
       >
         <SearchIcon />
-      </IconButton>
-      <Divider className={classes.divider} />
-      <IconButton
-        color="primary"
-        className={classes.iconButton}
-        aria-label="Directions"
-        onClick={handleClear}
-      >
-        <ClearIcon />
       </IconButton>
     </Paper>
   )
