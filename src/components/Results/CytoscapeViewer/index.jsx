@@ -95,16 +95,13 @@ const CytoscapeViewer = props => {
     }
 
     const targets = props.search.selectedGenes
-    if(targets === null || targets === undefined || targets.length === 0) {
+    if (targets === null || targets === undefined || targets.length === 0) {
       return
     }
 
-    const selected = cyInstance.elements(
-      'node[name = "' + targets[0] + '"]'
-    )
+    const selected = cyInstance.elements('node[name = "' + targets[0] + '"]')
 
-
-    if(selected.length !== 0) {
+    if (selected.length !== 0) {
       cyInstance.animate(
         {
           zoom: 2,
@@ -164,7 +161,10 @@ const CytoscapeViewer = props => {
       const query = cyInstance.filter('node[querynode = "true"]')
       query.addClass('highlight')
     } else {
-      cyInstance.elements().removeClass('faded')
+      cyInstance
+        .elements()
+        .removeClass('faded')
+        .removeClass('highlight')
     }
   }
 

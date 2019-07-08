@@ -70,7 +70,10 @@ const fadedEdge = {
 const highlight = {
   selector: '.highlight',
   css: {
-    opacity: 1.0
+    opacity: 1.0,
+    'overlay-color': '#C51162',
+    'overlay-padding': 15,
+    'overlay-opacity': 0.5
   }
 }
 

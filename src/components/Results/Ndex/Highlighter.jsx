@@ -1,7 +1,7 @@
 import React from 'react'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
+import Checkbox from '@material-ui/core/Checkbox'
 
 const Highlighter = props => {
   const highlights = props.uiState.highlights
@@ -12,8 +12,8 @@ const Highlighter = props => {
   return (
     <FormGroup row>
       <FormControlLabel
-        control={<Switch checked={highlights} onChange={handleChange} />}
-        label="Query Genes"
+        control={<Checkbox checked={highlights} onChange={handleChange} />}
+        label="Highlight Query Genes"
       />
     </FormGroup>
   )
