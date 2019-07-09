@@ -19,7 +19,7 @@ const handleImportNetwork = () => {
 const OpenInNDExButton = (props) => {
   const { classes } = props
 
-  return (
+  return ( 
     <Button variant="contained" color="default"
       disabled={!(props.network.uuid && props.network.uuid.length > 0)}
       onClick={handleImportNetwork}>
