@@ -19,6 +19,7 @@
     "react-split": "^2.0.4",
     "react-vis": "^1.11.6",
     "redux": "^4.0.1",
+    "react-google-login": "^5.0.2",
     "redux-actions": "^2.6.5",
     "redux-saga": "^1.0.3",
     "typeface-roboto": "^0.0.54"
