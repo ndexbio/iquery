@@ -78,7 +78,6 @@ const Ndex = props => {
       edgeCount
     })
 
-
     updateHistory(networkUUID)
   }
 

@@ -9,11 +9,10 @@ import * as uiStateActions from '../../actions/uiState'
 import * as networkActions from '../../actions/network'
 import * as sourceActions from '../../actions/source'
 import * as cyrestActions from '../../actions/cyrest'
+import * as ndexSaveActions from '../../actions/ndexSave'
 import ReactGA from 'react-ga'
 
-
 const TopPageContainer = props => {
-
   useEffect(() => {
     const { pathname } = props.location
     ReactGA.set({ page: pathname })
@@ -34,7 +33,8 @@ function mapStateToProps(state) {
     uiState: state.uiState,
     network: state.network,
     source: state.source,
-    cyrest: state.cyrest
+    cyrest: state.cyrest,
+    ndexSave: state.ndexSave
   }
 }
 
@@ -44,7 +44,8 @@ function mapDispatchToProps(dispatch) {
     uiStateActions: bindActionCreators(uiStateActions, dispatch),
     networkActions: bindActionCreators(networkActions, dispatch),
     sourceActions: bindActionCreators(sourceActions, dispatch),
-    cyrestActions: bindActionCreators(cyrestActions, dispatch)
+    cyrestActions: bindActionCreators(cyrestActions, dispatch),
+    ndexSaveActions: bindActionCreators(ndexSaveActions, dispatch)
   }
 }
 

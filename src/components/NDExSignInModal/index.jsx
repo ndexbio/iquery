@@ -1,4 +1,5 @@
 import React from 'react'
+import { withStyles } from '@material-ui/core/styles'
 import {
   DialogContent,
   Dialog,
@@ -16,10 +17,14 @@ import GoogleLogin from 'react-google-login'
 import GoogleLogo from './assets/images/google-logo.svg'
 import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 
+import NDExSave from '../NDExSave'
+
 import './style.css'
-import axios from 'axios'
 
 import config from './assets/config'
+
+const styles = theme => ({
+})
 
 class GoogleSignOn extends React.Component {
   onFailure = err => {
@@ -33,7 +38,17 @@ class GoogleSignOn extends React.Component {
     this.props.onError(message, false)
   }
 
-  verify = profile => {
+  onSuccess = resp => {
+    const token = resp.tokenObj.token_type + ' ' + resp.tokenObj.id_token
+    const profile = {
+      name: resp.profileObj.name,
+      image: resp.profileObj.imageUrl,
+      authorization: {
+        type: 'google',
+        token
+      }
+    }
+    /*
     axios
       .get(config.NDEX_USER_VALIDATION, {
         headers: {
@@ -67,20 +82,7 @@ class GoogleSignOn extends React.Component {
           return
         }
         this.props.onError(message, true)
-      })
-  }
-
-  onSuccess = resp => {
-    const token = resp.tokenObj.token_type + ' ' + resp.tokenObj.id_token
-    const profile = {
-      name: resp.profileObj.name,
-      image: resp.profileObj.imageUrl,
-      authorization: {
-        type: 'google',
-        token
-      }
-    }
-    this.verify(profile)
+      })*/
   }
 
   render() {
@@ -140,7 +142,7 @@ class CredentialsSignOn extends React.Component {
         Authorization: auth
       }
     }
-
+    /*
     axios
       .get(config.NDEX_USER_VALIDATION, headers)
       .then(resp => {
@@ -161,7 +163,7 @@ class CredentialsSignOn extends React.Component {
         } else {
           this.setState({ error: 'Unknown error' })
         }
-      })
+      })*/
   }
 
   render() {
@@ -302,31 +304,36 @@ export class NDExSignIn extends React.Component {
   }
 }
 
-export default class NDExSignInModal extends React.Component {
+class NDExSignInModal extends React.Component {
+  onLoginSuccess = () => {}
+
+  onLogout = () => {}
+
+  handleClose = () => {
+    this.props.ndexSave.setNdexModalOpen(false)
+  }
+
   render() {
-    const {
-      profile,
-      handleClose,
-      onLoginSuccess,
-      onLogout,
-      children
-    } = this.props
+    const { ndexSave } = this.props
+    const onLogout = this.onLogout
+    const onLoginSuccess = this.onLoginSuccess
+    const handleClose = this.handleClose
 
     return (
       <div>
         <Dialog
           className="sign-in-container"
-          open={true}
+          open={ndexSave.ndexModal}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
-          {profile ? (
+          {ndexSave.profile ? (
             <div className="sign-in-header">
-              <Avatar className="ndex-account-avatar" src={profile.image}>
+              <Avatar className="ndex-account-avatar" src={ndexSave.profile.image}>
                 U
               </Avatar>
               <Typography variant="h4" className="ndex-account-greeting">
-                Hi, {profile.name}
+                Hi, {ndexSave.profile.name}
               </Typography>
               <Button onClick={onLogout}>Logout</Button>
             </div>
@@ -337,9 +344,11 @@ export default class NDExSignInModal extends React.Component {
               onLogout={onLogout}
             />
           )}
-          {children}
+          <NDExSave />
         </Dialog>
       </div>
     )
   }
 }
+
+export default withStyles(styles)(NDExSignInModal)

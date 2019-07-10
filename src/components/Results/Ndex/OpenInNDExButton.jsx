@@ -12,17 +12,20 @@ const styles = theme => ({
   }
 })
 
-const handleImportNetwork = () => {
-
-}
-
-const OpenInNDExButton = (props) => {
+const OpenInNDExButton = props => {
   const { classes } = props
 
-  return ( 
-    <Button variant="contained" color="default"
+  const handleImportNetwork = () => {
+    props.ndexSaveActions.setNDExModalOpen(true)
+  }
+
+  return (
+    <Button
+      variant="contained"
+      color="default"
       disabled={!(props.network.uuid && props.network.uuid.length > 0)}
-      onClick={handleImportNetwork}>
+      onClick={handleImportNetwork}
+    >
       Save To
       <img alt="NDEx logo" src={logo} className={classes.buttonIcon} />
     </Button>
