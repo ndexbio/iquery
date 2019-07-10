@@ -1,12 +1,17 @@
 import { handleActions } from 'redux-actions'
-import { setNDExModalOpen, setProfile } from '../actions/ndexSave'
+import {
+  setNDExModalOpen,
+  setProfile,
+  credentialsSignOn,
+  googleSignOn
+} from '../actions/ndexSave'
 
 const DEF_STATE = {
   ndexModal: false,
   profile: null
 }
 
-const uiState = handleActions(
+const ndexSave = handleActions(
   {
     [setNDExModalOpen]: (state, payload) => {
       console.log('OPEN = ', payload.payload)
@@ -14,9 +19,19 @@ const uiState = handleActions(
     },
     [setProfile]: (state, payload) => {
       return { ...state, profile: payload.payload }
+    },
+    [credentialsSignOn]: (state, payload) => {
+      return {
+        ...state
+      }
+    },
+    [googleSignOn]: (state, payload) => {
+      return {
+        ...state
+      }
     }
   },
   DEF_STATE
 )
 
-export default uiState
+export default ndexSave

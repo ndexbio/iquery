@@ -23,8 +23,7 @@ import './style.css'
 
 import config from './assets/config'
 
-const styles = theme => ({
-})
+const styles = theme => ({})
 
 class GoogleSignOn extends React.Component {
   onFailure = err => {
@@ -131,48 +130,14 @@ class CredentialsSignOn extends React.Component {
     error: null
   }
 
-  submit = event => {
-    event.preventDefault()
-    const user = window.basicAuthSignIn.accountName.value
-    const pwd = window.basicAuthSignIn.password.value
-
-    const auth = 'Basic ' + window.btoa(user + ':' + pwd)
-    const headers = {
-      headers: {
-        Authorization: auth
-      }
-    }
-    /*
-    axios
-      .get(config.NDEX_USER_VALIDATION, headers)
-      .then(resp => {
-        const profile = {
-          name: resp.data.firstName,
-          image: resp.data.image,
-          authorization: {
-            type: 'ndex',
-            token: resp.config.headers['Authorization']
-          }
-        }
-        this.props.onLoginSuccess(profile)
-      })
-      .catch(err => {
-        console.log(err)
-        if ('response' in err) {
-          this.setState({ error: err.response.data.message })
-        } else {
-          this.setState({ error: 'Unknown error' })
-        }
-      })*/
-  }
-
   render() {
     const { error } = this.state
+    const { handleCredentialsSignOn } = this.props
 
     const button_cls = error ? 'btn btn-primary disabled' : 'btn btn-primary'
 
     return (
-      <form name="basicAuthSignIn" onSubmit={this.submit}>
+      <form name="basicAuthSignIn" onSubmit={handleCredentialsSignOn}>
         <FormControl className="form-control">
           <TextField
             name="accountName"
@@ -260,7 +225,7 @@ export class NDExSignIn extends React.Component {
   render() {
     const { googleSSO, error } = this.state
 
-    const { handleClose, onLoginSuccess } = this.props
+    const { handleClose, onLoginSuccess, handleCredentialsSignOn } = this.props
 
     return (
       <div>
@@ -287,6 +252,7 @@ export class NDExSignIn extends React.Component {
                     <CredentialsSignOn
                       onLoginSuccess={onLoginSuccess}
                       handleClose={handleClose}
+                      handleCredentialsSignOn={handleCredentialsSignOn}
                     />
                   </div>
                 </Paper>
@@ -313,11 +279,17 @@ class NDExSignInModal extends React.Component {
     this.props.ndexSave.setNdexModalOpen(false)
   }
 
+  handleCredentialsSignOn = event => {
+    event.preventDefault()
+    this.props.ndexSaveActions.credentialsSignOn(event)
+  }
+
   render() {
     const { ndexSave } = this.props
     const onLogout = this.onLogout
     const onLoginSuccess = this.onLoginSuccess
     const handleClose = this.handleClose
+    const handleCredentialsSignOn = this.handleCredentialsSignOn
 
     return (
       <div>
@@ -329,7 +301,10 @@ class NDExSignInModal extends React.Component {
         >
           {ndexSave.profile ? (
             <div className="sign-in-header">
-              <Avatar className="ndex-account-avatar" src={ndexSave.profile.image}>
+              <Avatar
+                className="ndex-account-avatar"
+                src={ndexSave.profile.image}
+              >
                 U
               </Avatar>
               <Typography variant="h4" className="ndex-account-greeting">
@@ -342,6 +317,7 @@ class NDExSignInModal extends React.Component {
               handleClose={handleClose}
               onLoginSuccess={onLoginSuccess}
               onLogout={onLogout}
+              handleCredentialsSignOn={handleCredentialsSignOn}
             />
           )}
           <NDExSave />
