@@ -4,6 +4,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Empty from './Empty'
 import Ndex from './Ndex'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const styles = theme => ({
   tabs: {

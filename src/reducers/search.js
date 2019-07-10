@@ -9,20 +9,22 @@ import {
   setSelectedGenes,
   fetchResultStarted,
   fetchResultSucceeded,
-  fetchResultFailed
+  fetchResultFailed,
+  setSearchResult
 } from '../actions/search'
 
 const EMPTY_STATE = {
   isSearching: false,
+  searchFinished: [],
   isFetching: false,
   queryGenes: '',
   queryList: [],
   results: null,
   searchStatus: null,
   searchResults: null,
-  selectedGenes: []
+  selectedGenes: [],
+  resultList: []
 }
-
 
 const search = handleActions(
   {
@@ -33,13 +35,22 @@ const search = handleActions(
       return { ...state, queryGenes: '', queryList: [] }
     },
     [clearAll]: (state, payload) => {
-      // return { ...state, queryGenes: '', queryList: [], results: null }
       return EMPTY_STATE
     },
     [searchStarted]: (state, payload) => {
+      console.log('------------ Start  1 ------------------::')
+      const sources = payload.payload.sourceNames
+      const sourceLen = sources.length
+      const searchFinished = {}
+      sources.forEach(source => {
+        searchFinished[source] = false
+      })
+
       return {
         ...state,
         isSearching: true,
+        searchFinished,
+        resultList: [],
         queryList: state.queryGenes.split(' ')
       }
     },
@@ -64,12 +75,22 @@ const search = handleActions(
     [fetchResultSucceeded]: (state, payload) => {
       return {
         ...state,
-        searchResults: payload.payload.searchResults,
+        // searchResults: payload.payload.searchResults,
         isFetching: false
       }
     },
     [fetchResultFailed]: (state, payload) => {
       return { ...state, isFetching: false }
+    },
+    [setSearchResult]: (state, payload) => {
+      const singleResult = payload.payload.singleResult
+
+      const newList = [...state.resultList, singleResult]
+      console.log('------------ Setting single ------------------::', newList)
+      return {
+        ...state,
+        searchResults: singleResult
+      }
     }
   },
   EMPTY_STATE
