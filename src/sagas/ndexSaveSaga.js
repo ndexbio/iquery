@@ -19,7 +19,53 @@ export default function* ndexSaveSaga() {
  * @param action
  * @returns {IterableIterator<*>}
  */
-function* watchGoogleSignOn(action) {}
+function* watchGoogleSignOn(action) {
+  const resp = action.payload
+  const token = resp.tokenObj.token_type + ' ' + resp.tokenObj.id_token
+  const profile = {
+    name: resp.profileObj.name,
+    image: resp.profileObj.imageUrl,
+    authorization: {
+      type: 'google',
+      token
+    }
+  }
+  /*
+  axios
+    .get(config.NDEX_USER_VALIDATION, {
+      headers: {
+        Authorization: profile.authorization.token
+      }
+    })
+    .then(_ => {
+      this.props.onLoginSuccess(profile)
+    })
+    .catch(error => {
+      const message =
+        error.response.data.message || 'Failed to verify account. ' + error
+      if (
+        message.startsWith('User with email') &&
+        message.endsWith("doesn't exist.")
+      ) {
+        const comp = (
+          <span>
+            {message} Go to{' '}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="http://ndexbio.org"
+            >
+              http://ndexbio.org
+            </a>{' '}
+            to create an account
+          </span>
+        )
+        this.props.onError(comp, true)
+        return
+      }
+      this.props.onError(message, true)
+    })*/
+}
 
 /**
  * Calling CredentialsSignOn

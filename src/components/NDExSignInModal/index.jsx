@@ -37,55 +37,8 @@ class GoogleSignOn extends React.Component {
     this.props.onError(message, false)
   }
 
-  onSuccess = resp => {
-    const token = resp.tokenObj.token_type + ' ' + resp.tokenObj.id_token
-    const profile = {
-      name: resp.profileObj.name,
-      image: resp.profileObj.imageUrl,
-      authorization: {
-        type: 'google',
-        token
-      }
-    }
-    /*
-    axios
-      .get(config.NDEX_USER_VALIDATION, {
-        headers: {
-          Authorization: profile.authorization.token
-        }
-      })
-      .then(_ => {
-        this.props.onLoginSuccess(profile)
-      })
-      .catch(error => {
-        const message =
-          error.response.data.message || 'Failed to verify account. ' + error
-        if (
-          message.startsWith('User with email') &&
-          message.endsWith("doesn't exist.")
-        ) {
-          const comp = (
-            <span>
-              {message} Go to{' '}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="http://ndexbio.org"
-              >
-                http://ndexbio.org
-              </a>{' '}
-              to create an account
-            </span>
-          )
-          this.props.onError(comp, true)
-          return
-        }
-        this.props.onError(message, true)
-      })*/
-  }
-
   render() {
-    const { googleSSO } = this.props
+    const { googleSSO, onSuccess } = this.props
 
     const clsName = googleSSO
       ? 'google-sign-in-button'
@@ -117,7 +70,7 @@ class GoogleSignOn extends React.Component {
             </Button>
           )}
           buttonText="Login"
-          onSuccess={this.onSuccess}
+          onSuccess={onSuccess}
           onFailure={this.onFailure}
         />
       </div>
@@ -225,7 +178,12 @@ export class NDExSignIn extends React.Component {
   render() {
     const { googleSSO, error } = this.state
 
-    const { handleClose, onLoginSuccess, handleCredentialsSignOn } = this.props
+    const {
+      handleClose,
+      onLoginSuccess,
+      onSuccess,
+      handleCredentialsSignOn
+    } = this.props
 
     return (
       <div>
@@ -242,6 +200,7 @@ export class NDExSignIn extends React.Component {
                       onError={this.onError}
                       googleSSO={googleSSO}
                       onLoginSuccess={onLoginSuccess}
+                      onSuccess={onSuccess}
                     />
                   </div>
                 </Paper>
@@ -276,12 +235,16 @@ class NDExSignInModal extends React.Component {
   onLogout = () => {}
 
   handleClose = () => {
-    this.props.ndexSave.setNdexModalOpen(false)
+    this.props.ndexSaveActions.setNDExModalOpen(false)
   }
 
   handleCredentialsSignOn = event => {
     event.preventDefault()
     this.props.ndexSaveActions.credentialsSignOn(event)
+  }
+
+  handleOnSuccess = resp => {
+    this.props.ndexSaveActions.GoogleSignOn(resp)
   }
 
   render() {
@@ -290,6 +253,7 @@ class NDExSignInModal extends React.Component {
     const onLoginSuccess = this.onLoginSuccess
     const handleClose = this.handleClose
     const handleCredentialsSignOn = this.handleCredentialsSignOn
+    const handleOnSuccess = this.handleOnSuccess
 
     return (
       <div>
@@ -318,6 +282,7 @@ class NDExSignInModal extends React.Component {
               onLoginSuccess={onLoginSuccess}
               onLogout={onLogout}
               handleCredentialsSignOn={handleCredentialsSignOn}
+              onSuccess={handleOnSuccess}
             />
           )}
           <NDExSave />
