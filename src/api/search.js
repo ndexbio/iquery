@@ -35,9 +35,16 @@ const checkStatus = jobId => {
     .catch(error => ({ error }))
 }
 
-const getResult = jobId => {
-  const resultUrl = BASE_URL + jobId
+const getResult = (jobId, sourceName = null) => {
+  const url = BASE_URL + jobId
 
+  const resultUrl = new URL(url)
+
+  if (sourceName !== null) {
+    resultUrl.searchParams.append('source', sourceName)
+  }
+
+  console.log('QQQQQQQQQQQQQQ URL = ', resultUrl, sourceName)
   return fetch(resultUrl, {
     method: METHOD_GET
   })

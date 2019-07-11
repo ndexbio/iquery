@@ -9,7 +9,8 @@ import {
   SEARCH_SUCCEEDED,
   FETCH_RESULT_STARTED,
   FETCH_RESULT_SUCCEEDED,
-  FETCH_RESULT_FAILED
+  FETCH_RESULT_FAILED,
+  SET_SEARCH_RESULT
 } from '../actions/search'
 
 import {
@@ -95,6 +96,7 @@ function* watchSearch(action) {
 }
 
 const checkStatus = statusJson => {
+  console.log('Status:::', statusJson)
   const { progress } = statusJson
   if (progress === 100) {
     return true
@@ -103,31 +105,72 @@ const checkStatus = statusJson => {
   }
 }
 
+const checkProgress = statusJson => {
+  const sources = statusJson.source
+}
+
 // Simple sleep function using Promise
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 function* watchSearchResult(action) {
   const jobId = action.payload.jobId
 
+  const currentResult = {}
+
   try {
-    let finished = false
-    let statusJson = null
-
-    while (!finished) {
+    while (true) {
+      // Check overall status
       const statusRes = yield call(cySearchApi.checkStatus, jobId)
-      statusJson = yield call([statusRes, 'json'])
-      finished = checkStatus(statusJson)
+      const statusJson = yield call([statusRes, 'json'])
 
-      if (finished) {
-        break
-      } else {
-        yield call(sleep, API_CALL_INTERVAL)
+      const { progress } = statusJson
+      if (progress === 100) {
+        // All results are available.  Simply return it.
+        const resultRes = yield call(cySearchApi.getResult, jobId)
+        const resultJson = yield call([resultRes, 'json'])
+        //
+
+        yield put({
+          type: SET_SEARCH_RESULT,
+          payload: {
+            singleResult: resultJson
+          }
+        })
+
+        yield put({
+          type: FETCH_RESULT_SUCCEEDED,
+          payload: {
+            searchResults: resultJson
+          }
+        })
+        return
       }
+
+      const status = statusJson.sources
+
+      let idx = status.length
+      while (idx--) {
+        const src = status[idx]
+        const { progress, sourceName } = src
+        if (progress === 100) {
+          const resultRes = yield call(cySearchApi.getResult, jobId, sourceName)
+          const json = yield call([resultRes, 'json'])
+
+          currentResult[sourceName] = json
+
+          yield put({
+            type: SET_SEARCH_RESULT,
+            payload: {
+              singleResult: json
+            }
+          })
+        }
+      }
+      yield call(sleep, API_CALL_INTERVAL)
     }
 
     const resultRes = yield call(cySearchApi.getResult, jobId)
     const resultJson = yield call([resultRes, 'json'])
-
     yield put({
       type: FETCH_RESULT_SUCCEEDED,
       payload: {

@@ -23,8 +23,15 @@ const HomePanel = props => {
     props.history.push('/')
   }
 
-  if (props.search.isFetching) {
-    return <LoadingPanel title="Loading Search Results" />
+  const { isFetching, searchResult } = props.search
+
+  // Still searching and no result is available
+  if (isFetching && searchResult === null) {
+    return (
+      <AppShell {...props}>
+        <LoadingPanel title="Loading Results..." />
+      </AppShell>
+    )
   }
 
   return (

@@ -14,8 +14,6 @@ const searchGenes = geneList => {
   const searchUrl =
     MYGENE_BASE_URL + '?q=' + geneList + '&scopes=symbol&' + fields
 
-  console.log('Calling MyGene API:', searchUrl)
-
   return fetch(searchUrl, {
     method: METHOD_POST
   })

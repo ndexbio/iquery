@@ -13,6 +13,8 @@ import logo from '../../assets/images/ndex-logo.svg'
 import GeneTextBox from './GeneTextBox'
 import Tooltip from '@material-ui/core/Tooltip'
 
+import HomeIcon from '@material-ui/icons/Home'
+
 const drawerWidth = 240
 
 const styles = theme => ({
@@ -30,9 +32,7 @@ const styles = theme => ({
     marginRight: 10
   },
   homeButton: {
-    height: '2.5em',
-    paddingLeft: '0.5em',
-    paddingRight: '0.5em'
+    height: '2em',
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -49,8 +49,7 @@ const styles = theme => ({
     })
   },
   logo: {
-    height: '2.5em',
-    marginRight: '0.7em'
+    height: '1em'
   },
   headerLogo: {
     height: '1.4em'
@@ -90,19 +89,13 @@ class TitleBar extends React.Component {
           >
             <MenuIcon />
           </IconButton>
-          <Button
-            color="inherit"
-            aria-label="Home"
-            onClick={this.handleHomeButton}
-          >
-            <img alt="NDEx logo" src={logo} className={classes.homeButton} />
-          </Button>
+
+
           <Tooltip title="Search by Pathway Enrichment / Gene Neighborhoods / Keywords" aria-label="NDEx_tooltip">
             <div>
               <Typography variant="h6" color="inherit">
-                NDEx
+                NDEx Network Search
               </Typography>
-              <Typography variant="body1">Network Search</Typography>
             </div>
           </Tooltip>
 
@@ -118,10 +111,24 @@ class TitleBar extends React.Component {
             <IconButton
               aria-haspopup="true"
               color="inherit"
+              onClick={this.handleHomeButton}
+            >
+              <HomeIcon fontSize="default" />
+            </IconButton>
+            <IconButton
+              aria-haspopup="true"
+              color="inherit"
               onClick={() => openLink(HELP_URL)}
             >
               <HelpIcon fontSize="default" />
             </IconButton>
+            <Button
+              color="inherit"
+              aria-label="Home"
+              onClick={() => openLink(NDEX_URL)}
+            >
+              <img alt="NDEx logo" src={logo} className={classes.homeButton} />
+            </Button>
           </div>
         </Toolbar>
       </AppBar>
@@ -131,6 +138,7 @@ class TitleBar extends React.Component {
 
 // TODO: replace this to the actual help page
 const HELP_URL = 'https://cytoscape.org/'
+const NDEX_URL = 'https://www.ndexbbio.org/'
 
 const openLink = url => {
   window.open(url, '_blank')
