@@ -117,7 +117,6 @@ function* watchSearchResult(action) {
 
   const currentResult = {}
 
-
   try {
     while (true) {
       // Check overall status
@@ -126,7 +125,6 @@ function* watchSearchResult(action) {
 
       const { progress } = statusJson
       if (progress === 100) {
-
         // All results are available.  Simply return it.
         const resultRes = yield call(cySearchApi.getResult, jobId)
         const resultJson = yield call([resultRes, 'json'])
@@ -138,8 +136,7 @@ function* watchSearchResult(action) {
             singleResult: resultJson
           }
         })
-        
-        console.log('##################### All finished 100%', currentResult, resultJson)
+
         yield put({
           type: FETCH_RESULT_SUCCEEDED,
           payload: {
@@ -155,13 +152,9 @@ function* watchSearchResult(action) {
       while (idx--) {
         const src = status[idx]
         const { progress, sourceName } = src
-        console.log('SRC', src, progress)
         if (progress === 100) {
-          console.log('Finished!!', src)
           const resultRes = yield call(cySearchApi.getResult, jobId, sourceName)
           const json = yield call([resultRes, 'json'])
-
-          console.log('****Partial res::::', json)
 
           currentResult[sourceName] = json
 
@@ -178,9 +171,6 @@ function* watchSearchResult(action) {
 
     const resultRes = yield call(cySearchApi.getResult, jobId)
     const resultJson = yield call([resultRes, 'json'])
-    //
-    console.log('##################### finished:: Partial res::::', currentResult)
-    //
     yield put({
       type: FETCH_RESULT_SUCCEEDED,
       payload: {

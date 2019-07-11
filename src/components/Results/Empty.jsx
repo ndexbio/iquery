@@ -13,10 +13,7 @@ import './style.css'
 const Empty = props => (
   <div className="results-container">
     <div className="message">
-      <Typography variant="title">
-        Enter gene list in the text area above.
-      </Typography>
-
+      <Typography variant="title">{}</Typography>
     </div>
   </div>
 )

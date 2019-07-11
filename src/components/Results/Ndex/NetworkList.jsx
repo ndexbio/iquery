@@ -47,7 +47,6 @@ const NetworkList = props => {
   }
 
   const query = search.results.genes
-  console.log('LIST val:::', query.size, props)
 
   return (
     <div className="network-list-wrapper">

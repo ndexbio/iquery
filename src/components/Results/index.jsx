@@ -3,8 +3,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Empty from './Empty'
-import Ndex from './Ndex'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import TabContent from './TabContent'
 
 const styles = theme => ({
   tabs: {
@@ -14,77 +13,85 @@ const styles = theme => ({
 })
 
 const Results = props => {
-  const [value, setValue] = useState(0)
+  // For tab selection
+  const [idx, setSelectedTabIndex] = useState(0)
 
   useEffect(() => {
     updateHistory(0)
   }, [])
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-    updateHistory(newValue)
+  const handleChange = (event, idx) => {
+    setSelectedTabIndex(idx)
+    updateHistory(idx)
     props.networkActions.networkClear()
   }
 
-  const updateHistory = (newValue) => {
+  const updateHistory = newValue => {
     // Update URL
-    const jobId = props.search.results.jobId
+    const results = props.search.results
+    if (results === null || results === undefined) {
+      return
+    }
+
+    const jobId = results.jobId
     const searchResults = props.search.searchResults
-    if(searchResults !== undefined && searchResults !== null) {
-      const source = searchResults.sources[newValue]
-      console.log('** Tab change:', jobId, source)
-      props.uiStateActions.setSelectedSource(source.sourceName)
-      props.history.push(`/${jobId}/${source.sourceName}`)
+    if (searchResults !== undefined && searchResults !== null) {
+      const sourceName = getSourceName(sources, idx)
+      console.log('** Tab change:', jobId, sourceName)
+      props.uiStateActions.setSelectedSource(sourceName)
+      props.history.push(`/${jobId}/${sourceName}`)
     }
   }
 
   const { classes, ...others } = props
 
-  const searchResults = props.search.searchResults
-
-
-  // Display message panel if no result is available
-  if (searchResults === null) {
+  // Source list is not available.  Just return empty result
+  const sources = props.source.sources
+  if (sources === null || sources === undefined) {
     return <Empty />
   }
 
+  const { searchResults } = props.search
+  const selectedSourceName = getSourceName(sources, idx)
 
+  const results = findResult(selectedSourceName, searchResults)
+
+
+  // Get current tab selection
   return (
     <div className="results-container">
       <div className="results-wrapper">
-        <Tabs value={value} onChange={handleChange}>
-          {getTabs(searchResults.sources)}
+        <Tabs value={idx} onChange={handleChange}>
+          {sources.map(source => (
+            <Tab key={source.uuid} label={source.name} />
+          ))}
         </Tabs>
-        {getTabContent(value, searchResults.sources, others)}
+        <TabContent results={results} {...others} />
       </div>
     </div>
   )
 }
 
-const getTabs = sources => {
-  if (sources === null || sources === undefined) {
-    return null
-  }
-
-  const tabs = sources.map(source => (
-    <Tab key={source.sourceUUID} label={source.sourceName} />
-  ))
-
-  return tabs
+const getSourceName = (sources, idx) => {
+  return sources[idx].name
 }
 
-const getTabContent = (index, sources, props) => {
-  if (sources === null || sources === undefined) {
+const findResult = (sourceName, results) => {
+  if (results === null || results === undefined) {
     return null
   }
 
-  const source = sources[index]
-  if (!source) {
-    return null
-  }
+  const resultArray = results.sources
 
-  const { results, sourceUUID } = source
-  return <Ndex hits={results} sourceUUID={sourceUUID} {...props} />
+  let idx = resultArray.length
+
+  while (idx--) {
+    const currentResult = resultArray[idx]
+    if (currentResult.sourceName === sourceName) {
+      return currentResult
+    }
+  }
+  return null
 }
 
 export default withStyles(styles)(Results)
