@@ -3,7 +3,8 @@ import {
   setNDExModalOpen,
   setProfile,
   credentialsSignOn,
-  googleSignOn
+  googleSignOn,
+  saveToNDEx
 } from '../actions/ndexSave'
 
 const DEF_STATE = {
@@ -26,6 +27,11 @@ const ndexSave = handleActions(
       }
     },
     [googleSignOn]: (state, payload) => {
+      return {
+        ...state
+      }
+    },
+    [saveToNDEx]: (state, payload) => {
       return {
         ...state
       }

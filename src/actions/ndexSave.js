@@ -16,3 +16,6 @@ export const credentialsSignOn = createAction(CREDENTIALS_SIGN_ON)
 
 export const GOOGLE_SIGN_ON = 'GOOGLE_SIGN_ON'
 export const googleSignOn = createAction(GOOGLE_SIGN_ON)
+
+export const SAVE_TO_NDEX = 'SAVE_TO_NDEX'
+export const saveToNDEx = createAction(SAVE_TO_NDEX)

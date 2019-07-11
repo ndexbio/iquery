@@ -1,6 +1,7 @@
-import { METHOD_GET, BASE_URL } from './apiConstants'
+import { METHOD_GET, METHOD_POST } from './apiConstants'
 
 const NDEX_USER_VALIDATION = 'http://ndexbio.org/v2/user?valid=true'
+const NDEX_SAVE = 'http://ndexbio.org/v2/network'
 
 const ndexValidation = headers => {
   console.log('Calling NDEx validation with headers: ', headers)
@@ -11,4 +12,14 @@ const ndexValidation = headers => {
   })
 }
 
-export { ndexValidation }
+const saveToNDEx = (cx, headers) => {
+  console.log('Calling Save-to-NDEx')
+
+  return fetch(NDEX_SAVE, {
+    method: METHOD_POST,
+    headers: headers,
+    body: JSON.stringify(cx)
+  })
+}
+
+export { ndexValidation, saveToNDEx }

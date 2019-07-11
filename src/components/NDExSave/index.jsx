@@ -15,43 +15,21 @@ class NDExSave extends React.Component {
     }
   }
 
-  saveToNDEx = (networkUrl, token) => {
-    const { profile, cx } = this.props
-    console.log(profile)
-
-    const authorization = profile.authorization.token
-    /*
-    axios
-      .post(config.save_to_ndex, cx, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: authorization
-        }
-      })
-      .then(resp => {
-        const networkUrl = resp.data.replace('/v2/', '/#/')
-        this.setState({ networkUrl })
-      })
-      .catch(err => {
-        alert('Failed to save network to NDEx: ' + err)
-      })
-      */
+  saveToNDEx = (cx, token) => {
+    this.props.ndexSaveActions.saveToNDEx({ cx: cx, token: token })
   }
 
   handleClose = () => {
-    this.props.handleClose()
-  }
-
-  getNetworkUrl = (props) => {
-    return ''
+    this.props.ndexSaveActions.setNDExModalOpen(false)
   }
 
   render() {
-    
-    const { ndexSave } = this.props
-    
-    console.log('NDExSave render' + ndexSave)
-    const networkUrl = this.getNetworkUrl(this.props)
+    const { ndexSave, network } = this.props
+    const token = ndexSave.profile ? ndexSave.profile.authorization.token : null
+    const cx = network.originalCX
+
+    console.log('NDExSave render token' + token)
+    const networkUrl = undefined
 
     return ndexSave && ndexSave.profile ? (
       <div className="ndex-save">
@@ -67,7 +45,7 @@ class NDExSave extends React.Component {
           ) : (
             <Button
               onClick={() => {
-                this.saveToNDEx(networkUrl())
+                this.saveToNDEx(cx, token)
               }}
             >
               Save to my account

@@ -5,12 +5,14 @@ import {
   SET_NDEX_MODAL_OPEN,
   SET_PROFILE,
   CREDENTIALS_SIGN_ON,
-  GOOGLE_SIGN_ON
+  GOOGLE_SIGN_ON,
+  SAVE_TO_NDEX
 } from '../actions/ndexSave'
 
 export default function* ndexSaveSaga() {
   yield takeLatest(GOOGLE_SIGN_ON, watchGoogleSignOn)
   yield takeLatest(CREDENTIALS_SIGN_ON, watchCredentialsSignOn)
+  yield takeLatest(SAVE_TO_NDEX, watchSaveToNDEx)
 }
 
 /**
@@ -112,7 +114,6 @@ function* watchGoogleSignOn(action) {
  * @returns {IterableIterator<*>}
  */
 function* watchCredentialsSignOn(action) {
- 
   const user = window.basicAuthSignIn.accountName.value
   const pwd = window.basicAuthSignIn.password.value
 
@@ -173,4 +174,48 @@ function* watchCredentialsSignOn(action) {
           this.setState({ error: 'Unknown error' })
         }
       })*/
+}
+
+/**
+ * Calling saveToNDEx
+ *
+ * @param action
+ * @returns {IterableIterator<*>}
+ */
+function* watchSaveToNDEx(action) {
+  const token = action.payload.token
+
+  const cx = action.payload.cx
+
+  const headers = new Headers({
+    'Content-Type': 'application/json',
+    Authorization: token
+  })
+
+  const resp = yield call(ndexSave.saveToNDEx, cx, headers)
+  console.log('resp', resp)
+  console.log('resp.body' + resp.body)
+
+  const responseText = yield call([resp, 'text'])
+
+  const networkURL = responseText.replace('/v2/', '/#/')
+
+  console.log('networkURL', networkURL)
+
+  /*
+  axios
+    .post(config.save_to_ndex, cx, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token
+      }
+    })
+    .then(resp => {
+      const networkUrl = resp.data.replace('/v2/', '/#/')
+      this.setState({ networkUrl })
+    })
+    .catch(err => {
+      alert('Failed to save network to NDEx: ' + err)
+    })
+    */
 }
