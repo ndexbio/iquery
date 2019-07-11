@@ -1,5 +1,5 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects'
-import * as cyrest from '../api/cyrest'
+import * as ndexSave from '../api/ndexSave'
 
 import {
   SET_NDEX_MODAL_OPEN,
@@ -29,6 +29,44 @@ function* watchGoogleSignOn(action) {
       type: 'google',
       token
     }
+  }
+
+  const headers = new Headers({
+    Authorization: profile.authorization.token
+  })
+
+  try {
+    yield call(ndexSave.ndexValidation, headers)
+    yield put({
+      type: SET_PROFILE,
+      payload: profile
+    })
+  } catch (error) {
+    const message =
+      error.response.data.message || 'Failed to verify account. ' + error
+    if (
+      message.startsWith('User with email') &&
+      message.endsWith("doesn't exist.")
+    ) {
+      /*
+      const comp = (
+        <span>
+          {message} Go to{' '}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="http://ndexbio.org"
+          >
+            http://ndexbio.org
+          </a>{' '}
+          to create an account
+        </span>
+      )
+      */
+      //this.props.onError(comp, true)
+      return
+    }
+    //this.props.onError(message, true)
   }
   /*
   axios
@@ -74,16 +112,45 @@ function* watchGoogleSignOn(action) {
  * @returns {IterableIterator<*>}
  */
 function* watchCredentialsSignOn(action) {
-  console.log('Credentials sign-on')
+ 
   const user = window.basicAuthSignIn.accountName.value
   const pwd = window.basicAuthSignIn.password.value
 
   const auth = 'Basic ' + window.btoa(user + ':' + pwd)
-  const headers = {
-    headers: {
-      Authorization: auth
+  const headers = new Headers({
+    Authorization: auth
+  })
+
+  try {
+    const resp = yield call(ndexSave.ndexValidation, headers)
+    console.log('resp', resp)
+
+    const responseJson = yield call([resp, 'json'])
+    console.log('responseJson', responseJson)
+
+    const profile = {
+      name: responseJson.firstName,
+      image: responseJson.image,
+      authorization: {
+        type: 'ndex',
+        token: resp.headers
+      }
+    }
+    yield put({
+      type: SET_PROFILE,
+      payload: profile
+    })
+
+    //this.props.onLoginSuccess(profile)
+  } catch (err) {
+    console.log(err)
+    if ('response' in err) {
+      //this.setState({ error: err.response.data.message })
+    } else {
+      //this.setState({ error: 'Unknown error' })
     }
   }
+
   /*
     axios
       .get(config.NDEX_USER_VALIDATION, headers)

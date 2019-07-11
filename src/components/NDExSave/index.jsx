@@ -15,7 +15,7 @@ class NDExSave extends React.Component {
     }
   }
 
-  saveToNDEx = () => {
+  saveToNDEx = (networkUrl, token) => {
     const { profile, cx } = this.props
     console.log(profile)
 
@@ -42,11 +42,18 @@ class NDExSave extends React.Component {
     this.props.handleClose()
   }
 
-  render() {
-    const { networkUrl } = this.state
-    const { profile } = this.props
+  getNetworkUrl = (props) => {
+    return ''
+  }
 
-    return profile ? (
+  render() {
+    
+    const { ndexSave } = this.props
+    
+    console.log('NDExSave render' + ndexSave)
+    const networkUrl = this.getNetworkUrl(this.props)
+
+    return ndexSave && ndexSave.profile ? (
       <div className="ndex-save">
         <DialogContentText>
           Now that you're logged in, you can save the network to your NDEx
@@ -58,7 +65,13 @@ class NDExSave extends React.Component {
               Open in NDEx
             </Button>
           ) : (
-            <Button onClick={this.saveToNDEx}>Save to my account</Button>
+            <Button
+              onClick={() => {
+                this.saveToNDEx(networkUrl())
+              }}
+            >
+              Save to my account
+            </Button>
           )}
         </DialogActions>
       </div>

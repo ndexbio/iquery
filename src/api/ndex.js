@@ -1,6 +1,5 @@
 import { METHOD_GET, BASE_URL } from './apiConstants'
 
-
 const fetchNetwork = (id, sourceUUID, networkUUID) => {
   const headers = {
     'Content-Type': 'application/json'

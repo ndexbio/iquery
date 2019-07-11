@@ -244,10 +244,11 @@ class NDExSignInModal extends React.Component {
   }
 
   handleOnSuccess = resp => {
-    this.props.ndexSaveActions.GoogleSignOn(resp)
+    this.props.ndexSaveActions.googleSignOn(resp)
   }
 
   render() {
+    const { classes, ...others } = this.props
     const { ndexSave } = this.props
     const onLogout = this.onLogout
     const onLoginSuccess = this.onLoginSuccess
@@ -285,7 +286,7 @@ class NDExSignInModal extends React.Component {
               onSuccess={handleOnSuccess}
             />
           )}
-          <NDExSave />
+          <NDExSave {...others} />
         </Dialog>
       </div>
     )
