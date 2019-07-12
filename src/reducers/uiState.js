@@ -9,7 +9,7 @@ import {
 const DEF_STATE = {
   isSettingsOpen: false,
   servicesListOpen: false,
-  highlights: false,
+  highlights: true,
   selectedSource: ''
 }
 

@@ -138,7 +138,7 @@ class TitleBar extends React.Component {
 
 // TODO: replace this to the actual help page
 const HELP_URL = 'https://cytoscape.org/'
-const NDEX_URL = 'https://www.ndexbbio.org/'
+const NDEX_URL = 'https://www.ndexbio.org/'
 
 const openLink = url => {
   window.open(url, '_blank')

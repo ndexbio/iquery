@@ -26,7 +26,7 @@ const NetworkProperties = props => {
   return (
     <React.Fragment>
       {networkAttr.map(entry => (
-        <ListItem key={entry.n}>
+        <ListItem key={Math.random()}>
           <ListItemText
             inset
             primary={removeHtmlTags(entry)}
