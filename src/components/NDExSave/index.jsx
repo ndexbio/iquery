@@ -29,7 +29,7 @@ class NDExSave extends React.Component {
     const cx = network.originalCX
 
     console.log('NDExSave render token' + token)
-    const networkUrl = undefined
+    const networkUrl = ndexSave.networkUrl
 
     return ndexSave && ndexSave.profile ? (
       <div className="ndex-save">

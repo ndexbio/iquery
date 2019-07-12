@@ -232,7 +232,10 @@ export class NDExSignIn extends React.Component {
 class NDExSignInModal extends React.Component {
   onLoginSuccess = () => {}
 
-  onLogout = () => {}
+  onLogout = () => {
+    this.props.ndexSaveActions.setProfile(null)
+    //this.handleClose()
+  }
 
   handleClose = () => {
     this.props.ndexSaveActions.setNDExModalOpen(false)

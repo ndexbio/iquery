@@ -5,20 +5,27 @@ import {
   credentialsSignOn,
   googleSignOn,
   saveToNDEx,
-  setErrorMessage
+  setErrorMessage,
+  setNetworkUrl
 } from '../actions/ndexSave'
 
 const DEF_STATE = {
   ndexModal: false,
   profile: null,
-  errorMessage: null
+  errorMessage: null,
+  networkUrl: null
 }
 
 const ndexSave = handleActions(
   {
     [setNDExModalOpen]: (state, payload) => {
       console.log('OPEN = ', payload.payload)
-      return { ...state, ndexModal: payload.payload }
+      return {
+        ...state,
+        ndexModal: payload.payload,
+        errorMessage: null,
+        networkUrl: null
+      }
     },
     [setProfile]: (state, payload) => {
       return { ...state, profile: payload.payload }
@@ -42,6 +49,12 @@ const ndexSave = handleActions(
       return {
         ...state,
         errorMessage: payload.payload
+      }
+    },
+    [setNetworkUrl]: (state, payload) => {
+      return {
+        ...state,
+        networkUrl: payload.payload
       }
     }
   },

@@ -7,7 +7,8 @@ import {
   CREDENTIALS_SIGN_ON,
   GOOGLE_SIGN_ON,
   SAVE_TO_NDEX,
-  SET_ERROR_MESSAGE
+  SET_ERROR_MESSAGE,
+  SET_NETWORK_URL
 } from '../actions/ndexSave'
 
 export default function* ndexSaveSaga() {
@@ -130,6 +131,8 @@ function* watchCredentialsSignOn(action) {
     const responseJson = yield call([resp, 'json'])
     console.log('responseJson', responseJson)
 
+    console.log('headers', resp.headers.get('Authorization'))
+
     if (resp.status != 200) {
       yield put({
         type: SET_ERROR_MESSAGE,
@@ -141,7 +144,7 @@ function* watchCredentialsSignOn(action) {
         image: responseJson.image,
         authorization: {
           type: 'ndex',
-          token: resp.headers
+          token: auth
         }
       }
       yield put({
@@ -191,7 +194,6 @@ function* watchCredentialsSignOn(action) {
  */
 function* watchSaveToNDEx(action) {
   const token = action.payload.token
-
   const cx = action.payload.cx
 
   const headers = new Headers({
@@ -209,6 +211,10 @@ function* watchSaveToNDEx(action) {
 
   console.log('networkURL', networkURL)
 
+  yield put({
+    type: SET_NETWORK_URL,
+    payload: networkURL
+  })
   /*
   axios
     .post(config.save_to_ndex, cx, {

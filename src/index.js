@@ -57,7 +57,7 @@ const handleEvent = event => {
       label: event.payload.uuid
     })
   } else if ('NETWORK_FETCH_STARTED') {
-    if (event.payload === undefined) {
+    if (event.payload === undefined || event.payload == null) {
       return
     }
     ReactGA.event({
