@@ -56,14 +56,14 @@ PRESET_VS.push({
 const fadedNode = {
   selector: 'node.faded',
   css: {
-    opacity: 0.2
+    opacity: 0.9
   }
 }
 
 const fadedEdge = {
   selector: 'edge.faded',
   css: {
-    opacity: 0.2
+    opacity: 0.9
   }
 }
 
@@ -72,7 +72,7 @@ const highlight = {
   css: {
     opacity: 1.0,
     'overlay-color': '#C51162',
-    'overlay-padding': 15,
+    'overlay-padding': 12,
     'overlay-opacity': 0.5
   }
 }

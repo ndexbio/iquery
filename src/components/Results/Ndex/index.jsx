@@ -7,12 +7,16 @@ import NetworkList from './NetworkList'
 
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
 
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 
 import * as cyRESTApi from '../../../api/cyrest'
 import { ListItem } from '@material-ui/core'
+
+import Tooltip from '@material-ui/core/Tooltip'
+import Paper from '@material-ui/core/Paper'
 
 const NETWORK_SIZE_TH = 5000
 
@@ -61,8 +65,6 @@ const Ndex = props => {
   ) => {
     checkCytoscapeConnection(props)
 
-    // Reset the UI state (hilight)
-    props.uiStateActions.setHighlights(false)
 
     // Reset selection
     props.searchActions.setSelectedGenes([])
@@ -94,6 +96,10 @@ const Ndex = props => {
   }
 
   const handleImportNetwork = () => {
+    // Reset the UI state (hilight)
+    props.uiStateActions.setHighlights(true)
+
+
     props.cyrestActions.importNetworkStarted({
       cx: props.network.originalCX,
       source: props.network.sourceId,
@@ -108,7 +114,8 @@ const Ndex = props => {
       nodes,
       edges,
       imageURL,
-      hitGenes
+      hitGenes,
+      rank
     } = networkEntry
 
     return (
@@ -120,20 +127,23 @@ const Ndex = props => {
           handleFetch(networkUUID, description, nodes, edges, hitGenes)
         }
       >
-        <ListItemAvatar>
-          <Avatar className={classes.networkAvatar} src={imageURL} />
-        </ListItemAvatar>
+        <ListItemIcon>
+          <img className="list-icon" src={imageURL} />
+        </ListItemIcon>
         <ListItemText
-          primary={description}
+          primary={'Rank ' + (rank) + ': ' + description}
           secondary={
             <React.Fragment>
-              <Typography component="span" className={classes.inline}>
-                {'Nodes: ' + nodes + ', Edges: ' + edges}
-              </Typography>
+              <Tooltip title="Number of nodes and edges" placement="bottom">
+                <Typography component="span" className={classes.inline}>
+                  {'N: ' + nodes + ', E: ' + edges}
+                </Typography>
+              </Tooltip>
               {'  Hit/Query = ' + hitGenes.length + '/' + querySize}
             </React.Fragment>
           }
-        />
+        >
+        </ListItemText>
       </ListItem>
     )
   }

@@ -41,6 +41,10 @@
   overflow-y: auto;
 }
 
+.list-icon {
+  width: 2.5em;
+}
+
 .gutter {
   margin: 0;
   padding: 0;

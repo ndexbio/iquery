@@ -45,7 +45,7 @@ const CytoscapeViewer = props => {
     if (cyInstance === undefined || cyInstance === null) {
       return
     }
-    console.log('This should run only once:  CyViewer Mounted:', cyInstance)
+    console.log('@@@@@@@@@@@@@@@@@This should run only once:  CyViewer Mounted:', cyInstance)
 
     cyInstance.on('tap', function(event) {
       try {
@@ -83,6 +83,10 @@ const CytoscapeViewer = props => {
         console.warn(e)
       }
     })
+
+
+    // Reset the UI state (hilight)
+    props.uiStateActions.setHighlights(true)
 
     return () => {
       console.log('unmount')
