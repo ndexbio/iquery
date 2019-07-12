@@ -19,3 +19,6 @@ export const googleSignOn = createAction(GOOGLE_SIGN_ON)
 
 export const SAVE_TO_NDEX = 'SAVE_TO_NDEX'
 export const saveToNDEx = createAction(SAVE_TO_NDEX)
+
+export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
+export const setErrorMessage = createAction(SET_ERROR_MESSAGE)

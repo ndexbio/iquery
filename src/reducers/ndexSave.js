@@ -4,12 +4,14 @@ import {
   setProfile,
   credentialsSignOn,
   googleSignOn,
-  saveToNDEx
+  saveToNDEx,
+  setErrorMessage
 } from '../actions/ndexSave'
 
 const DEF_STATE = {
   ndexModal: false,
-  profile: null
+  profile: null,
+  errorMessage: null
 }
 
 const ndexSave = handleActions(
@@ -34,6 +36,12 @@ const ndexSave = handleActions(
     [saveToNDEx]: (state, payload) => {
       return {
         ...state
+      }
+    },
+    [setErrorMessage]: (state, payload) => {
+      return {
+        ...state,
+        errorMessage: payload.payload
       }
     }
   },

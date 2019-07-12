@@ -79,13 +79,8 @@ class GoogleSignOn extends React.Component {
 }
 
 class CredentialsSignOn extends React.Component {
-  state = {
-    error: null
-  }
-
   render() {
-    const { error } = this.state
-    const { handleCredentialsSignOn } = this.props
+    const { error, handleCredentialsSignOn } = this.props
 
     const button_cls = error ? 'btn btn-primary disabled' : 'btn btn-primary'
 
@@ -166,23 +161,25 @@ export class NDExSignIn extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      error: null,
       googleSSO: true
     }
   }
 
   onError = (error, googleSSO) => {
-    this.setState({ error, googleSSO })
+    this.props.handleError(error)
+    this.setState({ googleSSO })
   }
 
   render() {
-    const { googleSSO, error } = this.state
+    const { googleSSO } = this.state
 
     const {
       handleClose,
       onLoginSuccess,
       onSuccess,
-      handleCredentialsSignOn
+      handleCredentialsSignOn,
+      handleError,
+      error
     } = this.props
 
     return (
@@ -212,17 +209,20 @@ export class NDExSignIn extends React.Component {
                       onLoginSuccess={onLoginSuccess}
                       handleClose={handleClose}
                       handleCredentialsSignOn={handleCredentialsSignOn}
+                      handleError={handleError}
+                      error={error}
                     />
                   </div>
                 </Paper>
               </Grid>
             </Grid>
           </div>
-          {error && (
+
+          {/*error && (
             <div className="sign-in-error">
               <p>{error}</p>
             </div>
-          )}
+          )*/}
         </DialogContent>
       </div>
     )
@@ -247,6 +247,10 @@ class NDExSignInModal extends React.Component {
     this.props.ndexSaveActions.googleSignOn(resp)
   }
 
+  handleError = error => {
+    this.props.ndexSaveActions.setErrorMessage(error)
+  }
+
   render() {
     const { classes, ...others } = this.props
     const { ndexSave } = this.props
@@ -255,6 +259,7 @@ class NDExSignInModal extends React.Component {
     const handleClose = this.handleClose
     const handleCredentialsSignOn = this.handleCredentialsSignOn
     const handleOnSuccess = this.handleOnSuccess
+    const handleError = this.handleError
 
     return (
       <div>
@@ -284,6 +289,8 @@ class NDExSignInModal extends React.Component {
               onLogout={onLogout}
               handleCredentialsSignOn={handleCredentialsSignOn}
               onSuccess={handleOnSuccess}
+              handleError={handleError}
+              error={ndexSave.errorMessage}
             />
           )}
           <NDExSave {...others} />

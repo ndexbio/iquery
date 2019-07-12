@@ -6,7 +6,8 @@ import {
   SET_PROFILE,
   CREDENTIALS_SIGN_ON,
   GOOGLE_SIGN_ON,
-  SAVE_TO_NDEX
+  SAVE_TO_NDEX,
+  SET_ERROR_MESSAGE
 } from '../actions/ndexSave'
 
 export default function* ndexSaveSaga() {
@@ -129,27 +130,33 @@ function* watchCredentialsSignOn(action) {
     const responseJson = yield call([resp, 'json'])
     console.log('responseJson', responseJson)
 
-    const profile = {
-      name: responseJson.firstName,
-      image: responseJson.image,
-      authorization: {
-        type: 'ndex',
-        token: resp.headers
+    if (resp.status != 200) {
+      yield put({
+        type: SET_ERROR_MESSAGE,
+        payload: responseJson.message
+      })
+    } else {
+      const profile = {
+        name: responseJson.firstName,
+        image: responseJson.image,
+        authorization: {
+          type: 'ndex',
+          token: resp.headers
+        }
       }
+      yield put({
+        type: SET_PROFILE,
+        payload: profile
+      })
     }
-    yield put({
-      type: SET_PROFILE,
-      payload: profile
-    })
-
     //this.props.onLoginSuccess(profile)
   } catch (err) {
     console.log(err)
-    if ('response' in err) {
-      //this.setState({ error: err.response.data.message })
-    } else {
-      //this.setState({ error: 'Unknown error' })
-    }
+    yield put({
+      type: SET_ERROR_MESSAGE,
+      payload: 'Unknown error'
+    })
+    //this.setState({ error: 'Unknown error' })
   }
 
   /*
