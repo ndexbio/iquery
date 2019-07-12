@@ -1,1 +1,89 @@
+.text-danger {
+    word-wrap: break-word;
+    color: #CD0606;
+}
 
+#form-dialog-title {
+    border-bottom: 1px solid #CCC;
+    padding: 14px;
+    margin-bottom: 10px;
+}
+
+.NDExSignInContainer {
+    padding-top: 10px;
+    position: relative;
+}
+
+.grid-paper {
+    text-align: center;
+    height: 100%;
+}
+.grid {
+    position: relative;
+}
+.grid-content {
+    padding: 10px;
+}
+
+.googleLogo { 
+    height: 130px ;
+    width: 130px;
+    max-height: 100%;
+    max-width: 100%;
+}
+.googleButtonDisabled {
+    color: #B6B6B6;
+    background-color: #FFF;
+    cursor: not-allowed;
+}
+.googleSignInText {
+    margin-top: 1.5em;
+    margin-left: 3em;
+    margin-right: 3em;
+}
+
+.ndex-account-links {
+    font-size: .8em;
+    text-align: left;
+    padding: 5px;
+    padding-top: 10px;
+}
+
+.form-control {
+    width: 100%;
+}
+.form-input {
+    margin: 20px;
+    padding:0;
+}
+
+.credentials-button-container {
+    text-align: right;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.credentials-button-container .btn {
+    margin: 5px;
+    padding: 5px 10px;
+}
+
+.sign-in-container {
+    min-height: 300px;
+}
+
+.sign-in-header {
+    display: flex;
+    padding: 10px;
+}
+
+.ndex-account-greeting {
+    flex-grow: 1;
+}
+
+.sign-in-error {
+    color: red;
+    padding-top: 10px;
+    font-weight: bold;
+}
