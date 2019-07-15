@@ -146,6 +146,7 @@ const network = handleActions(
       return {
         ...state,
         uuid: '',
+        networkName: '',
         originalCX: null,
         network: null,
         backgroundColor: null,
