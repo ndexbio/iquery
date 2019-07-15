@@ -11,7 +11,9 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 
-const EXAMPLES = ['kras egfr cdk4 tp53', 'per1 per2 clock', 'mtor wnt1 igf1']
+import * as examples from './example-genes'
+
+const EXAMPLES = examples.default.examples
 
 const styles = {
   root: {
@@ -132,18 +134,16 @@ const SearchTextBox = props => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={() => handleExample(0)}>Gene List 1</MenuItem>
-          <MenuItem onClick={() => handleExample(1)}>Gene List 2</MenuItem>
-          <MenuItem onClick={() => handleExample(2)}>Gene List 3</MenuItem>
+          {EXAMPLES.map((example, idx) => {
+            return (
+              <MenuItem key={idx} onClick={() => handleExample(idx)}>
+                Gene List {idx + 1}
+              </MenuItem>
+            )
+          })}
         </Menu>
       </div>
-      <InputBase
-        className={classes.input}
-        placeholder="Enter gene list (...or click menu for examples)"
-        onChange={handleChange('query')}
-        onKeyDown={handleKeyPress}
-        value={state.query}
-      />
+      <Divider className={classes.divider} />
       <IconButton
         color={'default'}
         className={classes.iconButton}
@@ -152,7 +152,13 @@ const SearchTextBox = props => {
       >
         <DeleteIcon />
       </IconButton>
-      <Divider className={classes.divider} />
+      <InputBase
+        className={classes.input}
+        placeholder="Enter gene list (...or click menu for examples)"
+        onChange={handleChange('query')}
+        onKeyDown={handleKeyPress}
+        value={state.query}
+      />
       <IconButton
         color={'primary'}
         className={classes.iconButton}

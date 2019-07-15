@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import HelpIcon from '@material-ui/icons/Help'
 import classNames from 'classnames'
-import logo from '../../assets/images/ndex-logo.svg'
+import logo from '../../assets/images/ndex-logo-mono.svg'
 import GeneTextBox from './GeneTextBox'
 import Tooltip from '@material-ui/core/Tooltip'
 
@@ -31,8 +31,8 @@ const styles = theme => ({
     marginLeft: 12,
     marginRight: 10
   },
-  homeButton: {
-    height: '2em',
+  ndexLogo: {
+    height: '1em'
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -47,12 +47,6 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     })
-  },
-  logo: {
-    height: '1em'
-  },
-  headerLogo: {
-    height: '1.4em'
   }
 })
 
@@ -110,25 +104,25 @@ class TitleBar extends React.Component {
           <div>
             <IconButton
               aria-haspopup="true"
-              color="inherit"
+              color="default"
               onClick={this.handleHomeButton}
             >
               <HomeIcon fontSize="default" />
             </IconButton>
             <IconButton
               aria-haspopup="true"
-              color="inherit"
+              color="default"
               onClick={() => openLink(HELP_URL)}
             >
               <HelpIcon fontSize="default" />
             </IconButton>
-            <Button
-              color="inherit"
+            <IconButton
+              color="default"
               aria-label="Home"
               onClick={() => openLink(NDEX_URL)}
             >
-              <img alt="NDEx logo" src={logo} className={classes.homeButton} />
-            </Button>
+              <img alt="NDEx logo" src={logo} className={classes.ndexLogo} />
+            </IconButton>
           </div>
         </Toolbar>
       </AppBar>
@@ -137,7 +131,7 @@ class TitleBar extends React.Component {
 }
 
 // TODO: replace this to the actual help page
-const HELP_URL = 'https://cytoscape.org/'
+const HELP_URL = 'https://github.com/idekerlab/search-portal/wiki'
 const NDEX_URL = 'https://www.ndexbio.org/'
 
 const openLink = url => {

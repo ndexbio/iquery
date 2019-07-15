@@ -115,16 +115,6 @@ const GeneTextBox = props => {
           </IconButton>
         </Tooltip>
         <Divider className={classes.divider} />
-        <InputBase
-          id={ORIGINAL_GENE_TEXT}
-          className={classes.input}
-          placeholder="Genes entered"
-          value={queryText}
-          onChange={handleChange}
-          onKeyDown={handleKeyPress}
-          ref={geneTextRef}
-        />
-
         <Tooltip title="Clear gene list" placement="bottom">
           <IconButton
             color="default"
@@ -135,8 +125,16 @@ const GeneTextBox = props => {
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-
         <Divider className={classes.divider} />
+        <InputBase
+          id={ORIGINAL_GENE_TEXT}
+          className={classes.input}
+          placeholder="Genes entered"
+          value={queryText}
+          onChange={handleChange}
+          onKeyDown={handleKeyPress}
+          ref={geneTextRef}
+        />
 
         <Tooltip title="Start new search" placement="bottom">
           <IconButton

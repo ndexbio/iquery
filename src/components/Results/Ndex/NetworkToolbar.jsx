@@ -1,18 +1,16 @@
 import './style.css'
 import React from 'react'
 import PropTypes from 'prop-types'
-import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
-import MenuIcon from '@material-ui/icons/Menu'
 import OpenInCytoscapeButton from './OpenInCytoscapeButton'
 import Highlighter from './Highlighter'
 import { Tooltip } from '@material-ui/core'
 import OpenInNDExButton from './OpenInNDExButton'
 import NDExSignInModal from '../../NDExSignInModal'
 import NDExSave from '../../NDExSave'
+import OpenIcon from '@material-ui/icons/OpenInBrowser'
 
 const styles = theme => ({
   toolbar: {
@@ -80,6 +78,16 @@ const styles = theme => ({
   buttonIcon: {
     height: '2.5em',
     paddingLeft: '0.5em'
+  },
+  buttons: {
+    padding: '0.3em',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    border: 'solid 1px #999999'
+  },
+  openIcon: {
+    marginRight: '0.5em'
   }
 })
 
@@ -102,8 +110,11 @@ const NetworkToolbar = props => {
       <NDExSignInModal {...others}>
         <NDExSave {...others} />
       </NDExSignInModal>
-      <OpenInNDExButton {...others} />
-      <OpenInCytoscapeButton {...others} />
+      <div className={classes.buttons}>
+        <OpenIcon color={'inherit'} className={classes.openIcon}/>
+        <OpenInNDExButton {...others} />
+        <OpenInCytoscapeButton {...others} />
+      </div>
     </div>
   )
 }
