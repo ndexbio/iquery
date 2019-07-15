@@ -16,6 +16,7 @@ import * as serviceWorker from './serviceWorker'
 import rootReducer from './reducers'
 import rootSaga from './sagas/ndexSaga'
 import cyRestSaga from './sagas/cyRestSaga'
+import ndexSaveSaga from './sagas/ndexSaveSaga'
 import ReactGA from 'react-ga'
 
 import { SET_QUERY } from './actions/search'
@@ -56,7 +57,7 @@ const handleEvent = event => {
       label: event.payload.uuid
     })
   } else if ('NETWORK_FETCH_STARTED') {
-    if (event.payload === undefined) {
+    if (event.payload === undefined || event.payload == null) {
       return
     }
     ReactGA.event({
@@ -79,6 +80,7 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga)
 sagaMiddleware.run(cyRestSaga)
+sagaMiddleware.run(ndexSaveSaga)
 
 const Root = ({ store }) => (
   <Provider store={store}>

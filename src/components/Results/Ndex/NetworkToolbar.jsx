@@ -7,9 +7,12 @@ import Typography from '@material-ui/core/Typography'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
 import MenuIcon from '@material-ui/icons/Menu'
-import OpenInButton from './OpenInButton'
+import OpenInCytoscapeButton from './OpenInCytoscapeButton'
 import Highlighter from './Highlighter'
 import { Tooltip } from '@material-ui/core'
+import OpenInNDExButton from './OpenInNDExButton'
+import NDExSignInModal from '../../NDExSignInModal'
+import NDExSave from '../../NDExSave'
 
 const styles = theme => ({
   toolbar: {
@@ -96,7 +99,11 @@ const NetworkToolbar = props => {
       </Tooltip>
       <div className={classes.grow} />
       <Highlighter {...others} />
-      <OpenInButton {...others} />
+      <NDExSignInModal {...others}>
+        <NDExSave {...others} />
+      </NDExSignInModal>
+      <OpenInNDExButton {...others} />
+      <OpenInCytoscapeButton {...others} />
     </div>
   )
 }
