@@ -47,16 +47,12 @@ function* watchSearch(action) {
   let sourceNames = action.payload.sourceNames
 
   // If source names are missing, find them:
-  if (sourceNames === undefined) {
+  if (sourceNames === undefined || sourceNames === null || sourceNames.length === 0) {
     const sources = yield call(cySearchApi.getSource, null)
     const sourceJson = yield call([sources, 'json'])
     const sourceList = sourceJson.results
     sourceNames = sourceList.map(source => source.name)
     sourceNames = sourceNames.filter(name => name !== 'keyword')
-
-    // TODO: this is a hack
-
-    console.log('Getting source list: ', sourceNames)
   }
   const geneListString = geneList.join()
 
@@ -95,19 +91,6 @@ function* watchSearch(action) {
   }
 }
 
-const checkStatus = statusJson => {
-  console.log('Status:::', statusJson)
-  const { progress } = statusJson
-  if (progress === 100) {
-    return true
-  } else {
-    return false
-  }
-}
-
-const checkProgress = statusJson => {
-  const sources = statusJson.source
-}
 
 // Simple sleep function using Promise
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -199,8 +182,6 @@ function* fetchNetwork(action) {
 
     const cx = yield call(api.fetchNetwork, id, sourceUUID, networkUUID)
     const json = yield call([cx, 'json'])
-
-    console.log('Network fetched: ', json)
 
     yield put({ type: NETWORK_FETCH_SUCCEEDED, cx: json })
   } catch (error) {

@@ -44,7 +44,6 @@ const getResult = (jobId, sourceName = null) => {
     resultUrl.searchParams.append('source', sourceName)
   }
 
-  console.log('QQQQQQQQQQQQQQ URL = ', resultUrl, sourceName)
   return fetch(resultUrl, {
     method: METHOD_GET
   })
@@ -64,8 +63,6 @@ const postQuery = (geneList, sourceList) => {
     geneList,
     sourceList
   }
-
-  console.log('Sending query to search service:', queryObject)
 
   const header = new Headers({
     'Content-Type': 'application/json'

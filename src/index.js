@@ -42,8 +42,6 @@ const gaMiddleware = store => next => action => {
 
 const handleEvent = event => {
   const eventType = event.type
-  console.log('*** Event handler:::', event)
-
   if (eventType === SET_QUERY) {
     ReactGA.event({
       category: 'User Action',

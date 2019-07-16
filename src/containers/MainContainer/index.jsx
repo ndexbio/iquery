@@ -18,7 +18,6 @@ const MainContainer = props => {
     const { history } = props
 
     history.listen(({ pathname }) => {
-      console.log('(((((((((((((MainPathname =  ====', pathname)
       ReactGA.set({ page: pathname })
       ReactGA.pageview(pathname)
     })

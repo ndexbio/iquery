@@ -15,7 +15,6 @@ import {
 
 const EMPTY_STATE = {
   isSearching: false,
-  searchFinished: [],
   isFetching: false,
   queryGenes: '',
   queryList: [],
@@ -38,18 +37,9 @@ const search = handleActions(
       return EMPTY_STATE
     },
     [searchStarted]: (state, payload) => {
-      console.log('------------ Start  1 ------------------::')
-      const sources = payload.payload.sourceNames
-      const sourceLen = sources.length
-      const searchFinished = {}
-      sources.forEach(source => {
-        searchFinished[source] = false
-      })
-
       return {
         ...state,
         isSearching: true,
-        searchFinished,
         resultList: [],
         queryList: state.queryGenes.split(' ')
       }
@@ -61,7 +51,6 @@ const search = handleActions(
       return { ...state, isSearching: false }
     },
     [setSelectedGenes]: (state, payload) => {
-      console.log('Setting selected gene:', payload)
       return { ...state, selectedGenes: payload.payload }
     },
     [fetchResultStarted]: (state, payload) => {
@@ -84,9 +73,6 @@ const search = handleActions(
     },
     [setSearchResult]: (state, payload) => {
       const singleResult = payload.payload.singleResult
-
-      const newList = [...state.resultList, singleResult]
-      console.log('------------ Setting single ------------------::', newList)
       return {
         ...state,
         searchResults: singleResult

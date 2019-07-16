@@ -15,15 +15,13 @@ const StartPanel = props => {
 
     if (genes !== undefined) {
       const geneList = genes.split(',')
-      //TODO: call actual API
       props.searchActions.setQuery(genes)
-      console.log('Got genes.  Start search now!', geneList)
       props.searchActions.searchStarted({ geneList })
     }
 
     props.sourceActions.findSourceStarted()
+
     return () => {
-      console.log('Page unmounted')
     }
   }, [])
 
