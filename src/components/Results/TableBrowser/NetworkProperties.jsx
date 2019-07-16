@@ -22,7 +22,6 @@ const NetworkProperties = props => {
   if (networkAttr === null) {
     return
   }
-
   return (
     <React.Fragment>
       {networkAttr.map(entry => (
