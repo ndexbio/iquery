@@ -4,3 +4,13 @@
   display: flex;
   flex-direction: column;
 }
+.gene-list-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 1.5em;
+  padding-top: 0.4em;
+  font-weight: 800;
+  color: #333333;
+  font-size: 0.8em;
+}

@@ -6,10 +6,8 @@ import NetworkView from './NetworkView'
 import NetworkList from './NetworkList'
 
 import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 
-import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 
 import * as cyRESTApi from '../../../api/cyrest'
@@ -65,7 +63,6 @@ const Ndex = props => {
   ) => {
     checkCytoscapeConnection(props)
 
-
     // Reset selection
     props.searchActions.setSelectedGenes([])
 
@@ -99,7 +96,6 @@ const Ndex = props => {
     // Reset the UI state (hilight)
     props.uiStateActions.setHighlights(true)
 
-
     props.cyrestActions.importNetworkStarted({
       cx: props.network.originalCX,
       source: props.network.sourceId,
@@ -115,8 +111,30 @@ const Ndex = props => {
       edges,
       imageURL,
       hitGenes,
-      rank
+      rank,
+      details
     } = networkEntry
+
+    const pVal = details.PValue
+    let descriptionText =
+      'N: ' +
+      nodes +
+      ', E: ' +
+      edges +
+      ',  Hit/Query = ' +
+      hitGenes.length +
+      '/' +
+      querySize
+
+    let descriptionText2 = ''
+
+    if (pVal !== undefined) {
+      let pValText = pVal.toExponential(5)
+      if (pVal === 0) {
+        pValText = 0
+      }
+      descriptionText2 = 'P-value = ' + pValText
+    }
 
     return (
       <ListItem
@@ -131,19 +149,29 @@ const Ndex = props => {
           <img className="list-icon" src={imageURL} />
         </ListItemIcon>
         <ListItemText
-          primary={'Rank ' + (rank) + ': ' + description}
+          primary={
+            <React.Fragment>
+              <Typography component="span" variant="caption">
+                {'Rank ' + (rank+1)}
+              </Typography>
+              <div className={classes.listTitle}>
+                {description}
+              </div>
+            </React.Fragment>
+          }
           secondary={
             <React.Fragment>
               <Tooltip title="Number of nodes and edges" placement="bottom">
-                <Typography component="span" className={classes.inline}>
-                  {'N: ' + nodes + ', E: ' + edges}
+                <Typography component="span" variant={'caption'}>
+                  {descriptionText}
                 </Typography>
               </Tooltip>
-              {'  Hit/Query = ' + hitGenes.length + '/' + querySize}
+              <Typography component="span" variant={'caption'}>
+                {descriptionText2}
+              </Typography>
             </React.Fragment>
           }
-        >
-        </ListItemText>
+        />
       </ListItem>
     )
   }

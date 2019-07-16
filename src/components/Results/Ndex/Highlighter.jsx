@@ -1,22 +1,44 @@
-import React from 'react'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
+import React, { useState } from 'react'
+import HighlightIcon from '@material-ui/icons/WbIncandescent'
+import Button from '@material-ui/core/Button'
+import { withStyles } from '@material-ui/core'
+
+const styles = theme => ({
+  buttonIcon: {
+    paddingRight: '0.2em'
+  },
+  button: {
+    height: '3em',
+    maxWidth: '13em',
+    minWidth: '13em',
+    marginRight: '0.5em'
+  }
+})
 
 const Highlighter = props => {
-  const highlights = props.uiState.highlights
-  const handleChange = (evt, checked) => {
-    props.uiStateActions.setHighlights(checked)
+  const { classes } = props
+
+  const [highlight, setHighlight] = useState(true)
+
+  const handleChange = evt => {
+    setHighlight(!highlight)
+    props.uiStateActions.setHighlights(!highlight)
   }
 
   return (
-    <FormGroup row>
-      <FormControlLabel
-        control={<Checkbox checked={highlights} onChange={handleChange} />}
-        label="Query Genes"
+    <Button
+      className={classes.button}
+      variant="outlined"
+      color={highlight ? 'secondary' : 'default'}
+      onClick={handleChange}
+    >
+      <HighlightIcon
+        className={classes.buttonIcon}
+        color={highlight ? 'secondary' : 'disabled'}
       />
-    </FormGroup>
+      Highlight Genes
+    </Button>
   )
 }
 
-export default Highlighter
+export default withStyles(styles)(Highlighter)

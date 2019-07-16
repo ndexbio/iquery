@@ -3,6 +3,7 @@ import './style.css'
 
 import Button from '@material-ui/core/Button'
 import logo from '../../../assets/images/ndex-logo.svg'
+import logoDisabled from '../../../assets/images/ndex-logo-mono.svg'
 import { withStyles } from '@material-ui/core'
 
 import Tooltip from '@material-ui/core/Tooltip'
@@ -12,6 +13,7 @@ const styles = theme => ({
     height: '2em'
   },
   button: {
+    width: '5em',
     marginRight: '0.5em',
     minWidth: '5em'
   }
@@ -24,17 +26,18 @@ const OpenInNDExButton = props => {
     props.ndexSaveActions.setNDExModalOpen(true)
   }
 
+  const disabled = !(props.network.uuid && props.network.uuid.length > 0)
+
   return (
     <Tooltip title="Save this network to your NDEx account" placement="bottom">
       <div>
         <Button
           className={classes.button}
-          variant="contained"
-          color="default"
-          disabled={!(props.network.uuid && props.network.uuid.length > 0)}
+          variant="outlined"
+          disabled={disabled}
           onClick={handleImportNetwork}
         >
-          <img alt="NDEx logo" src={logo} className={classes.buttonIcon} />
+          <img alt="NDEx logo" src={disabled ? logoDisabled: logo} className={classes.buttonIcon} />
         </Button>
       </div>
     </Tooltip>

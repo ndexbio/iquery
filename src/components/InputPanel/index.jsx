@@ -1,5 +1,4 @@
 import React from 'react'
-import SearchPanel from '../CommandPanel'
 import './style.css'
 import GeneList from '../GeneList'
 
@@ -13,7 +12,7 @@ import GeneList from '../GeneList'
 const InputPanel = props => (
   <div className="input-container">
     <div className="input-wrapper">
-      <SearchPanel {...props} />
+      <div className={"gene-list-title"}>Query Genes</div>
       <GeneList {...props} />
     </div>
   </div>

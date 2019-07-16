@@ -37,8 +37,8 @@ const HomePanel = props => {
   return (
     <AppShell {...props}>
       <div className="container">
-        <InputPanel className="input" {...props} />
-        <Results className="results" {...props} />
+        <Results {...props} />
+        <InputPanel {...props} />
       </div>
     </AppShell>
   )
