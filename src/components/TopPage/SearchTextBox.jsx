@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -37,6 +37,7 @@ const styles = {
 
 const SearchTextBox = props => {
   const { classes } = props
+  const searchButtonEl = useRef()
 
   const [state, setState] = useState({ anchorEl: null, query: '' })
 
@@ -45,11 +46,7 @@ const SearchTextBox = props => {
       const jobId = props.search.results.jobId
 
       const pathParam = props
-      console.log('** Search route:', jobId, pathParam)
       props.history.push(`/${jobId}`)
-    }
-    return () => {
-      console.log('Page unmounted')
     }
   }, [])
 
@@ -160,6 +157,7 @@ const SearchTextBox = props => {
         value={state.query}
       />
       <IconButton
+        ref={searchButtonEl}
         color={'primary'}
         className={classes.iconButton}
         aria-label="Search"

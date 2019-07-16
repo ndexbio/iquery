@@ -217,13 +217,6 @@ const adjustLayout = (nodes, queryGenes) => {
     if (upperQuery.has(name)) {
       node.data['query'] = 'true'
     }
-
-    // if (position !== undefined) {
-    //   node.position = {
-    //     x: position.x * LAYOUT_SCALING_FACTOR,
-    //     y: position.y * LAYOUT_SCALING_FACTOR
-    //   }
-    // }
   }
   return nodes
 }

@@ -42,7 +42,10 @@
 }
 
 .list-icon {
+  object-fit: scale-down;
   width: 2.5em;
+  height: 2.5em;
+
 }
 
 .gutter {
