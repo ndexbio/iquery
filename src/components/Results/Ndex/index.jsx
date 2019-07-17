@@ -115,6 +115,8 @@ const Ndex = props => {
       details
     } = networkEntry
 
+    // console.log('Entry:', networkEntry)
+
     const pVal = details.PValue
     let descriptionText =
       'N: ' +

@@ -10,8 +10,9 @@ const styles = theme => ({
     height: '2em'
   },
   button: {
-    width: '5em',
-    minWidth: '5em'
+    height: '3em',
+    width: '4.3em',
+    minWidth: '4.3em'
   }
 })
 

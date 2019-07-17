@@ -4,6 +4,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 const LIST_DATA_PREFIX = 'list_of'
 
+const PRESET_ATTR_NAMES = ['name', 'description']
+
 const NetworkProperties = props => {
   const { originalCX } = props
 

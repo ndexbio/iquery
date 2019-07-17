@@ -10,6 +10,8 @@ import { Tooltip } from '@material-ui/core'
 import OpenInNDExButton from './OpenInNDExButton'
 import NDExSignInModal from '../../NDExSignInModal'
 import NDExSave from '../../NDExSave'
+import OpenOriginalNetworkButton from './OpenOriginalNetworkButton'
+
 
 const styles = theme => ({
   toolbar: {
@@ -111,6 +113,7 @@ const NetworkToolbar = props => {
       </NDExSignInModal>
       <OpenInNDExButton {...others} />
       <OpenInCytoscapeButton {...others} />
+      <OpenOriginalNetworkButton {...others} />
     </div>
   )
 }
