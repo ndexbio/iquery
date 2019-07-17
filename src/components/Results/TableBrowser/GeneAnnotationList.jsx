@@ -16,6 +16,7 @@ import './style.css'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Collapse from '@material-ui/core/Collapse'
+import CheckIcon from '@material-ui/icons/Check'
 
 // For external link
 
@@ -34,7 +35,7 @@ const styles = theme => ({
     marginTop: '0.3em'
   },
   matched: {
-    backgroundColor: 'teal'
+    backgroundColor: '#C51162'
   },
   unmatched: {
     backgroundColor: 'red'
@@ -51,7 +52,6 @@ class GeneAnnotationList extends React.Component {
   state = {}
 
   handleClick = id => {
-    console.log('OPEN === ', id)
     const tag = 'pw_' + id
     const curState = this.state[tag]
 
@@ -77,8 +77,7 @@ class GeneAnnotationList extends React.Component {
       return <div className="gene-list-wrapper" />
     }
 
-    const symbol = this.props.geneSymbol.toLowerCase()
-    console.log('** LIST = ', symbol, geneList)
+    const symbol = this.props.geneSymbol.toUpperCase()
 
     return this.getListItem(geneList.get(symbol), classes)
   }
@@ -96,7 +95,9 @@ class GeneAnnotationList extends React.Component {
         onClick={e => this.handleClick(geneEntry._id)}
       >
         <ListItemAvatar>
-          <Avatar className={classes.matched}>G</Avatar>
+          <Avatar className={classes.matched}>
+            <CheckIcon />
+          </Avatar>
         </ListItemAvatar>
         <ListItemText
           primary={geneEntry.symbol}
@@ -132,8 +133,6 @@ class GeneAnnotationList extends React.Component {
     const pathway = entry.pathway
 
     const pathwaySources = Object.keys(pathway)
-
-    console.log('PW===', pathway)
 
     return (
       <Collapse

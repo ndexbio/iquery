@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
+import CheckIcon from '@material-ui/icons/Check'
 
 const styles = theme => ({
   root: {
@@ -73,15 +74,17 @@ const GeneList = props => {
 
 const getChip = (value, isValid, classes, props, hitSets) => {
   let color = 'default'
+  let found = false
   if (hitSets.has(value.symbol)) {
     color = 'secondary'
+    found = true
   }
 
   if (isValid) {
     return (
       <Chip
         className={classes.chip}
-        avatar={<Avatar>G</Avatar>}
+        avatar={<Avatar>{found ? <CheckIcon /> : '-'}</Avatar>}
         label={value.symbol}
         onClick={() => handleClick(value.symbol, props)}
         variant="outlined"

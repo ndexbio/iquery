@@ -61,7 +61,7 @@ const TableBrowser = props => {
     <div className={classes.container}>
       <List component="nav" className={classes.list}>
         {node !== null ? (
-          <NodeProperties node={node} {...props} />
+          <NodeProperties node={node} originalCX={originalCX} {...props} />
         ) : (
           <EdgeProperties edge={edge} />
         )}

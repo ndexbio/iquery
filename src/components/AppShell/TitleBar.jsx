@@ -13,6 +13,7 @@ import GeneTextBox from './GeneTextBox'
 import Tooltip from '@material-ui/core/Tooltip'
 
 import HomeIcon from '@material-ui/icons/Home'
+import { networkClear } from "../../actions/network";
 
 const drawerWidth = 240
 
@@ -58,6 +59,7 @@ class TitleBar extends React.Component {
 
   handleHomeButton = () => {
     this.props.searchActions.clearAll()
+    this.props.networkActions.networkClear()
     this.props.history.push('/')
   }
 

@@ -1,31 +1,21 @@
-import React, { useRef } from 'react'
-import { makeStyles } from '@material-ui/styles'
-import List from '@material-ui/core/List'
+import React from 'react'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import GeneAnnotationList from './GeneAnnotationList'
+import { getListNodeAttr } from './attribute-util'
 
-const useStyles = makeStyles(theme => ({
-  container: {
-    width: '100%',
-    height: '100%',
-    padding: '0.2em',
-    backgroundColor: '#FFFFFF',
-    overflow: 'auto'
-  },
-  list: {
-    height: '100%',
-    width: '100%'
-  },
-  subtitle: {
-    marginLeft: '1em',
-    marginTop: '0.5em'
-  }
-}))
 
 const NodeProperties = props => {
-  const { node } = props
+  const { node, originalCX } = props
+  const listAttr = getListNodeAttr(originalCX, node.id)
+
   const keys = Object.keys(node)
+
+  keys.forEach(key => {
+    if (listAttr[key] !== undefined) {
+      node[key] = listAttr[key].join(', ')
+    }
+  })
 
   return (
     <React.Fragment>

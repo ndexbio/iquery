@@ -63,7 +63,7 @@ const SearchTextBox = props => {
   const handleExample = exampleIdx => {
     setState({
       ...props,
-      query: EXAMPLES[exampleIdx],
+      query: EXAMPLES[exampleIdx].genes,
       anchorEl: null
     })
   }
@@ -134,7 +134,7 @@ const SearchTextBox = props => {
           {EXAMPLES.map((example, idx) => {
             return (
               <MenuItem key={idx} onClick={() => handleExample(idx)}>
-                Gene List {idx + 1}
+                {example.name}
               </MenuItem>
             )
           })}
