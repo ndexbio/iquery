@@ -19,7 +19,7 @@ const DEF_STATE = {
 const ndexSave = handleActions(
   {
     [setNDExModalOpen]: (state, payload) => {
-      console.log('OPEN = ', payload.payload)
+      //console.log('OPEN = ', payload.payload)
       return {
         ...state,
         ndexModal: payload.payload,

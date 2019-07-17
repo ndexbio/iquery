@@ -5,7 +5,11 @@ import { DialogContentText, DialogActions, Button } from '@material-ui/core'
 import config from './assets/config'
 import './style.css'
 
-const styles = theme => ({})
+const styles = theme => ({
+  button: {
+    'text-transform': 'none'
+  }
+})
 
 class NDExSave extends React.Component {
   constructor(props) {
@@ -24,11 +28,10 @@ class NDExSave extends React.Component {
   }
 
   render() {
-    const { ndexSave, network } = this.props
+    const { classes, ndexSave, network } = this.props
     const token = ndexSave.profile ? ndexSave.profile.authorization.token : null
     const cx = network.originalCX
 
-    console.log('NDExSave render token' + token)
     const networkUrl = ndexSave.networkUrl
 
     return ndexSave && ndexSave.profile ? (
@@ -39,8 +42,12 @@ class NDExSave extends React.Component {
         </DialogContentText>
         <DialogActions>
           {networkUrl ? (
-            <Button href={networkUrl} target="_blank">
-              Open in NDEx
+            <Button
+              href={networkUrl}
+              className={classes.button}
+              target="_blank"
+            >
+              OPEN IN NDEx
             </Button>
           ) : (
             <Button

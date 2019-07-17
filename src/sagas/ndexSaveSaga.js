@@ -126,12 +126,15 @@ function* watchCredentialsSignOn(action) {
 
   try {
     const resp = yield call(ndexSave.ndexValidation, headers)
-    console.log('resp', resp)
+    //console.log('resp', resp)
 
     const responseJson = yield call([resp, 'json'])
-    console.log('responseJson', responseJson)
 
-    console.log('headers', resp.headers.get('Authorization'))
+    /*
+    console.log('responseJson', responseJson)
+    for (const key of resp.headers.keys()) {
+      console.log('header ', key)
+    }*/
 
     if (resp.status != 200) {
       yield put({
