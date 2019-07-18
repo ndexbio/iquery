@@ -21,9 +21,9 @@ import ReactGA from 'react-ga'
 
 import { SET_QUERY } from './actions/search'
 
-import { GA_DEV_ID, GA_STAGING_ID } from './analytics'
+import { GA_DEV_ID, GA_STAGING_ID, GA_PRODUCTION } from './analytics'
 
-ReactGA.initialize(GA_DEV_ID, {
+ReactGA.initialize(GA_PRODUCTION, {
   gaOptions: {
     siteSpeedSampleRate: 100
   }
