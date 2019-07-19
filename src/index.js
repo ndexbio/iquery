@@ -16,6 +16,7 @@ import * as serviceWorker from './serviceWorker'
 import rootReducer from './reducers'
 import rootSaga from './sagas/ndexSaga'
 import cyRestSaga from './sagas/cyRestSaga'
+import cyRestStatusSaga from './sagas/cyRestStatusSaga'
 import ndexSaveSaga from './sagas/ndexSaveSaga'
 import ReactGA from 'react-ga'
 
@@ -78,6 +79,7 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga)
 sagaMiddleware.run(cyRestSaga)
+sagaMiddleware.run(cyRestStatusSaga)
 sagaMiddleware.run(ndexSaveSaga)
 
 const Root = ({ store }) => (
