@@ -18,7 +18,7 @@ export const fetchAvailable = createAction(FETCH_AVAILABLE)
 export const setAvailable = createAction(SET_AVAILABLE)
 
 export const START_CYREST_POLLING = 'START_CYREST_POLLING'
-export const STOP_CYREST_POLLING = 'START_CYREST_POLLING'
+export const STOP_CYREST_POLLING = 'STOP_CYREST_POLLING'
 
 export const startCyRestPolling = createAction(START_CYREST_POLLING)
 export const stopCyRestPolling = createAction(STOP_CYREST_POLLING)
