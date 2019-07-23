@@ -27,15 +27,15 @@ export function* _fetchCyRESTAvailable(action) {
   }
 }
 
-export function* _cyRestStatusSaga() {
+export function* _cyRestStatusSaga(fetchFunction) {
   while (true) {
     console.log('in cyRestStatusSaga loop')
     const data = yield take(START_CYREST_POLLING)
-    yield race([call(_fetchCyRESTAvailable), take(STOP_CYREST_POLLING)])
+    yield race([call(fetchFunction), take(STOP_CYREST_POLLING)])
   }
 }
 
 export default function* root() {
   console.log('in cyRestStatusSaga root')
-  yield all([_cyRestStatusSaga()])
+  yield all([_cyRestStatusSaga(_fetchCyRESTAvailable)])
 }
