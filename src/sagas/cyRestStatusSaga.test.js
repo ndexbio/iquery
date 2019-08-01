@@ -36,8 +36,6 @@ test('_cyRestStatusSaga start polling', () => {
   expect(next.value).toMatchObject(
     race([call(_fetchCyRESTAvailable), take(STOP_CYREST_POLLING)])
   )
-
-  console.log(next.value)
 })
 
 test('_fetchCyRESTAvailable success', async done => {
@@ -57,7 +55,6 @@ test('_fetchCyRESTAvailable success', async done => {
   })
 
   try {
-    console.log('starting failure')
     const result = await runSaga(
       {
         dispatch: action => dispatched.push(action),
@@ -69,7 +66,7 @@ test('_fetchCyRESTAvailable success', async done => {
   } finally {
     //statusStub.restore()
   }
-}, 10000)
+}, 7000)
 
 test('_fetchCyRESTAvailable failure', async done => {
   expect.assertions(1)
@@ -86,7 +83,6 @@ test('_fetchCyRESTAvailable failure', async done => {
   })
 
   try {
-    console.log('starting failure')
     const result = await runSaga(
       {
         dispatch: action => dispatched.push(action),
@@ -98,4 +94,4 @@ test('_fetchCyRESTAvailable failure', async done => {
   } finally {
     //statusStub.restore()
   }
-}, 10000)
+}, 7000)
