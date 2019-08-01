@@ -18,24 +18,29 @@ function delay(duration) {
 export function* _fetchCyRESTAvailable(action) {
   while (true) {
     try {
-      const { data } = yield call(cyrest.status, 1234)
+      const statusResponse = yield call(cyrest.status, 1234)
+      console.log(statusResponse)
+      const statusJson = yield call([statusResponse, 'json'])
+      console.log('_fetchCyRESTAvailable json:', statusJson)
       yield put({ type: SET_AVAILABLE, payload: true })
     } catch (e) {
+      console.log('_fetchCyRESTAvailable failed')
+      console.log(e)
       yield put({ type: SET_AVAILABLE, payload: false })
     }
     yield call(delay, 5000)
   }
 }
 
-export function* _cyRestStatusSaga(fetchFunction) {
+export function* _cyRestStatusSaga() {
   while (true) {
     console.log('in cyRestStatusSaga loop')
     const data = yield take(START_CYREST_POLLING)
-    yield race([call(fetchFunction), take(STOP_CYREST_POLLING)])
+    yield race([call(_fetchCyRESTAvailable), take(STOP_CYREST_POLLING)])
   }
 }
 
 export default function* root() {
   console.log('in cyRestStatusSaga root')
-  yield all([_cyRestStatusSaga(_fetchCyRESTAvailable)])
+  yield all([_cyRestStatusSaga()])
 }
