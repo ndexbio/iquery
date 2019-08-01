@@ -12,7 +12,9 @@ const fetchNetwork = (id, sourceUUID, networkUUID) => {
     '&networkUUID=' +
     networkUUID
 
-  console.log('Calling CX API:', fetchUrl)
+  // const url2 = 'http://public.ndexbio.org/v2/network/b9989f1c-816f-11e8-a4bf-0ac135e8bacf'
+
+  // console.log('#############Calling CX API:', url2)
 
   return fetch(fetchUrl, {
     method: METHOD_GET,
