@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from '@material-ui/core/Button'
 import logo from '../../../assets/images/cytoscape-logo.svg'
 import logoDisabled from '../../../assets/images/cytoscape-logo-mono.svg'
@@ -17,6 +17,13 @@ const styles = theme => ({
 })
 
 const OpenInCytoscapeButton = props => {
+  useEffect(() => {
+    props.cyrestActions.startCyRestPolling()
+    return () => {
+      props.cyrestActions.stopCyRestPolling()
+    }
+  }, [])
+
   const { classes, cyrest, handleImportNetwork } = props
 
   const disabled =
