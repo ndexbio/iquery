@@ -16,8 +16,8 @@ const NetworkProperties = props => {
   }
 
   //What to display
-  let primaries = []
-  let secondaries = []
+  const primaries = []
+  const secondaries = []
   for (var i = 0; i < networkAttr.length; i++) {
     let prim = formatValue(networkAttr[i])
     let sec = formatName(networkAttr[i])
@@ -61,15 +61,16 @@ const NetworkProperties = props => {
     'WikipathwaysID',
     'WikipathwaysVersion',
     'WikipathwaysIRI',
+    'Rights',
     '@context'
   ]
 
-  let visited = []
+  const visited = []
   for (var i = 0; i < primaries.length; i++) {
     visited.push(false)
   }
-  let sortedSec = []
-  let sortedPrim = []
+  const sortedSec = []
+  const sortedPrim = []
   for (let i = 0; i < order.length; i++) {
     let ind = secondaries.indexOf(order[i])
     if (ind >= 0) {
@@ -85,7 +86,7 @@ const NetworkProperties = props => {
     }
   }
 
-  let display = []
+  const display = []
   for (let i = 0; i < sortedPrim.length; i++) {
     display.push(
       <ListItem key={i}>
@@ -113,15 +114,6 @@ const formatName = entry => {
     modifiedText = ''
   }
   return modifiedText
-}
-
-const removeHtmlTags = text => {
-  const originalText = text
-  if (originalText === null || originalText === undefined) {
-    return ''
-  } else {
-    return originalText.replace(/<(?:.|\n)*?>/gm, ' ')
-  }
 }
 
 export default NetworkProperties
