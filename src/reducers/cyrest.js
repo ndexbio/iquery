@@ -15,7 +15,8 @@ const defaultState = {
   available: false,
   isPollingAvailable: false,
   port: 1234,
-  error: null
+  error: null,
+  lastResponse: null
 }
 
 const source = handleActions(
@@ -23,12 +24,14 @@ const source = handleActions(
     [importNetworkStarted]: (state, payload) => {
       return {
         ...state,
+        lastResponse: null,
         error: null
       }
     },
     [importNetworkSucceeded]: (state, payload) => {
       return {
         ...state,
+        lastResponse: payload,
         error: null
       }
     },
