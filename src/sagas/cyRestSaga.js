@@ -42,12 +42,13 @@ function* watchImportNetwork(action) {
     //console.log('CX', patchedCX)
 
     const response = yield call(cyrest.importNetwork, cyrestport, patchedCX)
+    const responseJson = yield call([response, 'json'])
 
     console.log('CyREST response:', response)
 
     yield put({
       type: IMPORT_NETWORK_SUCCEEDED,
-      payload: {}
+      payload: responseJson
     })
   } catch (e) {
     console.warn('CyREST import network error:', e)
