@@ -7,6 +7,7 @@ import NetworkList from './NetworkList'
 
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
+import Snackbar from '@material-ui/core/Snackbar';
 
 import Typography from '@material-ui/core/Typography'
 
@@ -86,6 +87,17 @@ const Ndex = props => {
       source: props.network.sourceId,
       uuid: props.network.uuid
     })
+    
+    return(
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center'
+        }}
+        message="Hello"
+        open={true}
+      />
+    )
   }
 
   const renderNetworkListItem = (querySize, networkEntry, classes) => {
