@@ -2,7 +2,6 @@ import React from 'react'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import { getListNetworkAttr, findAttributes } from './attribute-util'
-import { displayPartsToString } from 'typescript'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
 

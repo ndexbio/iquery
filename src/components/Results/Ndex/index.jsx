@@ -7,7 +7,6 @@ import NetworkList from './NetworkList'
 
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import Snackbar from '@material-ui/core/Snackbar';
 
 import Typography from '@material-ui/core/Typography'
 
@@ -79,6 +78,7 @@ const Ndex = props => {
   }
 
   const handleImportNetwork = () => {
+    console.log("\n\n\n\n\n\n\n\n\n\nStart!\n\n\n\n\n\n\n\n\n")
     // Reset the UI state (hilight)
     props.uiStateActions.setHighlights(true)
 
@@ -87,17 +87,7 @@ const Ndex = props => {
       source: props.network.sourceId,
       uuid: props.network.uuid
     })
-    
-    return(
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center'
-        }}
-        message="Hello"
-        open={true}
-      />
-    )
+    console.log("\n\n\n\n\n\n\n\n\nDone!\n\n\n\n\n\n\n\n\n\n")
   }
 
   const renderNetworkListItem = (querySize, networkEntry, classes) => {

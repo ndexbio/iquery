@@ -24,8 +24,7 @@
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
     "redux-saga": "^1.0.3",
-    "typeface-roboto": "^0.0.54",
-    "typescript": "^3.5.3"
+    "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
     "eslint-config-prettier": "^4.2.0",
