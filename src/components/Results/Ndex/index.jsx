@@ -78,7 +78,6 @@ const Ndex = props => {
   }
 
   const handleImportNetwork = () => {
-    console.log("\n\n\n\n\n\n\n\n\n\nStart!\n\n\n\n\n\n\n\n\n")
     // Reset the UI state (hilight)
     props.uiStateActions.setHighlights(true)
 
@@ -87,7 +86,6 @@ const Ndex = props => {
       source: props.network.sourceId,
       uuid: props.network.uuid
     })
-    console.log("\n\n\n\n\n\n\n\n\nDone!\n\n\n\n\n\n\n\n\n\n")
   }
 
   const renderNetworkListItem = (querySize, networkEntry, classes) => {

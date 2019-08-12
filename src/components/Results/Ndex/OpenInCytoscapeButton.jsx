@@ -33,40 +33,10 @@ const OpenInCytoscapeButton = props => {
 
   const disabled = !(props.network.uuid && props.network.uuid.length > 0) || !cyrest.available
 
-  const handleImportNetworkPromise = function() {
-    return new Promise(function(resolve, reject) {
-      if (cyrest.lastResponse.type === 'IMPORT_NETWORK_SUCCESS') {
-        resolve();
-      } else {
-        reject();
-      }
-    })
-  }
-
-  const handleClick = () => {
-    handleImportNetworkPromise().then(
-      function(result) {
-        setOpen(open)
-      },
-      function(error) {
-        setMessage("Network failed to open in Cytoscape Desktop")
-        setOpen(open)
-      }
-    )
-  }
-
-/*
   const handleClick = () => {
     handleImportNetwork()
-    if (cyrest.lastResponse == null) {
-      setMessage("null")
-    }
-    else if (cyrest.lastResponse.type === 'IMPORT_NETWORK_FAILED') {
-      setMessage("Network failed to open in Cytoscape Desktop")
-    }
     setOpen(true)
   }
-*/
 
   return (
     <React.Fragment>
