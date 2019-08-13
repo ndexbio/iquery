@@ -38,7 +38,7 @@ const NetworkProperties = props => {
 
     //Linkify and parse html
     prim = parse(prim)
-    prim = <Linkify>{prim}</Linkify>
+    prim = <Linkify key={'link' + i}>{prim}</Linkify>
 
     primaries.push(prim)
     secondaries.push(sec)

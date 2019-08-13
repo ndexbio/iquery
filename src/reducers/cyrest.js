@@ -19,7 +19,8 @@ const defaultState = {
   port: 1234,
   error: null,
   lastResponse: null,
-  snackbar: null
+  snackbar: null,
+  isLoadingNetwork: false
 }
 
 const source = handleActions(
@@ -28,6 +29,7 @@ const source = handleActions(
       return {
         ...state,
         lastResponse: null,
+        isLoadingNetwork: true,
         error: null
       }
     },
@@ -36,6 +38,7 @@ const source = handleActions(
         ...state,
         lastResponse: payload,
         snackbar: 'SUCCESS',
+        isLoadingNetwork: false,
         error: null
       }
     },
@@ -45,6 +48,7 @@ const source = handleActions(
         ...state,
         lastResponse: payload,
         error: payload.error,
+        isLoadingNetwork: false,
         snackbar: 'FAILURE'
       }
     },

@@ -1,19 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Snackbar from '@material-ui/core/Snackbar'
 import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 
 const MessageSnackbar = props => {
 
+  const [isOpen, setOpen] = useState(false)
+
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return
     }
-
-    props.setOpen(false)
   }
-
-
+  
   return (
     <Snackbar
       anchorOrigin={{
@@ -26,11 +25,7 @@ const MessageSnackbar = props => {
       ContentProps={{
         'aria-describedby': 'message-id'
       }}
-      message={        
-        <span id="message-id">
-          {props.message}
-        </span>
-      }
+      message={<span id="message-id">{props.message}</span>}
       action={[
         <IconButton
           color="inherit"
