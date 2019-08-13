@@ -5,7 +5,8 @@ import logoDisabled from '../../../assets/images/cytoscape-logo-mono.svg'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
 
-import CytoscapeSnackbar from './CytoscapeSnackbar'
+import MessageSnackbar from '../../AppShell/MessageSnackbar.jsx'
+
 
 const styles = theme => ({
   buttonIcon: {
@@ -27,20 +28,65 @@ const OpenInCytoscapeButton = props => {
   }, [])
 
   const [open, setOpen] = useState(false)
-  const [message, setMessage] = useState('Network has been opened in Cytoscape Desktop!')
+  const [loadOpen, setLoadOpen] = useState(false)
+  const [message, setMessage] = useState('')
+  const [loadMessage, setLoadMessage] = useState('')
 
+  
   const { classes, cyrest, handleImportNetwork } = props
 
   const disabled = !(props.network.uuid && props.network.uuid.length > 0) || !cyrest.available
 
   const handleClick = () => {
+    setLoadMessage('Opening network in Cytoscape Desktop . . .')
+    setLoadOpen(true)
     handleImportNetwork()
-    setOpen(true)
+  }
+
+  const SnackbarShower = props => {
+    useEffect(() => {
+      if (props.snackbar != null) {
+        setTimeout(() => {
+          props.removeSnackbar()
+        }, 4000)
+      }
+    })
+    if (props.snackbar === 'SUCCESS') {
+      setLoadOpen(false)
+      setOpen(true)
+      setMessage('Network opened in Cytoscape Desktop!')
+      return (
+        <MessageSnackbar>
+          open={open}
+          setOpen={setOpen}
+          message={message}
+          setMessage={setMessage}
+          horizontal={'right'}
+          vertical={'bottom'}
+        </MessageSnackbar>
+      )
+    } else if (props.snackbar === 'FAILURE') {
+      setLoadOpen(false)
+      setOpen(true)
+      setMessage('Network failed to open in Cytoscape Desktop :(')
+      return (
+        <MessageSnackbar>
+          open={open}
+          setOpen={setOpen}
+          message={message}
+          setMessage={setMessage}
+          horizontal={'right'}
+          vertical={'bottom'}
+        </MessageSnackbar>
+      )    
+    } else {
+      setOpen(false)
+      return null
+    }
   }
 
   return (
     <React.Fragment>
-      <CytoscapeSnackbar open={open} setOpen={setOpen} message={message} setMessage={setMessage}/>
       <Tooltip
         disableFocusListener
         title="Open this network in Cytoscape Desktop"
@@ -61,6 +107,23 @@ const OpenInCytoscapeButton = props => {
           </Button>
         </div>
       </Tooltip>
+      <MessageSnackbar 
+        open={loadOpen} 
+        setOpen={setLoadOpen} 
+        message={loadMessage} 
+        setMessage={setLoadMessage}
+        horizontal={'right'}
+        vertical={'bottom'}
+      />
+      <MessageSnackbar
+        open={open}
+        setOpen={setOpen}
+        message={message}
+        setMessage={setMessage}
+        horizontal={'right'}
+        vertical={'bottom'}
+      />
+      <SnackbarShower snackbar={props.cyrest.snackbar} removeSnackbar={props.cyrestActions.removeSnackbar}/>
     </React.Fragment>
   )
 }

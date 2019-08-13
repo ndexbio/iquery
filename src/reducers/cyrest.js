@@ -7,7 +7,9 @@ import {
   setAvailable,
   startCyRestPolling,
   stopCyRestPolling,
-  setPort
+  setPort,
+  addSnackbar,
+  removeSnackbar
 } from '../actions/cyrest'
 
 const defaultState = {
@@ -16,7 +18,8 @@ const defaultState = {
   isPollingAvailable: false,
   port: 1234,
   error: null,
-  lastResponse: null
+  lastResponse: null,
+  snackbar: null
 }
 
 const source = handleActions(
@@ -32,6 +35,7 @@ const source = handleActions(
       return {
         ...state,
         lastResponse: payload,
+        snackbar: 'SUCCESS',
         error: null
       }
     },
@@ -39,7 +43,9 @@ const source = handleActions(
       console.warn('Error===', payload.error)
       return {
         ...state,
-        error: payload.error
+        lastResponse: payload,
+        error: payload.error,
+        snackbar: 'FAILURE'
       }
     },
     [setPort]: (state, payload) => {
@@ -63,6 +69,12 @@ const source = handleActions(
     },
     [stopCyRestPolling]: (state, payload) => {
       return { ...state }
+    },
+    [removeSnackbar]: (state, payload) => {
+      return {
+        ...state,
+        snackbar: null
+      }
     }
   },
   defaultState

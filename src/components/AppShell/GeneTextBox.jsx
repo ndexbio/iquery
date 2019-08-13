@@ -102,7 +102,14 @@ const GeneTextBox = props => {
 
   return (
     <div>
-      <MessageSnackbar open={open} setOpen={setOpen} />
+      <MessageSnackbar 
+        open={open} 
+        setOpen={setOpen}
+        message={'Genes are copied to clipboard!'}
+        autoHideDuration={4000}
+        horizontal={'left'}
+        vertical={'bottom'}
+      />
       <Paper className={classes.root} elevation={0}>
         <Tooltip title="Copy" placement="bottom">
           <IconButton

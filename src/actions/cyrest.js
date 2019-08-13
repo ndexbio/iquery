@@ -22,3 +22,7 @@ export const STOP_CYREST_POLLING = 'STOP_CYREST_POLLING'
 
 export const startCyRestPolling = createAction(START_CYREST_POLLING)
 export const stopCyRestPolling = createAction(STOP_CYREST_POLLING)
+
+export const REMOVE_SNACKBAR = 'REMOVE_SNACKBAR'
+
+export const removeSnackbar = createAction(REMOVE_SNACKBAR)

@@ -17,16 +17,20 @@ const MessageSnackbar = props => {
   return (
     <Snackbar
       anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left'
+        vertical: props.vertical,
+        horizontal: props.horizontal
       }}
       open={props.open}
-      autoHideDuration={4000}
+      autoHideDuration={props.autoHideDuration || null}
       onClose={handleClose}
       ContentProps={{
         'aria-describedby': 'message-id'
       }}
-      message={<span id="message-id">Genes are copied to clipboard!</span>}
+      message={        
+        <span id="message-id">
+          {props.message}
+        </span>
+      }
       action={[
         <IconButton
           color="inherit"
