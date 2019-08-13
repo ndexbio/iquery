@@ -55,34 +55,14 @@ const OpenInCytoscapeButton = props => {
       setLoadOpen(false)
       setOpen(true)
       setMessage('Network opened in Cytoscape Desktop!')
-      return (
-        <MessageSnackbar>
-          open={open}
-          setOpen={setOpen}
-          message={message}
-          setMessage={setMessage}
-          horizontal={'right'}
-          vertical={'bottom'}
-        </MessageSnackbar>
-      )
     } else if (props.snackbar === 'FAILURE') {
       setLoadOpen(false)
       setOpen(true)
-      setMessage('Network failed to open in Cytoscape Desktop :(')
-      return (
-        <MessageSnackbar>
-          open={open}
-          setOpen={setOpen}
-          message={message}
-          setMessage={setMessage}
-          horizontal={'right'}
-          vertical={'bottom'}
-        </MessageSnackbar>
-      )    
+      setMessage('Network failed to open in Cytoscape Desktop :(')  
     } else {
       setOpen(false)
-      return null
     }
+    return null
   }
 
   return (
