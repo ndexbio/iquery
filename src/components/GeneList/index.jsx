@@ -61,8 +61,8 @@ const GeneList = props => {
     return 0
   }
 
-  const matchedSorted = matched.sort(sortBySymbol)
-  const unmatchedSorted = unmatched.sort(sortBySymbol)
+  const matchedSorted = matched.sort().reverse()
+  const unmatchedSorted = unmatched.sort().reverse()
   const sorted = [...matchedSorted, ...unmatchedSorted]
 
   return (
