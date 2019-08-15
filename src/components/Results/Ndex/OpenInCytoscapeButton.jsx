@@ -29,35 +29,58 @@ const OpenInCytoscapeButton = props => {
   const { classes, cyrest, handleImportNetwork } = props
 
   const disabled =
-    !(props.network.uuid && props.network.uuid.length > 0) || !cyrest.available
+    !(props.network.uuid && props.network.uuid.length > 0) || 
+    !cyrest.available
 
   const handleClick = () => {
     handleImportNetwork()
   }
 
-  // Setup state for the Snackbar
+  //Snackbar
   const { isLoadingNetwork, lastResponse } = cyrest
+  const [open, setOpen] = useState(false)
+  const [state, setState] = useState('dormant')
+  const [message, setMessage] = useState(null)
 
+  if (state === 'dormant' && isLoadingNetwork) {
+    setMessage('Opening network in Cytoscape Desktop . . .')
+    setState('openLoading')
+    if (!open) {
+      setOpen(true)
+    }
+  }
+  if (
+    (state === 'openLoading' || 
+    state === 'closeLoading') && 
+    lastResponse != null
+    ) {
+    setState('openResult')
+    if (lastResponse.type === 'IMPORT_NETWORK_SUCCEEDED') {
+      setMessage('Network opened in Cytoscape Desktop!')
+    } else {
+      setMessage('Network failed to open in Cytoscape Desktop')
+    }
+    if (!open) {
+      setOpen(true)
+    }
+  }
+  if (state === 'openResult' && !open) {
+    setOpen(true)
+  }
+  if (state === 'openResult' && open) {
+    setTimeout(() => {
+      setState('dormant')
+      setOpen(false)
+    }, 6000)
+  }
 
-  let statusMessage = '?'
-  let openSnackbar = false
-  if (isLoadingNetwork) {
-    console.log('=================== Start Loading:', isLoadingNetwork, lastResponse)
-    openSnackbar = true
-    statusMessage = 'Opening network in Cytoscape Desktop'
-  } else if (
-    lastResponse !== null &&
-    lastResponse.type === 'IMPORT_NETWORK_SUCCEEDED'
-  ) {
-    console.log('=================== Success!:')
-    openSnackbar = true
-    statusMessage = 'Network opened in Cytoscape Desktop!'
-  } else if (
-    lastResponse !== null &&
-    lastResponse.type === 'IMPORT_NETWORK_FAILED'
-  ) {
-    openSnackbar = true
-    statusMessage = 'Network failed to open in Cytoscape Desktop'
+  const handleClose = (event, reason) => {
+    if (state === 'openLoading') {
+      setState('closeLoading')
+    } else if (state === 'openResult') {
+      setState('dormant')
+    }
+    setOpen(false)
   }
 
   return (
@@ -83,11 +106,14 @@ const OpenInCytoscapeButton = props => {
         </div>
       </Tooltip>
       <MessageSnackbar
-        open={openSnackbar}
-        message={statusMessage}
-        autoHideDuration={6000}
+        open={open}
+        setOpen={setOpen}
+        message={message}
+        setMessage={setMessage}
+        autoHideDuration={null}
         horizontal={'right'}
         vertical={'bottom'}
+        handleClose={handleClose}
       />
     </React.Fragment>
   )

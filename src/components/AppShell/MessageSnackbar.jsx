@@ -11,6 +11,7 @@ const MessageSnackbar = props => {
     if (reason === 'clickaway') {
       return
     }
+    props.setOpen(false)
   }
   
   return (
@@ -31,7 +32,7 @@ const MessageSnackbar = props => {
           color="inherit"
           key="close"
           aria-label="Close"
-          onClick={handleClose}
+          onClick={props.handleClose || handleClose}
         >
           <CloseIcon />
         </IconButton>
