@@ -41,6 +41,7 @@ const OpenInCytoscapeButton = props => {
   const [open, setOpen] = useState(false)
   const [state, setState] = useState('dormant')
   const [message, setMessage] = useState(null)
+  let cycleId = 0
 
   if (state === 'dormant' && isLoadingNetwork) {
     setMessage('Opening network in Cytoscape Desktop . . .')
@@ -68,9 +69,13 @@ const OpenInCytoscapeButton = props => {
     setOpen(true)
   }
   if (state === 'openResult' && open) {
+    let currentId = cycleId
     setTimeout(() => {
-      setState('dormant')
-      setOpen(false)
+      if (state === 'openResult' && currentId === cycleId) {
+        setState('dormant')
+        cycleId++
+        setOpen(false)
+      }
     }, 6000)
   }
 
@@ -79,6 +84,7 @@ const OpenInCytoscapeButton = props => {
       setState('closeLoading')
     } else if (state === 'openResult') {
       setState('dormant')
+      cycleId++
     }
     setOpen(false)
   }
