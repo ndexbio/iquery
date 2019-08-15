@@ -94,18 +94,17 @@ const SearchTextBox = props => {
       // TODO: add better error message
       return
     }
-
+  
     const sourceNames = sources.map(source => source.name)
-
-    const geneListString = repaceDelimiters(genes)
-    const geneList = geneListString.split(/ /)
-    props.searchActions.setQuery(geneListString)
+    const geneList = genes.toString().split(/\s*,\s*|\s+/)
+    props.searchActions.setQuery(genes)
     props.searchActions.searchStarted({ geneList, sourceNames })
+    
   }
 
   const repaceDelimiters = query => {
     // TODO: what's the supported set of delimiters?
-    return query.replace(',', ' ')
+    return query.replace(/,/g, ' ')
   }
 
   return (

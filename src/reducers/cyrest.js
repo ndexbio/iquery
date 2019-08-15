@@ -7,7 +7,7 @@ import {
   setAvailable,
   startCyRestPolling,
   stopCyRestPolling,
-  setPort
+  setPort,
 } from '../actions/cyrest'
 
 const defaultState = {
@@ -16,7 +16,8 @@ const defaultState = {
   isPollingAvailable: false,
   port: 1234,
   error: null,
-  lastResponse: null
+  lastResponse: null,
+  isLoadingNetwork: false
 }
 
 const source = handleActions(
@@ -25,6 +26,7 @@ const source = handleActions(
       return {
         ...state,
         lastResponse: null,
+        isLoadingNetwork: true,
         error: null
       }
     },
@@ -32,6 +34,7 @@ const source = handleActions(
       return {
         ...state,
         lastResponse: payload,
+        isLoadingNetwork: false,
         error: null
       }
     },
@@ -39,7 +42,9 @@ const source = handleActions(
       console.warn('Error===', payload.error)
       return {
         ...state,
-        error: payload.error
+        lastResponse: payload,
+        error: payload.error,
+        isLoadingNetwork: false,
       }
     },
     [setPort]: (state, payload) => {
@@ -63,7 +68,7 @@ const source = handleActions(
     },
     [stopCyRestPolling]: (state, payload) => {
       return { ...state }
-    }
+    },
   },
   defaultState
 )

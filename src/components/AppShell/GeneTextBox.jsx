@@ -77,11 +77,11 @@ const GeneTextBox = props => {
     const sourceNames = sources.map(source => source.name)
 
     const geneListString = genes.replace(',', ' ')
-    const geneList = geneListString.split(/ /)
+    const geneList = geneListString.split(/\s*,\s*|\s+/)
 
     props.searchActions.clearAll()
     props.history.push('/')
-    props.searchActions.setQuery(geneListString)
+    props.searchActions.setQuery(geneList)
     props.searchActions.searchStarted({ geneList, sourceNames })
   }
 
@@ -102,7 +102,14 @@ const GeneTextBox = props => {
 
   return (
     <div>
-      <MessageSnackbar open={open} setOpen={setOpen} />
+      <MessageSnackbar 
+        open={open} 
+        setOpen={setOpen}
+        message={'Genes are copied to clipboard!'}
+        autoHideDuration={4000}
+        horizontal={'left'}
+        vertical={'bottom'}
+      />
       <Paper className={classes.root} elevation={0}>
         <Tooltip title="Copy" placement="bottom">
           <IconButton

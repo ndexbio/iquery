@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
 import OpenInCytoscapeButton from './OpenInCytoscapeButton'
+
 import Highlighter from './Highlighter'
 import { Tooltip } from '@material-ui/core'
 import OpenInNDExButton from './OpenInNDExButton'

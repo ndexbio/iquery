@@ -4,7 +4,7 @@ import * as cyrest from '../api/cyrest'
 import {
   IMPORT_NETWORK_STARTED,
   IMPORT_NETWORK_FAILED,
-  IMPORT_NETWORK_SUCCEEDED
+  IMPORT_NETWORK_SUCCEEDED,
 } from '../actions/cyrest'
 
 export default function* cyrestSaga() {

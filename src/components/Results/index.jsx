@@ -63,7 +63,8 @@ const Results = props => {
       <div className="results-wrapper">
         <Tabs value={idx} onChange={handleChange}>
           {sources.map(source => (
-            <Tab key={source.uuid} label={source.name} />
+            <Tab key={source.uuid} label={source.name === "enrichment" ? "Gene Enrichment" : 
+                                          source.name === "interactome" ? "Gene Neighborhood" : source.name} />
           ))}
         </Tabs>
         <TabContent results={results} {...others} />
