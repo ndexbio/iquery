@@ -6,7 +6,7 @@ import NetworkViewer from './NetworkViewer'
 import TableBrowser from '../TableBrowser'
 import NetworkToolbar from './NetworkToolbar'
 
-const DEFAULT_RATIO = [60, 40]
+const DEFAULT_RATIO = [50, 50]
 
 /**
  * Top page for the application
@@ -28,7 +28,7 @@ const NetworkView = props => {
       <Split
         sizes={DEFAULT_RATIO}
         direction="vertical"
-        gutterSize={6}
+        gutterSize={7}
         className={'nv-container'}
         onDragEnd={handleResizeEnd}
       >
@@ -36,7 +36,10 @@ const NetworkView = props => {
           resized={resized}
           {...props}
         />
-        <TableBrowser {...props} />
+        <TableBrowser
+          resized={resized} 
+          {...props} 
+        />
       </Split>
     </div>
   )

@@ -1,5 +1,6 @@
 export const camelCaseToTitleCase = (camelCaseString) => {
-    if (camelCaseString.slice(0, 4) === "http") {
+    if (camelCaseString.slice(0, 4) === "http" ||
+        camelCaseString.slice(0, 5) === 'Prov:') {
         return camelCaseString
     }
     let result = camelCaseString
@@ -14,5 +15,6 @@ export const camelCaseToTitleCase = (camelCaseString) => {
         .trim();
     result = result.charAt(0).toUpperCase() + result.slice(1)
     result = result.replace('Wiki Pathways', 'WikiPathways')
+        .replace('Wikipathways', 'WikiPathways')
     return result
   }

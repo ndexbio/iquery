@@ -4,9 +4,31 @@ import ListItemText from '@material-ui/core/ListItemText'
 import { getListNetworkAttr, findAttributes } from './attribute-util'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
+import { camelCaseToTitleCase } from './camel-case-util';
+import Split from 'react-split'
+import List from '@material-ui/core/List'
+import { makeStyles } from '@material-ui/styles'
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    padding: '0.2em',
+    backgroundColor: '#FFFFFF',
+    overflow: 'auto'
+  },
+  list: {
+    width: '100%'
+  },
+  subtitle: {
+    marginLeft: '1em',
+    marginTop: '0.5em'
+  }
+}))
+
 
 const NetworkProperties = props => {
   const { originalCX } = props
+  const classes = useStyles()
+  
 
   // Find network props
   let networkAttr = findAttributes(originalCX, 'networkAttributes')
@@ -36,6 +58,9 @@ const NetworkProperties = props => {
       }
     }
 
+    prim = camelCaseToTitleCase(prim)
+    sec = camelCaseToTitleCase(sec)
+
     //Linkify and parse html
     prim = parse(prim)
     prim = <Linkify key={'link' + i}>{prim}</Linkify>
@@ -54,12 +79,12 @@ const NetworkProperties = props => {
     'Version',
     'Author',
     'Reviewers',
-    'NetworkType',
+    'Network Type',
     'Labels',
-    'RightsHolder',
-    'WikipathwaysID',
-    'WikipathwaysVersion',
-    'WikipathwaysIRI',
+    'Rights Holder',
+    'Wikipathways ID',
+    'Wikipathways Version',
+    'Wikipathways IRI',
     'Rights',
     '@context'
   ]
@@ -89,12 +114,32 @@ const NetworkProperties = props => {
   for (let i = 0; i < sortedPrim.length; i++) {
     display.push(
       <ListItem key={i}>
-        <ListItemText inset primary={sortedPrim[i]} secondary={sortedSec[i]} />
+        <ListItemText 
+          inset 
+          secondary={sortedSec[i]}
+          primary={sortedPrim[i]} 
+        />
       </ListItem>
     )
   }
 
-  return <React.Fragment>{display}</React.Fragment>
+  return (//<React.Fragment>{display}</React.Fragment>
+    
+    <Split sizes={[70, 30]} gutterSize={7} className="ndex-base">
+      <div className={classes.container}>
+        <List component="nav" className={classes.list}>
+          <React.Fragment>{display}</React.Fragment>
+        </List>
+      </div>
+      <div className={classes.container}>
+        <List component="nav" className={classes.list}>
+          <React.Fragment>{display}</React.Fragment>
+        </List>
+      </div>
+    </Split>
+  )
+  
+  
 }
 
 const formatValue = entry => {

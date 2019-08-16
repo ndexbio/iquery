@@ -3,6 +3,11 @@
   grid-gap: 0;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: min-content 1fr;
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .start-container {

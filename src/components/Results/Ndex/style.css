@@ -2,19 +2,44 @@
   background-color: #ffffff;
   display: flex;
   height: 100vmin;
+  position: relative;
+  right: 0;
+}
+
+.network-info {
+  background-color: #ffffff;
+  display: inline-flex;
+  box-sizing: content-box;
+  width: 100%;
+  height: 100%;
+}
+
+.network-info-panel {
+  padding: 0.2em;
+  box-sizing: content-box;
+  background-color: #FFFFFF;
+  overflow-y: auto;
+  overflow-x: visible;
 }
 
 .network-view-top {
   width: 100%;
   height: 100%;
-  padding-bottom: 3em;
+  box-sizing: content-box;
+  position: relative;
+  bottom: 0;
+  right: 0;
 }
 
 .nv-container {
-  width: 100%;
-  height: 100%;
+  top: 5em;
+  bottom: 0;
+  right: 0;
+  left: 0;
   padding: 0;
   margin: 0;
+  box-sizing: content-box;
+  position: absolute;
 }
 
 .network-viewer {
@@ -38,7 +63,7 @@
 
 .network-list {
   box-sizing: content-box;
-    height: 100%;
+  height: 100%;
   overflow-y: auto;
 }
 
