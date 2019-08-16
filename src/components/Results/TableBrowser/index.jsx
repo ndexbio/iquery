@@ -4,8 +4,6 @@ import List from '@material-ui/core/List'
 import NodeProperties from './NodeProperties'
 import EdgeProperties from './EdgeProperties'
 import NetworkProperties from './NetworkProperties'
-import NetworkProperties2 from './NetworkProperties2'
-import Split from 'react-split'
 
 
 const useStyles = makeStyles(theme => ({
@@ -53,7 +51,7 @@ const TableBrowser = props => {
   if (!node && !edge) {
     return (
       <div className={'table-browser'}>
-        <NetworkProperties2 originalCX={originalCX}/>
+        <NetworkProperties originalCX={originalCX}/>
       </div>
     )
   }
