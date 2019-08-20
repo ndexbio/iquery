@@ -4,6 +4,7 @@ import List from '@material-ui/core/List'
 import NodeProperties from './NodeProperties'
 import EdgeProperties from './EdgeProperties'
 import NetworkProperties from './NetworkProperties'
+import TableBrowserPanel from './TableBrowserPanel'
 
 
 const useStyles = makeStyles(theme => ({
@@ -13,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto'
   },
   list: {
-    width: '100%'
+
   },
   subtitle: {
     marginLeft: '1em',
@@ -45,28 +46,16 @@ const TableBrowser = props => {
     return <div style={DISABLED_STYLE} />
   }
 
-  const node = network.selectedNode
-  const edge = network.selectedEdge
+  const nodes = network.selectedNodes
+  const edges = network.selectedEdges
 
-  if (!node && !edge) {
-    return (
-      <div className={'table-browser'}>
-        <NetworkProperties originalCX={originalCX}/>
-      </div>
-    )
-  }
 
   return (
-    <div className={"table-browser"}>
-      <List component="nav" className={classes.list}>
-        {node !== null ? (
-          <NodeProperties node={node} originalCX={originalCX} {...props} />
-        ) : (
-          <EdgeProperties edge={edge} />
-        )}
-      </List>
+    <div className={'table-browser'}>
+      <TableBrowserPanel {...props}/>
     </div>
   )
+  
 }
 
 export default TableBrowser

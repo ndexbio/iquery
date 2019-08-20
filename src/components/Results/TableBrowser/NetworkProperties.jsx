@@ -6,11 +6,14 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
+
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { camelCaseToTitleCase } from './camel-case-util'
+import { stripScripts }  from './strip-scripts-util'
 import { findAttributes } from './attribute-util'
 
 import Linkify from 'linkifyjs/react'
@@ -30,6 +33,9 @@ const useStyles = makeStyles(theme => ({
   padding: {
     paddingLeft: '16px',
     paddingTop: '12px'
+  },
+  lessPadding: {
+    paddingTop: '2.49px'
   }
 }))
 
@@ -183,12 +189,14 @@ const NetworkProperties = props => {
           <ListItemText
             primary={
               <React.Fragment>
-                <Typography variant="caption">
+                <Typography variant="caption" color="textSecondary">
                   {secondaryString}
                 </Typography>
-                <Typography variant="body1">
-                  {primaryString}
-                </Typography>
+                <div>
+                  <Typography variant="body1">
+                    {primaryString}
+                  </Typography>
+                </div>
               </React.Fragment>
             }
           />
@@ -218,11 +226,11 @@ const NetworkProperties = props => {
             </Typography>
             </div>
             <ExpansionPanel>
-              <ExpansionPanelSummary>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon/>}
+              >
                 <Typography component="span" variant="body1">
-                  <font color="blue">
-                    Click to view the namespaces associated with this network
-                  </font>
+                  Click to view the namespaces associated with this network
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
@@ -242,12 +250,14 @@ const NetworkProperties = props => {
             <ListItemText
               primary={
                 <React.Fragment>
-                  <Typography component="span" variant="caption">
+                  <Typography component="span" variant="caption" color="textSecondary">
                     {secondaryString}
                   </Typography>
-                  <Typography component="span" variant="body1">
-                  {primaryString}
-                  </Typography>
+                  <div>
+                    <Typography component="span" variant="body1">
+                      {primaryString}
+                    </Typography>
+                  </div>
                 </React.Fragment>
               }
             />
@@ -266,12 +276,14 @@ const NetworkProperties = props => {
           <ListItemText
             primary={
               <React.Fragment>
-                <Typography component="span" variant="caption">
+                <Typography component="span" variant="caption" color="textSecondary">
                   {secondaryString}
                 </Typography>
-                <Typography component="span" variant="body1">
-                  {primaryString}
-                </Typography>
+                <div>
+                  <Typography component="span" variant="body1">
+                    {primaryString}
+                  </Typography>
+                </div>
               </React.Fragment>
             }
           />
@@ -285,17 +297,17 @@ const NetworkProperties = props => {
 
       <Split sizes={[70, 30]} gutterSize={7} className="network-info">
         <div className={'network-info-panel'}>
-          <List className={classes.list}>
-            <React.Fragment>
+          <List className={classes.lessPadding}>
+            
               {leftDisplay}
-            </React.Fragment>
+            
           </List>
         </div>
         <div className={'network-info-panel'}>
-          <List component="nav" className={classes.list}>
-            <React.Fragment>
+          <List className={classes.lessPadding}>
+            
               {rightDisplay}
-            </React.Fragment>
+            
           </List>
         </div>
       </Split>
@@ -321,7 +333,6 @@ const extractTitle = entry => {
 }
 
 const formatPrimary = entry => {
-  console.log(entry)
   if (entry === '') {
     return entry
   }
@@ -356,10 +367,6 @@ const formatContext = entry => {
   })
   result += '</table>'
   return formatPrimary(result)
-}
-
-const stripScripts = entry => {
-  return entry.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\ *>/gi, '')
 }
 
 export default NetworkProperties

@@ -51,7 +51,7 @@ const CytoscapeViewer = props => {
         cyInstance.nodes().removeClass('connected')
         const target = event.target
         if (target === cyInstance) {
-          props.networkActions.deselectAll()
+          props.networkActions.changeTab(0)
           console.log('UNSELECT')
         }
       } catch (e) {
@@ -62,8 +62,6 @@ const CytoscapeViewer = props => {
     cyInstance.on('tap', 'node', function() {
       try {
         cyInstance.nodes().removeClass('connected')
-        const selected = this.data()
-        props.networkActions.selectNode(selected)
       } catch (e) {
         console.warn(e)
       }
@@ -74,14 +72,36 @@ const CytoscapeViewer = props => {
         cyInstance.nodes().removeClass('connected')
         const selected = this.data()
         const { source, target } = selected
-
         cyInstance.$('#' + source + ', #' + target).addClass('connected')
-
-        props.networkActions.selectEdge(selected)
       } catch (e) {
         console.warn(e)
       }
     })
+
+    cyInstance.on('select', 'node', function() {
+      const selected = this.data()
+      if (selected.name !== '') {
+        props.networkActions.selectNodes(selected)
+      }
+    })
+
+    cyInstance.on('unselect', 'node', function() {
+      const unselected = this.data()
+      if (unselected.name !== '') {
+        props.networkActions.unselectNodes(unselected)
+      }
+    })
+    
+    cyInstance.on('select', 'edge', function() {
+      const selected = this.data()
+      props.networkActions.selectEdges(selected)
+    })
+
+    cyInstance.on('unselect', 'edge', function() {
+      const unselected = this.data()
+      props.networkActions.unselectEdges(unselected)
+    })
+
 
     // Reset the UI state (hilight)
     props.uiStateActions.setHighlights(true)
@@ -97,7 +117,7 @@ const CytoscapeViewer = props => {
     }
 
     const targets = props.search.selectedGenes
-    if (targets === null || targets === undefined || targets.length === 0) {
+    if (targets === null || targets === undefined) {
       return
     }
 
@@ -127,6 +147,10 @@ const CytoscapeViewer = props => {
           duration: 500
         }
       )
+    }
+
+    if (targets.length === 0) {
+      cyInstance.reset()
     }
   }, [props.search.selectedGenes])
 

@@ -7,6 +7,7 @@ import {
   searchFailed,
   clearAll,
   setSelectedGenes,
+  clearSelectedGenes,
   fetchResultStarted,
   fetchResultSucceeded,
   fetchResultFailed,
@@ -51,7 +52,13 @@ const search = handleActions(
       return { ...state, isSearching: false }
     },
     [setSelectedGenes]: (state, payload) => {
-      return { ...state, selectedGenes: payload.payload }
+      return { ...state, selectedGenes: [payload.payload] }
+    },
+    [clearSelectedGenes]: (state, payload) => {
+      return {
+        ...state,
+        selectedGenes: []
+      }
     },
     [fetchResultStarted]: (state, payload) => {
       return {

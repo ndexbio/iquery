@@ -5,6 +5,7 @@ import Split from 'react-split'
 import NetworkViewer from './NetworkViewer'
 import TableBrowser from '../TableBrowser'
 import NetworkToolbar from './NetworkToolbar'
+import { classes } from 'istanbul-lib-coverage';
 
 const DEFAULT_RATIO = [50, 50]
 
@@ -24,7 +25,7 @@ const NetworkView = props => {
 
   return (
     <div className={'network-view-top'}>
-      <NetworkToolbar {...props} />
+      <NetworkToolbar {...props}/>
       <Split
         sizes={DEFAULT_RATIO}
         direction="vertical"

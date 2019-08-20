@@ -17,6 +17,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Collapse from '@material-ui/core/Collapse'
 import CheckIcon from '@material-ui/icons/Check'
+import { camelCaseToTitleCase } from './camel-case-util.js'
+
 
 // For external link
 
@@ -63,9 +65,9 @@ class GeneAnnotationList extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, search } = this.props
 
-    const results = this.props.search.results
+    const results = search.results
 
     if (!results) {
       return <div className="gene-list-wrapper" />
@@ -100,17 +102,26 @@ class GeneAnnotationList extends React.Component {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={geneEntry.symbol}
+          primary={
+            <Typography
+              component="span"
+              variant="body1"
+            >
+              {geneEntry.symbol}
+            </Typography>
+          }
           secondary={
             <React.Fragment>
               <Typography
                 component="span"
                 className={classes.inline}
-                color="textPrimary"
+                variant="caption"
               >
-                {geneEntry.name}
+                {camelCaseToTitleCase(geneEntry.name)}
               </Typography>
-              <Typography variant="caption">{description}</Typography>
+              <Typography variant="body1">
+                {description}
+              </Typography>
             </React.Fragment>
           }
         />

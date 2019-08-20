@@ -2,42 +2,54 @@ import React, { useState } from 'react'
 import HighlightIcon from '@material-ui/icons/WbIncandescent'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core'
+import Tooltip from '@material-ui/core/Tooltip'
+
 
 const styles = theme => ({
   buttonIcon: {
-    paddingRight: '0.2em'
+    textAlign: 'center',
+    lignHeight: '50%',
+    position: 'relative',
+    top: '1px'
   },
   button: {
     height: '3em',
-    maxWidth: '13em',
-    minWidth: '13em',
+    width: '4.3em',
     marginRight: '0.5em'
   }
 })
 
 const Highlighter = props => {
   const { classes } = props
+  const disabled = !(props.network.uuid && props.network.uuid.length > 0)
 
-  const [highlight, setHighlight] = useState(true)
-
+  //let [highlight, setHighlight] = useState(true)
+  let highlight = props.uiState.highlights
   const handleChange = evt => {
-    setHighlight(!highlight)
-    props.uiStateActions.setHighlights(!highlight)
+    if (props.network.uuid && props.network.uuid.length > 0) {
+      highlight = true
+      props.uiStateActions.setHighlights(!highlight)
+      highlight = props.uiState.highlights
+    }
   }
 
   return (
-    <Button
-      className={classes.button}
-      variant="outlined"
-      color={highlight ? 'secondary' : 'default'}
-      onClick={handleChange}
-    >
-      <HighlightIcon
-        className={classes.buttonIcon}
-        color={highlight ? 'secondary' : 'disabled'}
-      />
-      Highlight Genes
-    </Button>
+    <Tooltip title="Highlight genes" placement='bottom'>
+      <div>
+        <Button
+          className={classes.button}
+          variant="outlined"
+          color={highlight ? 'secondary' : 'default'}
+          onClick={handleChange}
+          disabled={disabled}
+        >
+          <HighlightIcon
+            className={classes.buttonIcon}
+            color={highlight && !disabled ? 'secondary' : 'disabled'}
+          />
+        </Button>
+      </div>
+    </Tooltip>
   )
 }
 

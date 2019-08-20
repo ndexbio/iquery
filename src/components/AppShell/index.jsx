@@ -11,7 +11,7 @@ const drawerWidth = 240
 const styles = theme => ({
   root: {
     display: 'flex',
-    height: '100vmin'
+    height: '100vmin',
   },
   drawerHeader: {
     display: 'flex',

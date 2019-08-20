@@ -24,6 +24,7 @@ const Results = props => {
     setSelectedTabIndex(idx)
     updateHistory(idx)
     props.networkActions.networkClear()
+    props.networkActions.changeListIndex(0)
   }
 
   const updateHistory = newValue => {

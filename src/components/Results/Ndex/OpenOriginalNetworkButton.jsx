@@ -31,6 +31,17 @@ const OpenOriginalNetworkButton = props => {
 
   const disabled = !(network.uuid && network.uuid.length > 0)
 
+  const BootstrapButton = withStyles({
+    root: {
+      borderColor: '#000000',
+      color: '#000000',
+      '&:active': {
+        borderColor: '#000000',
+        color: '#000000'
+      },
+    },
+  })(Button);
+
   return (
     <Tooltip
       disableFocusListener
@@ -38,8 +49,7 @@ const OpenOriginalNetworkButton = props => {
       placement="bottom"
     >
       <div>
-        <Button
-          color={'default'}
+        <BootstrapButton
           className={classes.button}
           variant="outlined"
           disabled={disabled}
@@ -50,7 +60,7 @@ const OpenOriginalNetworkButton = props => {
             fontSize="large"
             className={classes.buttonIcon}
           />
-        </Button>
+        </BootstrapButton>
       </div>
     </Tooltip>
   )

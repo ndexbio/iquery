@@ -15,6 +15,10 @@ import { ListItem } from '@material-ui/core'
 
 import Tooltip from '@material-ui/core/Tooltip'
 import Paper from '@material-ui/core/Paper'
+import MenuList from '@material-ui/core/MenuList'
+import MenuItem from '@material-ui/core/MenuItem';
+
+
 
 const NETWORK_SIZE_TH = 5000
 
@@ -88,7 +92,7 @@ const Ndex = props => {
     })
   }
 
-  const renderNetworkListItem = (querySize, networkEntry, classes) => {
+  const renderNetworkListItem = (querySize, networkEntry, classes, handleListItemClick, selectedIndex, index) => {
     const {
       description,
       networkUUID,
@@ -124,13 +128,16 @@ const Ndex = props => {
     }
 
     return (
+      //<MenuItem>
       <ListItem
         button
         className={classes.menuItem}
         key={networkUUID}
-        onClick={val =>
+        onClick={event => {
           handleFetch(networkUUID, description, nodes, edges, hitGenes)
-        }
+          handleListItemClick(event, index)
+        }}
+        selected={selectedIndex === index}
       >
         <ListItemIcon>
           <img className="list-icon" src={imageURL} />
@@ -138,7 +145,7 @@ const Ndex = props => {
         <ListItemText
           primary={
             <React.Fragment>
-              <Typography component="span" variant="caption">
+              <Typography component="span" variant="caption" color="textSecondary">
                 {'Rank ' + (rank+1)}
               </Typography>
               <div className={classes.listTitle}>
@@ -159,7 +166,8 @@ const Ndex = props => {
             </React.Fragment>
           }
         />
-      </ListItem>
+        </ListItem>
+      //</MenuItem>
     )
   }
 

@@ -9,8 +9,14 @@ import {
   networkFetchSucceeded,
   networkClear,
   selectNode,
+  selectNodes,
+  unselectNodes,
   selectEdge,
-  deselectAll
+  selectEdges,
+  unselectEdges,
+  deselectAll,
+  changeTab,
+  changeListIndex
 } from '../actions/network'
 
 const LAYOUT_SCALING_FACTOR = 2.0
@@ -28,8 +34,10 @@ const defaultState = {
   nodeCount: 0,
   edgeCount: 0,
   isLayoutComplete: false,
-  selectedNode: null,
-  selectedEdge: null
+  selectedNodes: [],
+  selectedEdges: [],
+  tableDisplayTab: 0,
+  listIndex: 0
 }
 
 const utils = new CyNetworkUtils()
@@ -155,14 +163,54 @@ const network = handleActions(
         edgeCount: undefined
       }
     },
-    [selectNode]: (state, payload) => {
-      return { ...state, selectedNode: payload.payload, selectedEdge: null }
+    [selectNodes]: (state, payload) => {
+      return {
+        ...state,
+        tableDisplayTab: 1,
+        selectedNodes: [...state.selectedNodes, payload.payload]
+      }
     },
-    [selectEdge]: (state, payload) => {
-      return { ...state, selectedNode: null, selectedEdge: payload.payload }
+    [selectEdges]: (state, payload) => {
+      return {
+        ...state,
+        tableDisplayTab: 2,
+        selectedEdges: [...state.selectedEdges, payload.payload]
+      }
+    },
+    [unselectNodes]: (state, payload) => {
+      return {
+        ...state,
+        selectedNodes: state.selectedNodes.filter(node => (
+          node.id !== payload.payload.id
+        ))
+      }
+    },
+    [unselectEdges]: (state, payload) => {
+      return {
+        ...state,
+        selectedEdges: state.selectedEdges.filter(edge => (
+          edge.id !== payload.payload.id
+        ))
+      }
     },
     [deselectAll]: (state, payload) => {
-      return { ...state, selectedNode: null, selectedEdge: null }
+      return { 
+        ...state,
+        tableDisplayTab: 0,
+        selectedNodes: [], 
+        selectedEdges: [] }
+    },
+    [changeTab]: (state, payload) => {
+      return {
+        ...state, 
+        tableDisplayTab: payload.payload
+      }
+    },
+    [changeListIndex]: (state, payload) => {
+      return {
+        ...state,
+        listIndex: payload.payload
+      }
     }
   },
   defaultState

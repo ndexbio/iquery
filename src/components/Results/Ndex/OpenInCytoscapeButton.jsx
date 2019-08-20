@@ -7,6 +7,16 @@ import Tooltip from '@material-ui/core/Tooltip'
 
 import MessageSnackbar from '../../AppShell/MessageSnackbar.jsx'
 
+
+
+const BootstrapButton = withStyles({
+  root: {
+    borderColor: '#EA9123',
+    '&:active': {
+      borderColor: '#EA9123',
+    }
+  },
+})(Button);
 const styles = theme => ({
   buttonIcon: {
     height: '2em'
@@ -18,7 +28,7 @@ const styles = theme => ({
   }
 })
 
-const OpenInCytoscapeButton = props => {
+    const OpenInCytoscapeButton = props => {
   useEffect(() => {
     props.cyrestActions.startCyRestPolling()
     return () => {
@@ -31,6 +41,8 @@ const OpenInCytoscapeButton = props => {
   const disabled =
     !(props.network.uuid && props.network.uuid.length > 0) || 
     !cyrest.available
+
+  const disabledLogo = 0
 
   const handleClick = () => {
     handleImportNetwork()
@@ -97,7 +109,7 @@ const OpenInCytoscapeButton = props => {
         placement="bottom"
       >
         <div>
-          <Button
+          <BootstrapButton
             className={classes.button}
             variant="outlined"
             disabled={disabled}
@@ -108,7 +120,7 @@ const OpenInCytoscapeButton = props => {
               src={disabled ? logoDisabled : logo}
               className={classes.buttonIcon}
             />
-          </Button>
+          </BootstrapButton>
         </div>
       </Tooltip>
       <MessageSnackbar

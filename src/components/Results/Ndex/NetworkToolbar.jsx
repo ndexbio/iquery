@@ -18,7 +18,10 @@ const styles = theme => ({
   toolbar: {
     background: '#EFEFEF',
     height: '4em',
-    padding: '0.5em',
+    paddingTop: '0',
+    paddingBottom: '0',
+    paddingLeft: '0.5em',
+    paddingRight: '0.5em',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'

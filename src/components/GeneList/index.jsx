@@ -1,35 +1,77 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
+import { makeStyles, withStyles } from '@material-ui/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
 import CheckIcon from '@material-ui/icons/Check'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
+
+const useStyles = makeStyles(theme => ({
   chip: {
-    margin: theme.spacing.unit
-  }
-})
+    margin: '0'
+  },
+  listPadding: {
+    paddingTop: '0',
+    paddingBottom: '22'
+  },
 
-const handleClick = (geneSymbol, props) => {
-  props.searchActions.setSelectedGenes([geneSymbol])
+}))
+
+const buttonStyle = {
+  padding: '0',
+  borderRadius: '20px',
+  height: '32px',
+  borderWidth: '0',
+  color: '#FFFFFF',
+  backgroundColor: '#FFFFFF'
 }
 
-const handleClear = (event) => {
+const selectedButtonStyle = {
+  padding: '0',
+  borderRadius: '20px',
+  height: '32px',
+  borderWidth: '0',
+  backgroundColor: 'rgb(252, 235, 242)',
+  color: 'rgb(252, 235, 242)'
+}
+
+const selectedChipStyle = {
+  margin: '0',
+  backgroundColor: 'rgba(0, 0, 0, 0)'
+}
+
+const handleClick = (geneSymbol, props) => {
+  console.log(geneSymbol)
+}
+
+const handleClear = (event, props) => {
   console.log('#### Clear selection', event.target.value)
-  // props.searchActions.setSelectedGenes([])
+  //props.searchActions.setSelectedGenes([])
 }
 
 const GeneList = props => {
-  const { classes, search, network } = props
+  const { search, network } = props
+  const classes = withStyles()
 
   const results = search.results
   const hits = network.hitGenes
   const hitSets = new Set(hits)
+
+  const [alignment, setAlignment] = React.useState(0)
+
+  const handleChange = (event, newAlignment) => {
+    if (newAlignment == null) {
+      setAlignment(0)
+      props.searchActions.clearSelectedGenes()
+    } else {
+      setAlignment(newAlignment)
+      props.searchActions.setSelectedGenes(newAlignment)
+    }
+  }
 
   if (!results) {
     return <div className="gene-list-wrapper" />
@@ -66,8 +108,27 @@ const GeneList = props => {
   const sorted = [...matchedSorted, ...unmatchedSorted]
 
   return (
-    <div className="gene-list-wrapper" onClick={event => handleClear(event)}>
-      {sorted.map(value => getChip(value, true, classes, props, hitSets))}
+    <div className="gene-list-wrapper" onClick={event => handleClear(event, props)}>
+      <List>
+        {sorted.map(geneValue => (
+          <ListItem key={geneValue.symbol}>
+            <ToggleButtonGroup 
+              value={alignment} 
+              exclusive 
+              onChange={handleChange}>
+              <ToggleButton value={geneValue.symbol}
+                style={
+                  hitSets.has(geneValue.symbol) && alignment == geneValue.symbol ?
+                    selectedButtonStyle
+                    : buttonStyle
+                }
+              >
+                {getChip(geneValue, true, classes, props, hitSets)}
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </ListItem>
+        ))}
+      </List>
     </div>
   )
 }
@@ -90,6 +151,8 @@ const getChip = (value, isValid, classes, props, hitSets) => {
         variant="outlined"
         color={color}
         key={value.symbol}
+        selected
+        style={selectedChipStyle}
       />
     )
   } else {
@@ -108,4 +171,4 @@ GeneList.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(GeneList)
+export default (GeneList)

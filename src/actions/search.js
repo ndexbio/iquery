@@ -16,6 +16,7 @@ export const FETCH_RESULT_FAILED = 'FETCH_RESULT_FAILED'
 export const CLEAR_ALL = 'CLEAR_ALL'
 
 export const SET_SELECTED_GENES = 'SET_SELECTED_GENES'
+export const CLEAR_SELECTED_GENES = 'CLEAR_SELECTED_GENES'
 
 export const setQuery = createAction(SET_QUERY)
 export const clearQuery = createAction(CLEAR_QUERY)
@@ -35,3 +36,4 @@ export const fetchResultFailed = createAction(FETCH_RESULT_FAILED)
 export const clearAll = createAction(CLEAR_ALL)
 
 export const setSelectedGenes = createAction(SET_SELECTED_GENES)
+export const clearSelectedGenes = createAction(CLEAR_SELECTED_GENES)
