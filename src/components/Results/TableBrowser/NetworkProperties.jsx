@@ -59,10 +59,11 @@ const ExpansionPanel = withStyles({
 const ExpansionPanelSummary = withStyles({
   root: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
-    marginBottom: '12px',
-    minHeight: 10,
+    marginBottom: '10px',
+    height: '26px',
+    minHeight: 0,
     '&$expanded': {
-      minHeight: 10,
+      minHeight: 0,
     },
   },
   content: {
@@ -193,7 +194,7 @@ const NetworkProperties = props => {
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography variant="body1">
+                  <Typography variant="body2">
                     {primaryString}
                   </Typography>
                 </div>
@@ -221,7 +222,7 @@ const NetworkProperties = props => {
         leftDisplay.push(
           <React.Fragment>
             <div className={classes.padding}>
-            <Typography component="span" variant="caption">
+            <Typography component="span" variant="caption" color="textSecondary">
               @context
             </Typography>
             </div>
@@ -229,12 +230,12 @@ const NetworkProperties = props => {
               <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon/>}
               >
-                <Typography component="span" variant="body1">
+                <Typography component="span" variant="body2">
                   Click to view the namespaces associated with this network
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <Typography>
+                <Typography variant="body2">
                   {primaryString}
                 </Typography>
               </ExpansionPanelDetails>
@@ -254,7 +255,7 @@ const NetworkProperties = props => {
                     {secondaryString}
                   </Typography>
                   <div>
-                    <Typography component="span" variant="body1">
+                    <Typography component="span" variant="body2">
                       {primaryString}
                     </Typography>
                   </div>
@@ -280,7 +281,7 @@ const NetworkProperties = props => {
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography component="span" variant="body1">
+                  <Typography component="span" variant="body2">
                     {primaryString}
                   </Typography>
                 </div>

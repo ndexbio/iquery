@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
-
 import './style.css'
 import Warning from './Warning'
+import Cytoscape from 'cytoscape'
+import panzoom from 'cytoscape-panzoom'
+
 let cyInstance = null
 
 const PRESET_LAYOUT = {
@@ -154,6 +156,22 @@ const CytoscapeViewer = props => {
     }
   }, [props.search.selectedGenes])
 
+  useEffect(() => {
+    if (cyInstance === undefined || cyInstance === null) {
+      return
+    }
+
+    const zoom = props.uiState.zoomed
+    if (zoom === null || zoom === undefined) {
+      return
+    }
+
+    if (zoom) {
+      props.searchActions.clearSelectedGenes()
+      props.uiStateActions.resetZoomed()
+    }
+  }, [props.uiState.zoomed])
+
   const numObjects = props.network.nodeCount + props.network.edgeCount
   if (numObjects > MAX_NETWORK_SIZE) {
     return <Warning />
@@ -193,6 +211,8 @@ const CytoscapeViewer = props => {
         .removeClass('highlight')
     }
   }
+
+  panzoom(Cytoscape)
 
   return (
     <CytoscapeComponent

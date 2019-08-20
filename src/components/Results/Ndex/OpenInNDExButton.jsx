@@ -16,7 +16,7 @@ const styles = theme => ({
     height: '3em',
     width: '4.3em',
     minWidth: '4.3em',
-    marginRight: '0.5em',
+    marginLeft: '0.5em',
     color: '#4DA1DE'
     
   }
@@ -24,6 +24,7 @@ const styles = theme => ({
 
 const BootstrapButton = withStyles({
   root: {
+    width: '4.3em',
     borderColor: '#4DA1DE',
     color: '#4DA1DE',
     '&:active': {

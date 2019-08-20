@@ -53,7 +53,7 @@ const Ndex = props => {
     //checkCytoscapeConnection(props)
 
     // Reset selection
-    props.searchActions.setSelectedGenes([])
+    props.searchActions.clearSelectedGenes()
 
     props.networkActions.networkFetchStarted({
       id,

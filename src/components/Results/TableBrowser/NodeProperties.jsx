@@ -201,7 +201,7 @@ const NodeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body1">
+                        <Typography variant="body2">
                           {primaryString}
                         </Typography>
                       </div>
@@ -226,7 +226,7 @@ const NodeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body1">
+                        <Typography variant="body2">
                           {primaryString}
                         </Typography>
                       </div>
@@ -268,7 +268,7 @@ const NodeProperties = props => {
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography variant="body1">
+                  <Typography variant="body2">
                     {primaryString}
                   </Typography>
                 </div>
@@ -295,7 +295,7 @@ const NodeProperties = props => {
               <ExpansionPanelSummary 
                 expandIcon={<ExpandMoreIcon/>}
               >
-                <Typography variant="body1">
+                <Typography variant="body2">
                   {node.name}
                 </Typography>
               </ExpansionPanelSummary>

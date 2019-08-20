@@ -18,6 +18,11 @@ export const setServicesListOpen = createAction(SET_SERVICES_LIST_OPEN)
 export const SET_HIGHLIGHTS = 'SET_HIGHLIGHTS'
 export const setHighlights = createAction(SET_HIGHLIGHTS)
 
+export const SET_ZOOMED = 'SET_ZOOMED'
+export const setZoomed = createAction(SET_ZOOMED)
+
+export const RESET_ZOOMED = 'RESET_ZOOMED'
+export const resetZoomed = createAction(RESET_ZOOMED)
 
 // Selected tab
 export const SET_SELECTED_SOURCE = 'SET_SELECTED_SOURCE'

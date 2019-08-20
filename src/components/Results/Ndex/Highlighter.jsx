@@ -15,7 +15,7 @@ const styles = theme => ({
   button: {
     height: '3em',
     width: '4.3em',
-    marginRight: '0.5em'
+    marginLeft: '0.5em'
   }
 })
 

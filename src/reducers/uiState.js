@@ -3,14 +3,17 @@ import {
   setSettingsOpen,
   setServicesListOpen,
   setHighlights,
-  setSelectedSource
+  setSelectedSource,
+  setZoomed,
+  resetZoomed
 } from '../actions/uiState'
 
 const DEF_STATE = {
   isSettingsOpen: false,
   servicesListOpen: false,
   highlights: false,
-  selectedSource: ''
+  selectedSource: '',
+  zoomed: false
 }
 
 const uiState = handleActions(
@@ -27,6 +30,18 @@ const uiState = handleActions(
     },
     [setSelectedSource]: (state, payload) => {
       return { ...state, selectedSource: payload.payload }
+    },
+    [setZoomed]: (state, payload) => {
+      return {
+        ...state,
+        zoomed: true
+      }
+    },
+    [resetZoomed]: (state, payload) => {
+      return {
+        ...state,
+        zoomed: false
+      }
     }
   },
   DEF_STATE

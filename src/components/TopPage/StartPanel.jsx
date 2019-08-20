@@ -29,7 +29,11 @@ const StartPanel = props => {
     return (
       <LoadingPanel
         title={'Searching Remote Database'}
-        message={'Please wait...'}
+        message={
+          <div style={{color: 'black'}}>
+            Please wait...
+          </div>
+        }
       />
     )
   }

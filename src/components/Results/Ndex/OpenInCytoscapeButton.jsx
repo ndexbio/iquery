@@ -11,12 +11,14 @@ import MessageSnackbar from '../../AppShell/MessageSnackbar.jsx'
 
 const BootstrapButton = withStyles({
   root: {
+    marginLeft: '0.5em',
     borderColor: '#EA9123',
     '&:active': {
       borderColor: '#EA9123',
     }
   },
 })(Button);
+
 const styles = theme => ({
   buttonIcon: {
     height: '2em'

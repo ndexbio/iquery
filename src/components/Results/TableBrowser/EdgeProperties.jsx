@@ -196,7 +196,7 @@ const EdgeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body1">
+                        <Typography variant="body2">
                           {primaryString}
                         </Typography>
                       </div>
@@ -221,7 +221,7 @@ const EdgeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body1">
+                        <Typography variant="body2">
                           {primaryString}
                         </Typography>
                       </div>
@@ -263,7 +263,7 @@ const EdgeProperties = props => {
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography variant="body1">
+                  <Typography variant="body2">
                     {primaryString}
                   </Typography>
                 </div>
@@ -290,7 +290,7 @@ const EdgeProperties = props => {
               <ExpansionPanelSummary
                 expandIcon={<ExpandMoreIcon/>}
               >
-                <Typography variant="body1">
+                <Typography variant="body2">
                   {source + " -> " + target}
                 </Typography>
               </ExpansionPanelSummary>

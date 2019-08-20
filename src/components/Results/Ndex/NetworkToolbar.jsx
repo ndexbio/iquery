@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
 import OpenInCytoscapeButton from './OpenInCytoscapeButton'
-
+import ResetZoomButton from './ResetZoomButton'
 import Highlighter from './Highlighter'
 import { Tooltip } from '@material-ui/core'
 import OpenInNDExButton from './OpenInNDExButton'
@@ -111,6 +111,7 @@ const NetworkToolbar = props => {
         </Typography>
       </Tooltip>
       <div className={classes.grow} />
+      <ResetZoomButton {...others} />
       <Highlighter {...others} />
       <NDExSignInModal {...others}>
         <NDExSave {...others} />

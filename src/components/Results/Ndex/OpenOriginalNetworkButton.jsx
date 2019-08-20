@@ -33,6 +33,7 @@ const OpenOriginalNetworkButton = props => {
 
   const BootstrapButton = withStyles({
     root: {
+      width: '4.3em',
       borderColor: '#000000',
       color: '#000000',
       '&:active': {

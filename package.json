@@ -8,6 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.23",
     "@material-ui/styles": "^3.0.0-alpha.10",
     "cytoscape-cx2js": "^0.5.3",
+    "cytoscape-panzoom": "^2.5.3",
     "fg-loadcss": "^2.1.0",
     "html-react-parser": "^0.9.1",
     "linkifyjs": "^2.1.8",
