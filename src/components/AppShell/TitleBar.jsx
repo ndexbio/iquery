@@ -9,8 +9,11 @@ import MenuIcon from '@material-ui/icons/Menu'
 import HelpIcon from '@material-ui/icons/Help'
 import classNames from 'classnames'
 import logo from '../../assets/images/ndex-logo-mono.svg'
+import cytoLogo from '../../assets/images/cytoscape-logo-mono.svg'
 import GeneTextBox from './GeneTextBox'
 import Tooltip from '@material-ui/core/Tooltip'
+import nrnbLogo from '../../assets/images/nrnb-logo.svg'
+import wpLogo from '../../assets/images/wp-logo.svg'
 
 import HomeIcon from '@material-ui/icons/Home'
 import { networkClear } from "../../actions/network";
@@ -31,8 +34,9 @@ const styles = theme => ({
     marginLeft: 12,
     marginRight: 10
   },
-  ndexLogo: {
-    height: '1em'
+  logo: {
+    height: '1em',
+    width: '1.5em'
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -108,21 +112,45 @@ class TitleBar extends React.Component {
               color="default"
               onClick={this.handleHomeButton}
             >
-              <HomeIcon fontSize="default" />
+              <HomeIcon fontSize="default" className={classes.logo}/>
             </IconButton>
+
             <IconButton
               aria-haspopup="true"
               color="default"
               onClick={() => openLink(HELP_URL)}
             >
-              <HelpIcon fontSize="default" />
+              <HelpIcon fontSize="default" className={classes.logo}/>
             </IconButton>
+
             <IconButton
               color="default"
               aria-label="Home"
               onClick={() => openLink(NDEX_URL)}
             >
-              <img alt="NDEx logo" src={logo} className={classes.ndexLogo} />
+              <img alt="NDEx logo" src={logo} className={classes.logo} />
+            </IconButton>
+
+            <IconButton
+              color="default"
+              onClick={() => openLink(CYTOSCAPE_URL)}
+            >
+              <img alt="Cytoscape Logo" src={cytoLogo} className={classes.logo}/>
+            </IconButton>
+
+            <IconButton
+              color="default"
+              aria-label="Home"
+              onClick={() => openLink(NDEX_URL)}
+            >
+              <img alt="NRNB logo" src={nrnbLogo} className={classes.logo} />
+            </IconButton>
+
+            <IconButton
+              color='default'
+              onClick={()=> openLink(WP_URL)}
+            >
+              <img alt="WikiPathways Logo" src={wpLogo} className={classes.logo}/>
             </IconButton>
           </div>
         </Toolbar>
@@ -134,6 +162,9 @@ class TitleBar extends React.Component {
 // TODO: replace this to the actual help page
 const HELP_URL = 'https://github.com/idekerlab/search-portal/wiki'
 const NDEX_URL = 'https://www.ndexbio.org/'
+const CYTOSCAPE_URL = 'https://cytoscape.org/'
+const NRNB_URL = 'https://nrnb.org/'
+const WP_URL = 'https://www.wikipathways.org/'
 
 const openLink = url => {
   window.open(url, '_blank')

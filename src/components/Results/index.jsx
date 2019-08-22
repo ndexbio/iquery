@@ -37,17 +37,18 @@ const Results = props => {
     const jobId = results.jobId
     const searchResults = props.search.searchResults
     if (searchResults !== undefined && searchResults !== null) {
-      const sourceName = getSourceName(sources, idx)
+      const sourceName = getSourceName(sources, newValue)
       console.log('** Tab change:', jobId, sourceName)
       props.uiStateActions.setSelectedSource(sourceName)
       props.history.push(`/${jobId}/${sourceName}`)
+      props.uiStateActions.setSort(true)
     }
   }
 
-  const { classes, ...others } = props
+  const { classes, source, ...others } = props
 
   // Source list is not available.  Just return empty result
-  const sources = props.source.sources
+  const sources = source.sources
   if (sources === null || sources === undefined) {
     return <Empty />
   }

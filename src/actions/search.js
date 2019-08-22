@@ -18,6 +18,9 @@ export const CLEAR_ALL = 'CLEAR_ALL'
 export const SET_SELECTED_GENES = 'SET_SELECTED_GENES'
 export const CLEAR_SELECTED_GENES = 'CLEAR_SELECTED_GENES'
 
+export const SET_SEARCH_RESULT_ORDER = 'SET_SEARCH_RESULT_ORDER'
+export const SET_ACTUAL_RESULTS = 'SET_ACUTAL_RESULTS'
+
 export const setQuery = createAction(SET_QUERY)
 export const clearQuery = createAction(CLEAR_QUERY)
 
@@ -37,3 +40,6 @@ export const clearAll = createAction(CLEAR_ALL)
 
 export const setSelectedGenes = createAction(SET_SELECTED_GENES)
 export const clearSelectedGenes = createAction(CLEAR_SELECTED_GENES)
+
+export const setSearchResultOrder = createAction(SET_SEARCH_RESULT_ORDER)
+export const setActualResults = createAction(SET_ACTUAL_RESULTS)

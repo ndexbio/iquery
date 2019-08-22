@@ -5,15 +5,31 @@ import {
   setHighlights,
   setSelectedSource,
   setZoomed,
-  resetZoomed
+  resetZoomed,
+  setSort,
+  setSortOrder,
+  setOverlapOn,
+  setOverlapThresholdOn,
+  setOverlapThresholdValue,
+  setPValueOn,
+  setPValueThresholdOn,
+  setPValueThresholdValue
 } from '../actions/uiState'
 
 const DEF_STATE = {
   isSettingsOpen: false,
   servicesListOpen: false,
   highlights: false,
-  selectedSource: '',
-  zoomed: false
+  selectedSource: 'enrichment',
+  zoomed: false,
+  sort: true,
+  sortOrder: ['p-Value', 'Overlap'],
+  sortOverlapOn: false,
+  sortOverlapThresholdOn: false,
+  sortOverlapThresholdValue: 1,
+  sortPValueOn: true,
+  sortPValueThresholdOn: false,
+  sortPValueThresholdValue: 0.05
 }
 
 const uiState = handleActions(
@@ -41,6 +57,54 @@ const uiState = handleActions(
       return {
         ...state,
         zoomed: false
+      }
+    },
+    [setSort]: (state, payload) => {
+      return {
+        ...state,
+        sort: payload.payload
+      }
+    },
+    [setSortOrder]: (state, payload) => {
+      return {
+        ...state,
+        sortOrder: payload.payload
+      }
+    },
+    [setOverlapOn]: (state, payload) => {
+      return {
+        ...state,
+        sortOverlapOn: payload.payload
+      }
+    },
+    [setOverlapThresholdOn]: (state, payload) => {
+      return {
+        ...state,
+        sortOverlapThresholdOn: payload.payload
+      }
+    },
+    [setOverlapThresholdValue]: (state, payload) => {
+      return {
+        ...state,
+        sortOverlapThresholdValue: payload.payload
+      }
+    },
+    [setPValueOn]: (state, payload) => {
+      return {
+        ...state,
+        sortPValueOn: payload.payload
+      }
+    },
+    [setPValueThresholdOn]: (state, payload) => {
+      return {
+        ...state,
+        sortPValueThresholdOn: payload.payload
+      }
+    },
+    [setPValueThresholdValue]: (state, payload) => {
+      return {
+        ...state,
+        sortPValueThresholdValue: payload.payload
       }
     }
   },

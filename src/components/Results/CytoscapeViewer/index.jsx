@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 import './style.css'
 import Warning from './Warning'
-import Cytoscape from 'cytoscape'
-import panzoom from 'cytoscape-panzoom'
 
 let cyInstance = null
 
@@ -152,7 +150,17 @@ const CytoscapeViewer = props => {
     }
 
     if (targets.length === 0) {
-      cyInstance.reset()
+      cyInstance.animate(
+        {
+          fit: {
+            eles: cyInstance.elements(),
+            padding: 10
+          }
+        },
+        {
+          duration: 500
+        }
+      )
     }
   }, [props.search.selectedGenes])
 
@@ -211,8 +219,6 @@ const CytoscapeViewer = props => {
         .removeClass('highlight')
     }
   }
-
-  panzoom(Cytoscape)
 
   return (
     <CytoscapeComponent

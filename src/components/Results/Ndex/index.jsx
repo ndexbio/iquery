@@ -106,25 +106,26 @@ const Ndex = props => {
 
     // console.log('Entry:', networkEntry)
 
-    const pVal = details.PValue
-    let descriptionText =
+    const topDescription = 
       'N: ' +
-      nodes +
+      nodes + 
       ', E: ' +
-      edges +
-      ',  Hit/Query = ' +
+      edges
+      
+    const bottomDescription1 = 
+      'Hit/Query = ' +
       hitGenes.length +
       '/' +
       querySize
 
-    let descriptionText2 = ''
-
+    let bottomDescription2 = ''
+    const pVal = details.PValue
     if (pVal !== undefined) {
       let pValText = pVal.toExponential(5)
       if (pVal === 0) {
         pValText = 0
       }
-      descriptionText2 = 'P-value = ' + pValText
+      bottomDescription2 = 'P-value = ' + pValText
     }
 
     return (
@@ -145,9 +146,7 @@ const Ndex = props => {
         <ListItemText
           primary={
             <React.Fragment>
-              <Typography component="span" variant="caption" color="textSecondary">
-                {'Rank ' + (rank+1)}
-              </Typography>
+              
               <div className={classes.listTitle}>
                 {description}
               </div>
@@ -156,18 +155,24 @@ const Ndex = props => {
           secondary={
             <React.Fragment>
               <Tooltip title="Number of nodes and edges" placement="bottom">
-                <Typography component="span" variant={'caption'}>
-                  {descriptionText}
+                <Typography component="span" variant="caption" color="textSecondary">
+                  {topDescription}
                 </Typography>
               </Tooltip>
-              <Typography component="span" variant={'caption'}>
-                {descriptionText2}
-              </Typography>
+              <div>
+                <Typography component="span" variant={'caption'}>
+                  {bottomDescription1}
+                </Typography>
+                </div>
+              <div>
+                <Typography component="span" variant={'caption'}>
+                  {bottomDescription2}
+                </Typography>
+              </div>
             </React.Fragment>
           }
         />
         </ListItem>
-      //</MenuItem>
     )
   }
 

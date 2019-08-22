@@ -6,9 +6,8 @@ import Chip from '@material-ui/core/Chip'
 import CheckIcon from '@material-ui/icons/Check'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-
+import MuiToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 
 const useStyles = makeStyles(theme => ({
   chip: {
@@ -18,7 +17,6 @@ const useStyles = makeStyles(theme => ({
     paddingTop: '0',
     paddingBottom: '22'
   },
-
 }))
 
 const buttonStyle = {
@@ -26,7 +24,6 @@ const buttonStyle = {
   borderRadius: '20px',
   height: '32px',
   borderWidth: '0',
-  color: '#FFFFFF',
   backgroundColor: '#FFFFFF'
 }
 
@@ -41,8 +38,14 @@ const selectedButtonStyle = {
 
 const selectedChipStyle = {
   margin: '0',
-  backgroundColor: 'rgba(0, 0, 0, 0)'
+  borderRadius: '20px',
 }
+
+const ToggleButton = withStyles({
+  label: {
+    backgroundColor: '#FAFAFA'
+  }
+})(MuiToggleButton);
 
 const handleClick = (geneSymbol, props) => {
   console.log(geneSymbol)
@@ -70,6 +73,12 @@ const GeneList = props => {
     } else {
       setAlignment(newAlignment)
       props.searchActions.setSelectedGenes(newAlignment)
+    }
+  }
+
+  if (props.search.selectedGenes.length == 0) {
+    if (alignment) {
+      setAlignment(0)
     }
   }
 
@@ -116,12 +125,15 @@ const GeneList = props => {
               value={alignment} 
               exclusive 
               onChange={handleChange}>
-              <ToggleButton value={geneValue.symbol}
+              <ToggleButton 
+                value={geneValue.symbol}
                 style={
                   hitSets.has(geneValue.symbol) && alignment == geneValue.symbol ?
                     selectedButtonStyle
-                    : buttonStyle
+                  : 
+                    buttonStyle
                 }
+                className={classes.label}
               >
                 {getChip(geneValue, true, classes, props, hitSets)}
               </ToggleButton>

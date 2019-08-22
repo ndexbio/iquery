@@ -11,7 +11,9 @@ import {
   fetchResultStarted,
   fetchResultSucceeded,
   fetchResultFailed,
-  setSearchResult
+  setSearchResult,
+  setSearchResultOrder,
+  setActualResults
 } from '../actions/search'
 
 const EMPTY_STATE = {
@@ -23,7 +25,8 @@ const EMPTY_STATE = {
   searchStatus: null,
   searchResults: null,
   selectedGenes: [],
-  resultList: []
+  resultList: [],
+  actualResults: []
 }
 
 const search = handleActions(
@@ -83,6 +86,27 @@ const search = handleActions(
       return {
         ...state,
         searchResults: singleResult
+      }
+    },
+    [setSearchResultOrder]: (state, payload) => {
+      return {
+        ...state,
+        searchResults: {
+          ...state,
+          sources: {
+            ...state,
+            source: {
+              ...state,
+              results: payload.payload
+            }
+          }
+        }
+      }
+    },
+    [setActualResults]: (state, payload) => {
+      return {
+        ...state,
+        actualResults: payload.payload
       }
     }
   },

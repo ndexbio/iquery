@@ -2,13 +2,15 @@ import { handleActions } from 'redux-actions'
 import {
   findSourceFailed,
   findSourceStarted,
-  findSourceSucceeded
+  findSourceSucceeded,
+  setCurrentSource
 } from '../actions/source'
 
 const defaultState = {
   isFetchingSource: false,
   sources: [],
-  error: null
+  error: null,
+  currentSource: null
 }
 
 const source = handleActions(
@@ -36,6 +38,12 @@ const source = handleActions(
         isFetchingSource: false,
         error: payload.error,
         sources: []
+      }
+    },
+    [setCurrentSource]: (state, payload) => {
+      return {
+        ...state,
+        currentSource: payload.payload
       }
     }
   },
