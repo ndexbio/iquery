@@ -23,13 +23,11 @@ const Highlighter = props => {
   const { classes } = props
   const disabled = !(props.network.uuid && props.network.uuid.length > 0)
 
-  //let [highlight, setHighlight] = useState(true)
   let highlight = props.uiState.highlights
   const handleChange = evt => {
     if (props.network.uuid && props.network.uuid.length > 0) {
-      highlight = true
       props.uiStateActions.setHighlights(!highlight)
-      highlight = props.uiState.highlights
+      highlight = !highlight
     }
   }
 
