@@ -1,13 +1,15 @@
 import './style.css'
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import Typography from '@material-ui/core/Typography'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 import { withStyles } from '@material-ui/core/styles'
+import { Tooltip } from '@material-ui/core'
+
 import OpenInCytoscapeButton from './OpenInCytoscapeButton'
 import ResetZoomButton from './ResetZoomButton'
 import Highlighter from './Highlighter'
-import { Tooltip } from '@material-ui/core'
 import OpenInNDExButton from './OpenInNDExButton'
 import NDExSignInModal from '../../NDExSignInModal'
 import NDExSave from '../../NDExSave'

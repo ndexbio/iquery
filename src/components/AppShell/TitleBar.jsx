@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -7,16 +8,17 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import HelpIcon from '@material-ui/icons/Help'
+import Tooltip from '@material-ui/core/Tooltip'
+
 import classNames from 'classnames'
+
 import logo from '../../assets/images/ndex-logo-mono.svg'
 import cytoLogo from '../../assets/images/cytoscape-logo-mono.svg'
-import GeneTextBox from './GeneTextBox'
-import Tooltip from '@material-ui/core/Tooltip'
 import nrnbLogo from '../../assets/images/nrnb-logo.svg'
 import wpLogo from '../../assets/images/wp-logo.svg'
-
 import HomeIcon from '@material-ui/icons/Home'
-import { networkClear } from "../../actions/network";
+
+import GeneTextBox from './GeneTextBox'
 
 const drawerWidth = 240
 
@@ -51,8 +53,17 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     })
+  },
+  textBox: {
+    position: 'relative',
+    left: '16px'
   }
 })
+
+const titleStyle = {
+  position: 'relative',
+  left: '16px'
+}
 
 class TitleBar extends React.Component {
   handleMenu = () => {
@@ -80,19 +91,12 @@ class TitleBar extends React.Component {
         })}
       >
         <Toolbar disableGutters={!open}>
-          <IconButton
-            className={classNames(classes.menuButton, open && classes.hide)}
-            color="inherit"
-            aria-label="Menu"
-            onClick={this.handleMenu}
-          >
-            <MenuIcon />
-          </IconButton>
+
 
 
           <Tooltip title="Search by Pathway Enrichment / Gene Neighborhoods / Keywords" aria-label="NDEx_tooltip">
             <div>
-              <Typography variant="h6" color="inherit">
+              <Typography variant="h6" color="inherit" style={titleStyle}>
                 NDEx Network Search
               </Typography>
             </div>
@@ -101,7 +105,15 @@ class TitleBar extends React.Component {
           {this.props.search.results === null ? (
             <div />
           ) : (
-            <GeneTextBox {...others} />
+            <div className={classes.textBox}>
+              <GeneTextBox 
+                classes={this.props.classes}
+                queryGenes={this.props.search.queryGenes}
+                sources={this.props.source.sources}
+                searchActions={this.props.searchActions}
+                history={this.props.history}
+              />
+             </div>
           )}
 
           <div className={classes.grow} />
@@ -175,3 +187,14 @@ TitleBar.propTypes = {
 }
 
 export default withStyles(styles, { withTheme: true })(TitleBar)
+
+/*
+          <IconButton
+            className={classNames(classes.menuButton, open && classes.hide)}
+            color="inherit"
+            aria-label="Menu"
+            onClick={this.handleMenu}
+          >
+            <MenuIcon />
+          </IconButton>
+          */

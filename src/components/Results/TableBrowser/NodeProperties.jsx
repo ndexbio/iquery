@@ -5,18 +5,18 @@ import parse from 'html-react-parser'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, withStyles } from '@material-ui/styles'
 
-import GeneAnnotationList from './GeneAnnotationList'
 import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
+
+import GeneAnnotationList from './GeneAnnotationList'
+
 
 let index = 0
 let topIndex = 0
@@ -39,6 +39,10 @@ const useStyles = makeStyles(theme => ({
   listPadding: {
     paddingTop: '0',
     paddingBottom: '16px'
+  },
+  lessListPadding: {
+    paddingTop: '0',
+    paddingBottom: '4px'
   },
   table: {
     width: '100%',
@@ -134,7 +138,7 @@ const NodeProperties = props => {
             <List className={classes.noPadding}>
               <ListItem 
                 key={index++} 
-                className={classes.listPadding} 
+                className={classes.lessListPadding} 
                 disableGutters={true}
               >
                 <GeneAnnotationList 

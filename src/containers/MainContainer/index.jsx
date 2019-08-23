@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import HomePanel from '../../components/HomePanel'
 import { withRouter } from 'react-router-dom'
 
 import * as searchActions from '../../actions/search'
@@ -12,6 +11,8 @@ import * as cyrestActions from '../../actions/cyrest'
 import * as ndexSaveActions from '../../actions/ndexSave'
 
 import ReactGA from 'react-ga'
+
+import HomePanel from '../../components/HomePanel'
 
 const MainContainer = props => {
   useEffect(() => {

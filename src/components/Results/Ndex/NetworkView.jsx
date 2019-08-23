@@ -5,7 +5,6 @@ import Split from 'react-split'
 import NetworkViewer from './NetworkViewer'
 import TableBrowser from '../TableBrowser'
 import NetworkToolbar from './NetworkToolbar'
-import { classes } from 'istanbul-lib-coverage';
 
 const DEFAULT_RATIO = [50, 50]
 

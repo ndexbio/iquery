@@ -1,9 +1,6 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import List from '@material-ui/core/List'
-import NodeProperties from './NodeProperties'
-import EdgeProperties from './EdgeProperties'
-import NetworkProperties from './NetworkProperties'
+
 import TableBrowserPanel from './TableBrowserPanel'
 
 

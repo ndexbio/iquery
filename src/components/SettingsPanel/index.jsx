@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { withStyles } from '@material-ui/core/styles'
 import Collapse from '@material-ui/core/Collapse'
 import Drawer from '@material-ui/core/Drawer'
@@ -12,11 +13,12 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import SettingIcon from '@material-ui/icons/Settings'
-import github from '../../assets/images/github.svg'
 import CloudIcon from '@material-ui/icons/Cloud'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import Tooltip from '@material-ui/core/Tooltip'
+
+import github from '../../assets/images/github.svg'
 
 import './style.css'
 

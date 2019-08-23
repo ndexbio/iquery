@@ -2,21 +2,15 @@ import React from 'react'
 import './style.css'
 
 import Split from 'react-split'
+
 import NetworkView from './NetworkView'
 import NetworkList from './NetworkList'
 
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-
 import Typography from '@material-ui/core/Typography'
-
-import * as cyRESTApi from '../../../api/cyrest'
 import { ListItem } from '@material-ui/core'
-
 import Tooltip from '@material-ui/core/Tooltip'
-import Paper from '@material-ui/core/Paper'
-import MenuList from '@material-ui/core/MenuList'
-import MenuItem from '@material-ui/core/MenuItem';
 
 
 

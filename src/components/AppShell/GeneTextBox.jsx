@@ -44,7 +44,7 @@ const GeneTextBox = props => {
   const { classes } = props
   const geneTextRef = useRef(null)
 
-  const [queryText, setQuery] = useState(props.search.queryGenes)
+  const [queryText, setQuery] = useState(props.queryGenes)
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const GeneTextBox = props => {
 
   const handleSearch = evt => {
     const genes = queryText
-    const sources = props.source.sources
+    const sources = props.sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
       // TODO: add better error message

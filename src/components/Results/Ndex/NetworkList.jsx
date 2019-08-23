@@ -4,13 +4,6 @@ import { withStyles } from '@material-ui/core/styles'
 import MenuList from '@material-ui/core/MenuList'
 import Typography from '@material-ui/core/Typography'
 
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-import { ListItem } from '@material-ui/core'
-
 import SortPanel from './SortPanel'
 
 
@@ -152,9 +145,9 @@ const NetworkList = props => {
   if (result.length > 0) {
     return (
       <div className="network-list-wrapper">
+        <SortPanel {...props}/>
         <div className="network-list">
           <MenuList className={classes.noPadding}>
-            <SortPanel {...props}/>
             {result}
           </MenuList>
         </div>

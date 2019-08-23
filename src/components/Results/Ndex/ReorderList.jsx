@@ -1,12 +1,10 @@
 import React, {Component, useState, useEffect} from 'react';
-import update from 'immutability-helper';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+
 import ReorderListItem from './ReorderListItem';
 
 import List from '@material-ui/core/List'
-import { makeStyles, withStyles } from '@material-ui/styles'
-
 
 const noPadding = {
   padding: '0',

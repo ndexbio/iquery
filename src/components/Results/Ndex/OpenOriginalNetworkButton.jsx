@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser'
+
 import { SERVICE_SERVER_URL } from '../../../api/apiConstants'
 
 const styles = theme => ({

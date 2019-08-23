@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
 import './style.css'
+
 import TitleBar from './TitleBar'
 import SettingsPanel from '../SettingsPanel'
+
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
+
 import classNames from 'classnames'
 
 const drawerWidth = 240

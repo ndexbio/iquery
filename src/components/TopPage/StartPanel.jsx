@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import './style.css'
+
 import SearchTextBox from './SearchTextBox'
 import Footer from './Footer'
-
-import ndex from '../../assets/images/ndex-logo.svg'
 import LoadingPanel from '../LoadingPanel'
 
+import ndex from '../../assets/images/ndex-logo.svg'
 import queryString from 'query-string'
 
 const StartPanel = props => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Button from '@material-ui/core/Button'
 import logo from '../../../assets/images/cytoscape-logo.svg'
-import logoDisabled from '../../../assets/images/cytoscape-logo-mono.svg'
+import logoDisabled from '../../../assets/images/cytoscape-logo-mono-light.svg'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
 

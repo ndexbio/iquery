@@ -1,131 +1,109 @@
 import React, { useState } from 'react'
+
 import { makeStyles, withStyles } from '@material-ui/styles'
-
 import Typography from '@material-ui/core/Typography'
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputBase from '@material-ui/core/InputBase';
 
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-
-
-import { ListItem } from '@material-ui/core'
-
-import ReorderList from './ReorderList'
-import { isClassExpression } from '@babel/types';
-
-const useStyles = makeStyles(theme => ({
-  noPadding: {
-    padding: '0',
-    width: "100%"
-  },
-  small: {
-    minWidth: '0'
-  }
-}))
-
-const ExpansionPanel = withStyles({
+const BootstrapInput = withStyles(theme => ({
   root: {
-    width: '100%',
-    boxShadow: 'none',
-    '&:not(:last-child)': {
-      borderBottom: 0,
-    },
-    '&:before': {
-      display: 'none',
-    },
-    '&$expanded': {
-      height: 'auto'
+    'label + &': {
+      marginTop: '0',
     },
   },
-  expanded: {},
-})(MuiExpansionPanel);
-
-const ExpansionPanelSummary = withStyles({
-  root: {
-    paddingLeft: '16px',
-    paddingRight: '16px',
-    paddingTop: '0',
-    paddingBottom: '0',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    marginBottom: -1,
-    minHeight: '35px',
-    '&$expanded': {
-      minHeight: '35px'
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: '#FFFFFF',
+    border: '1px solid #ced4da',
+    textColor: '#757575',
+    padding: '5px 26px 5px 12px',
+    '&:focus': {
+      borderRadius: 4,
+      backgroundColor: '#FFFFFF'
     },
   },
-  content: {
-    margin: '0',
-    '&$expanded': {
-      margin: '12px 0',
-    },
-  },
-  expanded: {},
-})(MuiExpansionPanelSummary);
+}))(InputBase);
 
-const ExpansionPanelDetails = withStyles({
-  root: {
-    padding: '0'
-  }
-})(MuiExpansionPanelDetails);
-
-const buttonStyle = {
+const formStyle = {
   position: 'relative',
-  left: '16px',
-  bottom: '0'
+  left: '11px',
+  marginTop: '8px',
+  marginBottom: '8px'
 }
 
-const buttonListStyle = {
-  height: '54px',
+const divStyle = {
+  paddingLeft: '16px',
+  borderBottom: '1px solid rgba(239, 239, 239, 1)',
 }
 
+const typeStyle = {
+  position: 'relative',
+  top: '14.5px'
+}
+
+const selectStyle = {
+  color: 'secondary'
+}
 
 const SortPanel = props => {
-  const classes = useStyles()
-  const { uiState, uiStateActions } = props
-  
-  const handleButtonClick = () => {
-    uiStateActions.setSort(true)
-  }
+  const [sortPValueOn, setSortPValueOn] = useState(true)
 
-  return (
-    <ListItem disableGutters={true} className={classes.noPadding}>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
+  const handleChange = event => {
+    if (event.target.value === 'p-Value') {
+      if (!sortPValueOn) {
+        setSortPValueOn(true)
+        props.uiStateActions.setPValueOn(true)
+        props.uiStateActions.setSort(true)
+      }
+    } else {
+      if (sortPValueOn) {
+        setSortPValueOn(false)
+        props.uiStateActions.setPValueOn(false)
+        props.uiStateActions.setSort(true)
+      }
+    }
+  }
+  
+  if (props.uiState.selectedSource === 'enrichment') {
+    return (
+      <div style={divStyle}>
+        <Typography 
+          variant='body2'
+          display='inline'
+          style={typeStyle}
+          color='textSecondary'
         >
-          <Typography 
-            variant="subtitle2" 
-            color="textSecondary"
+          Sort by
+        </Typography>
+        <FormControl style={formStyle}>
+          <Select
+            value={sortPValueOn ? 'p-Value' : 'Overlap'}
+            onChange={handleChange}
+            displayEmpty
+            name="Sort by"
+            style={selectStyle}
+            input={<BootstrapInput name="age" id="age-customized-select" />}
           >
-            Sort by
-          </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <List className={classes.noPadding}>
-            <ListItem disableGutters={true} className={classes.noPadding}>
-              <ReorderList 
-                uiStateActions={props.uiStateActions}
-                uiState={props.uiState}
-              />
-            </ListItem>
-            <ListItem disableGutters={true} className={classes.noPadding} style={buttonListStyle}>
-              <Button 
-                variant="outlined" 
-                color="secondary" 
-                style={buttonStyle}
-                onClick={handleButtonClick}
-              >
-                Sort
-              </Button>
-            </ListItem>
-          </List>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-    </ListItem>
-  )
+            <MenuItem value={'p-Value'}>
+              <Typography variant="body2" color='textSecondary'>
+                p-Value
+              </Typography>
+            </MenuItem>
+            <MenuItem value={'Overlap'}>
+              <Typography variant="body2" color='textSecondary'>
+                Overlap
+              </Typography>
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+    )
+  } else {
+    return null
+  }
 }
 
 export default SortPanel

@@ -2,11 +2,11 @@ import React, {Component, useState} from 'react';
 import PropTypes from 'prop-types';
 import {findDOMNode} from 'react-dom';
 import {DragSource, DropTarget} from 'react-dnd';
+
 import ListItem from '@material-ui/core/ListItem'
 import DragIcon from '@material-ui/icons/DragIndicator'
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -14,8 +14,6 @@ import { makeStyles, withStyles } from '@material-ui/styles'
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography'
 import { classes } from 'istanbul-lib-coverage';
-
-
 
 const useStyles = makeStyles(theme => ({
   noPadding: {

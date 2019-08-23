@@ -1,6 +1,6 @@
 import React from 'react'
-import Ndex from './Ndex'
 
+import Ndex from './Ndex'
 import LoadingPanel from '../LoadingPanel'
 
 const TabContent = props => {

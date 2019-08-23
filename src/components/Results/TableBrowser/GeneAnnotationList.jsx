@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { withStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -12,12 +13,14 @@ import IconButton from '@material-ui/core/IconButton'
 import LinkIcon from '@material-ui/icons/Launch'
 import InfoIcon from '@material-ui/icons/Info'
 import Tooltip from '@material-ui/core/Tooltip'
-import './style.css'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Collapse from '@material-ui/core/Collapse'
 import CheckIcon from '@material-ui/icons/Check'
+
 import { camelCaseToTitleCase } from './camel-case-util.js'
+import './style.css'
+
 
 
 // For external link
@@ -105,7 +108,7 @@ class GeneAnnotationList extends React.Component {
           primary={
             <Typography
               component="span"
-              variant="body1"
+              variant="body2"
             >
               {geneEntry.symbol}
             </Typography>
@@ -119,7 +122,7 @@ class GeneAnnotationList extends React.Component {
               >
                 {camelCaseToTitleCase(geneEntry.name)}
               </Typography>
-              <Typography variant="body1">
+              <Typography variant="body2" color='textPrimary'>
                 {description}
               </Typography>
             </React.Fragment>

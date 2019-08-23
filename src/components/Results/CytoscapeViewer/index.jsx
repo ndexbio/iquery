@@ -140,7 +140,7 @@ const CytoscapeViewer = props => {
         {
           fit: {
             eles: cyInstance.elements(),
-            padding: 10
+            padding: 6
           }
         },
         {
@@ -154,7 +154,7 @@ const CytoscapeViewer = props => {
         {
           fit: {
             eles: cyInstance.elements(),
-            padding: 10
+            padding: 6
           }
         },
         {

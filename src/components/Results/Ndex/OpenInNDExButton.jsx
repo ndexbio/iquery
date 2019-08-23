@@ -3,7 +3,7 @@ import './style.css'
 
 import Button from '@material-ui/core/Button'
 import logo from '../../../assets/images/ndex-logo.svg'
-import logoDisabled from '../../../assets/images/ndex-logo-mono.svg'
+import logoDisabled from '../../../assets/images/ndex-logo-mono-light.svg'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
 

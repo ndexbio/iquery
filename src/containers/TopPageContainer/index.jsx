@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import TopPage from '../../components/TopPage'
 import { withRouter } from 'react-router-dom'
 
 import * as searchActions from '../../actions/search'
@@ -11,6 +10,8 @@ import * as sourceActions from '../../actions/source'
 import * as cyrestActions from '../../actions/cyrest'
 import * as ndexSaveActions from '../../actions/ndexSave'
 import ReactGA from 'react-ga'
+
+import TopPage from '../../components/TopPage'
 
 const TopPageContainer = props => {
   useEffect(() => {

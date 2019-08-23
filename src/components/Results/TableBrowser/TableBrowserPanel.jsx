@@ -1,15 +1,12 @@
 import React from 'react'
-import { useState } from "react"
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
+import { makeStyles } from '@material-ui/styles'
+
 import NetworkProperties from './NetworkProperties'
 import NodeProperties from './NodeProperties'
 import EdgeProperties from './EdgeProperties'
-import { makeStyles } from '@material-ui/styles'
+
 
 
 const useStyles = makeStyles(theme => ({
