@@ -39,20 +39,20 @@ const styles = theme => ({
 
 class SettingsPanel extends React.Component {
   handleServicesItemClick = () => {
-    const servicesListOpen = this.props.uiState.servicesListOpen
-    this.props.uiStateActions.setServicesListOpen(!servicesListOpen)
+    const servicesListOpen = this.props.uiState_servicesListOpen
+    this.props.uiStateActions_setServicesListOpen(!servicesListOpen)
   }
 
   handleDrawerClose = () => {
-    const isOpen = this.props.uiState.isSettingsOpen
-    this.props.uiStateActions.setSettingsOpen(!isOpen)
+    const isOpen = this.props.uiState_isSettingsOpen
+    this.props.uiStateActions_setSettingsOpen(!isOpen)
   }
 
   render() {
     const { classes, theme } = this.props
-    const isOpen = this.props.uiState.isSettingsOpen
-    const sources = this.props.source.sources
-    const servicesListOpen = this.props.uiState.servicesListOpen
+    const isOpen = this.props.uiState_isSettingsOpen
+    const sources = this.props.source_sources
+    const servicesListOpen = this.props.uiState_servicesListOpen
 
     return (
       <Drawer

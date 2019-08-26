@@ -89,7 +89,7 @@ const SearchTextBox = props => {
 
   const handleSearch = event => {
     const genes = state.query
-    const sources = props.source.sources
+    const sources = props.source_sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
       // TODO: add better error message
@@ -98,8 +98,8 @@ const SearchTextBox = props => {
   
     const sourceNames = sources.map(source => source.name)
     const geneList = genes.toString().split(/\s*,\s*|\s+/)
-    props.searchActions.setQuery(genes)
-    props.searchActions.searchStarted({ geneList, sourceNames })
+    props.searchActions_setQuery(genes)
+    props.searchActions_searchStarted({ geneList, sourceNames })
     
   }
 

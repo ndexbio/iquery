@@ -12,7 +12,6 @@ import {
   fetchResultSucceeded,
   fetchResultFailed,
   setSearchResult,
-  setSearchResultOrder,
   setActualResults
 } from '../actions/search'
 
@@ -86,21 +85,6 @@ const search = handleActions(
       return {
         ...state,
         searchResults: singleResult
-      }
-    },
-    [setSearchResultOrder]: (state, payload) => {
-      return {
-        ...state,
-        searchResults: {
-          ...state,
-          sources: {
-            ...state,
-            source: {
-              ...state,
-              results: payload.payload
-            }
-          }
-        }
       }
     },
     [setActualResults]: (state, payload) => {

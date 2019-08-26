@@ -43,13 +43,14 @@ const TableBrowser = props => {
     return <div style={DISABLED_STYLE} />
   }
 
-  const nodes = network.selectedNodes
-  const edges = network.selectedEdges
-
-
   return (
     <div className={'table-browser'}>
-      <TableBrowserPanel {...props}/>
+      <TableBrowserPanel
+        network={props.network}
+        networkActions_changeTab={props.networkActions_changeTab}
+
+        search_results={props.search_results}
+      />
     </div>
   )
   

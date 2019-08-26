@@ -38,10 +38,10 @@ const OpenInNDExButton = props => {
   const { classes } = props
 
   const handleImportNetwork = () => {
-    props.ndexSaveActions.setNDExModalOpen(true)
+    props.ndexSaveActions_setNDExModalOpen(true)
   }
 
-  const disabled = !(props.network.uuid && props.network.uuid.length > 0)
+  const disabled = !(props.network_uuid && props.network_uuid.length > 0)
 
   return (
     <Tooltip title="Save this network to your NDEx account" placement="bottom">

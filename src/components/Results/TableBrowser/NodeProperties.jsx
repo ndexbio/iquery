@@ -88,7 +88,8 @@ const ExpansionPanelSummary = withStyles({
 
 const NodeProperties = props => {
   const classes = useStyles()
-  const { nodes, originalCX } = props
+  const nodes = props.network_selectedNodes
+
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
   const entityProperties = [
@@ -127,9 +128,8 @@ const NodeProperties = props => {
     let geneAnnotation = null
     let inset = false
     if (
-      props.search != null &&
-      props.search.results != null &&
-      props.search.results.genes.get(node.name) != null
+      props.search_results != null &&
+      props.search_results.genes.get(node.name) != null
     ) {
       inset = true
       geneAnnotation = (
@@ -143,7 +143,7 @@ const NodeProperties = props => {
               >
                 <GeneAnnotationList 
                   geneSymbol={node.name} 
-                  {...props} 
+                  search_results={props.search_results} 
                 />
               </ListItem>
             </List>

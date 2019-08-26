@@ -57,11 +57,10 @@ const handleClear = (event, props) => {
 }
 
 const GeneList = props => {
-  const { search, network } = props
   const classes = withStyles()
 
-  const results = search.results
-  const hits = network.hitGenes
+  const results = props.search_results
+  const hits = props.network_hitGenes
   const hitSets = new Set(hits)
 
   const [alignment, setAlignment] = React.useState(0)
@@ -69,14 +68,14 @@ const GeneList = props => {
   const handleChange = (event, newAlignment) => {
     if (newAlignment == null) {
       setAlignment(0)
-      props.searchActions.clearSelectedGenes()
+      props.searchActions_clearSelectedGenes()
     } else {
       setAlignment(newAlignment)
-      props.searchActions.setSelectedGenes(newAlignment)
+      props.searchActions_setSelectedGenes(newAlignment)
     }
   }
 
-  if (props.search.selectedGenes.length == 0) {
+  if (props.search_selectedGenes.length == 0) {
     if (alignment) {
       setAlignment(0)
     }

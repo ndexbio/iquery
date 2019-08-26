@@ -14,7 +14,14 @@ const InputPanel = props => (
   <div className="input-container">
     <div className="input-wrapper">
       <div className={"gene-list-title"}>Query Genes</div>
-      <GeneList {...props} />
+      <GeneList
+        search_results={props.search_results}
+        search_selectedGenes={props.search_selectedGenes}
+        searchActions_clearSelectedGenes={props.searchActions_clearSelectedGenes}
+        searchActions_setSelectedGenes={props.searchActions_setSelectedGenes}
+
+        network_hitGenes={props.network_hitGenes}
+      />
     </div>
   </div>
 )

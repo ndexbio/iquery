@@ -30,28 +30,29 @@ const styles = theme => ({
   }
 })
 
-    const OpenInCytoscapeButton = props => {
+const OpenInCytoscapeButton = props => {
   useEffect(() => {
-    props.cyrestActions.startCyRestPolling()
+    props.cyrestActions_startCyrestPolling()
     return () => {
-      props.cyrestActions.stopCyRestPolling()
+      props.cyrestActions_stopCyrestPolling()
     }
   }, [])
 
-  const { classes, cyrest, handleImportNetwork } = props
+  const { classes } = props
 
   const disabled =
-    !(props.network.uuid && props.network.uuid.length > 0) || 
-    !cyrest.available
+    !(props.network_uuid && props.network_uuid.length > 0) || 
+    !props.cyrest_available
 
-  const disabledLogo = 0
 
   const handleClick = () => {
-    handleImportNetwork()
+    props.handleImportNetwork()
   }
 
   //Snackbar
-  const { isLoadingNetwork, lastResponse } = cyrest
+  const isLoadingNetwork = props.cyrest_isLoadingNetwork
+  const lastResponse = props.cyrest_lastResponse
+
   const [open, setOpen] = useState(false)
   const [state, setState] = useState('dormant')
   const [message, setMessage] = useState(null)

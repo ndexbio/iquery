@@ -10,16 +10,16 @@ import queryString from 'query-string'
 
 const StartPanel = props => {
   useEffect(() => {
-    const params = queryString.parse(props.location.search)
+    const params = queryString.parse(props.location_search)
     const genes = params.genes
 
     if (genes !== undefined) {
       const geneList = genes.split(',')
-      props.searchActions.setQuery(genes)
-      props.searchActions.searchStarted({ geneList })
+      props.searchActions_setQuery(genes)
+      props.searchActions_searchStarted({ geneList })
     }
 
-    props.sourceActions.findSourceStarted()
+    props.sourceActions_findSourceStarted()
 
     return () => {
     }
@@ -43,7 +43,15 @@ const StartPanel = props => {
       <div className="start-title">
         <img className="start-logo-main" src={ndex} alt="logo" />
       </div>
-      <SearchTextBox {...props} />
+      <SearchTextBox 
+        search={props.search}
+        searchActions_setQuery={props.searchActions_setQuery}
+        searchActions_searchStarted={props.searchActions_searchStarted}
+  
+        source_sources={props.source_sources}
+
+        history={props.history}
+      />
       <Footer />
     </div>
   )

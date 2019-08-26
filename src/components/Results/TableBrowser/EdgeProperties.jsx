@@ -80,8 +80,11 @@ const ExpansionPanelSummary = withStyles({
 
 const EdgeProperties = props => {
   const classes = useStyles()
-  const { edges, originalCX } = props
+  const edges = props.network_selectedEdges
+  const originalCX = props.network_originalCX
+
   const [defaultExpanded, setDefaultExpanded] = useState(true)
+
   let nodes
   for (let i = 0; i < originalCX.length; i++) {
     if (originalCX[i].nodes != null) {

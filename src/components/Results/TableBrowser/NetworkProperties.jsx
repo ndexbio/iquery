@@ -82,7 +82,7 @@ const ExpansionPanelSummary = withStyles({
 
 const NetworkProperties = props => {
   index = 0
-  const { originalCX } = props
+  const originalCX = props.network_originalCX
   const classes = useStyles()
 
   //Find network props

@@ -68,9 +68,9 @@ class GeneAnnotationList extends React.Component {
   }
 
   render() {
-    const { classes, search } = this.props
+    const { classes } = this.props
 
-    const results = search.results
+    const results = this.props.search_results
 
     if (!results) {
       return <div className="gene-list-wrapper" />

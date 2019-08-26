@@ -39,7 +39,7 @@ export const MAX_NETWORK_SIZE = 5000
  * @constructor
  */
 const CytoscapeViewer = props => {
-  const { highlights } = props.uiState
+  const highlights = props.uiState_highlights
 
   useEffect(() => {
     if (cyInstance === undefined || cyInstance === null) {
@@ -51,7 +51,7 @@ const CytoscapeViewer = props => {
         cyInstance.nodes().removeClass('connected')
         const target = event.target
         if (target === cyInstance) {
-          props.networkActions.changeTab(0)
+          props.networkActions_changeTab(0)
           console.log('UNSELECT')
         }
       } catch (e) {
@@ -81,30 +81,30 @@ const CytoscapeViewer = props => {
     cyInstance.on('select', 'node', function() {
       const selected = this.data()
       if (selected.name !== '') {
-        props.networkActions.selectNodes(selected)
+        props.networkActions_selectNodes(selected)
       }
     })
 
     cyInstance.on('unselect', 'node', function() {
       const unselected = this.data()
       if (unselected.name !== '') {
-        props.networkActions.unselectNodes(unselected)
+        props.networkActions_unselectNodes(unselected)
       }
     })
     
     cyInstance.on('select', 'edge', function() {
       const selected = this.data()
-      props.networkActions.selectEdges(selected)
+      props.networkActions_selectEdges(selected)
     })
 
     cyInstance.on('unselect', 'edge', function() {
       const unselected = this.data()
-      props.networkActions.unselectEdges(unselected)
+      props.networkActions_unselectEdges(unselected)
     })
 
 
     // Reset the UI state (hilight)
-    props.uiStateActions.setHighlights(true)
+    props.uiStateActions_setHighlights(true)
 
     return () => {
       console.log('Network viewer unmounted')
@@ -116,7 +116,7 @@ const CytoscapeViewer = props => {
       return
     }
 
-    const targets = props.search.selectedGenes
+    const targets = props.search_selectedGenes
     if (targets === null || targets === undefined) {
       return
     }
@@ -135,21 +135,10 @@ const CytoscapeViewer = props => {
           duration: 500
         }
       )
-    } else {
-      cyInstance.animate(
-        {
-          fit: {
-            eles: cyInstance.elements(),
-            padding: 6
-          }
-        },
-        {
-          duration: 500
-        }
-      )
     }
 
     if (targets.length === 0) {
+      console.log(cyInstance.elements())
       cyInstance.animate(
         {
           fit: {
@@ -162,30 +151,30 @@ const CytoscapeViewer = props => {
         }
       )
     }
-  }, [props.search.selectedGenes])
+  }, [props.search_selectedGenes])
 
   useEffect(() => {
     if (cyInstance === undefined || cyInstance === null) {
       return
     }
 
-    const zoom = props.uiState.zoomed
+    const zoom = props.uiState_zoomed
     if (zoom === null || zoom === undefined) {
       return
     }
 
     if (zoom) {
-      props.searchActions.clearSelectedGenes()
-      props.uiStateActions.resetZoomed()
+      props.searchActions_clearSelectedGenes()
+      props.uiStateActions_setZoomed(false)
     }
-  }, [props.uiState.zoomed])
+  }, [props.uiState_zoomed])
 
-  const numObjects = props.network.nodeCount + props.network.edgeCount
+  const numObjects = props.network_nodeCount + props.network_edgeCount
   if (numObjects > MAX_NETWORK_SIZE) {
     return <Warning />
   }
 
-  const cyjs = props.network.network
+  const cyjs = props.network_network
   if (cyjs === null || cyjs === undefined) {
     return null
   }
@@ -193,7 +182,7 @@ const CytoscapeViewer = props => {
   const networkAreaStyle = {
     width: '100%',
     height: '100%',
-    background: props.network.backgroundColor
+    background: props.network_backgroundColor
   }
 
   const isLayoutAvailable = cyjs.isLayout

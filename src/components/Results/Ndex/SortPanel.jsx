@@ -53,21 +53,15 @@ const SortPanel = props => {
 
   const handleChange = event => {
     if (event.target.value === 'p-Value') {
-      if (!sortPValueOn) {
-        setSortPValueOn(true)
-        props.uiStateActions.setPValueOn(true)
-        props.uiStateActions.setSort(true)
-      }
+      setSortPValueOn(true)
+      props.uiStateActions_setSortOrder(['p-Value', 'Overlap'])
     } else {
-      if (sortPValueOn) {
-        setSortPValueOn(false)
-        props.uiStateActions.setPValueOn(false)
-        props.uiStateActions.setSort(true)
-      }
+      setSortPValueOn(false)
+      props.uiStateActions_setSortOrder(['Overlap', 'p-Value'])
     }
   }
   
-  if (props.uiState.selectedSource === 'enrichment') {
+  if (props.uiState_selectedSource === 'enrichment') {
     return (
       <div style={divStyle}>
         <Typography 

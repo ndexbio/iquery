@@ -17,6 +17,10 @@ import {
   changeListIndex
 } from '../actions/network'
 
+import {
+  setZoomed
+} from '../actions/uiState'
+
 const LAYOUT_SCALING_FACTOR = 2.0
 
 const defaultState = {
@@ -130,12 +134,14 @@ const network = handleActions(
         backgroundColor = getBackGround(originalCX)
       }
 
+      setZoomed()
+
       return {
         ...state,
         originalCX,
         network,
         backgroundColor,
-        isFetching: false
+        isFetching: false,
       }
     },
     [networkFetchFailed]: (state, payload) => {

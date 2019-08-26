@@ -21,13 +21,14 @@ const styles = theme => ({
 
 const Highlighter = props => {
   const { classes } = props
-  const disabled = !(props.network.uuid && props.network.uuid.length > 0)
+  const disabled = !(props.network_uuid && props.network_uuid.length > 0)
 
-  let highlight = props.uiState.highlights
+  let highlight = props.uiState_highlights
+  
   const handleChange = evt => {
-    if (props.network.uuid && props.network.uuid.length > 0) {
-      props.uiStateActions.setHighlights(!highlight)
+    if (props.network_uuid && props.network_uuid.length > 0) {
       highlight = !highlight
+      props.uiStateActions_setHighlights(highlight)
     }
   }
 

@@ -99,28 +99,73 @@ const styles = theme => ({
 })
 
 const NetworkToolbar = props => {
-  const { classes, ...others } = props
+  const { classes } = props
   return (
     <div className={classes.toolbar}>
-      <Tooltip title={props.network.networkName}>
+      <Tooltip title={props.network_networkName}>
         <Typography
           className={classes.title}
           variant="subtitle1"
           color="inherit"
           noWrap
         >
-          {props.network.networkName}
+          {props.network_networkName}
         </Typography>
       </Tooltip>
       <div className={classes.grow} />
-      <ResetZoomButton {...others} />
-      <Highlighter {...others} />
-      <NDExSignInModal {...others}>
-        <NDExSave {...others} />
+      <ResetZoomButton
+        network_uuid={props.network_uuid}
+        uiStateActions_setZoomed={props.uiStateActions_setZoomed}
+      />
+      <Highlighter
+        network_uuid={props.network_uuid}
+        uiState_highlights={props.uiState_highlights}
+        uiStateActions_setHighlights={props.uiStateActions_setHighlights}
+      />
+      <NDExSignInModal
+        ndexSave_ndexModal={props.ndexSave_ndexModal}
+        ndexSave_profile={props.ndexSave_profile}
+        ndexSave_networkUrl={props.ndexSave_networkUrl}
+
+        ndexSave_errorMessage={props.ndexSave_errorMessage}
+        ndexSaveActions_setProfile={props.ndexSaveActions_setProfile}
+        ndexSaveActions_setNDExModalOpen={props.ndexSaveActions_setNDExModalOpen}
+        ndexSaveActions_saveToNDEx={props.ndexSaveActions_saveToNDEx}
+        ndexSaveActions_credentialsSignOn={props.ndexSaveActions_credentialsSignOn}
+        ndexSaveActions_googleSignOn={props.ndexSaveActions_googleSignOn}
+        ndexSaveActions_setErrorMessage={props.ndexSaveActions_setErrorMessage}
+
+        network_originalCX={props.network_originalCX}
+
+      >
+        <NDExSave
+          ndexSave_networkUrl={props.ndexSave_networkUrl}
+          ndexSave_profile={props.ndexSave_profile}
+
+          ndexSaveActions_setNDExModalOpen={props.ndexSaveActions_setNDExModalOpen}
+          ndexSaveActions_saveToNDEx={props.ndexSaveActions_saveToNDEx}
+
+          network_originalCX={props.network_originalCX}
+        />
       </NDExSignInModal>
-      <OpenInNDExButton {...others} />
-      <OpenInCytoscapeButton {...others} />
-      <OpenOriginalNetworkButton {...others} />
+      <OpenInNDExButton 
+        network_uuid={props.network_uuid}
+        ndexSaveActions_setNDExModalOpen={props.ndexSaveActions_setNDExModalOpen}
+      />
+      <OpenInCytoscapeButton
+        handleImportNetwork={props.handleImportNetwork} 
+
+        cyrest_available={props.cyrest_available}
+        cyrest_isLoadingNetwork={props.cyrest_isLoadingNetwork}
+        cyrest_lastResponse={props.cyrest_lastResponse}
+        cyrestActions_startCyrestPolling={props.cyrestActions_startCyrestPolling}
+        cyrestActions_stopCyrestPolling={props.cyrestActions_stopCyrestPolling}
+
+        network_uuid={props.network_uuid}
+      />
+      <OpenOriginalNetworkButton
+        network_uuid={props.network_uuid}
+      />
     </div>
   )
 }

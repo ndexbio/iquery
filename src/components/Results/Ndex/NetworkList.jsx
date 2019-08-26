@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
 import MenuList from '@material-ui/core/MenuList'
@@ -57,7 +57,7 @@ const styles = theme => ({
 })
 
 const findSort = (sortOrder, pValue, overlap) => {
-  if (pValue && (!overlap || sortOrder[0] === 'p-Value')) {
+  if (sortOrder[0] === 'p-Value') {
     return (a, b) => {
       if (a.details.PValue > b.details.PValue) {
         return 1
@@ -89,8 +89,15 @@ const findSort = (sortOrder, pValue, overlap) => {
 }
 
 const NetworkList = props => {
-  const { classes, hits, renderNetworkListItem, network, search, uiState, uiStateActions, searchActions } = props
+  const hits = props.hits
 
+  //Sort hits
+  useEffect(() => {
+    const sortFunction = findSort(props.uiState_sortOrder)
+    const newHits = hits.sort(sortFunction)
+    props.searchActions_setActualResults(newHits)
+  }, [props.uiState_sortOrder, props.uiState_selectedSource])
+  
   if (!hits) {
     return <div className="network-list-wrapper" />
   }
@@ -98,46 +105,19 @@ const NetworkList = props => {
   let index = 1
 
   function handleListItemClick(event, index) {
-    props.networkActions.changeListIndex(index);
+    props.networkActions_changeListIndex(index);
   }
 
-  const selectedIndex = network.listIndex
+  const selectedIndex = props.network_listIndex
 
-  const query = search.results.genes
+  const query = props.search_results_genes
 
-  //Sort hits
-  if (uiState.sort) {
-    const sortOrder = uiState.sortOrder
-    const sortFunction = findSort(uiState.sortOrder, uiState.sortPValueOn, uiState.sortOverlapOn)
-    let newHits = hits.sort(sortFunction)
-    //Check threshold
-    if (uiState.sortPValueThresholdOn) {
-      const pValueThreshold = uiState.sortPValueThresholdValue
-      newHits = []
-      hits.forEach((hit) => {
-        if (hit.details.PValue <= pValueThreshold) {
-          newHits.push(hit)
-        }
-      })
-    }
-    if (uiState.sortOverlapThresholdOn) {
-      const overlapThreshold = uiState.sortOverlapThresholdValue
-      let newNewHits = []
-      newHits.forEach(hit => {
-        if (hit.hitGenes.length >= overlapThreshold) {
-          newNewHits.push(hit)
-        }
-      })
-      newHits = newNewHits
-    }
-    searchActions.setActualResults(newHits)
-    uiStateActions.setSort(false)
-  }
+  
 
-  const result = search.actualResults.map(entry => renderNetworkListItem(
+  const result = props.search_actualResults.map(entry => props.renderNetworkListItem(
     query.size, 
     entry, 
-    classes, 
+    props.classes, 
     handleListItemClick, 
     selectedIndex, 
     index++))
@@ -145,9 +125,12 @@ const NetworkList = props => {
   if (result.length > 0) {
     return (
       <div className="network-list-wrapper">
-        <SortPanel {...props}/>
+        <SortPanel
+          uiState_selectedSource={props.uiState_selectedSource}
+          uiStateActions_setSortOrder={props.uiStateActions_setSortOrder}
+        />
         <div className="network-list">
-          <MenuList className={classes.noPadding}>
+          <MenuList className={props.classes.noPadding}>
             {result}
           </MenuList>
         </div>
@@ -160,7 +143,7 @@ const NetworkList = props => {
           <Typography 
             variant={'subtitle1'}
             color={'textSecondary'}
-            className={classes.center}
+            className={props.classes.center}
           >
             No results found
           </Typography>

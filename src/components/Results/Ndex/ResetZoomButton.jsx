@@ -30,12 +30,12 @@ const BootstrapButton = withStyles({
 })(Button);
 
 const ResetZoomButton = props => {
-  const { classes, network } = props
+  const { classes } = props
 
-  const disabled = !(network.uuid && network.uuid.length > 0)
+  const disabled = !(props.network_uuid && props.network_uuid.length > 0)
 
   const handleClick = () => {
-    props.uiState.zoomed = true
+    props.uiStateActions_setZoomed()
   }
 
   return (

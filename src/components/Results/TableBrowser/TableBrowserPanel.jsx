@@ -28,13 +28,27 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const TabContent = props => {
-  const { value, originalCX, nodes, edges, search  } = props
+  const { value } = props
   if (value === 0) {
-    return <NetworkProperties originalCX={originalCX}/>
+    return (
+      <NetworkProperties 
+        network_originalCX={props.network_originalCX}
+      />
+    )
   } else if (value === 1) {
-    return <NodeProperties nodes={nodes} originalCX={originalCX} search={search} {...props} />
+    return (
+      <NodeProperties 
+        network_selectedNodes={props.network_selectedNodes} 
+        search_results={props.search_results} 
+      />
+    )
   } else {
-    return <EdgeProperties edges={edges} originalCX={originalCX} />
+    return (
+      <EdgeProperties 
+        network_selectedEdges={props.network_selectedEdges} 
+        network_originalCX={props.network_originalCX} 
+      />
+    )
   }
 }
 
@@ -52,13 +66,13 @@ const TableBrowserPanel = props => {
     return <div style={DISABLED_STYLE} />
   }
 
-  const { originalCX } = network
+  const originalCX = network.originalCX
   if (originalCX === null) {
     return <div style={DISABLED_STYLE} />
   }
 
   function handleChange(event, newValue) {
-    props.networkActions.changeTab(newValue)
+    props.networkActions_changeTab(newValue)
   }
 
   //Get current tab selection
@@ -91,10 +105,10 @@ const TableBrowserPanel = props => {
       </Tabs>
       <TabContent 
         value={value} 
-        originalCX={originalCX} 
-        nodes={props.network.selectedNodes}
-        edges={props.network.selectedEdges}
-        search={props.search}
+        network_originalCX={props.network.originalCX} 
+        network_selectedNodes={props.network.selectedNodes}
+        network_selectedEdges={props.network.selectedEdges}
+        search_results={props.search_results}
       />
     </div>
   )

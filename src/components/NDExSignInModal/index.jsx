@@ -233,30 +233,29 @@ class NDExSignInModal extends React.Component {
   onLoginSuccess = () => {}
 
   onLogout = () => {
-    this.props.ndexSaveActions.setProfile(null)
+    this.props.ndexSaveActions_setProfile(null)
     //this.handleClose()
   }
 
   handleClose = () => {
-    this.props.ndexSaveActions.setNDExModalOpen(false)
+    this.props.ndexSaveActions_setNDExModalOpen(false)
   }
 
   handleCredentialsSignOn = event => {
     event.preventDefault()
-    this.props.ndexSaveActions.credentialsSignOn(event)
+    this.props.ndexSaveActions_credentialsSignOn(event)
   }
 
   handleOnSuccess = resp => {
-    this.props.ndexSaveActions.googleSignOn(resp)
+    this.props.ndexSaveActions_googleSignOn(resp)
   }
 
   handleError = error => {
-    this.props.ndexSaveActions.setErrorMessage(error)
+    this.props.ndexSaveActions_setErrorMessage(error)
   }
 
   render() {
-    const { classes, ...others } = this.props
-    const { ndexSave } = this.props
+    const { classes } = this.props
     const onLogout = this.onLogout
     const onLoginSuccess = this.onLoginSuccess
     const handleClose = this.handleClose
@@ -268,20 +267,20 @@ class NDExSignInModal extends React.Component {
       <div>
         <Dialog
           className="sign-in-container"
-          open={ndexSave.ndexModal}
+          open={this.props.ndexSave_ndexModal}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
-          {ndexSave.profile ? (
+          {this.props.ndexSave_profile ? (
             <div className="sign-in-header">
               <Avatar
                 className="ndex-account-avatar"
-                src={ndexSave.profile.image}
+                src={this.props.ndexSave_profile.image}
               >
                 U
               </Avatar>
               <Typography variant="h4" className="ndex-account-greeting">
-                Hi, {ndexSave.profile.name}
+                Hi, {this.props.ndexSave_profile.name}
               </Typography>
               <Button onClick={onLogout}>Logout</Button>
             </div>
@@ -293,10 +292,18 @@ class NDExSignInModal extends React.Component {
               handleCredentialsSignOn={handleCredentialsSignOn}
               onSuccess={handleOnSuccess}
               handleError={handleError}
-              error={ndexSave.errorMessage}
+              error={this.props.ndexSave_errorMessage}
             />
           )}
-          <NDExSave {...others} />
+          <NDExSave 
+            ndexSave_networkUrl={this.props.ndexSave_networkUrl}
+            ndexSave_profile={this.props.ndexSave_profile}
+  
+            ndexSaveActions_setNDExModalOpen={this.props.ndexSaveActions_setNDExModalOpen}
+            ndexSaveActions_saveToNDEx={this.props.ndexSaveActions_saveToNDEx}
+  
+            network_originalCX={this.props.network_originalCX}
+          />
         </Dialog>
       </div>
     )

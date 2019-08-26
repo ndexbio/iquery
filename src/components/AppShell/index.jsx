@@ -42,22 +42,42 @@ const styles = theme => ({
 
 const AppShell = props => {
   useEffect(() => {
-    const urlParams = new URLSearchParams(props.history.location.search)
+    const urlParams = new URLSearchParams(props.history_location_search)
     const cyrestport = urlParams.get('cyrestport')
     if (cyrestport) {
-      props.cyrestActions.setPort(cyrestport)
+      props.cyrestActions_setPort(cyrestport)
     }
     return () => {}
   }, [])
-  const { classes, ...others } = props
+  const { classes } = props
 
-  const open = props.uiState.isSettingsOpen
+  const open = props.uiState_isSettingsOpen
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <TitleBar {...others} />
-      <SettingsPanel {...others} />
+      <TitleBar
+        source_sources={props.source_sources}
+
+        search_queryGnees={props.search_queryGnees}
+        search_results={props.search_results}
+        searchActions_clearAll={props.searchActions_clearAll}
+        searchActions_setQuery={props.searchActions_setQuery}
+        searchActions_searchStarted={props.searchActions_searchStarted}
+        
+        uiState_isSettingsOpen={props.uiState_isSettingsOpen}
+        uiStateActions_setSettingsOpen={props.uiStateActions_setSettingsOpen}
+
+        networkActions_networkClear={props.networkActions_networkClear}
+      />
+      <SettingsPanel
+        uiState_servicesListOpen={props.uiState_servicesListOpen}
+        uiState_isSettingsOpen={props.uiState_isSettingsOpen}
+        uiStateActions_setServicesListOpen={props.uiStateActions_setServicesListOpen}
+        uiStateActions_setSettingsOpen={props.uiStateActions_setSettingsOpen}
+
+        source_sources={props.source_sources}
+      />
 
       <div
         className={classNames(classes.content, {

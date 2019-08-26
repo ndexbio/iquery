@@ -20,21 +20,21 @@ class NDExSave extends React.Component {
   }
 
   saveToNDEx = (cx, token) => {
-    this.props.ndexSaveActions.saveToNDEx({ cx: cx, token: token })
+    this.props.ndexSaveActions_saveToNDEx({ cx: cx, token: token })
   }
 
   handleClose = () => {
-    this.props.ndexSaveActions.setNDExModalOpen(false)
+    this.props.ndexSaveActions_setNDExModalOpen(false)
   }
 
   render() {
-    const { classes, ndexSave, network } = this.props
-    const token = ndexSave.profile ? ndexSave.profile.authorization.token : null
-    const cx = network.originalCX
+    const { classes } = this.props
+    const token = this.props.ndexSaveprofile ? this.props.ndexSave_profile.authorization.token : null
+    const cx = this.props.network_originalCX
 
-    const networkUrl = ndexSave.networkUrl
+    const networkUrl = this.props.ndexSave_networkUrl
 
-    return ndexSave && ndexSave.profile ? (
+    return this.props.ndexSave_profile ? (
       <div className="ndex-save">
         <DialogContentText>
           Now that you're logged in, you can save the network to your NDEx

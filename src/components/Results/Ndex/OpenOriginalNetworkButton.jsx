@@ -28,9 +28,9 @@ const styles = theme => ({
  * @constructor
  */
 const OpenOriginalNetworkButton = props => {
-  const { classes, network } = props
+  const { classes } = props
 
-  const disabled = !(network.uuid && network.uuid.length > 0)
+  const disabled = !(props.network_uuid && props.network_uuid.length > 0)
 
   const BootstrapButton = withStyles({
     root: {
@@ -55,7 +55,7 @@ const OpenOriginalNetworkButton = props => {
           className={classes.button}
           variant="outlined"
           disabled={disabled}
-          onClick={() => handleOpen(network.uuid)}
+          onClick={() => handleOpen(props.network.uuid)}
         >
           <OpenInBrowserIcon
             color={disabled ? 'disabled' : 'inherit'}

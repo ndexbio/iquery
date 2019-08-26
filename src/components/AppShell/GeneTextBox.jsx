@@ -44,7 +44,7 @@ const GeneTextBox = props => {
   const { classes } = props
   const geneTextRef = useRef(null)
 
-  const [queryText, setQuery] = useState(props.queryGenes)
+  const [queryText, setQuery] = useState(props.search_queryGenes)
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const GeneTextBox = props => {
 
   const handleSearch = evt => {
     const genes = queryText
-    const sources = props.sources
+    const sources = props.source_sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
       // TODO: add better error message
@@ -79,10 +79,10 @@ const GeneTextBox = props => {
     const geneListString = genes.replace(',', ' ')
     const geneList = geneListString.split(/\s*,\s*|\s+/)
 
-    props.searchActions.clearAll()
+    props.searchActions_clearAll()
     props.history.push('/')
-    props.searchActions.setQuery(geneList)
-    props.searchActions.searchStarted({ geneList, sourceNames })
+    props.searchActions_setQuery(geneList)
+    props.searchActions_searchStarted({ geneList, sourceNames })
   }
 
   const handleChange = evt => {

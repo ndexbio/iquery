@@ -67,20 +67,20 @@ const titleStyle = {
 
 class TitleBar extends React.Component {
   handleMenu = () => {
-    this.props.uiStateActions.setSettingsOpen(
-      !this.props.uiState.isSettingsOpen
+    this.props.uiStateActions_setSettingsOpen(
+      !this.props.uiState_isSettingsOpen
     )
   }
 
   handleHomeButton = () => {
-    this.props.searchActions.clearAll()
-    this.props.networkActions.networkClear()
+    this.props.searchActions_clearAll()
+    this.props.networkActions_networkClear()
     this.props.history.push('/')
   }
 
   render() {
-    const { classes, ...others } = this.props
-    const open = this.props.uiState.isSettingsOpen
+    const { classes } = this.props
+    const open = this.props.uiState_isSettingsOpen
 
     return (
       <AppBar
@@ -91,9 +91,6 @@ class TitleBar extends React.Component {
         })}
       >
         <Toolbar disableGutters={!open}>
-
-
-
           <Tooltip title="Search by Pathway Enrichment / Gene Neighborhoods / Keywords" aria-label="NDEx_tooltip">
             <div>
               <Typography variant="h6" color="inherit" style={titleStyle}>
@@ -102,16 +99,17 @@ class TitleBar extends React.Component {
             </div>
           </Tooltip>
 
-          {this.props.search.results === null ? (
+          {this.props.search_results === null ? (
             <div />
           ) : (
             <div className={classes.textBox}>
               <GeneTextBox 
-                classes={this.props.classes}
-                queryGenes={this.props.search.queryGenes}
-                sources={this.props.source.sources}
-                searchActions={this.props.searchActions}
-                history={this.props.history}
+                source_sources={this.props.source_sources}
+
+                search_queryGenes={this.props.search_queryGenes}
+                searchActions_clearAll={this.props.searchActions_clearAll}
+                searchActions_setQuery={this.props.searchActions_setQuery}
+                searchActions_searchStarted={this.props.searchActions_searchStarted}
               />
              </div>
           )}
@@ -119,51 +117,63 @@ class TitleBar extends React.Component {
           <div className={classes.grow} />
 
           <div>
-            <IconButton
-              aria-haspopup="true"
-              color="default"
-              onClick={this.handleHomeButton}
-            >
-              <HomeIcon fontSize="default" className={classes.logo}/>
-            </IconButton>
+          <Tooltip title="Home" placement="bottom">
+              <IconButton
+                aria-haspopup="true"
+                color="default"
+                onClick={this.handleHomeButton}
+              >
+                <HomeIcon fontSize="default" className={classes.logo}/>
+              </IconButton>
+            </Tooltip>
+              
+            <Tooltip title="Help" placement="bottom">
+              <IconButton
+                aria-haspopup="true"
+                color="default"
+                onClick={() => openLink(HELP_URL)}
+              >
+                <HelpIcon fontSize="default" className={classes.logo}/>
+              </IconButton>
+            </Tooltip>
 
-            <IconButton
-              aria-haspopup="true"
-              color="default"
-              onClick={() => openLink(HELP_URL)}
-            >
-              <HelpIcon fontSize="default" className={classes.logo}/>
-            </IconButton>
+            <Tooltip title="NDEx" placement="bottom">
+              <IconButton
+                color="default"
+                aria-label="Home"
+                onClick={() => openLink(NDEX_URL)}
+              >
+                <img alt="NDEx logo" src={logo} className={classes.logo} />
+              </IconButton>
+            </Tooltip>
 
-            <IconButton
-              color="default"
-              aria-label="Home"
-              onClick={() => openLink(NDEX_URL)}
-            >
-              <img alt="NDEx logo" src={logo} className={classes.logo} />
-            </IconButton>
+            <Tooltip title="Cytoscape" placement="bottom">
+              <IconButton
+                color="default"
+                onClick={() => openLink(CYTOSCAPE_URL)}
+              >
+                <img alt="Cytoscape Logo" src={cytoLogo} className={classes.logo}/>
+              </IconButton>
+            </Tooltip>
 
-            <IconButton
-              color="default"
-              onClick={() => openLink(CYTOSCAPE_URL)}
-            >
-              <img alt="Cytoscape Logo" src={cytoLogo} className={classes.logo}/>
-            </IconButton>
+            <Tooltip title="NRNB" placement="bottom">
+              <IconButton
+                color="default"
+                aria-label="Home"
+                onClick={() => openLink(NRNB_URL)}
+              >
+                <img alt="NRNB logo" src={nrnbLogo} className={classes.logo} />
+              </IconButton>
+            </Tooltip>
 
-            <IconButton
-              color="default"
-              aria-label="Home"
-              onClick={() => openLink(NDEX_URL)}
-            >
-              <img alt="NRNB logo" src={nrnbLogo} className={classes.logo} />
-            </IconButton>
-
-            <IconButton
-              color='default'
-              onClick={()=> openLink(WP_URL)}
-            >
-              <img alt="WikiPathways Logo" src={wpLogo} className={classes.logo}/>
-            </IconButton>
+            <Tooltip title="WikiPathways" placement="bottom">
+              <IconButton
+                color='default'
+                onClick={()=> openLink(WP_URL)}
+              >
+                <img alt="WikiPathways Logo" src={wpLogo} className={classes.logo}/>
+              </IconButton>
+            </Tooltip>
           </div>
         </Toolbar>
       </AppBar>
