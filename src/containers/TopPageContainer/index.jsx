@@ -64,4 +64,4 @@ export default withRouter(
 )
 */
 
-export default (TopPageContainer)
+export default withRouter(TopPageContainer)

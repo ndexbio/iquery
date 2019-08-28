@@ -60,4 +60,4 @@ export default withRouter(
   )(MainContainer)
 )
 */
-export default MainContainer
+export default withRouter(MainContainer)

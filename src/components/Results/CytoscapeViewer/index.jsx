@@ -259,6 +259,8 @@ const mapStateToProps = state => {
     uiState_zoomed: state.uiState.zoomed,
     uiState_highlights: state.uiState.highlights,
 
+    network_selectedNodes: state.network.selectedNodes,
+    network_selectedEdges: state.network.selectedEdges,
     network_nodeCount: state.network.nodeCount,
     network_edgeCount: state.network.edgeCount,
     network_backgroundColor: state.network.backgroundColor,

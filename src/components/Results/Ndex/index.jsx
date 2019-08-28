@@ -194,13 +194,13 @@ const mapStateToProps = state => {
     network_uuid: state.network.uuid,
     search_results: state.search.results,
     search_queryList: state.search.queryList,
-    search_searchResults: state.search.searchResults
+    search_searchResults: state.search.searchResults,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    searchActions_clearSelectedGenes: () => dispatch(clearSelectedGenes()),
+    searchActions_clearSelectedGenes: (payload) => dispatch(clearSelectedGenes(payload)),
     networkActions_networkFetchStarted: (payload) => dispatch(networkFetchStarted(payload)),
     cyrestActions_importNetworkStarted: (payload) => dispatch(importNetworkStarted(payload)),
     uiStateActions_setHighlights: (payload) => dispatch(setHighlights(payload))

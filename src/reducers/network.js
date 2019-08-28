@@ -21,6 +21,10 @@ import {
   setZoomed
 } from '../actions/uiState'
 
+import {
+  clearSelectedGenes
+} from '../actions/search'
+
 const LAYOUT_SCALING_FACTOR = 2.0
 
 const defaultState = {
@@ -114,7 +118,10 @@ const network = handleActions(
         originalCX: null,
         network: null,
         isLayoutComplete: false,
-        backgroundColor: 'blue'
+        backgroundColor: 'blue',
+        selectedNodes: [],
+        selectedEdges: [],
+        tableDisplayTab: 0
       }
     },
     [networkFetchSucceeded]: (state, payload) => {

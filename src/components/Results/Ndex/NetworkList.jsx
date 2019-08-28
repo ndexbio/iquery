@@ -60,6 +60,7 @@ const styles = theme => ({
 
 const findSort = (sortOrder) => {
   if (sortOrder[0] === 'p-Value') {
+    console.log('p-Value')
     return (a, b) => {
       if (a.details.PValue > b.details.PValue) {
         return 1
@@ -74,6 +75,7 @@ const findSort = (sortOrder) => {
       }
     }
   } else {
+    console.log('overlap')
     return (a, b) => {
       if (a.hitGenes.length < b.hitGenes.length) {
         return 1
@@ -92,10 +94,12 @@ const findSort = (sortOrder) => {
 
 const NetworkList = props => {
   const hits = props.hits
+  
 
   //Sort hits
   useEffect(() => {
     const sortFunction = findSort(props.uiState_sortOrder)
+    console.log(props.uiState_sortOrder)
     const newHits = hits.sort(sortFunction)
     props.searchActions_setActualResults(newHits)
   }, [props.uiState_sortOrder, props.uiState_selectedSource])
@@ -114,23 +118,30 @@ const NetworkList = props => {
 
   const query = props.search_results_genes
 
-  
-
-  const result = props.search_actualResults.map(entry => props.renderNetworkListItem(
+  /*const result = props.search_actualResults.map(entry => props.renderNetworkListItem(
     query.size, 
     entry, 
     props.classes, 
     handleListItemClick, 
     selectedIndex, 
     index++))
-
-  if (result.length > 0) {
+*/
+let result = props.search_actualResults
+  if (props.search_actualResults.length > 0) {
     return (
       <div className="network-list-wrapper">
         <SortPanel />
         <div className="network-list">
           <MenuList className={props.classes.noPadding}>
-            {result}
+            {result.map(entry => props.renderNetworkListItem(
+              query.size, 
+              entry, 
+              props.classes, 
+              handleListItemClick, 
+              selectedIndex, 
+              index++
+              ))
+            }
           </MenuList>
         </div>
       </div>
@@ -160,7 +171,10 @@ const mapStateToProps = state => {
     network_listIndex: state.network.listIndex,
     
     search_results_genes: state.search.results.genes,
-    search_actualResults: state.search.actualResults
+    search_actualResults: state.search.actualResults,
+
+    //Necessary to make sure component updates when order of actualResults changes
+    first: state.search.actualResults[0]
   }
 }
 

@@ -107,7 +107,7 @@ const mapStateToProps = state => {
   return {
     search_results: state.search.results,
     search_searchResults: state.search.searchResults,
-    source_sources: state.source.sources
+    source_sources: state.source.sources,
   }
 }
 
