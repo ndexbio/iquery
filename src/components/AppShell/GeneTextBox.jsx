@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {connect} from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
@@ -14,8 +13,6 @@ import SearchIcon from '@material-ui/icons/Search'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 import MessageSnackbar from './MessageSnackbar'
-
-import {clearAll, setQuery, searchStarted} from '../../actions/search'
 
 const styles = {
   root: {
@@ -47,7 +44,7 @@ const GeneTextBox = props => {
   const { classes } = props
   const geneTextRef = useRef(null)
 
-  const [queryText, setQuery] = useState(props.search_queryGenes)
+  const [queryText, setQuery] = useState(props.search.queryGenes)
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -70,7 +67,7 @@ const GeneTextBox = props => {
 
   const handleSearch = evt => {
     const genes = queryText
-    const sources = props.source_sources
+    const sources = props.source.sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
       // TODO: add better error message
@@ -82,10 +79,10 @@ const GeneTextBox = props => {
     const geneListString = genes.replace(',', ' ')
     const geneList = geneListString.split(/\s*,\s*|\s+/)
 
-    props.searchActions_clearAll()
+    props.searchActions.clearAll()
     props.history.push('/')
-    props.searchActions_setQuery(geneList)
-    props.searchActions_searchStarted({ geneList, sourceNames })
+    props.searchActions.sourcessetQuery(geneList)
+    props.searchActions.searchStarted({ geneList, sourceNames })
   }
 
   const handleChange = evt => {
@@ -161,22 +158,4 @@ const GeneTextBox = props => {
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    source_sources: state.source.sources,
-    search_queryGenes: state.search.queryGenes
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    searchActions_clearAll: (payload) => dispatch(clearAll(payload)),
-    searchActions_setQuery: (payload) => dispatch(setQuery(payload)),
-    searchActions_searchStarted: (payload) => dispatch(searchStarted(payload))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-) (withStyles(styles)(GeneTextBox))
+export default (withStyles(styles)(GeneTextBox))

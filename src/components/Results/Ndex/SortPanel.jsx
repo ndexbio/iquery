@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
-import {connect} from 'react-redux'
 
-import { makeStyles, withStyles } from '@material-ui/styles'
+import { withStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputBase from '@material-ui/core/InputBase';
-
-import {setSortOrder} from '../../../actions/uiState'
 
 const BootstrapInput = withStyles(theme => ({
   root: {
@@ -57,14 +54,14 @@ const SortPanel = props => {
   const handleChange = event => {
     if (event.target.value === 'p-Value') {
       setSortPValueOn(true)
-      props.uiStateActions_setSortOrder(['p-Value', 'Overlap'])
+      props.uiStateAction.setSortOrder(['p-Value', 'Overlap'])
     } else {
       setSortPValueOn(false)
-      props.uiStateActions_setSortOrder(['Overlap', 'p-Value'])
+      props.uiStateActions.setSortOrder(['Overlap', 'p-Value'])
     }
   }
   
-  if (props.uiState_selectedSource === 'enrichment') {
+  if (props.uiState.selectedSource === 'enrichment') {
     return (
       <div style={divStyle}>
         <Typography 
@@ -103,20 +100,5 @@ const SortPanel = props => {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    uiState_selectedSource: state.uiState.selectedSource
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    uiStateActions_setSortOrder: (payload) => dispatch(setSortOrder(payload))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-) (SortPanel)
+export default (SortPanel)
             

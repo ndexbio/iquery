@@ -1,8 +1,7 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { connect } from 'react-redux'
-import TableBrowserPanel from './TableBrowserPanel'
 
+import TableBrowserPanel from './TableBrowserPanel'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -32,32 +31,16 @@ const DISABLED_STYLE = {
  */
 const TableBrowser = props => {
   const classes = useStyles()
-  
-  /*
-  const network = props.network
 
-  if (network === null) {
-    return <div style={DISABLED_STYLE} />
-  }
-  */
-
-  if (props.network_originalCX === null) {
+  if (props.network.originalCX === null) {
     return <div style={DISABLED_STYLE} />
   }
 
   return (
     <div className={'table-browser'}>
-      <TableBrowserPanel />
+      <TableBrowserPanel {...props} />
     </div>
   ) 
 }
 
-const mapStateToProps = state => {
-  return {
-    network_originalCX: state.network.originalCX
-  }
-}
-
-export default connect (
-  mapStateToProps
-) (TableBrowser)
+export default (TableBrowser)

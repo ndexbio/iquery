@@ -5,11 +5,10 @@ import StartPanel from './StartPanel'
 
 const TopPage = props => (
   <AppShell 
-    history_location_search={props.history.location.search}
+    {...props}
   >
     <StartPanel
-      location_search={props.location_search}
-      history={props.history}
+      {...props}
     />
   </AppShell>
 )

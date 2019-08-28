@@ -1,5 +1,4 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import { makeStyles, withStyles } from '@material-ui/styles'
 import Avatar from '@material-ui/core/Avatar'
@@ -9,7 +8,6 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import MuiToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
-import { clearSelectedGenes, setSelectedGenes } from '../../actions/search';
 
 const useStyles = makeStyles(theme => ({
   chip: {
@@ -53,25 +51,18 @@ const ToggleButton = withStyles({
   },
 })(MuiToggleButton);
 
-/*
-const handleClear = (event, props) => {
-  console.log('#### Clear selection', event.target.value)
-  props.searchActions_clearSelectedGenes()
-  //props.searchActions.setSelectedGenes([])
-}
-*/
 const GeneList = props => {
   const classes = withStyles()
 
-  const results = props.search_results
-  const hits = props.network_hitGenes
+  const results = props.search.results
+  const hits = props.network.hitGenes
   const hitSets = new Set(hits)
 
   const handleChange = (event, newAlignment) => {
-    if (newAlignment === props.search_selectedGenes[0]) {
-      props.searchActions_clearSelectedGenes()
+    if (newAlignment === props.search.selectedGenes[0]) {
+      props.searchActions.clearSelectedGenes()
     } else {
-      props.searchActions_setSelectedGenes(newAlignment)
+      props.searchActions.setSelectedGenes(newAlignment)
     }
   }
 
@@ -116,7 +107,7 @@ const GeneList = props => {
         {sorted.map(geneValue => (
           <ListItem key={geneValue.symbol}>
             <ToggleButtonGroup 
-              value={props.search_selectedGenes} 
+              value={props.search.selectedGenes} 
               exclusive 
               onChange={handleChange}
               style={toggleButtonGroupStyle}
@@ -124,7 +115,7 @@ const GeneList = props => {
               <ToggleButton 
                 value={geneValue.symbol}
                 style={
-                  hitSets.has(geneValue.symbol) && props.search_selectedGenes[0] === geneValue.symbol ?
+                  hitSets.has(geneValue.symbol) && props.search.selectedGenes[0] === geneValue.symbol ?
                     selectedButtonStyle
                   : 
                     buttonStyle
@@ -180,22 +171,4 @@ GeneList.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    search_results: state.search.results,
-    search_selectedGenes: state.search.selectedGenes,
-    network_hitGenes: state.network.hitGenes
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    searchActions_clearSelectedGenes: (payload) => dispatch(clearSelectedGenes(payload)),
-    searchActions_setSelectedGenes: (payload) => dispatch(setSelectedGenes(payload))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GeneList)
+export default (GeneList)

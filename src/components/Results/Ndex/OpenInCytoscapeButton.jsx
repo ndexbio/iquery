@@ -8,8 +8,6 @@ import Tooltip from '@material-ui/core/Tooltip'
 
 import MessageSnackbar from '../../AppShell/MessageSnackbar.jsx'
 
-import { startCyRestPolling, stopCyRestPolling } from '../../../actions/cyrest'
-
 const BootstrapButton = withStyles({
   root: {
     marginLeft: '0.5em',
@@ -33,17 +31,17 @@ const styles = theme => ({
 
 const OpenInCytoscapeButton = props => {
   useEffect(() => {
-    props.cyrestActions_startCyrestPolling()
+    props.cyrestActions.startCyRestPolling()
     return () => {
-      props.cyrestActions_stopCyrestPolling()
+      props.cyrestActions.stopCyRestPolling()
     }
   }, [])
 
   const { classes } = props
 
   const disabled =
-    !(props.network_uuid && props.network_uuid.length > 0) || 
-    !props.cyrest_available
+    !(props.network.uuid && props.network.uuid.length > 0) || 
+    !props.cyrest.available
 
 
   const handleClick = () => {
@@ -51,8 +49,8 @@ const OpenInCytoscapeButton = props => {
   }
 
   //Snackbar
-  const isLoadingNetwork = props.cyrest_isLoadingNetwork
-  const lastResponse = props.cyrest_lastResponse
+  const isLoadingNetwork = props.cyrest.isLoadingNetwork
+  const lastResponse = props.cyrest.lastResponse
 
   const [open, setOpen] = useState(false)
   const [state, setState] = useState('dormant')
@@ -141,24 +139,4 @@ const OpenInCytoscapeButton = props => {
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    cyrest_available: state.cyrest.available,
-    cyrest_isLoadingNetwork: state.cyrest.isLoadingNetwork,
-    cyrest_lastResponse: state.cyrest.lastResponse,
-
-    network_uuid: state.network.uuid
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    cyrestActions_startCyrestPolling: (payload) => dispatch(startCyRestPolling(payload)),
-    cyrestActions_stopCyrestPolling: (payload) => dispatch(stopCyRestPolling(payload))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-) (withStyles(styles)(OpenInCytoscapeButton))
+export default (withStyles(styles)(OpenInCytoscapeButton))

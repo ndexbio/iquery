@@ -1,6 +1,5 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { connect } from 'react-redux'
 
 import {
   DialogContent,
@@ -24,10 +23,6 @@ import NDExSave from '../NDExSave'
 import './style.css'
 
 import config from './assets/config'
-
-import { setProfile, setNDExModalOpen, credentialsSignOn, googleSignOn, setErrorMessage } from '../../actions/ndexSave'
-
-const styles = theme => ({})
 
 class GoogleSignOn extends React.Component {
   onFailure = err => {
@@ -237,29 +232,29 @@ class NDExSignInModal extends React.Component {
   onLoginSuccess = () => {}
 
   onLogout = () => {
-    this.props.ndexSaveActions_setProfile(null)
+    this.props.ndexSaveActions.setProfile(null)
     //this.handleClose()
   }
 
   handleClose = () => {
-    this.props.ndexSaveActions_setNDExModalOpen(false)
+    this.props.ndexSaveActions.setNDExModalOpen(false)
   }
 
   handleCredentialsSignOn = event => {
     event.preventDefault()
-    this.props.ndexSaveActions_credentialsSignOn(event)
+    this.props.ndexSaveActions.credentialsSignOn(event)
   }
 
   handleOnSuccess = resp => {
-    this.props.ndexSaveActions_googleSignOn(resp)
+    this.props.ndexSaveActions.googleSignOn(resp)
   }
 
   handleError = error => {
-    this.props.ndexSaveActions_setErrorMessage(error)
+    this.props.ndexSaveActions.setErrorMessage(error)
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, props } = this.props
     const onLogout = this.onLogout
     const onLoginSuccess = this.onLoginSuccess
     const handleClose = this.handleClose
@@ -271,20 +266,20 @@ class NDExSignInModal extends React.Component {
       <div>
         <Dialog
           className="sign-in-container"
-          open={this.props.ndexSave_ndexModal}
+          open={this.props.ndexSave.ndexModal}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
-          {this.props.ndexSave_profile ? (
+          {this.props.ndexSave.profile ? (
             <div className="sign-in-header">
               <Avatar
                 className="ndex-account-avatar"
-                src={this.props.ndexSave_profile.image}
+                src={this.props.ndexSave.profile.image}
               >
                 U
               </Avatar>
               <Typography variant="h4" className="ndex-account-greeting">
-                Hi, {this.props.ndexSave_profile.name}
+                Hi, {this.props.ndexSave.profile.name}
               </Typography>
               <Button onClick={onLogout}>Logout</Button>
             </div>
@@ -296,37 +291,16 @@ class NDExSignInModal extends React.Component {
               handleCredentialsSignOn={handleCredentialsSignOn}
               onSuccess={handleOnSuccess}
               handleError={handleError}
-              error={this.props.ndexSave_errorMessage}
+              error={this.props.ndexSave.errorMessage}
             />
           )}
-          <NDExSave />
+          <NDExSave {...props} />
         </Dialog>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    ndexSave_ndexModal: state.ndexSave.ndexModal,
-    ndexSave_profile: state.ndexSave.profile,
-    ndexSave_errorMessage: state.ndexSave.errorMessage
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    ndexSaveActions_setProfile: (payload) => dispatch(setProfile(payload)),
-    ndexSaveActions_setNDExModalOpen: (payload) => dispatch(setNDExModalOpen(payload)),
-    ndexSaveActions_credentialsSignOn: (payload) => dispatch(credentialsSignOn(payload)),
-    ndexSaveActions_googleSignOn: (payload) => dispatch(googleSignOn(payload)),
-    ndexSaveActions_setErrorMessage: (payload) => dispatch(setErrorMessage(payload))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-) (withStyles(styles)(NDExSignInModal))
+export default (NDExSignInModal)
 
 

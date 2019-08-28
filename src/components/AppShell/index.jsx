@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import {connect} from 'react-redux'
 import './style.css'
 
 import TitleBar from './TitleBar'
@@ -9,8 +8,6 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 
 import classNames from 'classnames'
-
-import {setPort} from '../../actions/cyrest'
 
 const drawerWidth = 240
 
@@ -45,24 +42,22 @@ const styles = theme => ({
 
 const AppShell = props => {
   useEffect(() => {
-    const urlParams = new URLSearchParams(props.history_location_search)
+    const urlParams = new URLSearchParams(props.history.location.search)
     const cyrestport = urlParams.get('cyrestport')
     if (cyrestport) {
-      props.cyrestActions_setPort(cyrestport)
+      props.cyrestActions.setPort(cyrestport)
     }
     return () => {}
   }, [])
   const { classes } = props
 
-  const open = props.uiState_isSettingsOpen
+  const open = props.uiState.isSettingsOpen
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <TitleBar
-        history={props.history}
-      />
-      <SettingsPanel />
+      <TitleBar {...props} />
+      <SettingsPanel {...props}/>
 
       <div
         className={classNames(classes.content, {
@@ -74,19 +69,4 @@ const AppShell = props => {
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    uiState_isSettingsOpen: state.uiState.isSettingsOpen
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    cyrestActions_setPort: (payload) => dispatch(setPort(payload))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(AppShell))
+export default (withStyles(styles, {withTheme: true})(AppShell))

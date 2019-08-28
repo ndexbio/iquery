@@ -1,6 +1,5 @@
 import React from 'react'
 import Split from 'react-split'
-import { connect } from 'react-redux'
 
 import { makeStyles, withStyles } from '@material-ui/styles'
 import ListItem from '@material-ui/core/ListItem'
@@ -83,7 +82,7 @@ const ExpansionPanelSummary = withStyles({
 
 const NetworkProperties = props => {
   index = 0
-  const originalCX = props.network_originalCX
+  const originalCX = props.network.originalCX
   const classes = useStyles()
 
   //Find network props
@@ -370,12 +369,4 @@ const formatContext = entry => {
   return formatPrimary(result)
 }
 
-const mapStateToProps = state => {
-  return {
-    network_originalCX: state.network.originalCX
-  }
-}
-
-export default connect(
-  mapStateToProps
-) (NetworkProperties)
+export default (NetworkProperties)

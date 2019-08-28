@@ -1,6 +1,5 @@
 import React from 'react'
 import './style.css'
-import { connect } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -8,8 +7,6 @@ import { withStyles } from '@material-ui/core'
 
 import logo from '../../../assets/images/zoom-logo.svg'
 import disabledLogo from '../../../assets/images/zoom-logo-mono.svg'
-
-import { setZoomed } from '../../../actions/uiState'
 
 const styles = theme => ({
   buttonIcon: {
@@ -35,10 +32,10 @@ const BootstrapButton = withStyles({
 const ResetZoomButton = props => {
   const { classes } = props
 
-  const disabled = !(props.network_uuid && props.network_uuid.length > 0)
+  const disabled = !(props.network.uuid && props.network.uuid.length > 0)
 
   const handleClick = () => {
-    props.uiStateActions_setZoomed(true)
+    props.uiStateActions.setZoomed(true)
   }
 
   return (
@@ -56,19 +53,4 @@ const ResetZoomButton = props => {
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    network_uuid: state.network.uuid
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    uiStateActions_setZoomed: (payload) => dispatch(setZoomed(payload)),
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-) (withStyles(styles)(ResetZoomButton))
+export default (withStyles(styles)(ResetZoomButton))

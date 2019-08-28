@@ -14,7 +14,7 @@ const InputPanel = props => (
   <div className="input-container">
     <div className="input-wrapper">
       <div className={"gene-list-title"}>Query Genes</div>
-      <GeneList />
+      <GeneList {...props}/>
     </div>
   </div>
 )

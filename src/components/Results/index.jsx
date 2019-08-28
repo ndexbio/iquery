@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import {connect} from 'react-redux'
 
 import { withStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
@@ -7,9 +6,6 @@ import Tab from '@material-ui/core/Tab'
 
 import Empty from './Empty'
 import TabContent from './TabContent'
-
-import {networkClear, changeListIndex} from '../../actions/network'
-import {setSelectedSource} from '../../actions/uiState'
 
 const styles = theme => ({
   tabs: {
@@ -29,34 +25,34 @@ const Results = props => {
   const handleChange = (event, idx) => {
     setSelectedTabIndex(idx)
     updateHistory(idx)
-    props.networkActions_networkClear()
-    props.networkActions_changeListIndex(0)
+    props.networkActions.networkClear()
+    props.networkActions.changeListIndex(0)
   }
 
   const updateHistory = newValue => {
     // Update URL
-    const results = props.search_results
+    const results = props.search.results
     if (results === null || results === undefined) {
       return
     }
 
     const jobId = results.jobId
-    const searchResults = props.search_searchResults
+    const searchResults = props.search.searchResults
     if (searchResults !== undefined && searchResults !== null) {
       const sourceName = getSourceName(sources, newValue)
       console.log('** Tab change:', jobId, sourceName)
-      props.uiStateActions_setSelectedSource(sourceName)
+      props.uiStateActions.setSelectedSource(sourceName)
       props.history.push(`/${jobId}/${sourceName}`)
     }
   }
 
   // Source list is not available.  Just return empty result
-  const sources = props.source_sources
+  const sources = props.source.sources
   if (sources === null || sources === undefined) {
     return <Empty />
   }
 
-  const searchResults = props.search_searchResults
+  const searchResults = props.search.searchResults
   const selectedSourceName = getSourceName(sources, idx)
 
   const results = findResult(selectedSourceName, searchResults)
@@ -74,7 +70,7 @@ const Results = props => {
         </Tabs>
         <TabContent 
           results={results}
-          history={props.history}
+          {...props} 
         />
       </div>
     </div>
@@ -103,23 +99,4 @@ const findResult = (sourceName, results) => {
   return null
 }
 
-const mapStateToProps = state => {
-  return {
-    search_results: state.search.results,
-    search_searchResults: state.search.searchResults,
-    source_sources: state.source.sources,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    networkActions_networkClear: (payload) => dispatch(networkClear(payload)),
-    networkActions_changeListIndex: (payload) => dispatch(changeListIndex(payload)),
-    uiStateActions_setSelectedSource: (payload) => dispatch(setSelectedSource(payload))
-  }
-}
-
-export default connect (
-  mapStateToProps,
-  mapDispatchToProps
-) (withStyles(styles)(Results))
+export default (withStyles(styles)(Results))

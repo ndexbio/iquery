@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { Typography } from '@material-ui/core'
 import cytoLogo from '../../../assets/images/cytoscape-logo.svg'
-import {connect} from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import MessageSnackbar from '../../AppShell/MessageSnackbar.jsx'
 
@@ -39,8 +38,8 @@ const Warning = props => {
   const { classes } = props
 
   //Snackbar
-  const isLoadingNetwork = props.cyrest_isLoadingNetwork
-  const lastResponse = props.cyrest_lastResponse
+  const isLoadingNetwork = props.cyrest.isLoadingNetwork
+  const lastResponse = props.cyrest.lastResponse
 
   const [open, setOpen] = useState(false)
   const [state, setState] = useState('dormant')
@@ -97,7 +96,7 @@ const Warning = props => {
     props.handleImportNetwork()
   }
 
-  if (props.network_uuid && props.network_uuid.length > 0 && props.cyrest_available) {
+  if (props.network.uuid && props.network.uuid.length > 0 && props.cyrest.available) {
     return (
       <React.Fragment>
         <Tooltip title="Open in cytoscape" placement="bottom">
@@ -133,20 +132,10 @@ const Warning = props => {
             Network is too big for interactive view, <br/>
             but may be viewed in Cytoscape Desktop
             </Typography>
-            </div>
-
+          </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    network_uuid: state.network.uuid,
-    cyrest_available: state.cyrest.available
-  }
-}
-
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(Warning))
+export default (withStyles(styles)(Warning))

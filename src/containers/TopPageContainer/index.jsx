@@ -27,13 +27,11 @@ const TopPageContainer = props => {
   }, [])
   return (
     <TopPage
-      location_search={props.location.search}
-      history={props.history}
+      {...props}
     />
   )
 }
 
-/*
 function mapStateToProps(state) {
   return {
     search: state.search,
@@ -62,6 +60,3 @@ export default withRouter(
     mapDispatchToProps
   )(TopPageContainer)
 )
-*/
-
-export default withRouter(TopPageContainer)

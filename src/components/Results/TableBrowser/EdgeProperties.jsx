@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
-import isEqual from 'lodash.isequal'
-import { connect } from 'react-redux'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -82,7 +80,7 @@ const ExpansionPanelSummary = withStyles({
 
 const EdgeProperties = props => {
   const classes = useStyles()
-  const edges = props.network_selectedEdges
+  const edges = props.network.selectedEdges
   const nodes = props.nodeList
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
@@ -394,10 +392,4 @@ const MemoEdgeProperties = React.memo(EdgeProperties, (prevProps, newProps) => {
 })
 */
 
-const mapStateToProps = state => {
-  return {
-    network_selectedEdges: state.network.selectedEdges
-  }
-}
-
-export default connect(mapStateToProps)(EdgeProperties)
+export default (EdgeProperties)

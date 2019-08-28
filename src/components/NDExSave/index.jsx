@@ -1,8 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { DialogContentText, DialogActions, Button } from '@material-ui/core'
-import { connect } from 'react-redux'
-import { setNDExModalOpen, saveToNDEx } from '../../actions/ndexSave'
 
 import config from './assets/config'
 import './style.css'
@@ -22,21 +20,21 @@ class NDExSave extends React.Component {
   }
 
   saveToNDEx = (cx, token) => {
-    this.props.ndexSaveActions_saveToNDEx({ cx: cx, token: token })
+    this.props.ndexSaveActions.saveToNDEx({ cx: cx, token: token })
   }
 
   handleClose = () => {
-    this.props.ndexSaveActions_setNDExModalOpen(false)
+    this.props.ndexSaveActions.setNDExModalOpen(false)
   }
 
   render() {
     const { classes } = this.props
-    const token = this.props.ndexSave_profile ? this.props.ndexSave_profile.authorization.token : null
-    const cx = this.props.network_originalCX
+    const token = this.props.ndexSave.profile ? this.props.ndexSave.profile.authorization.token : null
+    const cx = this.props.network.originalCX
 
-    const networkUrl = this.props.ndexSave_networkUrl
+    const networkUrl = this.props.ndexSave.networkUrl
 
-    return this.props.ndexSave_profile ? (
+    return this.props.ndexSave.profile ? (
       <div className="ndex-save">
         <DialogContentText>
           Now that you're logged in, you can save the network to your NDEx
@@ -66,22 +64,4 @@ class NDExSave extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    ndexSave_networkUrl: state.ndexSave.networkUrl,
-    ndexSave_profile: state.ndexSave.profile,
-    network_originalCX: state.network.originalCX
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    ndexSaveActions_setNDExModalOpen: (payload) => dispatch(setNDExModalOpen(payload)),
-    ndexSaveActions_saveToNDEx: (payload) => dispatch(saveToNDEx(payload))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-) (withStyles(styles)(NDExSave))
+export default (withStyles(styles)(NDExSave))

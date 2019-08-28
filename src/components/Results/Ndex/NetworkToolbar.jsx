@@ -1,7 +1,6 @@
 import './style.css'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 import Typography from '@material-ui/core/Typography'
 import { fade } from '@material-ui/core/styles/colorManipulator'
@@ -100,30 +99,30 @@ const styles = theme => ({
 })
 
 const NetworkToolbar = props => {
-  const { classes } = props
+  const { classes, ...other } = props
   return (
     <div className={classes.toolbar}>
-      <Tooltip title={props.network_networkName}>
+      <Tooltip title={props.network.networkName}>
         <Typography
           className={classes.title}
           variant="subtitle1"
           color="inherit"
           noWrap
         >
-          {props.network_networkName}
+          {props.network.networkName}
         </Typography>
       </Tooltip>
       <div className={classes.grow} />
-      <ResetZoomButton />
-      <Highlighter />
-      <NDExSignInModal>
-        <NDExSave />
+      <ResetZoomButton {...other} />
+      <Highlighter {...other} />
+      <NDExSignInModal {...other} >
+        <NDExSave {...other} />
       </NDExSignInModal>
-      <OpenInNDExButton />
+      <OpenInNDExButton {...other} />
       <OpenInCytoscapeButton
-        handleImportNetwork={props.handleImportNetwork} 
+        {...other}
       />
-      <OpenOriginalNetworkButton />
+      <OpenOriginalNetworkButton {...other} />
     </div>
   )
 }
@@ -132,12 +131,4 @@ NetworkToolbar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    network_networkName: state.network.networkName
-  }
-}
-
-export default connect(
-  mapStateToProps
-) (withStyles(styles)(NetworkToolbar))
+export default (withStyles(styles)(NetworkToolbar))

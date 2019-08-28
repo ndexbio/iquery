@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
+
 import HighlightIcon from '@material-ui/icons/WbIncandescent'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
-
-import { setHighlights } from '../../../actions/uiState'
-
 
 const styles = theme => ({
   buttonIcon: {
@@ -24,14 +21,14 @@ const styles = theme => ({
 
 const Highlighter = props => {
   const { classes } = props
-  const disabled = !(props.network_uuid && props.network_uuid.length > 0)
+  const disabled = !(props.network.uuid && props.network.uuid.length > 0)
 
-  let highlight = props.uiState_highlights
+  let highlight = props.uiState.highlights
   
   const handleChange = evt => {
-    if (props.network_uuid && props.network_uuid.length > 0) {
+    if (props.network.uuid && props.network.uuid.length > 0) {
       highlight = !highlight
-      props.uiStateActions_setHighlights(highlight)
+      props.uiStateActions.setHighlights(highlight)
     }
   }
 
@@ -55,21 +52,5 @@ const Highlighter = props => {
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    network_uuid: state.network.uuid,
-    uiState_highlights: state.uiState.highlights
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    uiStateActions_setHighlights: (payload) => dispatch(setHighlights(payload))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-) (withStyles(styles)(Highlighter))
+export default (withStyles(styles)(Highlighter))
 

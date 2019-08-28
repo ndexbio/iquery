@@ -24,13 +24,10 @@ const MainContainer = props => {
     })
   }, [])
   return (
-    <HomePanel
-      history={props.history}
-    />
+    <HomePanel {...props} />
   )
 }
 
-/*
 function mapStateToProps(state) {
   return {
     search: state.search,
@@ -59,5 +56,3 @@ export default withRouter(
     mapDispatchToProps
   )(MainContainer)
 )
-*/
-export default withRouter(MainContainer)

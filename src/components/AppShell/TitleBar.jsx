@@ -1,5 +1,4 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -20,10 +19,6 @@ import wpLogo from '../../assets/images/wp-logo.svg'
 import HomeIcon from '@material-ui/icons/Home'
 
 import GeneTextBox from './GeneTextBox'
-
-import {setSettingsOpen} from '../../actions/uiState'
-import {clearAll} from '../../actions/search'
-import {networkClear} from '../../actions/network'
 
 const drawerWidth = 240
 
@@ -72,20 +67,20 @@ const titleStyle = {
 
 class TitleBar extends React.Component {
   handleMenu = () => {
-    this.props.uiStateActions_setSettingsOpen(
-      !this.props.uiState_isSettingsOpen
+    this.props.uiStateActions.setSettingsOpen(
+      !this.props.uiState.isSettingsOpen
     )
   }
 
   handleHomeButton = () => {
-    this.props.searchActions_clearAll()
-    this.props.networkActions_networkClear()
+    this.props.searchActions.clearAll()
+    this.props.networkActions.networkClear()
     this.props.history.push('/')
   }
 
   render() {
-    const { classes } = this.props
-    const open = this.props.uiState_isSettingsOpen
+    const { classes, ...props } = this.props
+    const open = this.props.uiState.isSettingsOpen
 
     return (
       <AppBar
@@ -104,13 +99,11 @@ class TitleBar extends React.Component {
             </div>
           </Tooltip>
 
-          {this.props.search_results === null ? (
+          {this.props.search.results === null ? (
             <div />
           ) : (
             <div className={classes.textBox}>
-              <GeneTextBox 
-                history={this.props.history}
-              />
+              <GeneTextBox {...props} />
              </div>
           )}
 
@@ -196,22 +189,4 @@ TitleBar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    uiState_isSettingsOpen: state.uiState.isSettingsOpen,
-    search_results: state.search.results
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    uiStateActions_setSettingsOpen: (payload) => dispatch(setSettingsOpen(payload)),
-    searchActions_clearAll: (payload) => dispatch(clearAll(payload)),
-    networkActions_networkClear: (payload) => dispatch(networkClear(payload))
-  }
-}
-
-export default connect (
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles, { withTheme: true})(TitleBar))
+export default (withStyles(styles, { withTheme: true})(TitleBar))

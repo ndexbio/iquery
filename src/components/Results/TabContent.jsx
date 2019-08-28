@@ -22,7 +22,7 @@ const TabContent = props => {
       <Ndex 
         hits={results.results} 
         sourceUUID={results.sourceUUID}
-        history={props.history}
+        {...props}
       />
     )
   }

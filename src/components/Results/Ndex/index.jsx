@@ -1,6 +1,5 @@
 import React from 'react'
 import './style.css'
-import {connect} from 'react-redux'
 
 import Split from 'react-split'
 
@@ -13,11 +12,6 @@ import Typography from '@material-ui/core/Typography'
 import { ListItem } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
 
-import {clearSelectedGenes} from '../../../actions/search'
-import {networkFetchStarted} from '../../../actions/network'
-import {setHighlights} from '../../../actions/uiState'
-import {importNetworkStarted} from '../../../actions/cyrest'
-
 const NETWORK_SIZE_TH = 5000
 
 /**
@@ -28,11 +22,11 @@ const NETWORK_SIZE_TH = 5000
  * @constructor
  */
 const Ndex = props => {
-  const geneList = props.search_queryList
+  const geneList = props.search.queryList
 
   const sourceUUID = props.sourceUUID
 
-  const id = props.search_results.jobId
+  const id = props.search.results.jobId
 
   const handleErrors = res => {
     if (res !== undefined) {
@@ -51,9 +45,9 @@ const Ndex = props => {
     //checkCytoscapeConnection(props)
 
     // Reset selection
-    props.searchActions_clearSelectedGenes()
+    props.searchActions.clearSelectedGenes()
 
-    props.networkActions_networkFetchStarted({
+    props.networkActions.networkFetchStarted({
       id,
       sourceUUID,
       networkUUID,
@@ -68,9 +62,9 @@ const Ndex = props => {
 
   const updateHistory = networkUUID => {
     // Update URL
-    const jobId = props.search_results.jobId
-    const searchResults = props.search_searchResults
-    const sourceName = props.uiState_selectedSource
+    const jobId = props.search.results.jobId
+    const searchResults = props.search.searchResults
+    const sourceName = props.uiState.selectedSource
 
     if (searchResults !== undefined && searchResults !== null) {
       console.log('** network changed:', jobId, sourceName)
@@ -80,12 +74,12 @@ const Ndex = props => {
 
   const handleImportNetwork = () => {
     // Reset the UI state (hilight)
-    props.uiStateActions_setHighlights(true)
+    props.uiStateActions.setHighlights(true)
 
-    props.cyrestActions_importNetworkStarted({
-      cx: props.network_originalCX,
-      source: props.network_sourceId,
-      uuid: props.network_uuid
+    props.cyrestActions.importNetworkStarted({
+      cx: props.network.originalCX,
+      source: props.network.sourceId,
+      uuid: props.network.uuid
     })
   }
 
@@ -178,36 +172,14 @@ const Ndex = props => {
         renderNetworkListItem={renderNetworkListItem} 
         handleFetch={handleFetch}
         hits={props.hits}
+        {...props}
       />
       <NetworkView 
         handleImportNetwork={handleImportNetwork} 
+        {...props}
       />
     </Split>
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    uiState_selectedSource: state.uiState.selectedSource,
-    network_originalCX: state.network.originalCX,
-    network_sourceId: state.network.sourceId,
-    network_uuid: state.network.uuid,
-    search_results: state.search.results,
-    search_queryList: state.search.queryList,
-    search_searchResults: state.search.searchResults,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    searchActions_clearSelectedGenes: (payload) => dispatch(clearSelectedGenes(payload)),
-    networkActions_networkFetchStarted: (payload) => dispatch(networkFetchStarted(payload)),
-    cyrestActions_importNetworkStarted: (payload) => dispatch(importNetworkStarted(payload)),
-    uiStateActions_setHighlights: (payload) => dispatch(setHighlights(payload))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Ndex)
+export default (Ndex)

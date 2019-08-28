@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
-import isEqual from 'lodash.isequal'
-import { connect } from 'react-redux'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -69,6 +67,7 @@ const ExpansionPanel = withStyles({
 
 const ExpansionPanelSummary = withStyles({
   root: {
+    display: 'inlineBlock',
     paddingLeft: '16px',
     paddingRight: '16px',
     backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -88,7 +87,7 @@ const ExpansionPanelSummary = withStyles({
 
 const NodeProperties = props => {
   const classes = useStyles()
-  const nodes = props.network_selectedNodes
+  const nodes = props.network.selectedNodes
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
@@ -128,8 +127,8 @@ const NodeProperties = props => {
     let geneAnnotation = null
     let inset = false
     if (
-      props.search_results != null &&
-      props.search_results.genes.get(node.name) != null
+      props.search.results != null &&
+      props.search.results.genes.get(node.name) != null
     ) {
       inset = true
       geneAnnotation = (
@@ -142,7 +141,7 @@ const NodeProperties = props => {
                 disableGutters={true}
               >
                 <GeneAnnotationList
-                  search_results={props.search_results}
+                  search_results={props.search.results}
                   geneSymbol={node.name}
                 />
               </ListItem>
@@ -377,11 +376,4 @@ const formatPrimary = entry => {
   return isEqual(prevProps.network_selectedNodes, newProps.network_selectedNodes)
 })*/
 
-const mapStateToProps = state => {
-  return {
-    network_selectedNodes: state.network.selectedNodes,
-    search_results: state.search.results
-  }
-}
-
-export default connect(mapStateToProps)(NodeProperties)
+export default (NodeProperties)

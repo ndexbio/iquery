@@ -24,9 +24,7 @@ const NetworkView = props => {
 
   return (
     <div className={'network-view-top'}>
-      <NetworkToolbar
-        handleImportNetwork={props.handleImportNetwork} 
-      />
+      <NetworkToolbar {...props} />
       <Split
         sizes={DEFAULT_RATIO}
         direction="vertical"
@@ -36,9 +34,9 @@ const NetworkView = props => {
       >
         <NetworkViewer
           resized={resized}
-          handleImportNetwork={props.handleImportNetwork} 
+          {...props}
         />
-        <TableBrowser />
+        <TableBrowser {...props}/>
       </Split>
     </div>
   )

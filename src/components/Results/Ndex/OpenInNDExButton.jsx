@@ -1,15 +1,11 @@
 import React from 'react'
 import './style.css'
-import { connect } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
 import logo from '../../../assets/images/ndex-logo.svg'
 import logoDisabled from '../../../assets/images/ndex-logo-mono-light.svg'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
-
-import { setNDExModalOpen } from '../../../actions/ndexSave'
-
 
 const styles = theme => ({
   buttonIcon: {
@@ -41,10 +37,10 @@ const OpenInNDExButton = props => {
   const { classes } = props
 
   const handleImportNetwork = () => {
-    props.ndexSaveActions_setNDExModalOpen(true)
+    props.ndexSaveActions.setNDExModalOpen(true)
   }
 
-  const disabled = !(props.network_uuid && props.network_uuid.length > 0)
+  const disabled = !(props.network.uuid && props.network.uuid.length > 0)
 
   return (
     <Tooltip title="Save this network to your NDEx account" placement="bottom">
@@ -62,19 +58,4 @@ const OpenInNDExButton = props => {
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    network_uuid: state.network.uuid
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    ndexSaveActions_setNDExModalOpen: (payload) => dispatch(setNDExModalOpen(payload)),
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-) (withStyles(styles)(OpenInNDExButton))
+export default (withStyles(styles)(OpenInNDExButton))

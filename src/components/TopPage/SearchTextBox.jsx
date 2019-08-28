@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -14,8 +13,6 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 
 import * as examples from './example-genes'
-
-import {setQuery, searchStarted} from '../../actions/search'
 
 const EXAMPLES = examples.default.examples
 
@@ -46,8 +43,8 @@ const SearchTextBox = props => {
   const [state, setState] = useState({ anchorEl: null, query: '' })
 
   useEffect(() => {
-    if (props.search_results !== null) {
-      const jobId = props.search_results.jobId
+    if (props.search.results !== null) {
+      const jobId = props.search.results.jobId
 
       const pathParam = props
       props.history.push(`/${jobId}`)
@@ -92,7 +89,7 @@ const SearchTextBox = props => {
 
   const handleSearch = event => {
     const genes = state.query
-    const sources = props.source_sources
+    const sources = props.source.sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
       // TODO: add better error message
@@ -101,8 +98,8 @@ const SearchTextBox = props => {
   
     const sourceNames = sources.map(source => source.name)
     const geneList = genes.toString().split(/\s*,\s*|\s+/)
-    props.searchActions_setQuery(genes)
-    props.searchActions_searchStarted({ geneList, sourceNames })
+    props.searchActions.setQuery(genes)
+    props.searchActions.searchStarted({ geneList, sourceNames })
     
   }
 
@@ -176,21 +173,4 @@ SearchTextBox.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    search_results: state.search.results,
-    source_sources: state.source.sources
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    searchActions_setQuery: (payload) => dispatch(setQuery(payload)),
-    searchActions_searchStarted: (payload) => dispatch(searchStarted(payload))
-  }
-}
-
-export default connect (
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(SearchTextBox))
+export default (withStyles(styles)(SearchTextBox))

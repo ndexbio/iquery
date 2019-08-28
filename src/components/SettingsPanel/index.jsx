@@ -1,5 +1,4 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -23,8 +22,6 @@ import github from '../../assets/images/github.svg'
 
 import './style.css'
 
-import {setServicesListOpen, setSettingsOpen} from '../../actions/uiState'
-
 const drawerWidth = 240
 
 const styles = theme => ({
@@ -42,20 +39,20 @@ const styles = theme => ({
 
 class SettingsPanel extends React.Component {
   handleServicesItemClick = () => {
-    const servicesListOpen = this.props.uiState_servicesListOpen
-    this.props.uiStateActions_setServicesListOpen(!servicesListOpen)
+    const servicesListOpen = this.props.uiState.servicesListOpen
+    this.props.uiStateActions.setServicesListOpen(!servicesListOpen)
   }
 
   handleDrawerClose = () => {
-    const isOpen = this.props.uiState_isSettingsOpen
-    this.props.uiStateActions_setSettingsOpen(!isOpen)
+    const isOpen = this.props.uiState.isSettingsOpen
+    this.props.uiStateActions.setSettingsOpen(!isOpen)
   }
 
   render() {
     const { classes, theme } = this.props
-    const isOpen = this.props.uiState_isSettingsOpen
-    const sources = this.props.source_sources
-    const servicesListOpen = this.props.uiState_servicesListOpen
+    const isOpen = this.props.uiState.isSettingsOpen
+    const sources = this.props.source.sources
+    const servicesListOpen = this.props.uiState.servicesListOpen
 
     return (
       <Drawer
@@ -155,22 +152,4 @@ SettingsPanel.propTypes = {
   theme: PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => {
-  return {
-    uiState_servicesListOpen: state.uiState.servicesListOpen,
-    uiState_isSettingsOpen: state.uiState.isSettingsOpen,
-    source_sources: state.source.sources
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    uiStateActions_setServicesListOpen: (payload) => dispatch(setServicesListOpen(payload)),
-    uiStateActions_setSettingsOpen: (payload) => dispatch(setServicesListOpen(payload))
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles, {withTheme: true})(SettingsPanel))
+export default (withStyles(styles, {withTheme: true})(SettingsPanel))
