@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import {connect} from 'react-redux'
 import './style.css'
 
 import SearchTextBox from './SearchTextBox'
@@ -7,6 +8,8 @@ import LoadingPanel from '../LoadingPanel'
 
 import ndex from '../../assets/images/ndex-logo.svg'
 import queryString from 'query-string'
+import { searchStarted, setQuery } from '../../actions/search';
+import {findSourceStarted} from '../../actions/source'
 
 const StartPanel = props => {
   useEffect(() => {
@@ -25,7 +28,7 @@ const StartPanel = props => {
     }
   }, [])
 
-  if (props.search.isSearching) {
+  if (props.search_isSearching) {
     return (
       <LoadingPanel
         title={'Searching Remote Database'}
@@ -44,12 +47,6 @@ const StartPanel = props => {
         <img className="start-logo-main" src={ndex} alt="logo" />
       </div>
       <SearchTextBox 
-        search={props.search}
-        searchActions_setQuery={props.searchActions_setQuery}
-        searchActions_searchStarted={props.searchActions_searchStarted}
-  
-        source_sources={props.source_sources}
-
         history={props.history}
       />
       <Footer />
@@ -57,4 +54,21 @@ const StartPanel = props => {
   )
 }
 
-export default StartPanel
+const mapStateToProps = state => {
+  return {
+    search_isSearching: state.search.isSearching
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    searchActions_searchStarted: (payload) => dispatch(searchStarted(payload)),
+    searchActions_setQuery: (payload) => dispatch(setQuery(payload)),
+    sourceActions_findSourceStarted: (payload) => dispatch(findSourceStarted(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StartPanel)

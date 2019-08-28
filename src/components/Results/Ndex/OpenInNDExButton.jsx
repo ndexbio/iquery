@@ -1,11 +1,14 @@
 import React from 'react'
 import './style.css'
+import { connect } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
 import logo from '../../../assets/images/ndex-logo.svg'
 import logoDisabled from '../../../assets/images/ndex-logo-mono-light.svg'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
+
+import { setNDExModalOpen } from '../../../actions/ndexSave'
 
 
 const styles = theme => ({
@@ -59,4 +62,19 @@ const OpenInNDExButton = props => {
   )
 }
 
-export default withStyles(styles)(OpenInNDExButton)
+const mapStateToProps = state => {
+  return {
+    network_uuid: state.network.uuid
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    ndexSaveActions_setNDExModalOpen: (payload) => dispatch(setNDExModalOpen(payload)),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (withStyles(styles)(OpenInNDExButton))

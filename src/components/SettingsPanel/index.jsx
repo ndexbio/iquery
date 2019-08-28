@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -21,6 +22,8 @@ import Tooltip from '@material-ui/core/Tooltip'
 import github from '../../assets/images/github.svg'
 
 import './style.css'
+
+import {setServicesListOpen, setSettingsOpen} from '../../actions/uiState'
 
 const drawerWidth = 240
 
@@ -152,4 +155,22 @@ SettingsPanel.propTypes = {
   theme: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(SettingsPanel)
+const mapStateToProps = state => {
+  return {
+    uiState_servicesListOpen: state.uiState.servicesListOpen,
+    uiState_isSettingsOpen: state.uiState.isSettingsOpen,
+    source_sources: state.source.sources
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    uiStateActions_setServicesListOpen: (payload) => dispatch(setServicesListOpen(payload)),
+    uiStateActions_setSettingsOpen: (payload) => dispatch(setServicesListOpen(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, {withTheme: true})(SettingsPanel))

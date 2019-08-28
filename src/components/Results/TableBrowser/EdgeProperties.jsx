@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
+import isEqual from 'lodash.isequal'
+import { connect } from 'react-redux'
+
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -81,17 +84,9 @@ const ExpansionPanelSummary = withStyles({
 const EdgeProperties = props => {
   const classes = useStyles()
   const edges = props.network_selectedEdges
-  const originalCX = props.network_originalCX
+  const nodes = props.nodeList
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
-
-  let nodes
-  for (let i = 0; i < originalCX.length; i++) {
-    if (originalCX[i].nodes != null) {
-      nodes = originalCX[i].nodes
-      break
-    }
-  }
 
   const entityProperties = [
     'Source',
@@ -118,11 +113,53 @@ const EdgeProperties = props => {
     edgeProperties
   ]
 
-  let source = ''
-  let target = ''
+  //Find sources and targets
+  edges.forEach(edge => {
+    for (let key in edge) {
+      if (extractTitle(key) === 'source') {
+        edge[key] = findNode(extractContent(edge[key]), nodes)
+      } else if (extractTitle(key) === 'target') {
+        edge[key] = findNode(extractContent(edge[key]), nodes)
+      }
+    }
+  })
+
+  const sortedEdges = edges.sort((a, b) => {
+    let aScore = 0
+    let bScore = 0
+    if (a.source != '') {
+      aScore++
+    }
+    if (a.target != '') {
+      aScore++
+    }
+    if (b.source != '') {
+      bScore++
+    }
+    if (b.target != '') {
+      bScore++
+    }
+    if (bScore - aScore != 0) {
+      return bScore - aScore
+    } else if (a.source === '') {
+      return 1
+    } else if (b.source === '') {
+      return -1
+    }
+
+    if (a.source.toUpperCase() > b.source.toUpperCase()) {
+      return 1
+    } else if (a.source.toUpperCase() < b.source.toUpperCase()) {
+      return -1
+    } else if (a.target.toUpperCase() > b.target.toUpperCase()) {
+      return 1
+    } else {
+      return -1
+    }
+  })
 
   const topDisplay = []
-  edges.forEach(edge => {
+  sortedEdges.forEach(edge => {
     //Filter properties
     const attributes = []
     let content;
@@ -135,27 +172,11 @@ const EdgeProperties = props => {
         content != null &&
         content !== 'null' &&
         content !== '') {
-        if (title === 'source') {
-          source = findNode(content, nodes)
-          attributes.push({
-            title: 'Source',
-            content: source,
-            displayed: false
-          })
-        } else if (title === 'target') {
-          target = findNode(content, nodes)
-          attributes.push({
-            title: 'Target',
-            content: target,
-            displayed: false
-          })
-        } else {
-          attributes.push({
-            title: camelCaseToTitleCase(title),
-            content: content,
-            displayed: false
-          })
-        }
+        attributes.push({
+          title: camelCaseToTitleCase(title),
+          content: content,
+          displayed: false
+        })
       }
     }
 
@@ -292,7 +313,7 @@ const EdgeProperties = props => {
                 expandIcon={<ExpandMoreIcon/>}
               >
                 <Typography variant="body2">
-                  {source + " -> " + target}
+                  {edge.source + " -> " + edge.target}
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails
@@ -358,6 +379,8 @@ const EdgeProperties = props => {
   }
 }
 
+
+
 const extractContent = entry => {
   if (entry == null) {
     return ''
@@ -393,9 +416,26 @@ const formatPrimary = entry => {
 }
 
 const findNode = (nodeId, nodeArray) => {
-  return nodeArray.filter(item => {
-    return item['@id'].toString() === nodeId
-  })[0].n
+  if (isNaN(nodeId) || nodeId === '') {
+    return nodeId
+  }
+  return nodeArray.filter(item => (
+    item['@id'].toString() === nodeId.toString()
+  ))[0].n
 }
 
-export default EdgeProperties
+/*
+const MemoEdgeProperties = React.memo(EdgeProperties, (prevProps, newProps) => {
+  return isEqual(prevProps.network_selectedEdges, newProps.network_selectedEdges)
+})
+*/
+
+const mapStateToProps = state => {
+  return {
+    network_selectedEdges: state.network.selectedEdges
+  }
+}
+
+export default connect(
+  mapStateToProps
+) (EdgeProperties)

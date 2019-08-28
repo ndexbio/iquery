@@ -27,29 +27,13 @@ const TopPageContainer = props => {
   }, [])
   return (
     <TopPage
-      uiState_servicesListOpen={props.uiState.servicesListOpen}
-      uiState_isSettingsOpen={props.uiState.isSettingsOpen}
-      uiStateActions_setServicesListOpen={props.uiStateActions.setServicesListOpen}
-      uiStateActions_setSettingsOpen={props.uiStateActions.setSettingsOpen} 
-
-      source_sources={props.source.sources}
-      sourceActions_findSourceStarted={props.sourceActions.findSourceStarted}
-
-      search={props.search}
-      searchActions_clearAll={props.searchActions.clearAll}
-      searchActions_setQuery={props.searchActions.setQuery}
-      searchActions_searchStarted={props.searchActions.searchStarted}
-
-      networkActions_networkClear={props.networkActions.networkClear}
-
-      cyrestActions_setPort={props.cyrestActions.setPort}
-
       location_search={props.location.search}
       history={props.history}
     />
   )
 }
 
+/*
 function mapStateToProps(state) {
   return {
     search: state.search,
@@ -78,3 +62,6 @@ export default withRouter(
     mapDispatchToProps
   )(TopPageContainer)
 )
+*/
+
+export default (TopPageContainer)

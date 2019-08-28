@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -19,6 +20,10 @@ import wpLogo from '../../assets/images/wp-logo.svg'
 import HomeIcon from '@material-ui/icons/Home'
 
 import GeneTextBox from './GeneTextBox'
+
+import {setSettingsOpen} from '../../actions/uiState'
+import {clearAll} from '../../actions/search'
+import {networkClear} from '../../actions/network'
 
 const drawerWidth = 240
 
@@ -104,12 +109,7 @@ class TitleBar extends React.Component {
           ) : (
             <div className={classes.textBox}>
               <GeneTextBox 
-                source_sources={this.props.source_sources}
-
-                search_queryGenes={this.props.search_queryGenes}
-                searchActions_clearAll={this.props.searchActions_clearAll}
-                searchActions_setQuery={this.props.searchActions_setQuery}
-                searchActions_searchStarted={this.props.searchActions_searchStarted}
+                history={this.props.history}
               />
              </div>
           )}
@@ -196,15 +196,22 @@ TitleBar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(TitleBar)
+const mapStateToProps = state => {
+  return {
+    uiState_isSettingsOpen: state.uiState.isSettingsOpen,
+    search_results: state.search.results
+  }
+}
 
-/*
-          <IconButton
-            className={classNames(classes.menuButton, open && classes.hide)}
-            color="inherit"
-            aria-label="Menu"
-            onClick={this.handleMenu}
-          >
-            <MenuIcon />
-          </IconButton>
-          */
+const mapDispatchToProps = dispatch => {
+  return {
+    uiStateActions_setSettingsOpen: (payload) => dispatch(setSettingsOpen(payload)),
+    searchActions_clearAll: (payload) => dispatch(clearAll(payload)),
+    networkActions_networkClear: (payload) => dispatch(networkClear(payload))
+  }
+}
+
+export default connect (
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true})(TitleBar))

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import {connect} from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
@@ -13,6 +14,8 @@ import SearchIcon from '@material-ui/icons/Search'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 import MessageSnackbar from './MessageSnackbar'
+
+import {clearAll, setQuery, searchStarted} from '../../actions/search'
 
 const styles = {
   root: {
@@ -158,4 +161,22 @@ const GeneTextBox = props => {
   )
 }
 
-export default withStyles(styles)(GeneTextBox)
+const mapStateToProps = state => {
+  return {
+    source_sources: state.source.sources,
+    search_queryGenes: state.search.queryGenes
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    searchActions_clearAll: (payload) => dispatch(clearAll(payload)),
+    searchActions_setQuery: (payload) => dispatch(setQuery(payload)),
+    searchActions_searchStarted: (payload) => dispatch(searchStarted(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (withStyles(styles)(GeneTextBox))

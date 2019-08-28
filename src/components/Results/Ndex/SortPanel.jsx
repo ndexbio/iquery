@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {connect} from 'react-redux'
 
 import { makeStyles, withStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
@@ -6,6 +7,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputBase from '@material-ui/core/InputBase';
+
+import {setSortOrder} from '../../../actions/uiState'
 
 const BootstrapInput = withStyles(theme => ({
   root: {
@@ -100,5 +103,20 @@ const SortPanel = props => {
   }
 }
 
-export default SortPanel
+const mapStateToProps = state => {
+  return {
+    uiState_selectedSource: state.uiState.selectedSource
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    uiStateActions_setSortOrder: (payload) => dispatch(setSortOrder(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (SortPanel)
             

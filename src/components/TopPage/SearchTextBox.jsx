@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -13,6 +14,8 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 
 import * as examples from './example-genes'
+
+import {setQuery, searchStarted} from '../../actions/search'
 
 const EXAMPLES = examples.default.examples
 
@@ -43,8 +46,8 @@ const SearchTextBox = props => {
   const [state, setState] = useState({ anchorEl: null, query: '' })
 
   useEffect(() => {
-    if (props.search !== undefined && props.search.results !== null) {
-      const jobId = props.search.results.jobId
+    if (props.search_results !== null) {
+      const jobId = props.search_results.jobId
 
       const pathParam = props
       props.history.push(`/${jobId}`)
@@ -173,4 +176,21 @@ SearchTextBox.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(SearchTextBox)
+const mapStateToProps = state => {
+  return {
+    search_results: state.search.results,
+    source_sources: state.source.sources
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    searchActions_setQuery: (payload) => dispatch(setQuery(payload)),
+    searchActions_searchStarted: (payload) => dispatch(searchStarted(payload))
+  }
+}
+
+export default connect (
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(SearchTextBox))

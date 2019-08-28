@@ -2,11 +2,13 @@ import React from 'react'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { makeStyles } from '@material-ui/styles'
+import { connect } from 'react-redux'
 
 import NetworkProperties from './NetworkProperties'
 import NodeProperties from './NodeProperties'
 import EdgeProperties from './EdgeProperties'
 
+import {changeTab} from '../../../actions/network'
 
 
 const useStyles = makeStyles(theme => ({
@@ -31,22 +33,16 @@ const TabContent = props => {
   const { value } = props
   if (value === 0) {
     return (
-      <NetworkProperties 
-        network_originalCX={props.network_originalCX}
-      />
+      <NetworkProperties />
     )
   } else if (value === 1) {
     return (
-      <NodeProperties 
-        network_selectedNodes={props.network_selectedNodes} 
-        search_results={props.search_results} 
-      />
+      <NodeProperties />
     )
   } else {
     return (
       <EdgeProperties 
-        network_selectedEdges={props.network_selectedEdges} 
-        network_originalCX={props.network_originalCX} 
+        nodeList={props.nodeList} 
       />
     )
   }
@@ -58,21 +54,29 @@ const DISABLED_STYLE = {
 
 const TableBrowserPanel = props => {
 
-  const network = props.network
+  //const network = props.network
   const classes = useStyles();
-  let value = props.network.tableDisplayTab
-
+  let value = props.network_tableDisplayTab
+/*
   if (network === null) {
     return <div style={DISABLED_STYLE} />
   }
-
-  const originalCX = network.originalCX
+*/
+  const originalCX = props.network_originalCX
   if (originalCX === null) {
     return <div style={DISABLED_STYLE} />
   }
 
   function handleChange(event, newValue) {
     props.networkActions_changeTab(newValue)
+  }
+
+  let nodeList
+  for (let i = 0; i < props.network_originalCX.length; i++) {
+    if (props.network_originalCX[i].nodes != null) {
+      nodeList = props.network_originalCX[i].nodes
+      break
+    }
   }
 
   //Get current tab selection
@@ -105,13 +109,26 @@ const TableBrowserPanel = props => {
       </Tabs>
       <TabContent 
         value={value} 
-        network_originalCX={props.network.originalCX} 
-        network_selectedNodes={props.network.selectedNodes}
-        network_selectedEdges={props.network.selectedEdges}
-        search_results={props.search_results}
+        nodeList={nodeList} 
       />
     </div>
   )
 }
 
-export default TableBrowserPanel
+const mapStateToProps = state => {
+  return {
+    network_originalCX: state.network.originalCX,
+    network_tableDisplayTab: state.network.tableDisplayTab
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    networkActions_changeTab: (payload) => dispatch(changeTab(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (TableBrowserPanel)

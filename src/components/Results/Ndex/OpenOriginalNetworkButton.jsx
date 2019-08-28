@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser'
+import { connect } from 'react-redux'
+
 
 import { SERVICE_SERVER_URL } from '../../../api/apiConstants'
 
@@ -55,7 +57,7 @@ const OpenOriginalNetworkButton = props => {
           className={classes.button}
           variant="outlined"
           disabled={disabled}
-          onClick={() => handleOpen(props.network.uuid)}
+          onClick={() => handleOpen(props.network_uuid)}
         >
           <OpenInBrowserIcon
             color={disabled ? 'disabled' : 'inherit'}
@@ -75,4 +77,12 @@ const handleOpen = uuid => {
   window.open(url, '_blank')
 }
 
-export default withStyles(styles)(OpenOriginalNetworkButton)
+const mapStateToProps = state => {
+  return {
+    network_uuid: state.network.uuid
+  }
+}
+
+export default connect(
+  mapStateToProps
+) (withStyles(styles)(OpenOriginalNetworkButton))

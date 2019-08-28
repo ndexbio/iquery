@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react'
+import {connect} from 'react-redux'
+
 import { withStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 
 import Empty from './Empty'
 import TabContent from './TabContent'
+
+import {networkClear, changeListIndex} from '../../actions/network'
+import {setSelectedSource} from '../../actions/uiState'
 
 const styles = theme => ({
   tabs: {
@@ -30,13 +35,13 @@ const Results = props => {
 
   const updateHistory = newValue => {
     // Update URL
-    const results = props.search.results
+    const results = props.search_results
     if (results === null || results === undefined) {
       return
     }
 
     const jobId = results.jobId
-    const searchResults = props.search.searchResults
+    const searchResults = props.search_searchResults
     if (searchResults !== undefined && searchResults !== null) {
       const sourceName = getSourceName(sources, newValue)
       console.log('** Tab change:', jobId, sourceName)
@@ -51,7 +56,7 @@ const Results = props => {
     return <Empty />
   }
 
-  const { searchResults } = props.search
+  const searchResults = props.search_searchResults
   const selectedSourceName = getSourceName(sources, idx)
 
   const results = findResult(selectedSourceName, searchResults)
@@ -69,56 +74,6 @@ const Results = props => {
         </Tabs>
         <TabContent 
           results={results}
-
-          ndexSave_ndexModal={props.ndexSave_ndexModal}
-          ndexSave_profile={props.ndexSave_profile}
-          ndexSave_errorMessage={props.ndexSave_errorMessage}
-          ndexSave_networkUrl={props.ndexSave_networkUrl}
-          ndexSaveActions_saveToNDEx={props.ndexSaveActions_saveToNDEx}
-          ndexSaveActions_setProfile={props.ndexSaveActions_setProfile}
-          ndexSaveActions_setNDExModalOpen={props.ndexSaveActions_setNDExModalOpen}
-          ndexSaveActions_credentialsSignOn={props.ndexSaveActions_credentialsSignOn}
-          ndexSaveActions_googleSignOn={props.ndexSaveActions_googleSignOn}
-          ndexSaveActions_setErrorMessage={props.ndexSaveActions_setErrorMessage}
-    
-          cyrest_available={props.cyrest_available}
-          cyrest_isLoadingNetwork={props.cyrest_isLoadingNetwork}
-          cyrest_lastResponse={props.cyrest_lastResponse}
-          cyrestActions_startCyrestPolling={props.cyrestActions_startCyrestPolling}
-          cyrestActions_stopCyrestPolling={props.cyrestActions_stopCyrestPolling}
-          cyrestActions_importNetworkStarted={props.cyrest_importNetworkStarted}
-    
-          uiState_zoomed={props.uiState_zoomed}
-          uiState_highlights={props.uiState_highlights}
-          uiState_selectedSource={props.uiState_selectedSource}
-          uiState_sortOrder={props.uiState_sortOrder}
-          uiStateActions_setZoomed={props.uiStateActions_setZoomed}
-          uiStateActions_setHighlights={props.uiStateActions_setHighlights}
-          uiStateActions_clearSelectedGenes={props.uiStateActions_clearSelectedGenes}
-          uiStateActions_setSortOrder={props.uiStateActions_setSortOrder}
-    
-          network={props.network}
-          networkActions_changeTab={props.networkActions_changeTab}
-          networkActions_selectNodes={props.networkActions_selectNodes}
-          networkActions_unselectNodes={props.networkActions_unselectNodes}
-          networkActions_selectEdges={props.networkActions_selectEdges}
-          networkActions_unselectEdges={props.networkActions_unselectEdges}
-          networkActions_changeListIndex={props.networkActions_changeListIndex}
-          networkActions_networkFetchStarted={props.networkActions_networkFetchStarted}
-    
-          search_results={props.search.results}
-          search_queryList={props.search.queryList}
-          search_actualResults={props.search.actualResults}
-          search_searchResults={props.search.searchResults}
-          search_selectedGenes={props.search.selectedGenes}
-          searchActions_clearSelectedGenes={props.searchActions_clearSelectedGenes}
-          searchActions_setActualResults={props.searchActions_setActualResults}
-    
-          source_sources={props.source_sources}
-
-          cyrestActions_importNetworkStarted={props.cyrestActions_importNetworkStarted}
-          cyrestActions_setPort={props.cyrestActions_setPort}
-
           history={props.history}
         />
       </div>
@@ -148,4 +103,23 @@ const findResult = (sourceName, results) => {
   return null
 }
 
-export default withStyles(styles)(Results)
+const mapStateToProps = state => {
+  return {
+    search_results: state.search.results,
+    search_searchResults: state.search.searchResults,
+    source_sources: state.source.sources
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    networkActions_networkClear: (payload) => dispatch(networkClear(payload)),
+    networkActions_changeListIndex: (payload) => dispatch(changeListIndex(payload)),
+    uiStateActions_setSelectedSource: (payload) => dispatch(setSelectedSource(payload))
+  }
+}
+
+export default connect (
+  mapStateToProps,
+  mapDispatchToProps
+) (withStyles(styles)(Results))

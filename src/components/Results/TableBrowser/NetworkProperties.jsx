@@ -1,5 +1,6 @@
 import React from 'react'
 import Split from 'react-split'
+import { connect } from 'react-redux'
 
 import { makeStyles, withStyles } from '@material-ui/styles'
 import ListItem from '@material-ui/core/ListItem'
@@ -369,4 +370,12 @@ const formatContext = entry => {
   return formatPrimary(result)
 }
 
-export default NetworkProperties
+const mapStateToProps = state => {
+  return {
+    network_originalCX: state.network.originalCX
+  }
+}
+
+export default connect(
+  mapStateToProps
+) (NetworkProperties)

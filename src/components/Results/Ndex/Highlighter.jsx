@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import HighlightIcon from '@material-ui/icons/WbIncandescent'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
+
+import { setHighlights } from '../../../actions/uiState'
 
 
 const styles = theme => ({
@@ -52,4 +55,21 @@ const Highlighter = props => {
   )
 }
 
-export default withStyles(styles)(Highlighter)
+const mapStateToProps = state => {
+  return {
+    network_uuid: state.network.uuid,
+    uiState_highlights: state.uiState.highlights
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    uiStateActions_setHighlights: (payload) => dispatch(setHighlights(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (withStyles(styles)(Highlighter))
+

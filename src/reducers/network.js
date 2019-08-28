@@ -134,7 +134,7 @@ const network = handleActions(
         backgroundColor = getBackGround(originalCX)
       }
 
-      setZoomed()
+      setZoomed(true)
 
       return {
         ...state,
@@ -171,30 +171,26 @@ const network = handleActions(
       return {
         ...state,
         tableDisplayTab: 1,
-        selectedNodes: [...state.selectedNodes, payload.payload]
-      }
-    },
-    [selectEdges]: (state, payload) => {
-      return {
-        ...state,
-        tableDisplayTab: 2,
-        selectedEdges: [...state.selectedEdges, payload.payload]
+        selectedNodes: payload.payload
       }
     },
     [unselectNodes]: (state, payload) => {
       return {
         ...state,
-        selectedNodes: state.selectedNodes.filter(node => (
-          node.id !== payload.payload.id
-        ))
+        selectedNodes: payload.payload
+      }
+    },
+    [selectEdges]: (state, payload) => {     
+      return {
+        ...state,
+        tableDisplayTab: 2,
+        selectedEdges: payload.payload
       }
     },
     [unselectEdges]: (state, payload) => {
       return {
         ...state,
-        selectedEdges: state.selectedEdges.filter(edge => (
-          edge.id !== payload.payload.id
-        ))
+        selectedEdges: payload.payload
       }
     },
     [deselectAll]: (state, payload) => {

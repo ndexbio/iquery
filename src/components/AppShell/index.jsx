@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import {connect} from 'react-redux'
 import './style.css'
 
 import TitleBar from './TitleBar'
@@ -8,6 +9,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import { withStyles } from '@material-ui/core/styles'
 
 import classNames from 'classnames'
+
+import {setPort} from '../../actions/cyrest'
 
 const drawerWidth = 240
 
@@ -57,27 +60,9 @@ const AppShell = props => {
     <div className={classes.root}>
       <CssBaseline />
       <TitleBar
-        source_sources={props.source_sources}
-
-        search_queryGnees={props.search_queryGnees}
-        search_results={props.search_results}
-        searchActions_clearAll={props.searchActions_clearAll}
-        searchActions_setQuery={props.searchActions_setQuery}
-        searchActions_searchStarted={props.searchActions_searchStarted}
-        
-        uiState_isSettingsOpen={props.uiState_isSettingsOpen}
-        uiStateActions_setSettingsOpen={props.uiStateActions_setSettingsOpen}
-
-        networkActions_networkClear={props.networkActions_networkClear}
+        history={props.history}
       />
-      <SettingsPanel
-        uiState_servicesListOpen={props.uiState_servicesListOpen}
-        uiState_isSettingsOpen={props.uiState_isSettingsOpen}
-        uiStateActions_setServicesListOpen={props.uiStateActions_setServicesListOpen}
-        uiStateActions_setSettingsOpen={props.uiStateActions_setSettingsOpen}
-
-        source_sources={props.source_sources}
-      />
+      <SettingsPanel />
 
       <div
         className={classNames(classes.content, {
@@ -89,4 +74,19 @@ const AppShell = props => {
   )
 }
 
-export default withStyles(styles, { withTheme: true })(AppShell)
+const mapStateToProps = state => {
+  return {
+    uiState_isSettingsOpen: state.uiState.isSettingsOpen
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    cyrestActions_setPort: (payload) => dispatch(setPort(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, {withTheme: true})(AppShell))

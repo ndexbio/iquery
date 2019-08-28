@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react'
+import {connect} from 'react-redux'
+
 import { withStyles } from '@material-ui/core/styles'
 
 import MenuList from '@material-ui/core/MenuList'
@@ -6,10 +8,10 @@ import Typography from '@material-ui/core/Typography'
 
 import SortPanel from './SortPanel'
 
-
+import {setActualResults} from '../../../actions/search'
+import {changeListIndex} from '../../../actions/network'
 
 import './style.css'
-import Sorter from './Sorter'
 
 const styles = theme => ({
   inline: {
@@ -56,7 +58,7 @@ const styles = theme => ({
   },
 })
 
-const findSort = (sortOrder, pValue, overlap) => {
+const findSort = (sortOrder) => {
   if (sortOrder[0] === 'p-Value') {
     return (a, b) => {
       if (a.details.PValue > b.details.PValue) {
@@ -125,10 +127,7 @@ const NetworkList = props => {
   if (result.length > 0) {
     return (
       <div className="network-list-wrapper">
-        <SortPanel
-          uiState_selectedSource={props.uiState_selectedSource}
-          uiStateActions_setSortOrder={props.uiStateActions_setSortOrder}
-        />
+        <SortPanel />
         <div className="network-list">
           <MenuList className={props.classes.noPadding}>
             {result}
@@ -151,7 +150,28 @@ const NetworkList = props => {
       </div>
     )
   }
-
 }
 
-export default withStyles(styles)(NetworkList)
+const mapStateToProps = state => {
+  return {
+    uiState_sortOrder: state.uiState.sortOrder,
+    uiState_selectedSource: state.uiState.selectedSource,
+
+    network_listIndex: state.network.listIndex,
+    
+    search_results_genes: state.search.results.genes,
+    search_actualResults: state.search.actualResults
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    searchActions_setActualResults: (payload) => dispatch(setActualResults(payload)),
+    networkActions_changeListIndex: (payload) => dispatch(changeListIndex(payload))
+  }
+}
+
+export default connect (
+  mapStateToProps,
+  mapDispatchToProps
+) (withStyles(styles)(NetworkList))

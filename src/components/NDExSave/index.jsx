@@ -1,6 +1,8 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { DialogContentText, DialogActions, Button } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { setNDExModalOpen, saveToNDEx } from '../../actions/ndexSave'
 
 import config from './assets/config'
 import './style.css'
@@ -29,7 +31,7 @@ class NDExSave extends React.Component {
 
   render() {
     const { classes } = this.props
-    const token = this.props.ndexSaveprofile ? this.props.ndexSave_profile.authorization.token : null
+    const token = this.props.ndexSave_profile ? this.props.ndexSave_profile.authorization.token : null
     const cx = this.props.network_originalCX
 
     const networkUrl = this.props.ndexSave_networkUrl
@@ -64,4 +66,22 @@ class NDExSave extends React.Component {
   }
 }
 
-export default withStyles(styles)(NDExSave)
+const mapStateToProps = state => {
+  return {
+    ndexSave_networkUrl: state.ndexSave.networkUrl,
+    ndexSave_profile: state.ndexSave.profile,
+    network_originalCX: state.network.originalCX
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    ndexSaveActions_setNDExModalOpen: (payload) => dispatch(setNDExModalOpen(payload)),
+    ndexSaveActions_saveToNDEx: (payload) => dispatch(saveToNDEx(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (withStyles(styles)(NDExSave))

@@ -1,5 +1,7 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
+
 import {
   DialogContent,
   Dialog,
@@ -22,6 +24,8 @@ import NDExSave from '../NDExSave'
 import './style.css'
 
 import config from './assets/config'
+
+import { setProfile, setNDExModalOpen, credentialsSignOn, googleSignOn, setErrorMessage } from '../../actions/ndexSave'
 
 const styles = theme => ({})
 
@@ -295,19 +299,34 @@ class NDExSignInModal extends React.Component {
               error={this.props.ndexSave_errorMessage}
             />
           )}
-          <NDExSave 
-            ndexSave_networkUrl={this.props.ndexSave_networkUrl}
-            ndexSave_profile={this.props.ndexSave_profile}
-  
-            ndexSaveActions_setNDExModalOpen={this.props.ndexSaveActions_setNDExModalOpen}
-            ndexSaveActions_saveToNDEx={this.props.ndexSaveActions_saveToNDEx}
-  
-            network_originalCX={this.props.network_originalCX}
-          />
+          <NDExSave />
         </Dialog>
       </div>
     )
   }
 }
 
-export default withStyles(styles)(NDExSignInModal)
+const mapStateToProps = state => {
+  return {
+    ndexSave_ndexModal: state.ndexSave.ndexModal,
+    ndexSave_profile: state.ndexSave.profile,
+    ndexSave_errorMessage: state.ndexSave.errorMessage
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    ndexSaveActions_setProfile: (payload) => dispatch(setProfile(payload)),
+    ndexSaveActions_setNDExModalOpen: (payload) => dispatch(setNDExModalOpen(payload)),
+    ndexSaveActions_credentialsSignOn: (payload) => dispatch(credentialsSignOn(payload)),
+    ndexSaveActions_googleSignOn: (payload) => dispatch(googleSignOn(payload)),
+    ndexSaveActions_setErrorMessage: (payload) => dispatch(setErrorMessage(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (withStyles(styles)(NDExSignInModal))
+
+

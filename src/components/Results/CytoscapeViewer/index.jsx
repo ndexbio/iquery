@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 import './style.css'
 import Warning from './Warning'
+import { connect } from 'react-redux'
+import { setZoomed, setHighlights } from '../../../actions/uiState'
+import { changeTab, selectNodes, unselectNodes, selectEdges, unselectEdges } from '../../../actions/network'
+import { clearSelectedGenes } from '../../../actions/search'
 
 let cyInstance = null
 
@@ -78,30 +82,61 @@ const CytoscapeViewer = props => {
       }
     })
 
+    let nodeTimeout
     cyInstance.on('select', 'node', function() {
-      const selected = this.data()
-      if (selected.name !== '') {
-        props.networkActions_selectNodes(selected)
-      }
+      clearTimeout(nodeTimeout)
+      nodeTimeout = setTimeout(function() {
+        const nodes = []
+        const selectedNodes = cyInstance.$('node:selected')
+        selectedNodes.forEach(element => {
+          if (element.data().name != '') {
+            nodes.push(element.data())
+          }
+        })
+        props.networkActions_selectNodes(nodes)
+      }, 1)
     })
 
+    let nodeUnselectTimeout
     cyInstance.on('unselect', 'node', function() {
-      const unselected = this.data()
-      if (unselected.name !== '') {
-        props.networkActions_unselectNodes(unselected)
-      }
+      clearTimeout(nodeUnselectTimeout)
+      nodeUnselectTimeout = setTimeout(function() {
+        const nodes = []
+        const selectedNodes = cyInstance.$('node:selected')
+        selectedNodes.forEach(element => {
+          if (element.data().name != '') {
+            nodes.push(element.data())
+          }
+        })
+        props.networkActions_unselectNodes(nodes)
+      }, 1)
     })
-    
+
+    let edgeTimeout
     cyInstance.on('select', 'edge', function() {
-      const selected = this.data()
-      props.networkActions_selectEdges(selected)
+      clearTimeout(edgeTimeout)
+      edgeTimeout = setTimeout(function() {
+        const edges = []
+        const selectedEdges = cyInstance.$('edge:selected')
+        selectedEdges.forEach(element => {
+          edges.push(element.data())
+        })
+        props.networkActions_selectEdges(edges)
+      }, 1)
     })
 
+    let edgeUnselectTimeout
     cyInstance.on('unselect', 'edge', function() {
-      const unselected = this.data()
-      props.networkActions_unselectEdges(unselected)
+      clearTimeout(edgeUnselectTimeout)
+      edgeTimeout = setTimeout(function() {
+        const edges = []
+        const selectedEdges = cyInstance.$('edge:selected')
+        selectedEdges.forEach(element => {
+          edges.push(element.data())
+        })
+        props.networkActions_unselectEdges(edges)
+      }, 1)
     })
-
 
     // Reset the UI state (hilight)
     props.uiStateActions_setHighlights(true)
@@ -138,7 +173,6 @@ const CytoscapeViewer = props => {
     }
 
     if (targets.length === 0) {
-      console.log(cyInstance.elements())
       cyInstance.animate(
         {
           fit: {
@@ -220,4 +254,37 @@ const CytoscapeViewer = props => {
   )
 }
 
-export default CytoscapeViewer
+const mapStateToProps = state => {
+  return {
+    uiState_zoomed: state.uiState.zoomed,
+    uiState_highlights: state.uiState.highlights,
+
+    network_nodeCount: state.network.nodeCount,
+    network_edgeCount: state.network.edgeCount,
+    network_backgroundColor: state.network.backgroundColor,
+    network_network: state.network.network,
+
+    search_selectedGenes: state.search.selectedGenes
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    uiStateActions_setZoomed: (payload) => dispatch(setZoomed(payload)),
+    uiStateActions_setHighlights: (payload) => dispatch(setHighlights(payload)),
+
+    networkActions_changeTab: (payload) => dispatch(changeTab(payload)),
+    networkActions_selectNodes: (payload) => dispatch(selectNodes(payload)),
+    networkActions_unselectNodes: (payload) => dispatch(unselectNodes(payload)),
+    networkActions_selectEdges: (payload) => dispatch(selectEdges(payload)),
+    networkActions_unselectEdges: (payload) => dispatch(unselectEdges(payload)),
+
+    searchActions_clearSelectedGenes: (payload) => dispatch(clearSelectedGenes(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (CytoscapeViewer)
+

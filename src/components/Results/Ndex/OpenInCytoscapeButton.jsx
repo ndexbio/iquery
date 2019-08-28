@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import logo from '../../../assets/images/cytoscape-logo.svg'
 import logoDisabled from '../../../assets/images/cytoscape-logo-mono-light.svg'
@@ -7,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 
 import MessageSnackbar from '../../AppShell/MessageSnackbar.jsx'
 
-
+import { startCyRestPolling, stopCyRestPolling } from '../../../actions/cyrest'
 
 const BootstrapButton = withStyles({
   root: {
@@ -140,4 +141,24 @@ const OpenInCytoscapeButton = props => {
   )
 }
 
-export default withStyles(styles)(OpenInCytoscapeButton)
+const mapStateToProps = state => {
+  return {
+    cyrest_available: state.cyrest.available,
+    cyrest_isLoadingNetwork: state.cyrest.isLoadingNetwork,
+    cyrest_lastResponse: state.cyrest.lastResponse,
+
+    network_uuid: state.network.uuid
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    cyrestActions_startCyrestPolling: (payload) => dispatch(startCyRestPolling(payload)),
+    cyrestActions_stopCyrestPolling: (payload) => dispatch(stopCyRestPolling(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (withStyles(styles)(OpenInCytoscapeButton))

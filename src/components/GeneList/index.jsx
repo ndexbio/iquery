@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import { makeStyles, withStyles } from '@material-ui/styles'
 import Avatar from '@material-ui/core/Avatar'
@@ -8,10 +9,12 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import MuiToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+import { clearSelectedGenes, setSelectedGenes } from '../../actions/search';
 
 const useStyles = makeStyles(theme => ({
   chip: {
-    margin: '0'
+    margin: '0',
+    backgroundColor: '#000000'
   },
   listPadding: {
     paddingTop: '0',
@@ -33,7 +36,6 @@ const selectedButtonStyle = {
   height: '32px',
   borderWidth: '0',
   backgroundColor: 'rgb(252, 235, 242)',
-  color: 'rgb(252, 235, 242)'
 }
 
 const selectedChipStyle = {
@@ -41,21 +43,23 @@ const selectedChipStyle = {
   borderRadius: '20px',
 }
 
+const toggleButtonGroupStyle = {
+  backgroundColor: 'transparent'
+}
+
 const ToggleButton = withStyles({
   label: {
-    backgroundColor: '#FAFAFA'
-  }
+    backgroundColor: 'transparent',
+  },
 })(MuiToggleButton);
 
-const handleClick = (geneSymbol, props) => {
-  console.log(geneSymbol)
-}
-
+/*
 const handleClear = (event, props) => {
   console.log('#### Clear selection', event.target.value)
+  props.searchActions_clearSelectedGenes()
   //props.searchActions.setSelectedGenes([])
 }
-
+*/
 const GeneList = props => {
   const classes = withStyles()
 
@@ -63,21 +67,11 @@ const GeneList = props => {
   const hits = props.network_hitGenes
   const hitSets = new Set(hits)
 
-  const [alignment, setAlignment] = React.useState(0)
-
   const handleChange = (event, newAlignment) => {
-    if (newAlignment == null) {
-      setAlignment(0)
+    if (newAlignment === props.search_selectedGenes[0]) {
       props.searchActions_clearSelectedGenes()
     } else {
-      setAlignment(newAlignment)
       props.searchActions_setSelectedGenes(newAlignment)
-    }
-  }
-
-  if (props.search_selectedGenes.length == 0) {
-    if (alignment) {
-      setAlignment(0)
     }
   }
 
@@ -115,19 +109,22 @@ const GeneList = props => {
   const unmatchedSorted = unmatched.sort().reverse()
   const sorted = [...matchedSorted, ...unmatchedSorted]
 
+
   return (
-    <div className="gene-list-wrapper" onClick={event => handleClear(event, props)}>
+    <div className="gene-list-wrapper">
       <List>
         {sorted.map(geneValue => (
           <ListItem key={geneValue.symbol}>
             <ToggleButtonGroup 
-              value={alignment} 
+              value={props.search_selectedGenes} 
               exclusive 
-              onChange={handleChange}>
+              onChange={handleChange}
+              style={toggleButtonGroupStyle}
+            >
               <ToggleButton 
                 value={geneValue.symbol}
                 style={
-                  hitSets.has(geneValue.symbol) && alignment == geneValue.symbol ?
+                  hitSets.has(geneValue.symbol) && props.search_selectedGenes[0] === geneValue.symbol ?
                     selectedButtonStyle
                   : 
                     buttonStyle
@@ -158,21 +155,22 @@ const getChip = (value, isValid, classes, props, hitSets) => {
         className={classes.chip}
         avatar={<Avatar>{found ? <CheckIcon /> : '-'}</Avatar>}
         label={value.symbol}
-        onClick={() => handleClick(value.symbol, props)}
         variant="outlined"
         color={color}
         key={value.symbol}
         selected
         style={selectedChipStyle}
+        clickable={true}
       />
     )
   } else {
     return (
       <Chip
+        className={classes.chip}
         avatar={<Avatar>G</Avatar>}
         label={'INVALID: ' + value}
-        onClick={handleClick}
         key={value}
+        clickable={true}
       />
     )
   }
@@ -182,4 +180,22 @@ GeneList.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default (GeneList)
+const mapStateToProps = state => {
+  return {
+    search_results: state.search.results,
+    search_selectedGenes: state.search.selectedGenes,
+    network_hitGenes: state.network.hitGenes
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    searchActions_clearSelectedGenes: (payload) => dispatch(clearSelectedGenes(payload)),
+    searchActions_setSelectedGenes: (payload) => dispatch(setSelectedGenes(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GeneList)

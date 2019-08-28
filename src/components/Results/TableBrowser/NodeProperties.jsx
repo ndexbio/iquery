@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
+import isEqual from 'lodash.isequal'
+import { connect } from 'react-redux'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -17,9 +19,7 @@ import { stripScripts } from './strip-scripts-util.js'
 
 import GeneAnnotationList from './GeneAnnotationList'
 
-
 let index = 0
-let topIndex = 0
 
 const useStyles = makeStyles(theme => ({
   noPadding: {
@@ -119,8 +119,17 @@ const NodeProperties = props => {
     nodeProperties
   ]
 
+  const sortedNodes = nodes.sort((a, b) => {
+    if (a.name.toUpperCase() > b.name.toUpperCase()) {
+      return 1
+    } else {
+      return -1
+    }
+  })
+
   const topDisplay = []
-  nodes.forEach(node => {
+  sortedNodes.forEach(node => {
+  
     //Filter properties
     const attributes = []
     let content;
@@ -142,8 +151,8 @@ const NodeProperties = props => {
                 disableGutters={true}
               >
                 <GeneAnnotationList 
+                  search_results={props.search_results}
                   geneSymbol={node.name} 
-                  search_results={props.search_results} 
                 />
               </ListItem>
             </List>
@@ -367,6 +376,8 @@ const NodeProperties = props => {
   }
 }
 
+
+
 const extractContent = entry => {
   if (entry == null) {
     return ''
@@ -401,4 +412,17 @@ const formatPrimary = entry => {
   return <Linkify key={'link' + index++} newTab={true}>{modifiedText}</Linkify>
 }
 
-export default NodeProperties
+/*const MemoNodeProperties = React.memo(NodeProperties, (prevProps, newProps) => {
+  return isEqual(prevProps.network_selectedNodes, newProps.network_selectedNodes)
+})*/
+
+const mapStateToProps = state => {
+  return {
+    network_selectedNodes: state.network.selectedNodes,
+    search_results: state.search.results
+  }
+}
+
+export default connect(
+  mapStateToProps
+) (NodeProperties)

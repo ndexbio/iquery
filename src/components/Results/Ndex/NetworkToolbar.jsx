@@ -1,6 +1,7 @@
 import './style.css'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import Typography from '@material-ui/core/Typography'
 import { fade } from '@material-ui/core/styles/colorManipulator'
@@ -113,59 +114,16 @@ const NetworkToolbar = props => {
         </Typography>
       </Tooltip>
       <div className={classes.grow} />
-      <ResetZoomButton
-        network_uuid={props.network_uuid}
-        uiStateActions_setZoomed={props.uiStateActions_setZoomed}
-      />
-      <Highlighter
-        network_uuid={props.network_uuid}
-        uiState_highlights={props.uiState_highlights}
-        uiStateActions_setHighlights={props.uiStateActions_setHighlights}
-      />
-      <NDExSignInModal
-        ndexSave_ndexModal={props.ndexSave_ndexModal}
-        ndexSave_profile={props.ndexSave_profile}
-        ndexSave_networkUrl={props.ndexSave_networkUrl}
-
-        ndexSave_errorMessage={props.ndexSave_errorMessage}
-        ndexSaveActions_setProfile={props.ndexSaveActions_setProfile}
-        ndexSaveActions_setNDExModalOpen={props.ndexSaveActions_setNDExModalOpen}
-        ndexSaveActions_saveToNDEx={props.ndexSaveActions_saveToNDEx}
-        ndexSaveActions_credentialsSignOn={props.ndexSaveActions_credentialsSignOn}
-        ndexSaveActions_googleSignOn={props.ndexSaveActions_googleSignOn}
-        ndexSaveActions_setErrorMessage={props.ndexSaveActions_setErrorMessage}
-
-        network_originalCX={props.network_originalCX}
-
-      >
-        <NDExSave
-          ndexSave_networkUrl={props.ndexSave_networkUrl}
-          ndexSave_profile={props.ndexSave_profile}
-
-          ndexSaveActions_setNDExModalOpen={props.ndexSaveActions_setNDExModalOpen}
-          ndexSaveActions_saveToNDEx={props.ndexSaveActions_saveToNDEx}
-
-          network_originalCX={props.network_originalCX}
-        />
+      <ResetZoomButton />
+      <Highlighter />
+      <NDExSignInModal>
+        <NDExSave />
       </NDExSignInModal>
-      <OpenInNDExButton 
-        network_uuid={props.network_uuid}
-        ndexSaveActions_setNDExModalOpen={props.ndexSaveActions_setNDExModalOpen}
-      />
+      <OpenInNDExButton />
       <OpenInCytoscapeButton
         handleImportNetwork={props.handleImportNetwork} 
-
-        cyrest_available={props.cyrest_available}
-        cyrest_isLoadingNetwork={props.cyrest_isLoadingNetwork}
-        cyrest_lastResponse={props.cyrest_lastResponse}
-        cyrestActions_startCyrestPolling={props.cyrestActions_startCyrestPolling}
-        cyrestActions_stopCyrestPolling={props.cyrestActions_stopCyrestPolling}
-
-        network_uuid={props.network_uuid}
       />
-      <OpenOriginalNetworkButton
-        network_uuid={props.network_uuid}
-      />
+      <OpenOriginalNetworkButton />
     </div>
   )
 }
@@ -174,4 +132,12 @@ NetworkToolbar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(NetworkToolbar)
+const mapStateToProps = state => {
+  return {
+    network_networkName: state.network.networkName
+  }
+}
+
+export default connect(
+  mapStateToProps
+) (withStyles(styles)(NetworkToolbar))
