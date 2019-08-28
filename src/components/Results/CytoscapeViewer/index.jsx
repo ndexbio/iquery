@@ -12,6 +12,7 @@ import {
   unselectEdges
 } from '../../../actions/network'
 import { clearSelectedGenes } from '../../../actions/search'
+import {debounce} from 'lodash'
 
 let cyInstance = null
 
@@ -70,6 +71,16 @@ const CytoscapeViewer = props => {
     })
 
     cyInstance.on('tap', 'node', function() {
+      const nodes = []
+      const selectedNodes = cyInstance.$('node:selected')
+      selectedNodes.forEach(element => {
+        if (element.data().name != '') {
+          nodes.push(element.data())
+        }
+      })
+      console.log('nodes: ' + nodes)
+      props.networkActions_selectNodes(nodes)
+
       try {
         cyInstance.nodes().removeClass('connected')
       } catch (e) {
@@ -78,6 +89,14 @@ const CytoscapeViewer = props => {
     })
 
     cyInstance.on('tap', 'edge', function() {
+      const edges = []
+      const selectedEdges = cyInstance.$('edge:selected')
+      selectedEdges.forEach(element => {
+        edges.push(element.data())
+      })
+      console.log('edges: ' + edges)
+      props.networkActions_selectEdges(edges)
+
       try {
         cyInstance.nodes().removeClass('connected')
         const selected = this.data()
@@ -87,21 +106,29 @@ const CytoscapeViewer = props => {
         console.warn(e)
       }
     })
+  
+    cyInstance.on('boxend', function() {
+      console.log('boxend')
+      const edges = []
+      const selectedEdges = cyInstance.$('edge:selected')
+      selectedEdges.forEach(element => {
+        edges.push(element.data())
+      })
+      console.log('edges: ' + edges)
+      props.networkActions_selectEdges(edges)
 
-    cyInstance.on('boxend', 'nodes', function() {
       const nodes = []
       const selectedNodes = cyInstance.$('node:selected')
-      
-      console.log('--- Selected nodes:', selectedNodes)
-      
       selectedNodes.forEach(element => {
         if (element.data().name != '') {
           nodes.push(element.data())
         }
       })
+      console.log('nodes: ' + nodes)
       props.networkActions_selectNodes(nodes)
     })
 
+    /*
     let nodeUnselectTimeout
     cyInstance.on('unselect', 'node', function() {
       clearTimeout(nodeUnselectTimeout)
@@ -142,6 +169,7 @@ const CytoscapeViewer = props => {
         props.networkActions_unselectEdges(edges)
       }, 1)
     })
+    */
 
     // Reset the UI state (hilight)
     props.uiStateActions_setHighlights(true)
