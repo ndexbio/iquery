@@ -12,7 +12,7 @@ import {
   unselectEdges
 } from '../../../actions/network'
 import { clearSelectedGenes } from '../../../actions/search'
-import {debounce} from 'lodash'
+import { debounce } from 'lodash'
 
 let cyInstance = null
 
@@ -106,16 +106,15 @@ const CytoscapeViewer = props => {
         console.warn(e)
       }
     })
-  
-    cyInstance.on('boxend', function() {
-      console.log('boxend')
+
+    const selection = () => {
       const edges = []
       const selectedEdges = cyInstance.$('edge:selected')
       selectedEdges.forEach(element => {
         edges.push(element.data())
       })
-      console.log('edges: ' + edges)
-      props.networkActions_selectEdges(edges)
+      console.log('edges: ', edges)
+      props.networkActions.selectEdges(edges)
 
       const nodes = []
       const selectedNodes = cyInstance.$('node:selected')
@@ -124,8 +123,14 @@ const CytoscapeViewer = props => {
           nodes.push(element.data())
         }
       })
-      console.log('nodes: ' + nodes)
-      props.networkActions_selectNodes(nodes)
+      console.log('nodes: ', nodes, selectedNodes)
+      props.networkActions.selectNodes(nodes)
+    }
+
+    cyInstance.on('boxend', function(event) {
+      setTimeout(() => {
+        selection()
+      }, 100)
     })
 
     /*
