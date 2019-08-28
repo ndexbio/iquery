@@ -21,7 +21,7 @@ const PRESET_LAYOUT = {
   padding: 6
 }
 
-const COCENTRIC_LAYOUT = {
+const CONCENTRIC_LAYOUT = {
   name: 'concentric',
   padding: 6,
   minNodeSpacing: 100
@@ -238,7 +238,7 @@ const CytoscapeViewer = props => {
 
   const numObjects = props.network_nodeCount + props.network_edgeCount
   if (numObjects > MAX_NETWORK_SIZE) {
-    return <Warning />
+    return <Warning handleImportNetwork={props.handleImportNetwork} />
   }
 
   const cyjs = props.network_network
@@ -257,8 +257,10 @@ const CytoscapeViewer = props => {
   let layout = PRESET_LAYOUT
   if (!isLayoutAvailable && cyjs.elements.length < 500) {
     layout = COSE_SETTING
+    console.log('cose')
   } else if (!isLayoutAvailable) {
-    layout = COCENTRIC_LAYOUT
+    layout = CONCENTRIC_LAYOUT
+    console.log('concentric')
   }
 
   if (cyInstance !== null) {
