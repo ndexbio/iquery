@@ -95,6 +95,12 @@ const findSort = (sortOrder) => {
 const NetworkList = props => {
   const hits = props.hits
   
+  const openFirst = (first) => {
+    if (first != null) {
+      console.log(first)
+      props.handleFetch(first.networkUUID, first.description, first.nodes, first.edges, first.hitGenes)
+    }
+  }
 
   //Sort hits
   useEffect(() => {
@@ -102,7 +108,14 @@ const NetworkList = props => {
     console.log(props.uiState_sortOrder)
     const newHits = hits.sort(sortFunction)
     props.searchActions_setActualResults(newHits)
+    openFirst(newHits[0])
+    props.networkActions_changeListIndex(1)
   }, [props.uiState_sortOrder, props.uiState_selectedSource])
+
+  useEffect(() => {
+    //Open first hit
+    openFirst()
+  }, [props.uiState_selectedSource])
   
   if (!hits) {
     return <div className="network-list-wrapper" />
@@ -126,14 +139,14 @@ const NetworkList = props => {
     selectedIndex, 
     index++))
 */
-let result = props.search_actualResults
+
   if (props.search_actualResults.length > 0) {
     return (
       <div className="network-list-wrapper">
         <SortPanel />
         <div className="network-list">
           <MenuList className={props.classes.noPadding}>
-            {result.map(entry => props.renderNetworkListItem(
+            {props.search_actualResults.map(entry => props.renderNetworkListItem(
               query.size, 
               entry, 
               props.classes, 
@@ -174,7 +187,7 @@ const mapStateToProps = state => {
     search_actualResults: state.search.actualResults,
 
     //Necessary to make sure component updates when order of actualResults changes
-    first: state.search.actualResults[0]
+    search_actualResults_0: state.search.actualResults[0]
   }
 }
 

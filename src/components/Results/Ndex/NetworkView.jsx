@@ -36,6 +36,7 @@ const NetworkView = props => {
       >
         <NetworkViewer
           resized={resized}
+          handleImportNetwork={props.handleImportNetwork} 
         />
         <TableBrowser />
       </Split>

@@ -15,6 +15,7 @@ const NetworkViewer = props => (
     ) : (
       <CytoscapeViewer 
         resized={props.resized}
+        handleImportNetwork={props.handleImportNetwork} 
       />
     )}
   </div>
