@@ -118,7 +118,7 @@ const Ndex = props => {
     let bottomDescription2 = ''
     const pVal = details.PValue
     if (pVal !== undefined) {
-      let pValText = pVal.toExponential(5)
+      let pValText = pVal.toExponential(2)
       if (pVal === 0) {
         pValText = 0
       }
@@ -126,7 +126,6 @@ const Ndex = props => {
     }
 
     return (
-      //<MenuItem>
       <ListItem
         button
         className={classes.menuItem}
@@ -177,6 +176,7 @@ const Ndex = props => {
     <Split sizes={[35, 65]} gutterSize={7} className="ndex-base">
       <NetworkList 
         renderNetworkListItem={renderNetworkListItem} 
+        handleFetch={handleFetch}
         hits={props.hits}
       />
       <NetworkView 
