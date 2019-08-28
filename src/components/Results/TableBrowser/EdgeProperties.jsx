@@ -4,14 +4,13 @@ import parse from 'html-react-parser'
 import isEqual from 'lodash.isequal'
 import { connect } from 'react-redux'
 
-
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
+import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, withStyles } from '@material-ui/styles'
 
@@ -23,7 +22,7 @@ let index = 0
 const useStyles = makeStyles(theme => ({
   padding: {
     paddingTop: '0',
-    paddingBottom: '0',
+    paddingBottom: '0'
   },
   center: {
     justifyContent: 'center',
@@ -50,17 +49,17 @@ const ExpansionPanel = withStyles({
     borderBottom: '1px solid rgba(239, 239, 239, 1)',
     boxShadow: 'none',
     '&:not(:last-child)': {
-      borderBottom: 0,
+      borderBottom: 0
     },
     '&:before': {
-      display: 'none',
+      display: 'none'
     },
     '&$expanded': {
-      margin: 'auto',
-    },
+      margin: 'auto'
+    }
   },
-  expanded: {},
-})(MuiExpansionPanel);
+  expanded: {}
+})(MuiExpansionPanel)
 
 const ExpansionPanelSummary = withStyles({
   root: {
@@ -70,16 +69,16 @@ const ExpansionPanelSummary = withStyles({
     marginBottom: -1,
     minHeight: 35,
     '&$expanded': {
-      minHeight: 35,
-    },
+      minHeight: 35
+    }
   },
   content: {
     '&$expanded': {
-      margin: '12px 0',
-    },
+      margin: '12px 0'
+    }
   },
-  expanded: {},
-})(MuiExpansionPanelSummary);
+  expanded: {}
+})(MuiExpansionPanelSummary)
 
 const EdgeProperties = props => {
   const classes = useStyles()
@@ -108,10 +107,7 @@ const EdgeProperties = props => {
     'Id'
   ]
 
-  const displayItems = [
-    entityProperties,
-    edgeProperties
-  ]
+  const displayItems = [entityProperties, edgeProperties]
 
   //Find sources and targets
   edges.forEach(edge => {
@@ -162,8 +158,8 @@ const EdgeProperties = props => {
   sortedEdges.forEach(edge => {
     //Filter properties
     const attributes = []
-    let content;
-    let title;
+    let content
+    let title
     for (let key in edge) {
       content = extractContent(edge[key])
       title = extractTitle(key)
@@ -171,7 +167,8 @@ const EdgeProperties = props => {
         !title.startsWith('__') &&
         content != null &&
         content !== 'null' &&
-        content !== '') {
+        content !== ''
+      ) {
         attributes.push({
           title: camelCaseToTitleCase(title),
           content: content,
@@ -192,24 +189,18 @@ const EdgeProperties = props => {
           return entry.title === element
         })[0]
         if (currentEntry != null && currentEntry.content != null) {
-          primaryString += 
-            currentEntry.title + 
-            ": " +
-            currentEntry.content +
-            "<br>"
+          primaryString +=
+            currentEntry.title + ': ' + currentEntry.content + '<br>'
           currentEntry.displayed = true
         }
       })
       primaryString = formatPrimary(primaryString)
       if (primaryString != '') {
-        switch(list) {
+        switch (list) {
           case entityProperties:
             secondaryString = 'Entity Properties'
             displayCol1.push(
-              <ListItem 
-                key={index++} 
-                className={classes.listPadding}
-              >
+              <ListItem key={index++} className={classes.listPadding}>
                 <ListItemText
                   inset={false}
                   primary={
@@ -218,22 +209,20 @@ const EdgeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2">
-                          {primaryString}
-                        </Typography>
+                        <Typography variant="body2">{primaryString}</Typography>
                       </div>
                     </React.Fragment>
                   }
                 />
               </ListItem>
             )
-          break
+            break
           case edgeProperties:
             secondaryString = 'Edge Properties'
             displayCol2.push(
-              <ListItem 
-                key={index++} 
-                className={classes.listPadding} 
+              <ListItem
+                key={index++}
+                className={classes.listPadding}
                 disableGutters={true}
               >
                 <ListItemText
@@ -243,16 +232,14 @@ const EdgeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2">
-                          {primaryString}
-                        </Typography>
+                        <Typography variant="body2">{primaryString}</Typography>
                       </div>
                     </React.Fragment>
                   }
                 />
               </ListItem>
             )
-          break
+            break
         }
       }
     })
@@ -260,23 +247,16 @@ const EdgeProperties = props => {
     primaryString = ''
     attributes.forEach(entry => {
       if (!entry.displayed) {
-        primaryString +=
-          entry.title +
-          ": " +
-          entry.content +
-          "<br>"
+        primaryString += entry.title + ': ' + entry.content + '<br>'
         entry.displayed = true
       }
     })
     primaryString = formatPrimary(primaryString)
-    secondaryString = "Additional properties"
+    secondaryString = 'Additional properties'
 
     if (primaryString != '') {
       displayCol1.push(
-        <ListItem 
-          key={index++} c
-          lassName={classes.listPadding}
-        >
+        <ListItem key={index++} c lassName={classes.listPadding}>
           <ListItemText
             inset={false}
             primary={
@@ -285,9 +265,7 @@ const EdgeProperties = props => {
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography variant="body2">
-                    {primaryString}
-                  </Typography>
+                  <Typography variant="body2">{primaryString}</Typography>
                 </div>
               </React.Fragment>
             }
@@ -297,11 +275,7 @@ const EdgeProperties = props => {
     }
 
     topDisplay.push(
-      <ListItem 
-        key={edge.id} 
-        disableGutters={true} 
-        className={classes.padding}
-      >
+      <ListItem key={edge.id} disableGutters={true} className={classes.padding}>
         <ListItemText
           className={classes.wideList}
           primary={
@@ -309,24 +283,16 @@ const EdgeProperties = props => {
               defaultExpanded={defaultExpanded}
               setDefaultExpanded={setDefaultExpanded}
             >
-              <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon/>}
-              >
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography variant="body2">
-                  {edge.source + " -> " + edge.target}
+                  {edge.source + ' -> ' + edge.target}
                 </Typography>
               </ExpansionPanelSummary>
-              <ExpansionPanelDetails
-                className={classes.noPadding}
-              >
+              <ExpansionPanelDetails className={classes.noPadding}>
                 <table className={classes.table}>
                   <tr>
-                    <td valign={'top'}>
-                      {displayCol1}
-                    </td>
-                    <td valign={'top'}>
-                      {displayCol2}
-                    </td>
+                    <td valign={'top'}>{displayCol1}</td>
+                    <td valign={'top'}>{displayCol2}</td>
                   </tr>
                 </table>
               </ExpansionPanelDetails>
@@ -340,7 +306,7 @@ const EdgeProperties = props => {
   //Don't return nothing
   if (topDisplay.length == 0) {
     return (
-      <div className={"outer-rectangle"}>
+      <div className={'outer-rectangle'}>
         <div className={classes.center}>
           <Typography variant="subtitle1" color="textSecondary">
             Select an edge to view edge properties
@@ -353,11 +319,9 @@ const EdgeProperties = props => {
       setDefaultExpanded(true)
     }
     return (
-      <div className={"outer-rectangle"}>
+      <div className={'outer-rectangle'}>
         <div className={'inner-rectangle'}>
-          <List className={classes.padding}>
-            {topDisplay}
-          </List>
+          <List className={classes.padding}>{topDisplay}</List>
         </div>
       </div>
     )
@@ -366,20 +330,16 @@ const EdgeProperties = props => {
       setDefaultExpanded(false)
     }
     return (
-      <div className={"outer-rectangle"}>
+      <div className={'outer-rectangle'}>
         <div className={'inner-rectangle'}>
           <div>
-            <List className={classes.padding}>
-              {topDisplay}
-            </List>
+            <List className={classes.padding}>{topDisplay}</List>
           </div>
         </div>
       </div>
     )
   }
 }
-
-
 
 const extractContent = entry => {
   if (entry == null) {
@@ -412,16 +372,20 @@ const formatPrimary = entry => {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
   modifiedText = parse(camelCaseToTitleCase(modifiedText))
-  return <Linkify key={'link' + index++} newTab={true}>{modifiedText}</Linkify>
+  return (
+    <Linkify key={'link' + index++} newTab={true}>
+      {modifiedText}
+    </Linkify>
+  )
 }
 
 const findNode = (nodeId, nodeArray) => {
   if (isNaN(nodeId) || nodeId === '') {
     return nodeId
   }
-  return nodeArray.filter(item => (
-    item['@id'].toString() === nodeId.toString()
-  ))[0].n
+  return nodeArray.filter(
+    item => item['@id'].toString() === nodeId.toString()
+  )[0].n
 }
 
 /*
@@ -436,6 +400,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(
-  mapStateToProps
-) (EdgeProperties)
+export default connect(mapStateToProps)(EdgeProperties)

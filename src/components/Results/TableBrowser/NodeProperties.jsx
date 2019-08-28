@@ -7,10 +7,10 @@ import { connect } from 'react-redux'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
+import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, withStyles } from '@material-ui/styles'
 
@@ -24,7 +24,7 @@ let index = 0
 const useStyles = makeStyles(theme => ({
   noPadding: {
     paddingTop: '0',
-    paddingBottom: '0',
+    paddingBottom: '0'
   },
   center: {
     justifyContent: 'center',
@@ -55,17 +55,17 @@ const ExpansionPanel = withStyles({
     borderBottom: '1px solid rgba(239, 239, 239, 1)',
     boxShadow: 'none',
     '&:not(:last-child)': {
-      borderBottom: 0,
+      borderBottom: 0
     },
     '&:before': {
-      display: 'none',
+      display: 'none'
     },
     '&$expanded': {
-      margin: 'auto',
-    },
+      margin: 'auto'
+    }
   },
-  expanded: {},
-})(MuiExpansionPanel);
+  expanded: {}
+})(MuiExpansionPanel)
 
 const ExpansionPanelSummary = withStyles({
   root: {
@@ -75,16 +75,16 @@ const ExpansionPanelSummary = withStyles({
     marginBottom: -1,
     minHeight: 35,
     '&$expanded': {
-      minHeight: 35,
-    },
+      minHeight: 35
+    }
   },
   content: {
     '&$expanded': {
-      margin: '12px 0',
-    },
+      margin: '12px 0'
+    }
   },
-  expanded: {},
-})(MuiExpansionPanelSummary);
+  expanded: {}
+})(MuiExpansionPanelSummary)
 
 const NodeProperties = props => {
   const classes = useStyles()
@@ -92,12 +92,7 @@ const NodeProperties = props => {
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
-  const entityProperties = [
-    'Name',
-    'HGNC',
-    'Ensembl',
-    'Type',
-  ]
+  const entityProperties = ['Name', 'HGNC', 'Ensembl', 'Type']
 
   const nodeProperties = [
     'Height',
@@ -114,10 +109,7 @@ const NodeProperties = props => {
     'Id'
   ]
 
-  const displayItems = [
-    entityProperties,
-    nodeProperties
-  ]
+  const displayItems = [entityProperties, nodeProperties]
 
   const sortedNodes = nodes.sort((a, b) => {
     if (a.name.toUpperCase() > b.name.toUpperCase()) {
@@ -129,11 +121,10 @@ const NodeProperties = props => {
 
   const topDisplay = []
   sortedNodes.forEach(node => {
-  
     //Filter properties
     const attributes = []
-    let content;
-    let title;
+    let content
+    let title
     let geneAnnotation = null
     let inset = false
     if (
@@ -145,14 +136,14 @@ const NodeProperties = props => {
         <tr>
           <td colSpan={2} valign={'top'}>
             <List className={classes.noPadding}>
-              <ListItem 
-                key={index++} 
-                className={classes.lessListPadding} 
+              <ListItem
+                key={index++}
+                className={classes.lessListPadding}
                 disableGutters={true}
               >
-                <GeneAnnotationList 
+                <GeneAnnotationList
                   search_results={props.search_results}
-                  geneSymbol={node.name} 
+                  geneSymbol={node.name}
                 />
               </ListItem>
             </List>
@@ -167,7 +158,8 @@ const NodeProperties = props => {
         !title.startsWith('__') &&
         content != null &&
         content !== 'null' &&
-        content !== '') {
+        content !== ''
+      ) {
         attributes.push({
           title: camelCaseToTitleCase(title),
           content: content,
@@ -188,24 +180,18 @@ const NodeProperties = props => {
           return entry.title === element
         })[0]
         if (currentEntry != null && currentEntry.content != null) {
-          primaryString += 
-            currentEntry.title + 
-            ": " +
-            currentEntry.content +
-            "<br>"
+          primaryString +=
+            currentEntry.title + ': ' + currentEntry.content + '<br>'
           currentEntry.displayed = true
         }
       })
       primaryString = formatPrimary(primaryString)
       if (primaryString != '') {
-        switch(list) {
+        switch (list) {
           case entityProperties:
             secondaryString = 'Entity Properties'
             displayCol1.push(
-              <ListItem 
-                key={index++} 
-                className={classes.listPadding}
-              >
+              <ListItem key={index++} className={classes.listPadding}>
                 <ListItemText
                   inset={inset}
                   primary={
@@ -214,22 +200,20 @@ const NodeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2">
-                          {primaryString}
-                        </Typography>
+                        <Typography variant="body2">{primaryString}</Typography>
                       </div>
                     </React.Fragment>
                   }
                 />
               </ListItem>
             )
-          break
+            break
           case nodeProperties:
             secondaryString = 'Node Properties'
             displayCol2.push(
-              <ListItem 
-                key={index++} 
-                className={classes.listPadding} 
+              <ListItem
+                key={index++}
+                className={classes.listPadding}
                 disableGutters={true}
               >
                 <ListItemText
@@ -239,16 +223,14 @@ const NodeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2">
-                          {primaryString}
-                        </Typography>
+                        <Typography variant="body2">{primaryString}</Typography>
                       </div>
                     </React.Fragment>
                   }
                 />
               </ListItem>
             )
-          break
+            break
         }
       }
     })
@@ -256,23 +238,16 @@ const NodeProperties = props => {
     primaryString = ''
     attributes.forEach(entry => {
       if (!entry.displayed) {
-        primaryString +=
-          entry.title +
-          ": " +
-          entry.content +
-          "<br>"
+        primaryString += entry.title + ': ' + entry.content + '<br>'
         entry.displayed = true
       }
     })
     primaryString = formatPrimary(primaryString)
-    secondaryString = "Additional properties"
+    secondaryString = 'Additional properties'
 
     if (primaryString != '') {
       displayCol1.push(
-        <ListItem 
-          key={index++} 
-          className={classes.listPadding}
-        >
+        <ListItem key={index++} className={classes.listPadding}>
           <ListItemText
             inset={inset}
             primary={
@@ -281,9 +256,7 @@ const NodeProperties = props => {
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography variant="body2">
-                    {primaryString}
-                  </Typography>
+                  <Typography variant="body2">{primaryString}</Typography>
                 </div>
               </React.Fragment>
             }
@@ -291,39 +264,29 @@ const NodeProperties = props => {
         </ListItem>
       )
     }
-  
+
     topDisplay.push(
-      <ListItem 
-        key={node.id} 
-        disableGutters={true} 
+      <ListItem
+        key={node.id}
+        disableGutters={true}
         className={classes.noPadding}
       >
         <ListItemText
           className={classes.wideList}
           primary={
-            <ExpansionPanel 
+            <ExpansionPanel
               defaultExpanded={defaultExpanded}
               setDefaultExpanded={setDefaultExpanded}
             >
-              <ExpansionPanelSummary 
-                expandIcon={<ExpandMoreIcon/>}
-              >
-                <Typography variant="body2">
-                  {node.name}
-                </Typography>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant="body2">{node.name}</Typography>
               </ExpansionPanelSummary>
-              <ExpansionPanelDetails 
-                className={classes.noPadding}
-              >
+              <ExpansionPanelDetails className={classes.noPadding}>
                 <table className={classes.table}>
                   {geneAnnotation}
                   <tr>
-                    <td valign={'top'}>
-                      {displayCol1}
-                    </td>
-                    <td valign={'top'}>
-                      {displayCol2}
-                    </td>
+                    <td valign={'top'}>{displayCol1}</td>
+                    <td valign={'top'}>{displayCol2}</td>
                   </tr>
                 </table>
               </ExpansionPanelDetails>
@@ -337,7 +300,7 @@ const NodeProperties = props => {
   //Don't return nothing
   if (topDisplay.length == 0) {
     return (
-      <div className={"outer-rectangle"}>
+      <div className={'outer-rectangle'}>
         <div className={classes.center}>
           <Typography color="textSecondary" variant="subtitle1">
             Select a node to view node properties
@@ -350,11 +313,9 @@ const NodeProperties = props => {
       setDefaultExpanded(true)
     }
     return (
-      <div className={"outer-rectangle"}>
+      <div className={'outer-rectangle'}>
         <div className={'inner-rectangle'}>
-          <List className={classes.noPadding}>
-            {topDisplay}
-          </List>
+          <List className={classes.noPadding}>{topDisplay}</List>
         </div>
       </div>
     )
@@ -363,20 +324,16 @@ const NodeProperties = props => {
       setDefaultExpanded(false)
     }
     return (
-      <div className={"outer-rectangle"}>
+      <div className={'outer-rectangle'}>
         <div className={'inner-rectangle'}>
           <div>
-            <List className={classes.noPadding}>
-              {topDisplay}
-            </List>
+            <List className={classes.noPadding}>{topDisplay}</List>
           </div>
         </div>
       </div>
     )
   }
 }
-
-
 
 const extractContent = entry => {
   if (entry == null) {
@@ -409,7 +366,11 @@ const formatPrimary = entry => {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
   modifiedText = parse(camelCaseToTitleCase(modifiedText))
-  return <Linkify key={'link' + index++} newTab={true}>{modifiedText}</Linkify>
+  return (
+    <Linkify key={'link' + index++} newTab={true}>
+      {modifiedText}
+    </Linkify>
+  )
 }
 
 /*const MemoNodeProperties = React.memo(NodeProperties, (prevProps, newProps) => {
@@ -423,6 +384,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(
-  mapStateToProps
-) (NodeProperties)
+export default connect(mapStateToProps)(NodeProperties)
