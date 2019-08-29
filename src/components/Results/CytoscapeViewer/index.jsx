@@ -59,33 +59,41 @@ const CytoscapeViewer = props => {
       }
     })
 
-    cyInstance.on('tap', 'node', function() {
-      const nodes = []
-      const selectedNodes = cyInstance.$('node:selected')
-      selectedNodes.forEach(element => {
-        if (element.data().name != '') {
-          nodes.push(element.data())
-        }
-      })
-      console.log('nodes: ' + nodes)
-      props.networkActions.selectNodes(nodes)
+    const selectEdge = () => {
+      setTimeout(() => {
+        const edges = []
+        const selectedEdges = cyInstance.$('edge:selected')
+        selectedEdges.forEach(element => {
+          edges.push(element.data())
+        })
+        props.networkActions.selectEdges(edges)
+      }, 10) 
+    }
 
+    const selectNode = () => {
+      setTimeout(() => {
+        const nodes = []
+        const selectedNodes = cyInstance.$('node:selected')
+        selectedNodes.forEach(element => {
+          if (element.data().name != '') {
+            nodes.push(element.data())
+          }
+        })
+        console.log('nodes: ', nodes, selectedNodes)
+        props.networkActions.selectNodes(nodes)
+      }, 10) 
+    }
+
+    cyInstance.on('tap', 'node', function() {
       try {
         cyInstance.nodes().removeClass('connected')
       } catch (e) {
         console.warn(e)
       }
+      selectNode()
     })
 
     cyInstance.on('tap', 'edge', function() {
-      const edges = []
-      const selectedEdges = cyInstance.$('edge:selected')
-      selectedEdges.forEach(element => {
-        edges.push(element.data())
-      })
-      console.log('edges: ' + edges)
-      props.networkActions.selectEdges(edges)
-
       try {
         cyInstance.nodes().removeClass('connected')
         const selected = this.data()
@@ -94,32 +102,14 @@ const CytoscapeViewer = props => {
       } catch (e) {
         console.warn(e)
       }
+      selectEdge()
     })
 
-    const selection = () => {
-      const edges = []
-      const selectedEdges = cyInstance.$('edge:selected')
-      selectedEdges.forEach(element => {
-        edges.push(element.data())
-      })
-      console.log('edges: ', edges)
-      props.networkActions.selectEdges(edges)
-
-      const nodes = []
-      const selectedNodes = cyInstance.$('node:selected')
-      selectedNodes.forEach(element => {
-        if (element.data().name != '') {
-          nodes.push(element.data())
-        }
-      })
-      console.log('nodes: ', nodes, selectedNodes)
-      props.networkActions.selectNodes(nodes)
-    }
+    
 
     cyInstance.on('boxend', function(event) {
-      setTimeout(() => {
-        selection()
-      }, 100)
+      selectEdge()
+      selectNode()
     })
 
     // Reset the UI state (hilight)
