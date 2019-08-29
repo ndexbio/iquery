@@ -6,16 +6,16 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
 import HelpIcon from '@material-ui/icons/Help'
 import Tooltip from '@material-ui/core/Tooltip'
 
 import classNames from 'classnames'
 
-import logo from '../../assets/images/ndex-logo-mono.svg'
-import cytoLogo from '../../assets/images/cytoscape-logo-mono.svg'
-import nrnbLogo from '../../assets/images/nrnb-logo.svg'
-import wpLogo from '../../assets/images/wp-logo.svg'
+import logo from '../../assets/images/ndex-logo-mono-dark.svg'
+import cytoLogo from '../../assets/images/cytoscape-logo-mono-dark.svg'
+import nrnbLogo from '../../assets/images/nrnb-logo-mono-dark.svg'
+import wpLogo from '../../assets/images/wp-logo-mono-dark.svg'
+import idekerLogo from '../../assets/images/ideker-logo-mono-dark.svg'
 import HomeIcon from '@material-ui/icons/Home'
 
 import GeneTextBox from './GeneTextBox'
@@ -130,6 +130,15 @@ class TitleBar extends React.Component {
               </IconButton>
             </Tooltip>
 
+            <Tooltip title="Ideker Lab" placement="bottom">
+              <IconButton
+                color='default'
+                onClick={() => openLink(IL_URL)}
+              >
+                <img alt="Ideker Lab Logo" src={idekerLogo} className={classes.logo} />
+              </IconButton>
+            </Tooltip>
+
             <Tooltip title="NDEx" placement="bottom">
               <IconButton
                 color="default"
@@ -180,6 +189,7 @@ const NDEX_URL = 'https://www.ndexbio.org/'
 const CYTOSCAPE_URL = 'https://cytoscape.org/'
 const NRNB_URL = 'https://nrnb.org/'
 const WP_URL = 'https://www.wikipathways.org/'
+const IL_URL = 'http://idekerlab.ucsd.edu/'
 
 const openLink = url => {
   window.open(url, '_blank')
