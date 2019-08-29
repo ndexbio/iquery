@@ -14,16 +14,13 @@ import {
   unselectEdges,
   deselectAll,
   changeTab,
-  changeListIndex
+  changeListIndex,
+  fitNetworkView
 } from '../actions/network'
 
-import {
-  setZoomed
-} from '../actions/uiState'
+import { setZoomed } from '../actions/uiState'
 
-import {
-  clearSelectedGenes
-} from '../actions/search'
+import { clearSelectedGenes } from '../actions/search'
 
 const LAYOUT_SCALING_FACTOR = 2.0
 
@@ -43,7 +40,8 @@ const defaultState = {
   selectedNodes: [],
   selectedEdges: [],
   tableDisplayTab: 0,
-  listIndex: 0
+  listIndex: 0,
+  fit: false
 }
 
 const utils = new CyNetworkUtils()
@@ -148,7 +146,7 @@ const network = handleActions(
         originalCX,
         network,
         backgroundColor,
-        isFetching: false,
+        isFetching: false
       }
     },
     [networkFetchFailed]: (state, payload) => {
@@ -187,7 +185,7 @@ const network = handleActions(
         selectedNodes: payload.payload
       }
     },
-    [selectEdges]: (state, payload) => {     
+    [selectEdges]: (state, payload) => {
       return {
         ...state,
         tableDisplayTab: 2,
@@ -201,15 +199,16 @@ const network = handleActions(
       }
     },
     [deselectAll]: (state, payload) => {
-      return { 
+      return {
         ...state,
         tableDisplayTab: 0,
-        selectedNodes: [], 
-        selectedEdges: [] }
+        selectedNodes: [],
+        selectedEdges: []
+      }
     },
     [changeTab]: (state, payload) => {
       return {
-        ...state, 
+        ...state,
         tableDisplayTab: payload.payload
       }
     },
@@ -217,6 +216,13 @@ const network = handleActions(
       return {
         ...state,
         listIndex: payload.payload
+      }
+    },
+    [fitNetworkView]: (state, payload) => {
+      console.log('Fit network called:', payload.payload)
+      return {
+        ...state,
+        fit: payload.payload
       }
     }
   },

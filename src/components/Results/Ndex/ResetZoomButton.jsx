@@ -11,7 +11,7 @@ import disabledLogo from '../../../assets/images/zoom-logo-mono.svg'
 const styles = theme => ({
   buttonIcon: {
     height: '1.75em'
-  },
+  }
 })
 
 const BootstrapButton = withStyles({
@@ -25,9 +25,9 @@ const BootstrapButton = withStyles({
     '&:active': {
       borderColor: '#000000',
       color: '#000000'
-    },
-  },
-})(Button);
+    }
+  }
+})(Button)
 
 const ResetZoomButton = props => {
   const { classes } = props
@@ -35,22 +35,26 @@ const ResetZoomButton = props => {
   const disabled = !(props.network.uuid && props.network.uuid.length > 0)
 
   const handleClick = () => {
-    props.uiStateActions.setZoomed(true)
+    props.networkActions.fitNetworkView(true)
   }
 
   return (
-    <Tooltip title="Zoom out" placement="bottom">
+    <Tooltip title="Fit network to panel" placement="bottom">
       <div>
         <BootstrapButton
           variant="outlined"
           disabled={disabled}
           onClick={handleClick}
         >
-          <img alt="Zoom logo" src={disabled ? disabledLogo : logo} className={classes.buttonIcon} />
+          <img
+            alt="Zoom logo"
+            src={disabled ? disabledLogo : logo}
+            className={classes.buttonIcon}
+          />
         </BootstrapButton>
       </div>
     </Tooltip>
   )
 }
 
-export default (withStyles(styles)(ResetZoomButton))
+export default withStyles(styles)(ResetZoomButton)

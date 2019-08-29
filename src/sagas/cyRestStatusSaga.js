@@ -25,7 +25,7 @@ export function* _fetchCyRESTAvailable(action) {
       //console.log(e)
       yield put({ type: SET_AVAILABLE, payload: false })
     }
-    yield call(delay, 5000)
+    yield call(delay, 20000)
   }
 }
 

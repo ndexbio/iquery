@@ -39,7 +39,8 @@ export const MAX_NETWORK_SIZE = 5000
  * @constructor
  */
 const CytoscapeViewer = props => {
-  const highlights = props.uiState.highlights
+  const { highlights } = props.uiState
+  const { fit } = props.network
 
   useEffect(() => {
     if (cyInstance === undefined || cyInstance === null) {
@@ -67,7 +68,7 @@ const CytoscapeViewer = props => {
           edges.push(element.data())
         })
         props.networkActions.selectEdges(edges)
-      }, 10) 
+      }, 10)
     }
 
     const selectNode = () => {
@@ -81,7 +82,7 @@ const CytoscapeViewer = props => {
         })
         console.log('nodes: ', nodes, selectedNodes)
         props.networkActions.selectNodes(nodes)
-      }, 10) 
+      }, 10)
     }
 
     cyInstance.on('tap', 'node', function() {
@@ -104,8 +105,6 @@ const CytoscapeViewer = props => {
       }
       selectEdge()
     })
-
-    
 
     cyInstance.on('boxend', function(event) {
       selectEdge()
@@ -161,21 +160,19 @@ const CytoscapeViewer = props => {
     }
   }, [props.search.selectedGenes])
 
+
   useEffect(() => {
     if (cyInstance === undefined || cyInstance === null) {
       return
     }
-
-    const zoom = props.uiState.zoomed
-    if (zoom === null || zoom === undefined) {
-      return
+    if (fit) {
+      console.log('fit effect:', fit)
+      cyInstance.fit()
+      setTimeout(() => {
+        props.networkActions.fitNetworkView(false)
+      }, 1000)
     }
-
-    if (zoom) {
-      props.searchActions.clearSelectedGenes()
-      props.uiStateActions.setZoomed(false)
-    }
-  }, [props.uiState.zoomed])
+  }, [fit])
 
   const numObjects = props.network.nodeCount + props.network.edgeCount
   if (numObjects > MAX_NETWORK_SIZE) {
@@ -198,10 +195,8 @@ const CytoscapeViewer = props => {
   let layout = PRESET_LAYOUT
   if (!isLayoutAvailable && cyjs.elements.length < 500) {
     layout = COSE_SETTING
-    console.log('cose')
   } else if (!isLayoutAvailable) {
     layout = CONCENTRIC_LAYOUT
-    console.log('concentric')
   }
 
   if (cyInstance !== null) {
@@ -230,4 +225,4 @@ const CytoscapeViewer = props => {
   )
 }
 
-export default (CytoscapeViewer)
+export default CytoscapeViewer

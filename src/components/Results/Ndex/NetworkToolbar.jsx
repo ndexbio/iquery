@@ -15,7 +15,6 @@ import NDExSignInModal from '../../NDExSignInModal'
 import NDExSave from '../../NDExSave'
 import OpenOriginalNetworkButton from './OpenOriginalNetworkButton'
 
-
 const styles = theme => ({
   toolbar: {
     background: '#EFEFEF',
@@ -115,13 +114,11 @@ const NetworkToolbar = props => {
       <div className={classes.grow} />
       <ResetZoomButton {...other} />
       <Highlighter {...other} />
-      <NDExSignInModal {...other} >
+      <NDExSignInModal {...other}>
         <NDExSave {...other} />
       </NDExSignInModal>
       <OpenInNDExButton {...other} />
-      <OpenInCytoscapeButton
-        {...other}
-      />
+      <OpenInCytoscapeButton {...other} />
       <OpenOriginalNetworkButton {...other} />
     </div>
   )
@@ -131,4 +128,4 @@ NetworkToolbar.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default (withStyles(styles)(NetworkToolbar))
+export default withStyles(styles)(NetworkToolbar)

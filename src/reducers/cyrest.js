@@ -52,11 +52,9 @@ const source = handleActions(
       return { ...state, port: payload.payload }
     },
     [fetchAvailable]: (state, payload) => {
-      console.log('CyREST available = ', payload.payload)
       return { ...state, available: null, isFetchingAvailable: true }
     },
     [setAvailable]: (state, payload) => {
-      console.log('CyREST available = ', payload.payload)
       return {
         ...state,
         available: payload.payload,

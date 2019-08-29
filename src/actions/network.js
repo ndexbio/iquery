@@ -14,6 +14,8 @@ export const DESELECT_ALL = 'DESELECT_ALL'
 export const CHANGE_TAB = 'CHANGE_TAB'
 export const CHANGE_LIST_INDEX = 'CHANGE_LIST_INDEX'
 
+export const FIT_NETWORK_VIEW = 'FIT_NETWORK_VIEW'
+
 export const networkFetchStarted = createAction(NETWORK_FETCH_STARTED)
 export const networkFetchSucceeded = createAction(NETWORK_FETCH_SUCCEEDED)
 export const networkFetchFailed = createAction(NETWORK_FETCH_FAILED)
@@ -28,3 +30,5 @@ export const unselectEdges = createAction(UNSELECT_EDGES)
 export const deselectAll = createAction(DESELECT_ALL)
 export const changeTab = createAction(CHANGE_TAB)
 export const changeListIndex = createAction(CHANGE_LIST_INDEX)
+
+export const fitNetworkView = createAction(FIT_NETWORK_VIEW)
