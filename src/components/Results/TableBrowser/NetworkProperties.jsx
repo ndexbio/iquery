@@ -1,5 +1,6 @@
 import React from 'react'
 import Split from 'react-split'
+import {isEqual} from 'lodash'
 
 import { makeStyles, withStyles } from '@material-ui/styles'
 import ListItem from '@material-ui/core/ListItem'
@@ -294,23 +295,18 @@ const NetworkProperties = props => {
 
   //Display panes
   return (
-
-      <Split sizes={[70, 30]} gutterSize={7} className="network-info">
-        <div className={'network-info-panel'}>
-          <List className={classes.lessPadding}>
-            
-              {leftDisplay}
-            
-          </List>
-        </div>
-        <div className={'network-info-panel'}>
-          <List className={classes.lessPadding}>
-            
-              {rightDisplay}
-            
-          </List>
-        </div>
-      </Split>
+    <Split sizes={[70, 30]} gutterSize={7} className="network-info">
+      <div className={'network-info-panel'}>
+        <List className={classes.lessPadding}>
+          {leftDisplay}
+        </List>
+      </div>
+      <div className={'network-info-panel'}>
+        <List className={classes.lessPadding}>
+          {rightDisplay}
+        </List>
+      </div>
+    </Split>
   )
 }
 
@@ -355,7 +351,7 @@ const formatPrimary = entry => {
 const formatContext = entry => {
   const elements = entry.split(',')
   let splitResults
-  let result = '<table>'
+  let result = '<table><tbody>'
   elements.forEach(item => {
     splitResults = item.split("\"")
     result += 
@@ -365,8 +361,12 @@ const formatContext = entry => {
       splitResults [3] +
       '</td></tr>'    
   })
-  result += '</table>'
+  result += '</tbody></table>'
   return formatPrimary(result)
 }
 
-export default (NetworkProperties)
+const MemoNetworkProperties = React.memo(NetworkProperties, (prevProps, newProps) => {
+  return true
+})
+
+export default (MemoNetworkProperties)

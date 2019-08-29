@@ -1,13 +1,14 @@
 import React from 'react'
+import {isEqual} from 'lodash'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { makeStyles } from '@material-ui/styles'
 
-import NetworkProperties from './NetworkProperties'
-import NodeProperties from './NodeProperties'
-import EdgeProperties from './EdgeProperties'
+import MemoNetworkProperties from './NetworkProperties'
+import MemoNodeProperties from './NodeProperties'
+import MemoEdgeProperties from './EdgeProperties'
 
-
+let update = 0
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -31,15 +32,15 @@ const TabContent = props => {
   const { value } = props
   if (value === 0) {
     return (
-      <NetworkProperties {...props}/>
+      <MemoNetworkProperties {...props}/>
     )
   } else if (value === 1) {
     return (
-      <NodeProperties {...props}/>
+      <MemoNodeProperties {...props}/>
     )
   } else {
     return (
-      <EdgeProperties {...props} />
+      <MemoEdgeProperties {...props} />
     )
   }
 }
@@ -112,4 +113,8 @@ const TableBrowserPanel = props => {
   )
 }
 
-export default (TableBrowserPanel)
+const MemoTableBrowserPanel = TableBrowserPanel/*React.memo(TableBrowserPanel, (prevProps, newProps) => {
+  return isEqual(prevProps.network.tableDisplayTab, newProps.network.tableDisplayTab)
+})*/
+
+export default (MemoTableBrowserPanel)

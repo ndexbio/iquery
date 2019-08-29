@@ -54,7 +54,7 @@ const SortPanel = props => {
   const handleChange = event => {
     if (event.target.value === 'p-Value') {
       setSortPValueOn(true)
-      props.uiStateAction.setSortOrder(['p-Value', 'Overlap'])
+      props.uiStateActions.setSortOrder(['p-Value', 'Overlap'])
     } else {
       setSortPValueOn(false)
       props.uiStateActions.setSortOrder(['Overlap', 'p-Value'])

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
+import {isEqual} from 'lodash'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -282,11 +283,13 @@ const NodeProperties = props => {
               </ExpansionPanelSummary>
               <ExpansionPanelDetails className={classes.noPadding}>
                 <table className={classes.table}>
-                  {geneAnnotation}
-                  <tr>
-                    <td valign={'top'}>{displayCol1}</td>
-                    <td valign={'top'}>{displayCol2}</td>
-                  </tr>
+                  <tbody>
+                    {geneAnnotation}
+                    <tr>
+                      <td valign={'top'}>{displayCol1}</td>
+                      <td valign={'top'}>{displayCol2}</td>
+                    </tr>
+                  </tbody>
                 </table>
               </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -372,8 +375,8 @@ const formatPrimary = entry => {
   )
 }
 
-/*const MemoNodeProperties = React.memo(NodeProperties, (prevProps, newProps) => {
-  return isEqual(prevProps.network_selectedNodes, newProps.network_selectedNodes)
-})*/
+const MemoNodeProperties = React.memo(NodeProperties, (prevProps, newProps) => {
+  return isEqual(prevProps.network.selectedNodes, newProps.network.selectedNodes)
+})
 
-export default (NodeProperties)
+export default (MemoNodeProperties)

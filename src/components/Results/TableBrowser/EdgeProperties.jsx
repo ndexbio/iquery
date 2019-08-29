@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
+import {isEqual} from 'lodash'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -288,10 +289,12 @@ const EdgeProperties = props => {
               </ExpansionPanelSummary>
               <ExpansionPanelDetails className={classes.noPadding}>
                 <table className={classes.table}>
-                  <tr>
-                    <td valign={'top'}>{displayCol1}</td>
-                    <td valign={'top'}>{displayCol2}</td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td valign={'top'}>{displayCol1}</td>
+                      <td valign={'top'}>{displayCol2}</td>
+                    </tr>
+                  </tbody>
                 </table>
               </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -381,15 +384,19 @@ const findNode = (nodeId, nodeArray) => {
   if (isNaN(nodeId) || nodeId === '') {
     return nodeId
   }
-  return nodeArray.filter(
+  const returnNode = nodeArray.filter(
     item => item['@id'].toString() === nodeId.toString()
-  )[0].n
+  )[0]
+
+  if (returnNode != null) {
+    return returnNode.n
+  } else {
+    return ''
+  }
 }
 
-/*
 const MemoEdgeProperties = React.memo(EdgeProperties, (prevProps, newProps) => {
-  return isEqual(prevProps.network_selectedEdges, newProps.network_selectedEdges)
+  return isEqual(prevProps.network.selectedEdges, newProps.network.selectedEdges)
 })
-*/
 
-export default (EdgeProperties)
+export default (MemoEdgeProperties)

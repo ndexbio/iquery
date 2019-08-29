@@ -3,7 +3,7 @@ import './style.css'
 import Split from 'react-split'
 
 import NetworkViewer from './NetworkViewer'
-import TableBrowser from '../TableBrowser'
+import MemoTableBrowser from '../TableBrowser'
 import NetworkToolbar from './NetworkToolbar'
 
 const DEFAULT_RATIO = [50, 50]
@@ -36,7 +36,7 @@ const NetworkView = props => {
           resized={resized}
           {...props}
         />
-        <TableBrowser {...props}/>
+        <MemoTableBrowser {...props}/>
       </Split>
     </div>
   )

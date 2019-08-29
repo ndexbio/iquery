@@ -1,7 +1,8 @@
 import React from 'react'
+import {isEqual} from 'lodash'
 import { makeStyles } from '@material-ui/styles'
 
-import TableBrowserPanel from './TableBrowserPanel'
+import MemoTableBrowserPanel from './TableBrowserPanel'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -21,6 +22,8 @@ const useStyles = makeStyles(theme => ({
 const DISABLED_STYLE = {
   width: '100%'
 }
+
+let update = 0
 /**
  *
  * Basic property viewer for nodes and edges
@@ -31,6 +34,7 @@ const DISABLED_STYLE = {
  */
 const TableBrowser = props => {
   const classes = useStyles()
+  
 
   if (props.network.originalCX === null) {
     return <div style={DISABLED_STYLE} />
@@ -38,9 +42,14 @@ const TableBrowser = props => {
 
   return (
     <div className={'table-browser'}>
-      <TableBrowserPanel {...props} />
+      Update: {update++}
+      <MemoTableBrowserPanel {...props} />
     </div>
   ) 
 }
 
-export default (TableBrowser)
+const MemoTableBrowser = TableBrowser /*React.memo(TableBrowser, (prevProps, newProps) => {
+  return isEqual(prevProps.network.isFetching, newProps.network.isFetching)
+})*/
+
+export default (MemoTableBrowser)
