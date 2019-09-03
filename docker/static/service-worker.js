@@ -14,11 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-<<<<<<< Updated upstream
-  "/idekerlab/search-portal/precache-manifest.ae34d83d7b37a1e8385db2edf1de998a.js"
-=======
-  "/idekerlab/search-portal/precache-manifest.4a9ae6b76cfb2d692e8a6e9cdc8e7c01.js"
->>>>>>> Stashed changes
+  "/idekerlab/search-portal/precache-manifest.a26a12736e144c4a25b2c4a1a3c7b947.js"
 );
 
 self.addEventListener('message', (event) => {
