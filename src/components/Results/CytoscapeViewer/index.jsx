@@ -49,7 +49,7 @@ const CytoscapeViewer = props => {
 
     cyInstance.on('tap', function(event) {
       try {
-        cyInstance.nodes().removeClass('connected')
+       // cyInstance.nodes().removeClass('connected')
         const target = event.target
         if (target === cyInstance) {
           props.networkActions.changeTab(0)
@@ -85,23 +85,23 @@ const CytoscapeViewer = props => {
     }
 
     cyInstance.on('tap', 'node', function() {
-      try {
+      /*try {
         cyInstance.nodes().removeClass('connected')
       } catch (e) {
         console.warn(e)
-      }
+      }*/
       selectNode()
     })
 
     cyInstance.on('tap', 'edge', function() {
-      try {
+      /*try {
         cyInstance.nodes().removeClass('connected')
         const selected = this.data()
         const { source, target } = selected
         cyInstance.$('#' + source + ', #' + target).addClass('connected')
       } catch (e) {
         console.warn(e)
-      }
+      }*/
       selectEdge()
     })
 
@@ -182,7 +182,7 @@ const CytoscapeViewer = props => {
       )
       setTimeout(() => {
         props.networkActions.fitNetworkView(false)
-      }, 1000)
+      })
     }
   }, [fit])
 

@@ -5,7 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import { makeStyles } from '@material-ui/styles'
 
 import MemoNetworkProperties from './NetworkProperties'
-import MemoNodeProperties from './NodeProperties'
+import NodeProperties from './NodeProperties'
 import MemoEdgeProperties from './EdgeProperties'
 
 let update = 0
@@ -32,11 +32,11 @@ const TabContent = props => {
   const { value } = props
   if (value === 0) {
     return (
-      <MemoNetworkProperties {...props}/>
+      <MemoNetworkProperties originalCX={props.network.originalCX}/>
     )
   } else if (value === 1) {
     return (
-      <MemoNodeProperties {...props}/>
+      <NodeProperties {...props}/>
     )
   } else {
     return (

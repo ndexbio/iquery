@@ -23,7 +23,7 @@ export default function ExpandPanel(props) {
 
   return (
     <React.Fragment>
-      <ListItem button onClick={handleClick} key={props.keyId}>
+      <ListItem button onClick={handleClick} divider={true} key={props.keyId}>
         <ListItemText primary={props.summary} />
         {open ? <ExpandLess/> : <ExpandMore/>}
       </ListItem>

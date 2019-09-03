@@ -13,7 +13,9 @@ import GeneList from '../GeneList'
 const InputPanel = props => (
   <div className="input-container">
     <div className="input-wrapper">
-      <div className={"gene-list-title"}>Query Genes</div>
+      <div className={"gene-list-title"}>
+        Query Genes ({props.search.queryList.length}) 
+      </div>
       <GeneList {...props}/>
     </div>
   </div>

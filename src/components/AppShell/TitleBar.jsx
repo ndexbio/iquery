@@ -55,8 +55,8 @@ const styles = theme => ({
     })
   },
   textBox: {
-    position: 'relative',
-    left: '16px'
+    paddingLeft: '16px',
+    paddingRight: '16px'
   }
 })
 

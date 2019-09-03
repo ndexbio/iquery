@@ -8,10 +8,11 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, withStyles } from '@material-ui/styles'
+import ExpandPanel from './ExpandPanel'
 
 import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
@@ -19,7 +20,7 @@ import { stripScripts } from './strip-scripts-util.js'
 let index = 0
 
 const useStyles = makeStyles(theme => ({
-  padding: {
+  noPadding: {
     paddingTop: '0',
     paddingBottom: '0'
   },
@@ -30,22 +31,19 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   wideList: {
+    marginTop: '0',
     width: '100%',
-    padding: '0 0 0 0'
-  },
-  listPadding: {
-    paddingTop: '0',
-    paddingBottom: '16px'
+    padding: '0'
   },
   table: {
     width: '100%',
-    tableLayout: 'fixed'
-  }
+    tableLayout: 'fixed',
+  },
 }))
 
 const ExpansionPanel = withStyles({
   root: {
-    borderBottom: '1px solid rgba(239, 239, 239, 1)',
+    borderTop: '1px solid rgba(239, 239, 239, 1)',
     boxShadow: 'none',
     '&:not(:last-child)': {
       borderBottom: 0
@@ -62,13 +60,14 @@ const ExpansionPanel = withStyles({
 
 const ExpansionPanelSummary = withStyles({
   root: {
+    display: 'inlineBlock',
     paddingLeft: '16px',
     paddingRight: '16px',
     backgroundColor: 'rgba(0, 0, 0, 0)',
-    marginBottom: -1,
-    minHeight: 35,
+    marginBottom: -6,
+    minHeight: 36,
     '&$expanded': {
-      minHeight: 35
+      minHeight: 36
     }
   },
   content: {
@@ -78,6 +77,12 @@ const ExpansionPanelSummary = withStyles({
   },
   expanded: {}
 })(MuiExpansionPanelSummary)
+
+const ExpansionPanelDetails = withStyles({
+  root: {
+    paddingTop: '36px',
+  }
+})(MuiExpansionPanelDetails)
 
 const EdgeProperties = props => {
   const classes = useStyles()
@@ -199,7 +204,7 @@ const EdgeProperties = props => {
           case entityProperties:
             secondaryString = 'Entity Properties'
             displayCol1.push(
-              <ListItem key={index++} className={classes.listPadding}>
+              <ListItem key={index++} className={classes.noPadding}>
                 <ListItemText
                   inset={false}
                   primary={
@@ -255,7 +260,7 @@ const EdgeProperties = props => {
 
     if (primaryString != '') {
       displayCol1.push(
-        <ListItem key={index++} c lassName={classes.listPadding}>
+        <ListItem key={index++} c lassName={classes.noPadding}>
           <ListItemText
             inset={false}
             primary={
@@ -273,34 +278,24 @@ const EdgeProperties = props => {
       )
     }
 
+    const summary = <Typography variant="body2">{edge.source + ' -> ' + edge.target}</Typography>
+    const details = (
+      <table className={classes.table}>
+        <tbody>
+          <tr>
+            <td valign={'top'}>{displayCol1}</td>
+            <td valign={'top'}>{displayCol2}</td>
+          </tr>
+        </tbody>
+      </table>
+    )
     topDisplay.push(
-      <ListItem key={edge.id} disableGutters={true} className={classes.padding}>
-        <ListItemText
-          className={classes.wideList}
-          primary={
-            <ExpansionPanel
-              defaultExpanded={defaultExpanded}
-              setDefaultExpanded={setDefaultExpanded}
-            >
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="body2">
-                  {edge.source + ' -> ' + edge.target}
-                </Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails className={classes.noPadding}>
-                <table className={classes.table}>
-                  <tbody>
-                    <tr>
-                      <td valign={'top'}>{displayCol1}</td>
-                      <td valign={'top'}>{displayCol2}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-          }
-        />
-      </ListItem>
+      <ExpandPanel 
+        summary={summary} 
+        details={details} 
+        defaultExpanded={defaultExpanded}
+        keyId={edge.id}
+      />
     )
   })
 
@@ -322,7 +317,7 @@ const EdgeProperties = props => {
     return (
       <div className={'outer-rectangle'}>
         <div className={'inner-rectangle'}>
-          <List className={classes.padding}>{topDisplay}</List>
+          <List className={classes.noPadding}>{topDisplay}</List>
         </div>
       </div>
     )
@@ -334,7 +329,7 @@ const EdgeProperties = props => {
       <div className={'outer-rectangle'}>
         <div className={'inner-rectangle'}>
           <div>
-            <List className={classes.padding}>{topDisplay}</List>
+            <List className={classes.noPadding}>{topDisplay}</List>
           </div>
         </div>
       </div>
@@ -395,8 +390,8 @@ const findNode = (nodeId, nodeArray) => {
   }
 }
 
-const MemoEdgeProperties = React.memo(EdgeProperties, (prevProps, newProps) => {
+const MemoEdgeProperties = EdgeProperties/*React.memo(EdgeProperties, (prevProps, newProps) => {
   return isEqual(prevProps.network.selectedEdges, newProps.network.selectedEdges)
-})
+})*/
 
 export default (MemoEdgeProperties)

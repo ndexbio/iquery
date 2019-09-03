@@ -18,10 +18,6 @@ import {
   fitNetworkView
 } from '../actions/network'
 
-import { setZoomed } from '../actions/uiState'
-
-import { clearSelectedGenes } from '../actions/search'
-
 const LAYOUT_SCALING_FACTOR = 2.0
 
 const defaultState = {
@@ -138,8 +134,6 @@ const network = handleActions(
 
         backgroundColor = getBackGround(originalCX)
       }
-
-      setZoomed(true)
 
       return {
         ...state,

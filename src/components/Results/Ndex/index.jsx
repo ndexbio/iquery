@@ -97,17 +97,17 @@ const Ndex = props => {
 
     // console.log('Entry:', networkEntry)
 
-    const topDescription = 
-      'N: ' +
-      nodes + 
-      ', E: ' +
-      edges
+    const topDescription = (
+      <React.Fragment>
+        Nodes: <strong>{nodes}</strong>, Edges: <strong>{edges}</strong>
+      </React.Fragment>
+    )
       
-    const bottomDescription1 = 
-      'Hit/Query = ' +
-      hitGenes.length +
-      '/' +
-      querySize
+    const bottomDescription1 = (
+      <React.Fragment>
+        Overlap: <strong>{hitGenes.length}</strong> out of {querySize} genes
+      </React.Fragment>
+    )
 
     let bottomDescription2 = ''
     const pVal = details.PValue
@@ -116,7 +116,11 @@ const Ndex = props => {
       if (pVal === 0) {
         pValText = 0
       }
-      bottomDescription2 = 'P-value = ' + pValText
+      bottomDescription2 = (
+        <React.Fragment>
+          p-value = <strong>{pValText}</strong>
+        </React.Fragment>
+      )
     }
 
     return (
@@ -135,31 +139,18 @@ const Ndex = props => {
         </ListItemIcon>
         <ListItemText
           primary={
-            <React.Fragment>
-              
               <div className={classes.listTitle}>
-                {description}
+                <Typography color='textPrimary'>
+                  {description}
+                </Typography>
               </div>
-            </React.Fragment>
           }
           secondary={
-            <React.Fragment>
-              <Tooltip title="Number of nodes and edges" placement="bottom">
-                <Typography component="span" variant="caption" color="textSecondary">
-                  {topDescription}
-                </Typography>
-              </Tooltip>
-              <div>
-                <Typography component="span" variant={'caption'}>
-                  {bottomDescription1}
-                </Typography>
-                </div>
-              <div>
-                <Typography component="span" variant={'caption'}>
-                  {bottomDescription2}
-                </Typography>
-              </div>
-            </React.Fragment>
+            <Typography component="span" variant={'caption'} color='textSecondary'>
+              {topDescription}<br/>
+              {bottomDescription1}<br/>
+              {bottomDescription2}
+            </Typography>
           }
         />
         </ListItem>

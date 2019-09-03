@@ -18,6 +18,7 @@ import { findAttributes } from './attribute-util'
 
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
+import ExpandPanel from './ExpandPanel';
 
 
 let index = 0
@@ -83,7 +84,7 @@ const ExpansionPanelSummary = withStyles({
 
 const NetworkProperties = props => {
   index = 0
-  const originalCX = props.network.originalCX
+  const originalCX = props.originalCX//props.network.originalCX
   const classes = useStyles()
 
   //Find network props
@@ -219,28 +220,30 @@ const NetworkProperties = props => {
       if (element === '@context') {
         primaryString = formatContext(currentEntry.content)
         currentEntry.displayed = true
+        const summary = (
+          <Typography component="span" variant="body2">
+            Click to view the namespaces associated with this network
+          </Typography>
+        )
+        const details = (
+          <Typography variant="body2">
+            {primaryString}
+          </Typography>
+        )
         leftDisplay.push(
           <React.Fragment>
             <div className={classes.padding}>
-            <Typography component="span" variant="caption" color="textSecondary">
-              @context
-            </Typography>
+              <Typography component="span" variant="caption" color="textSecondary">
+                @context
+              </Typography>
             </div>
-            <ExpansionPanel>
-              <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon/>}
-              >
-                <Typography component="span" variant="body2">
-                  Click to view the namespaces associated with this network
-                </Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <Typography variant="body2">
-                  {primaryString}
-                </Typography>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-            </React.Fragment>
+            <ExpandPanel
+              summary={summary}
+              details={details}
+              defaultExpanded={false}
+              keyId={index++}
+            />
+          </React.Fragment>
         )
       } else {
         primaryString = formatPrimary(currentEntry.content)
@@ -365,8 +368,8 @@ const formatContext = entry => {
   return formatPrimary(result)
 }
 
-const MemoNetworkProperties = React.memo(NetworkProperties, (prevProps, newProps) => {
+const MemoNetworkProperties = NetworkProperties/*React.memo(NetworkProperties, (prevProps, newProps) => {
   return true
-})
+})*/
 
 export default (MemoNetworkProperties)

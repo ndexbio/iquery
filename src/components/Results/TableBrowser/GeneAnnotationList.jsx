@@ -98,51 +98,64 @@ class GeneAnnotationList extends React.Component {
         alignItems="flex-start"
         key={geneEntry._id}
         onClick={e => this.handleClick(geneEntry._id)}
+        disableGutters={true}
+        style={{padding: '0'}}
       >
         <ListItemAvatar>
           <Avatar className={classes.matched}>
             <CheckIcon />
           </Avatar>
         </ListItemAvatar>
+
         <ListItemText
           primary={
-            <Typography
-              component="span"
-              variant="body2"
-            >
-              {geneEntry.symbol}
-            </Typography>
-          }
-          secondary={
-            <React.Fragment>
-              <Typography
-                component="span"
-                className={classes.inline}
-                variant="caption"
-              >
-                {camelCaseToTitleCase(geneEntry.name)}
-              </Typography>
-              <Typography variant="body2" color='textPrimary'>
-                {description}
-              </Typography>
-            </React.Fragment>
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <div>
+                      <Typography component="span" variant="body2" >
+                        {geneEntry.symbol}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography
+                        component="span"
+                        className={classes.inline}
+                        variant="caption"
+                        color='textSecondary'
+                      >
+                        {camelCaseToTitleCase(geneEntry.name)}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography variant="body2" color='textPrimary'>
+                        {description}
+                      </Typography>
+                    </div>
+                  </td>
+                  <td>
+                    <Tooltip title="Open in GeneCards" placement="bottom">
+                      <IconButton
+                        aria-label="Link to GeneCards"
+                        href={GENE_CARDS_URL + geneEntry.symbol}
+                        target="_blank"
+                      >
+                        <LinkIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           }
         />
-        <ListItemSecondaryAction className={classes.linkIcon}>
-          <IconButton
-            aria-label="Link to GeneCards"
-            href={GENE_CARDS_URL + geneEntry.symbol}
-            target="_blank"
-          >
-            <Tooltip title="Open in GeneCards" placement="bottom">
-              <LinkIcon />
-            </Tooltip>
-          </IconButton>
-        </ListItemSecondaryAction>
       </ListItem>
     )
-  }
+  }    
+} 
 
+  /*
   getListChildren = (entry, classes) => {
     const pathway = entry.pathway
 
@@ -228,5 +241,6 @@ class GeneAnnotationList extends React.Component {
 }
 
 const getPathwayStateTag = id => 'pw_' + id
+*/
 
 export default withStyles(styles)(GeneAnnotationList)

@@ -20,7 +20,7 @@ const defaultState = {
   isLoadingNetwork: false
 }
 
-const source = handleActions(
+const cyrest = handleActions(
   {
     [importNetworkStarted]: (state, payload) => {
       return {
@@ -71,4 +71,4 @@ const source = handleActions(
   defaultState
 )
 
-export default source
+export default cyrest

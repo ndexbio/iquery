@@ -20,7 +20,7 @@
   box-sizing: content-box;
   width: 100%;
   height: 100%;
-  height: calc(100% - 28px);
+  /*height: calc(100% - 28px);*/
 }
 
 .node-info {
@@ -63,12 +63,14 @@
 }
 
 .network-view-top {
-  width: 100%;
+  /*height: calc(100% + 56px);*/
   height: 100%;
+  width: 100%;
   box-sizing: content-box;
   position: relative;
   bottom: 0;
   right: 0;
+  /*top: -56px;*/
 }
 
 .nv-container {
@@ -129,6 +131,16 @@
   background-repeat: no-repeat;
 }
 
+.gutter-horizontal {
+  margin: 0;
+  padding: 0;
+  background-color: #EFEFEF;
+  background-repeat: no-repeat;
+  /*height: calc(100% + 56px);*/
+  position: relative;
+  /*top: -56px;*/
+}
+
 .sorter-container {
   background: red;
   height: 3em;
@@ -150,6 +162,7 @@
   overflow-y: auto;
   overflow-x: visible;
   width: 100%;
+  margin-bottom: 8px; 
 }
 
 .wide-list {

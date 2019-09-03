@@ -9,12 +9,15 @@ import TabContent from './TabContent'
 
 const styles = theme => ({
   tabs: {
-    width: '100%',
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#DBDBDB',
+  },
+  grow: {
+    flexGrow: 1
   }
 })
 
 const Results = props => {
+  const {classes} = props
   // For tab selection
   const [idx, setSelectedTabIndex] = useState(0)
 
@@ -62,7 +65,11 @@ const Results = props => {
   return (
     <div className="results-container">
       <div className="results-wrapper">
-        <Tabs value={idx} onChange={handleChange}>
+        <Tabs 
+          value={idx} 
+          onChange={handleChange} 
+          className={classes.tabs}         
+        >
           {sources.map(source => (
             <Tab key={source.uuid} label={source.name === "enrichment" ? "Gene Enrichment" : 
                                           source.name === "interactome" ? "Gene Neighborhood" : source.name} />

@@ -130,7 +130,7 @@ const NetworkList = props => {
         <div className="network-list">
           <MenuList className={props.classes.noPadding}>
             {props.search.actualResults.map(entry => props.renderNetworkListItem(
-              query.size, 
+              props.search.queryList.length, 
               entry, 
               props.classes, 
               handleListItemClick, 

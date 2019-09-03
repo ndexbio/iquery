@@ -2,6 +2,8 @@
   height: 100%;
   padding: 0.5em;
   overflow: auto;
+  /*border-right: 7px solid #EFEFEF;
+  background-color: #FFFFFF;*/
 }
 
 .gene-list {

@@ -1,6 +1,7 @@
 {
   "files": {
     "main.css": "/idekerlab/search-portal/static/css/main.a0d8df72.chunk.css",
+<<<<<<< Updated upstream
     "main.js": "/idekerlab/search-portal/static/js/main.f3c465b0.chunk.js",
     "main.js.map": "/idekerlab/search-portal/static/js/main.f3c465b0.chunk.js.map",
     "runtime~main.js": "/idekerlab/search-portal/static/js/runtime~main.4312e709.js",
@@ -10,6 +11,17 @@
     "static/js/2.b9ad867c.chunk.js.map": "/idekerlab/search-portal/static/js/2.b9ad867c.chunk.js.map",
     "index.html": "/idekerlab/search-portal/index.html",
     "precache-manifest.ae34d83d7b37a1e8385db2edf1de998a.js": "/idekerlab/search-portal/precache-manifest.ae34d83d7b37a1e8385db2edf1de998a.js",
+=======
+    "main.js": "/idekerlab/search-portal/static/js/main.f4b6927a.chunk.js",
+    "main.js.map": "/idekerlab/search-portal/static/js/main.f4b6927a.chunk.js.map",
+    "runtime~main.js": "/idekerlab/search-portal/static/js/runtime~main.4312e709.js",
+    "runtime~main.js.map": "/idekerlab/search-portal/static/js/runtime~main.4312e709.js.map",
+    "static/css/2.9ae129ca.chunk.css": "/idekerlab/search-portal/static/css/2.9ae129ca.chunk.css",
+    "static/js/2.42b28dd0.chunk.js": "/idekerlab/search-portal/static/js/2.42b28dd0.chunk.js",
+    "static/js/2.42b28dd0.chunk.js.map": "/idekerlab/search-portal/static/js/2.42b28dd0.chunk.js.map",
+    "index.html": "/idekerlab/search-portal/index.html",
+    "precache-manifest.4a9ae6b76cfb2d692e8a6e9cdc8e7c01.js": "/idekerlab/search-portal/precache-manifest.4a9ae6b76cfb2d692e8a6e9cdc8e7c01.js",
+>>>>>>> Stashed changes
     "service-worker.js": "/idekerlab/search-portal/service-worker.js",
     "static/css/2.9ae129ca.chunk.css.map": "/idekerlab/search-portal/static/css/2.9ae129ca.chunk.css.map",
     "static/css/main.a0d8df72.chunk.css.map": "/idekerlab/search-portal/static/css/main.a0d8df72.chunk.css.map",

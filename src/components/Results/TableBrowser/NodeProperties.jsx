@@ -8,7 +8,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, withStyles } from '@material-ui/styles'
@@ -17,6 +17,7 @@ import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
 
 import GeneAnnotationList from './GeneAnnotationList'
+import ExpandPanel from './ExpandPanel'
 
 let index = 0
 
@@ -32,59 +33,15 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   wideList: {
+    marginTop: '0',
     width: '100%',
-    padding: '0 0 0 0'
-  },
-  listPadding: {
-    paddingTop: '0',
-    paddingBottom: '16px'
-  },
-  lessListPadding: {
-    paddingTop: '0',
-    paddingBottom: '4px'
+    padding: '0'
   },
   table: {
     width: '100%',
-    tableLayout: 'fixed'
-  }
+    tableLayout: 'fixed',
+  },
 }))
-
-const ExpansionPanel = withStyles({
-  root: {
-    borderBottom: '1px solid rgba(239, 239, 239, 1)',
-    boxShadow: 'none',
-    '&:not(:last-child)': {
-      borderBottom: 0
-    },
-    '&:before': {
-      display: 'none'
-    },
-    '&$expanded': {
-      margin: 'auto'
-    }
-  },
-  expanded: {}
-})(MuiExpansionPanel)
-
-const ExpansionPanelSummary = withStyles({
-  root: {
-    display: 'inlineBlock',
-    paddingLeft: '16px',
-    paddingRight: '16px',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    marginBottom: -1,
-    minHeight: 35,
-    '&$expanded': {
-      minHeight: 35
-    }
-  },
-  content: {
-    '&$expanded': {
-      margin: '12px 0'
-    }
-  },
-  expanded: {}
-})(MuiExpansionPanelSummary)
 
 const NodeProperties = props => {
   const classes = useStyles()
@@ -133,22 +90,19 @@ const NodeProperties = props => {
     ) {
       inset = true
       geneAnnotation = (
-        <tr>
-          <td colSpan={2} valign={'top'}>
-            <List className={classes.noPadding}>
-              <ListItem
-                key={index++}
-                className={classes.lessListPadding}
-                disableGutters={true}
-              >
-                <GeneAnnotationList
-                  search_results={props.search.results}
-                  geneSymbol={node.name}
-                />
-              </ListItem>
-            </List>
-          </td>
-        </tr>
+        <List className={classes.noPadding}>
+          <ListItem
+            key={index++}
+            className={classes.noPadding}
+            disableGutters={true}
+          >
+            <GeneAnnotationList
+              {...props}
+              search_results={props.search.results}
+              geneSymbol={node.name}
+            />
+          </ListItem>
+        </List>
       )
     }
     for (let key in node) {
@@ -191,7 +145,7 @@ const NodeProperties = props => {
           case entityProperties:
             secondaryString = 'Entity Properties'
             displayCol1.push(
-              <ListItem key={index++} className={classes.listPadding}>
+              <ListItem key={index++} className={classes.noPadding}>
                 <ListItemText
                   inset={inset}
                   primary={
@@ -213,7 +167,7 @@ const NodeProperties = props => {
             displayCol2.push(
               <ListItem
                 key={index++}
-                className={classes.listPadding}
+                className={classes.noPadding}
                 disableGutters={true}
               >
                 <ListItemText
@@ -247,7 +201,7 @@ const NodeProperties = props => {
 
     if (primaryString != '') {
       displayCol1.push(
-        <ListItem key={index++} className={classes.listPadding}>
+        <ListItem key={index++} className={classes.noPadding}>
           <ListItemText
             inset={inset}
             primary={
@@ -265,40 +219,30 @@ const NodeProperties = props => {
       )
     }
 
+    const summary = <Typography variant="body2">{node.name}</Typography>
+    const details = (
+      <table className={classes.table}>
+        <tbody>
+          <tr>
+            <td colspan='2' valign='top'>{geneAnnotation}</td>
+            </tr>
+          <tr>
+            <td valign={'top'}>{displayCol1}</td>
+            <td valign={'top'}>{displayCol2}</td>
+          </tr>
+        </tbody>
+      </table>
+    )
     topDisplay.push(
-      <ListItem
-        key={node.id}
-        disableGutters={true}
-        className={classes.noPadding}
-      >
-        <ListItemText
-          className={classes.wideList}
-          primary={
-            <ExpansionPanel
-              defaultExpanded={defaultExpanded}
-              setDefaultExpanded={setDefaultExpanded}
-            >
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant="body2">{node.name}</Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails className={classes.noPadding}>
-                <table className={classes.table}>
-                  <tbody>
-                    {geneAnnotation}
-                    <tr>
-                      <td valign={'top'}>{displayCol1}</td>
-                      <td valign={'top'}>{displayCol2}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-          }
-        />
-      </ListItem>
+      <ExpandPanel 
+        summary={summary} 
+        details={details} 
+        defaultExpanded={defaultExpanded}
+        keyId={node.id}
+      />
     )
   })
-
+    
   //Don't return nothing
   if (topDisplay.length == 0) {
     return (
@@ -328,9 +272,7 @@ const NodeProperties = props => {
     return (
       <div className={'outer-rectangle'}>
         <div className={'inner-rectangle'}>
-          <div>
             <List className={classes.noPadding}>{topDisplay}</List>
-          </div>
         </div>
       </div>
     )
@@ -375,8 +317,4 @@ const formatPrimary = entry => {
   )
 }
 
-const MemoNodeProperties = React.memo(NodeProperties, (prevProps, newProps) => {
-  return isEqual(prevProps.network.selectedNodes, newProps.network.selectedNodes)
-})
-
-export default (MemoNodeProperties)
+export default (NodeProperties)
