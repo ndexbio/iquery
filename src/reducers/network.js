@@ -219,7 +219,6 @@ const network = handleActions(
       }
     },
     [fitNetworkView]: (state, payload) => {
-      console.log('Fit network called:', payload.payload)
       return {
         ...state,
         fit: payload.payload

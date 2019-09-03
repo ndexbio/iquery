@@ -23,7 +23,6 @@ const DISABLED_STYLE = {
   width: '100%'
 }
 
-let update = 0
 /**
  *
  * Basic property viewer for nodes and edges
@@ -42,7 +41,6 @@ const TableBrowser = props => {
 
   return (
     <div className={'table-browser'}>
-      Update: {update++}
       <MemoTableBrowserPanel {...props} />
     </div>
   ) 

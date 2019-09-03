@@ -80,7 +80,6 @@ const CytoscapeViewer = props => {
             nodes.push(element.data())
           }
         })
-        console.log('nodes: ', nodes, selectedNodes)
         props.networkActions.selectNodes(nodes)
       }, 10)
     }
@@ -113,6 +112,10 @@ const CytoscapeViewer = props => {
 
     // Reset the UI state (hilight)
     props.uiStateActions.setHighlights(true)
+    setTimeout(() => {
+      props.networkActions.fitNetworkView(true)
+    }, 1000)
+    
 
     return () => {
       console.log('Network viewer unmounted')
@@ -166,8 +169,17 @@ const CytoscapeViewer = props => {
       return
     }
     if (fit) {
-      console.log('fit effect:', fit)
-      cyInstance.fit()
+      cyInstance.animate(
+        {
+          fit: {
+            eles: cyInstance.elements(),
+            padding: 6
+          }
+        },
+        {
+          duration: 500
+        }
+      )
       setTimeout(() => {
         props.networkActions.fitNetworkView(false)
       }, 1000)

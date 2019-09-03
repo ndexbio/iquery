@@ -56,7 +56,6 @@ const styles = theme => ({
 
 const findSort = (sortOrder) => {
   if (sortOrder[0] === 'p-Value') {
-    console.log('p-Value')
     return (a, b) => {
       if (a.details.PValue > b.details.PValue) {
         return 1
@@ -71,7 +70,6 @@ const findSort = (sortOrder) => {
       }
     }
   } else {
-    console.log('overlap')
     return (a, b) => {
       if (a.hitGenes.length < b.hitGenes.length) {
         return 1
@@ -93,7 +91,6 @@ const NetworkList = props => {
   
   const openFirst = (first) => {
     if (first != null) {
-      console.log(first)
       props.handleFetch(first.networkUUID, first.description, first.nodes, first.edges, first.hitGenes)
     }
   }
@@ -101,7 +98,6 @@ const NetworkList = props => {
   //Sort hits
   useEffect(() => {
     const sortFunction = findSort(props.uiState.sortOrder)
-    console.log(props.uiState.sortOrder)
     const newHits = hits.sort(sortFunction)
     props.searchActions.setActualResults(newHits)
     openFirst(newHits[0])
