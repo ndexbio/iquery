@@ -10,6 +10,7 @@ const NetworkViewer = props => (
     {props.network.isFetching ? (
       <LoadingPanel
         title="Loading Network..."
+        color='#FFFFFF'
       />
     ) : (
       <CytoscapeViewer 

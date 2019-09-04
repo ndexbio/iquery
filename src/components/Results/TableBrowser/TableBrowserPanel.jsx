@@ -1,5 +1,4 @@
 import React from 'react'
-import {isEqual} from 'lodash'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { makeStyles } from '@material-ui/styles'

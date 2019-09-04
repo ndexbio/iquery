@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 import './style.css'
 import Warning from './Warning'
@@ -76,7 +76,7 @@ const CytoscapeViewer = props => {
         const nodes = []
         const selectedNodes = cyInstance.$('node:selected')
         selectedNodes.forEach(element => {
-          if (element.data().name != '') {
+          if (element.data().name !== '') {
             nodes.push(element.data())
           }
         })
@@ -114,7 +114,7 @@ const CytoscapeViewer = props => {
     props.uiStateActions.setHighlights(true)
     setTimeout(() => {
       props.networkActions.fitNetworkView(true)
-    }, 1000)
+    }, 100)
     
 
     return () => {

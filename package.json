@@ -34,10 +34,9 @@
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
-    "eslint": "^6.2.2",
-    "eslint-config-prettier": "^4.3.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "prettier": "^1.18.2",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "prettier": "^1.17.0",
     "react-scripts": "^3.0.1",
     "redux-devtools-extension": "^2.13.8",
     "sinon": "7.3.2"
@@ -61,18 +60,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": ".eslintrc.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/idekerlab/search-portal.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/idekerlab/search-portal/issues"
-  },
-  "homepage": "https://github.com/idekerlab/search-portal#readme"
+  ]
 }

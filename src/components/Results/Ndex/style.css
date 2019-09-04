@@ -17,10 +17,9 @@
 .network-info {
   background-color: #ffffff;
   display: inline-flex;
-  box-sizing: content-box;
+  box-sizing: initial;
   width: 100%;
-  height: 100%;
-  /*height: calc(100% - 28px);*/
+  height: calc(100% - 28px);
 }
 
 .node-info {
@@ -71,6 +70,7 @@
   bottom: 0;
   right: 0;
   /*top: -56px;*/
+  border-right: 7px solid #EFEFEF;
 }
 
 .nv-container {
@@ -136,9 +136,9 @@
   padding: 0;
   background-color: #EFEFEF;
   background-repeat: no-repeat;
-  /*height: calc(100% + 56px);*/
+  /*height: calc(100% + 56px);
   position: relative;
-  /*top: -56px;*/
+  top: -56px;*/
 }
 
 .sorter-container {
@@ -152,12 +152,11 @@
   display: inline-flex;
   box-sizing: content-box;
   width: 100%;
-  height: 100%;
   height: calc(100% - 28px);
 }
 
 .inner-rectangle {
-  box-sizing: content-box;
+  box-sizing: initial;
   background-color: #FFFFFF;
   overflow-y: auto;
   overflow-x: visible;

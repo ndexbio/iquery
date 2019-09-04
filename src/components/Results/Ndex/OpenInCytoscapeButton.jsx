@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import logo from '../../../assets/images/cytoscape-logo.svg'
 import logoDisabled from '../../../assets/images/cytoscape-logo-mono-light.svg'

@@ -1,16 +1,11 @@
 import React from 'react'
 import Split from 'react-split'
-import {isEqual} from 'lodash'
 
-import { makeStyles, withStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { camelCaseToTitleCase } from './camel-case-util'
 import { stripScripts }  from './strip-scripts-util'
@@ -37,50 +32,12 @@ const useStyles = makeStyles(theme => ({
   },
   lessPadding: {
     paddingTop: '2.49px'
+  },
+  noPadding: {
+    paddingTop: '0',
+    paddingBottom: '0'
   }
 }))
-
-//Expansion panel styling
-const ExpansionPanel = withStyles({
-  root: {
-    boxShadow: 'none',
-    '&:not(:last-child)': {
-      borderBottom: 0,
-    },
-    '&:before': {
-      display: 'none',
-    },
-    '&$expanded': {
-      margin: 'auto',
-    },
-  },
-  expanded: {},
-})(MuiExpansionPanel);
-
-const ExpansionPanelSummary = withStyles({
-  root: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    marginBottom: '10px',
-    height: '26px',
-    minHeight: 0,
-    '&$expanded': {
-      minHeight: 0,
-    },
-  },
-  content: {
-    marginTop: 0,
-    marginBottom: 0,
-    marginLeft: '-9px',
-    marginRight: 0,
-    '&$expanded': {
-      marginTop: 0,
-      marginBottom: 0,
-      marginLeft: '-9px',
-      marginRight: 0,
-    },
-  },
-  expanded: {},
-})(MuiExpansionPanelSummary);
 
 const NetworkProperties = props => {
   index = 0
@@ -185,9 +142,9 @@ const NetworkProperties = props => {
         break
       }
     primaryString = formatPrimary(primaryString)
-    if (primaryString != '') {
+    if (primaryString !== '') {
       rightDisplay.push(
-        <ListItem key={index++}>
+        <ListItem key={index++} className={classes.noPadding}>
           <ListItemText
             primary={
               <React.Fragment>
@@ -242,6 +199,7 @@ const NetworkProperties = props => {
               details={details}
               defaultExpanded={false}
               keyId={index++}
+              divider={false}
             />
           </React.Fragment>
         )
@@ -250,7 +208,7 @@ const NetworkProperties = props => {
         secondaryString = element
         currentEntry.displayed = true
         leftDisplay.push(
-          <ListItem key={index++}>
+          <ListItem key={index++} className={classes.noPadding}>
             <ListItemText
               primary={
                 <React.Fragment>
@@ -276,7 +234,7 @@ const NetworkProperties = props => {
       secondaryString = entry.title
       entry.displayed = true
       leftDisplay.push(
-        <ListItem key={index++}>
+        <ListItem key={index++} className={classes.noPadding}>
           <ListItemText
             primary={
               <React.Fragment>

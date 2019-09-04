@@ -1,17 +1,12 @@
 import React, { useState } from 'react'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
-import {isEqual} from 'lodash'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, withStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import ExpandPanel from './ExpandPanel'
 
 import { camelCaseToTitleCase } from './camel-case-util.js'
@@ -40,49 +35,6 @@ const useStyles = makeStyles(theme => ({
     tableLayout: 'fixed',
   },
 }))
-
-const ExpansionPanel = withStyles({
-  root: {
-    borderTop: '1px solid rgba(239, 239, 239, 1)',
-    boxShadow: 'none',
-    '&:not(:last-child)': {
-      borderBottom: 0
-    },
-    '&:before': {
-      display: 'none'
-    },
-    '&$expanded': {
-      margin: 'auto'
-    }
-  },
-  expanded: {}
-})(MuiExpansionPanel)
-
-const ExpansionPanelSummary = withStyles({
-  root: {
-    display: 'inlineBlock',
-    paddingLeft: '16px',
-    paddingRight: '16px',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    marginBottom: -6,
-    minHeight: 36,
-    '&$expanded': {
-      minHeight: 36
-    }
-  },
-  content: {
-    '&$expanded': {
-      margin: '12px 0'
-    }
-  },
-  expanded: {}
-})(MuiExpansionPanelSummary)
-
-const ExpansionPanelDetails = withStyles({
-  root: {
-    paddingTop: '36px',
-  }
-})(MuiExpansionPanelDetails)
 
 const EdgeProperties = props => {
   const classes = useStyles()
@@ -127,19 +79,19 @@ const EdgeProperties = props => {
   const sortedEdges = edges.sort((a, b) => {
     let aScore = 0
     let bScore = 0
-    if (a.source != '') {
+    if (a.source !== '') {
       aScore++
     }
-    if (a.target != '') {
+    if (a.target !== '') {
       aScore++
     }
-    if (b.source != '') {
+    if (b.source !== '') {
       bScore++
     }
-    if (b.target != '') {
+    if (b.target !== '') {
       bScore++
     }
-    if (bScore - aScore != 0) {
+    if (bScore - aScore !== 0) {
       return bScore - aScore
     } else if (a.source === '') {
       return 1
@@ -199,7 +151,7 @@ const EdgeProperties = props => {
         }
       })
       primaryString = formatPrimary(primaryString)
-      if (primaryString != '') {
+      if (primaryString !== '') {
         switch (list) {
           case entityProperties:
             secondaryString = 'Entity Properties'
@@ -258,7 +210,7 @@ const EdgeProperties = props => {
     primaryString = formatPrimary(primaryString)
     secondaryString = 'Additional properties'
 
-    if (primaryString != '') {
+    if (primaryString !== '') {
       displayCol1.push(
         <ListItem key={index++} c lassName={classes.noPadding}>
           <ListItemText
@@ -295,12 +247,13 @@ const EdgeProperties = props => {
         details={details} 
         defaultExpanded={defaultExpanded}
         keyId={edge.id}
+        divider={true}
       />
     )
   })
 
   //Don't return nothing
-  if (topDisplay.length == 0) {
+  if (topDisplay.length === 0) {
     return (
       <div className={'outer-rectangle'}>
         <div className={classes.center}>
@@ -310,7 +263,7 @@ const EdgeProperties = props => {
         </div>
       </div>
     )
-  } else if (topDisplay.length == 1) {
+  } else if (topDisplay.length === 1) {
     if (!defaultExpanded) {
       setDefaultExpanded(true)
     }

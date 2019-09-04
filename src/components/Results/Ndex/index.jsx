@@ -10,9 +10,6 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Typography from '@material-ui/core/Typography'
 import { ListItem } from '@material-ui/core'
-import Tooltip from '@material-ui/core/Tooltip'
-
-const NETWORK_SIZE_TH = 5000
 
 /**
  * Top page for the application
@@ -27,13 +24,6 @@ const Ndex = props => {
   const sourceUUID = props.sourceUUID
 
   const id = props.search.results.jobId
-
-  const handleErrors = res => {
-    if (res !== undefined) {
-      return true
-    }
-    return false
-  }
 
   const handleFetch = (
     networkUUID,
@@ -91,7 +81,6 @@ const Ndex = props => {
       edges,
       imageURL,
       hitGenes,
-      rank,
       details
     } = networkEntry
 
@@ -135,7 +124,7 @@ const Ndex = props => {
         selected={selectedIndex === index}
       >
         <ListItemIcon>
-          <img className="list-icon" src={imageURL} />
+          <img className="list-icon" src={imageURL} alt='list icon'/>
         </ListItemIcon>
         <ListItemText
           primary={

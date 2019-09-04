@@ -18,8 +18,6 @@ import {
   fitNetworkView
 } from '../actions/network'
 
-const LAYOUT_SCALING_FACTOR = 2.0
-
 const defaultState = {
   isFetching: false,
   uuid: '',
@@ -44,8 +42,6 @@ const utils = new CyNetworkUtils()
 const cx2js = new CxToJs(utils)
 
 const PRESET_VS = vs.default[0].style
-
-const SELECTION_COLOR = '#F2355B'
 
 // Standard selection
 PRESET_VS.push({
@@ -265,7 +261,6 @@ const adjustLayout = (nodes, queryGenes) => {
 
   while (len--) {
     const node = nodes[len]
-    const position = node.position
 
     const name = node.data.name ? node.data.name.toUpperCase() : null
     if (upperQuery.has(name)) {

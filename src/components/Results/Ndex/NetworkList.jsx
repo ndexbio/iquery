@@ -121,8 +121,6 @@ const NetworkList = props => {
 
   const selectedIndex = props.network.listIndex
 
-  const query = props.search.results.genes
-
   if (props.search.actualResults.length > 0) {
     return (
       <div className="network-list-wrapper">

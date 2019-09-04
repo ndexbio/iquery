@@ -11,12 +11,13 @@
   justify-content: center;
   padding-left: 0em;
   padding-top: 1.295em;
+  padding-bottom: 1.2em;
   /*padding-top: 1.6em;
   padding-bottom: 1.4em;*/
   font-weight: 500;
-  color: #333333;
+  color: #000000;
   font-size: 0.8125rem;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  /*border-right: 7px solid #EFEFEF;
-  background-color: #EFEFEF;  */
+  /*border-right: 7px solid #DBDBDB;*/
+  background-color: #FFFFFF;
 }

@@ -1,23 +1,6 @@
 import React from 'react'
-import {isEqual} from 'lodash'
-import { makeStyles } from '@material-ui/styles'
 
 import MemoTableBrowserPanel from './TableBrowserPanel'
-
-const useStyles = makeStyles(theme => ({
-  container: {
-    padding: '0.2em',
-    backgroundColor: '#FFFFFF',
-    overflow: 'auto'
-  },
-  list: {
-
-  },
-  subtitle: {
-    marginLeft: '1em',
-    marginTop: '0.5em'
-  }
-}))
 
 const DISABLED_STYLE = {
   width: '100%'
@@ -32,9 +15,6 @@ const DISABLED_STYLE = {
  * @constructor
  */
 const TableBrowser = props => {
-  const classes = useStyles()
-  
-
   if (props.network.originalCX === null) {
     return <div style={DISABLED_STYLE} />
   }

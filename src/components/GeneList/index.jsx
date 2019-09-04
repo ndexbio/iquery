@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { makeStyles, withStyles } from '@material-ui/styles'
+import { withStyles } from '@material-ui/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
 import CheckIcon from '@material-ui/icons/Check'
@@ -8,17 +8,6 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import MuiToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
-
-const useStyles = makeStyles(theme => ({
-  chip: {
-    margin: '0',
-    backgroundColor: '#000000'
-  },
-  listPadding: {
-    paddingTop: '0',
-    paddingBottom: '22'
-  },
-}))
 
 const buttonStyle = {
   padding: '0',
@@ -84,16 +73,6 @@ const GeneList = props => {
     } else {
       unmatched.push(value)
     }
-  }
-
-  const sortBySymbol = (a, b) => {
-    if (a.symbol < b.symbol) {
-      return -1
-    }
-    if (a.symbol > b.symbol) {
-      return 1
-    }
-    return 0
   }
 
   const matchedSorted = matched.sort().reverse()

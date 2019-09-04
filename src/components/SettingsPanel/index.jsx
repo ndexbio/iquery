@@ -124,7 +124,7 @@ class SettingsPanel extends React.Component {
           {LINKS.map(link => (
             <ListItem button key={link.name} onClick={() => openLink(link.url)}>
               <ListItemIcon>
-                <img src={link.src} height="24px" width="24px" />
+                <img src={link.src} height="24px" width="24px" alt='list item icon'/>
               </ListItemIcon>
               <ListItemText primary={link.name} />
             </ListItem>

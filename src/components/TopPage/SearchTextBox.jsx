@@ -45,8 +45,6 @@ const SearchTextBox = props => {
   useEffect(() => {
     if (props.search.results !== null) {
       const jobId = props.search.results.jobId
-
-      const pathParam = props
       props.history.push(`/${jobId}`)
     }
   }, [])
@@ -101,11 +99,6 @@ const SearchTextBox = props => {
     props.searchActions.setQuery(genes)
     props.searchActions.searchStarted({ geneList, sourceNames })
     
-  }
-
-  const repaceDelimiters = query => {
-    // TODO: what's the supported set of delimiters?
-    return query.replace(/,/g, ' ')
   }
 
   return (

@@ -1,17 +1,12 @@
 import React, { useState } from 'react'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
-import {isEqual} from 'lodash'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
-import MuiExpansionPanel from '@material-ui/core/ExpansionPanel'
-import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
-import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, withStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 
 import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
@@ -140,7 +135,7 @@ const NodeProperties = props => {
         }
       })
       primaryString = formatPrimary(primaryString)
-      if (primaryString != '') {
+      if (primaryString !== '') {
         switch (list) {
           case entityProperties:
             secondaryString = 'Entity Properties'
@@ -199,7 +194,7 @@ const NodeProperties = props => {
     primaryString = formatPrimary(primaryString)
     secondaryString = 'Additional properties'
 
-    if (primaryString != '') {
+    if (primaryString !== '') {
       displayCol1.push(
         <ListItem key={index++} className={classes.noPadding}>
           <ListItemText
@@ -239,12 +234,13 @@ const NodeProperties = props => {
         details={details} 
         defaultExpanded={defaultExpanded}
         keyId={node.id}
+        divider={true}
       />
     )
   })
     
   //Don't return nothing
-  if (topDisplay.length == 0) {
+  if (topDisplay.length === 0) {
     return (
       <div className={'outer-rectangle'}>
         <div className={classes.center}>
@@ -254,7 +250,7 @@ const NodeProperties = props => {
         </div>
       </div>
     )
-  } else if (topDisplay.length == 1) {
+  } else if (topDisplay.length === 1) {
     if (!defaultExpanded) {
       setDefaultExpanded(true)
     }

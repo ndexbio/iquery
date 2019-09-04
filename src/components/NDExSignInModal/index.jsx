@@ -1,5 +1,4 @@
 import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
 
 import {
   DialogContent,
@@ -254,7 +253,7 @@ class NDExSignInModal extends React.Component {
   }
 
   render() {
-    const { classes, props } = this.props
+    const { props } = this.props
     const onLogout = this.onLogout
     const onLoginSuccess = this.onLoginSuccess
     const handleClose = this.handleClose

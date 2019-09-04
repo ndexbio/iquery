@@ -4,9 +4,6 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 
 const MessageSnackbar = props => {
-
-  const [isOpen, setOpen] = useState(false)
-
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return
