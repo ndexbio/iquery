@@ -62,15 +62,12 @@
 }
 
 .network-view-top {
-  /*height: calc(100% + 56px);*/
   height: 100%;
   width: 100%;
   box-sizing: content-box;
   position: relative;
   bottom: 0;
   right: 0;
-  /*top: -56px;*/
-  border-right: 7px solid #EFEFEF;
 }
 
 .nv-container {

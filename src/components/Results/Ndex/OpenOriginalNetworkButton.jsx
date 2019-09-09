@@ -71,6 +71,8 @@ const OpenOriginalNetworkButton = props => {
 
 const handleOpen = uuid => {
   const url = SERVICE_SERVER_URL + '#/network/' + uuid
+  console.log(SERVICE_SERVER_URL)
+  console.log(url)
 
   console.log('Opening original network entry:', url)
   window.open(url, '_blank')

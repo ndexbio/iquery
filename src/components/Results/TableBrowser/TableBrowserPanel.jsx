@@ -31,7 +31,7 @@ const TabContent = props => {
   const { value } = props
   if (value === 0) {
     return (
-      <MemoNetworkProperties originalCX={props.network.originalCX}/>
+      <MemoNetworkProperties {...props}/>
     )
   } else if (value === 1) {
     return (
