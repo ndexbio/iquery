@@ -44,41 +44,11 @@ export const MAX_NETWORK_SIZE = 5000;
 const CytoscapeViewer = props => {
   const { highlights } = props.uiState;
   const { fit } = props.network;
-  let selectedEdges = []
-
-  const updateSelectedEdges = () => {
-    //props.networkActions.selectEdges(selectedEdges)
-    props.networkActions.selectEdges(selectedEdges)
-  }
 
   useEffect(() => {
     if (cyInstance === undefined || cyInstance === null) {
       return;
     }
-/*
-    let edgeSelectTimeout;
-    cyInstance.on("select", "edge", function(event) {
-      selectedEdges.push(this.data())
-      clearTimeout(edgeSelectTimeout);
-      edgeSelectTimeout = setTimeout(() => {
-        updateSelectedEdges()
-      }, 1);
-    });
-
-    let edgeUnselectTimeout;
-    cyInstance.on("unselect", "edge", function(event) {
-      for (let i = 0; i < selectedEdges.length; i++) {
-        if (selectedEdges[i] === this.data().id) {
-          selectedEdges.splice(i, 1)
-          break
-        }
-      }
-      clearTimeout(edgeUnselectTimeout);
-      edgeUnselectTimeout = setTimeout(() => {
-        updateSelectedEdges()
-      }, 1);
-    });
-*/
     
     cyInstance.on("tap", function(event) {
       try {
@@ -95,15 +65,13 @@ const CytoscapeViewer = props => {
 
     const selectEdge = () => {
       setTimeout(() => {
-        
         const edges = [];
-        selectedEdges = cyInstance.$("edge:selected");
+        const selectedEdges = cyInstance.$("edge:selected");
         selectedEdges.forEach(element => {
           edges.push(element.data());
         });
         props.networkActions.selectEdges(edges);
-        
-      }, 10);
+      }, 1);
     };
 
     const selectNode = () => {
@@ -116,7 +84,7 @@ const CytoscapeViewer = props => {
           }
         });
         props.networkActions.selectNodes(nodes);
-      }, 10);
+      }, 1);
     };
 
     cyInstance.on("tap", "node", function() {
@@ -147,9 +115,12 @@ const CytoscapeViewer = props => {
 
     // Reset the UI state (hilight)
     props.uiStateActions.setHighlights(true);
-    /*setTimeout(() => {
-      props.networkActions.fitNetworkView(true);
-    }, 100);*/
+    
+    if (layout === COSE_SETTING) {
+      setTimeout(() => {
+        props.networkActions.fitNetworkView(true);
+      }, 1);
+    }
 
     return () => {
       console.log("Network viewer unmounted");

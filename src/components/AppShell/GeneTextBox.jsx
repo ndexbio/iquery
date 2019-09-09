@@ -81,7 +81,7 @@ const GeneTextBox = props => {
 
     props.searchActions.clearAll()
     props.history.push('/')
-    props.searchActions.sourcessetQuery(geneList)
+    props.searchActions.setQuery(geneList)
     props.searchActions.searchStarted({ geneList, sourceNames })
   }
 

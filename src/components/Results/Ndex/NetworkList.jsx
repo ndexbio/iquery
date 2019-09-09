@@ -87,7 +87,7 @@ const findSort = sortOrder => {
 };
 
 const NetworkList = props => {
-  const hits = props.hits;
+  let hits = props.hits;
 
   const openFirst = first => {
     if (first != null) {
@@ -103,10 +103,12 @@ const NetworkList = props => {
 
   //Sort hits
   useEffect(() => {
-    const sortFunction = findSort(props.uiState.sortOrder);
-    const newHits = hits.sort(sortFunction);
-    props.searchActions.setActualResults(newHits);
-    openFirst(newHits[0]);
+    if (props.uiState.selectedSource === "enrichment") {
+      const sortFunction = findSort(props.uiState.sortOrder);
+      hits = hits.sort(sortFunction);
+    }
+    props.searchActions.setActualResults(hits);
+    openFirst(hits[0]);
     props.networkActions.changeListIndex(1);
   }, [props.uiState.sortOrder, props.uiState.selectedSource]);
 

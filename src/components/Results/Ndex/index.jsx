@@ -90,11 +90,12 @@ const Ndex = props => {
       hitGenes,
       details
     } = networkEntry;
+    console.log(networkEntry)
 
     const genes = (
       <div display="inline">
         <Typography display="inline" style={{ lineHeight: "1" }}>
-          <strong>{hitGenes.length}</strong>{" "}
+          <strong>{hitGenes ? hitGenes.length : "?"}</strong>{" "}
         </Typography>
         <Typography
           variant="caption"
@@ -139,7 +140,11 @@ const Ndex = props => {
       const descriptionElem = (
         <React.Fragment>
           <div>
-            <Typography>{description.split(":")[1].slice(1)}</Typography>
+            <Typography>
+              {description.split(":")[1]
+                ? description.split(":")[1].slice(1)
+                : description}
+            </Typography>
           </div>
           <div>
             <Typography
@@ -215,9 +220,14 @@ const Ndex = props => {
       );
 
       const descriptionElem = (
+        <React.Fragment>
         <Typography color="textPrimary" style={{ lineHeight: "1.33" }}>
-          {description.split(",")[0]}
+          {description}
         </Typography>
+        <Typography variant="caption" color="textSecondary" style={{lineHeight: "1.33"}}>
+          Parent: {details.parent_network_nodes} nodes, {details.parent_network_edges} edges
+        </Typography>
+        </React.Fragment>
       );
 
       return (
@@ -539,7 +549,7 @@ const Ndex = props => {
   };
 
   return (
-    <Split sizes={[35, 65]} gutterSize={7} className="ndex-base">
+    <Split sizes={[40, 60]} gutterSize={7} className="ndex-base">
       <NetworkList
         renderNetworkListItem={renderNetworkListItem}
         handleFetch={handleFetch}

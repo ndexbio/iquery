@@ -65,19 +65,6 @@ const EdgeProperties = props => {
 
   const displayItems = [entityProperties, edgeProperties];
 
-  /*
-  //Find sources and targets
-  edges.forEach(edge => {
-    for (let key in edge) {
-      if (extractTitle(key) === "source") {
-        edge[key] = findNode(extractContent(edge[key]), nodes);
-      } else if (extractTitle(key) === "target") {
-        edge[key] = findNode(extractContent(edge[key]), nodes);
-      }
-    }
-  });
-  */
-
   const sortedEdges = edges.sort((a, b) => {
     let aScore = 0;
     let bScore = 0;

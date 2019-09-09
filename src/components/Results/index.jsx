@@ -69,8 +69,10 @@ const Results = props => {
               label={
                 source.name === "enrichment"
                   ? "Gene Enrichment"
-                  : source.name === "interactome"
-                  ? "Gene Neighborhood"
+                  : source.name === "interactome-ppi"
+                  ? "Interactome-PPI"
+                  : source.name === "interactome-association"
+                  ? "Interactome-Association"
                   : source.name
               }
             />
