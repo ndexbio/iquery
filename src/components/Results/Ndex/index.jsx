@@ -90,11 +90,10 @@ const Ndex = props => {
       hitGenes,
       details
     } = networkEntry;
-    console.log(networkEntry)
 
     const genes = (
       <div display="inline">
-        <Typography display="inline" style={{ lineHeight: "1" }}>
+        <Typography display="inline" style={{ lineHeight: "1.33" }}>
           <strong>{hitGenes ? hitGenes.length : "?"}</strong>{" "}
         </Typography>
         <Typography
@@ -137,26 +136,20 @@ const Ndex = props => {
         </div>
       );
 
-      const descriptionElem = (
-        <React.Fragment>
-          <div>
-            <Typography>
-              {description.split(":")[1]
-                ? description.split(":")[1].slice(1)
-                : description}
-            </Typography>
-          </div>
-          <div>
-            <Typography
-              variant="caption"
-              color="textSecondary"
-              style={{ lineHeight: "1" }}
-            >
-              Nodes: {nodes}, Edges: {edges}, Source:{" "}
-              {description.split(":")[0]}
-            </Typography>
-          </div>
-        </React.Fragment>
+      const title = (
+        <Typography style={{ lineHeight: "1.33" }}>
+          {description.split(":").slice(1)}
+        </Typography>
+      );
+
+      const subtitle = (
+        <Typography
+          variant="caption"
+          color="textSecondary"
+          style={{ lineHeight: "1" }}
+        >
+          Nodes: {nodes}, Edges: {edges}, Source: {description.split(":")[0]}
+        </Typography>
       );
 
       return (
@@ -178,13 +171,16 @@ const Ndex = props => {
                 <td width="90px" align="left" valign="bottom">
                   {genes}
                 </td>
-                <td rowSpan="2" valign="top">
-                  {descriptionElem}
+                <td align="left" valign="bottom">
+                  {title}
                 </td>
               </tr>
               <tr>
-                <td align="left" valign="top">
+                <td align="left" valign="baseline">
                   {pv}
+                </td>
+                <td align="left" valign="baseline">
+                  {subtitle}
                 </td>
               </tr>
             </tbody>
@@ -192,7 +188,7 @@ const Ndex = props => {
         </ListItem>
       );
     } else {
-      const nodeAndEdge = (
+      const node = (
         <div display="inline">
           <Typography display="inline" style={{ lineHeight: "1" }}>
             <strong>{nodes}</strong>{" "}
@@ -205,6 +201,11 @@ const Ndex = props => {
           >
             {"nodes "}
           </Typography>
+        </div>
+      );
+
+      const edge = (
+        <div display="inline">
           <Typography display="inline" style={{ lineHeight: "1" }}>
             <strong>{edges}</strong>{" "}
           </Typography>
@@ -219,15 +220,19 @@ const Ndex = props => {
         </div>
       );
 
-      const descriptionElem = (
+      const title = (
         <React.Fragment>
-        <Typography color="textPrimary" style={{ lineHeight: "1.33" }}>
-          {description}
-        </Typography>
-        <Typography variant="caption" color="textSecondary" style={{lineHeight: "1.33"}}>
-          Parent: {details.parent_network_nodes} nodes, {details.parent_network_edges} edges
-        </Typography>
+          <Typography color="textPrimary" style={{ lineHeight: "1.33" }}>
+            {description}
+          </Typography>
         </React.Fragment>
+      );
+
+      const subtitle = (
+        <Typography variant="caption" color="textSecondary">
+          Parent: {details.parent_network_nodes} nodes,{" "}
+          {details.parent_network_edges} edges
+        </Typography>
       );
 
       return (
@@ -246,16 +251,22 @@ const Ndex = props => {
                 <td rowSpan="2" align="center" valign="middle" width="50px">
                   {icon}
                 </td>
-                <td align="left" valign="bottom" width="150px">
+                <td colSpan="2" align="left" valign="bottom" width="150px">
                   {genes}
                 </td>
-                <td rowSpan="2" align="left" valign="top">
-                  {descriptionElem}
+                <td align="left" valign="bottom">
+                  {title}
                 </td>
               </tr>
               <tr>
-                <td align="left" valign="top">
-                  {nodeAndEdge}
+                <td align="left" valign="baseline" width="75px">
+                  {node}
+                </td>
+                <td align="left" valign="baseline" width="80px">
+                  {edge}
+                </td>
+                <td align="left" valign="baseline">
+                  {subtitle}
                 </td>
               </tr>
             </tbody>

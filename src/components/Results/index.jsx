@@ -3,9 +3,11 @@ import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Button from "@material-ui/core/Button";
 
 import Empty from "./Empty";
 import TabContent from "./TabContent";
+import { ListItem } from "@material-ui/core";
 
 const styles = theme => ({
   tabs: {},
@@ -13,6 +15,15 @@ const styles = theme => ({
     flexGrow: 1
   }
 });
+
+const HoverTab = withStyles(theme => ({
+  root: {
+    "&:hover": {
+      backgroundColor: "rgb(230,230,230)",
+      opacity: 1
+    }
+  }
+}))(props => <Tab {...props} />);
 
 const Results = props => {
   const { classes } = props;
@@ -64,18 +75,20 @@ const Results = props => {
       <div className="results-wrapper">
         <Tabs value={idx} onChange={handleChange} className={classes.tabs}>
           {sources.map(source => (
-            <Tab
+            <HoverTab
               key={source.uuid}
               label={
                 source.name === "enrichment"
                   ? "Gene Enrichment"
                   : source.name === "interactome-ppi"
-                  ? "Interactome-PPI"
+                  ? "Protein Interactions"
                   : source.name === "interactome-association"
-                  ? "Interactome-Association"
+                  ? "Gene Association"
                   : source.name
               }
-            />
+            >
+              <ListItem button>hey</ListItem>
+            </HoverTab>
           ))}
         </Tabs>
         <TabContent results={results} {...props} />
@@ -83,6 +96,10 @@ const Results = props => {
     </div>
   );
 };
+
+/*
+
+              */
 
 const getSourceName = (sources, idx) => {
   return sources[idx].name;

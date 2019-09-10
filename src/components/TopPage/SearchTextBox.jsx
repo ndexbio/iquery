@@ -1,26 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 
-import { withStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import InputBase from '@material-ui/core/InputBase'
-import Divider from '@material-ui/core/Divider'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import SearchIcon from '@material-ui/icons/Search'
-import DeleteIcon from '@material-ui/icons/Delete'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import SearchIcon from "@material-ui/icons/Search";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
-import * as examples from './example-genes'
+import * as examples from "./example-genes";
 
-const EXAMPLES = examples.default.examples
+const EXAMPLES = examples.default.examples;
 
 const styles = {
   root: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center'
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center"
   },
   input: {
     marginLeft: 8,
@@ -34,75 +34,74 @@ const styles = {
     height: 28,
     margin: 4
   }
-}
+};
 
 const SearchTextBox = props => {
-  const { classes } = props
-  const searchButtonEl = useRef()
+  const { classes } = props;
+  const searchButtonEl = useRef();
 
-  const [state, setState] = useState({ anchorEl: null, query: '' })
+  const [state, setState] = useState({ anchorEl: null, query: "" });
 
   useEffect(() => {
     if (props.search.results !== null) {
-      const jobId = props.search.results.jobId
-      props.history.push(`/${jobId}`)
+      const jobId = props.search.results.jobId;
+      props.history.push(`/${jobId}`);
     }
-  }, [])
+  }, []);
 
-  const open = Boolean(state.anchorEl)
+  const open = Boolean(state.anchorEl);
 
   const handleMenu = event => {
-    setState({ ...state, anchorEl: event.currentTarget })
-  }
+    setState({ ...state, anchorEl: event.currentTarget });
+  };
 
   const handleClose = () => {
-    setState({ ...state, anchorEl: null })
-  }
+    setState({ ...state, anchorEl: null });
+  };
 
   const handleExample = exampleIdx => {
     setState({
       ...props,
       query: EXAMPLES[exampleIdx].genes,
       anchorEl: null
-    })
-  }
+    });
+  };
 
   const handleChange = name => event => {
     setState({
       ...props,
       [name]: event.target.value
-    })
-  }
+    });
+  };
 
   const handleKeyPress = event => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       // TODO: add validator here
-      handleSearch()
+      handleSearch();
     }
-  }
+  };
 
   const handleClear = () => {
-    setState({ ...state, query: '' })
-  }
+    setState({ ...state, query: "" });
+  };
 
   const handleSearch = event => {
-    const genes = state.query
-    const sources = props.source.sources
+    const genes = state.query;
+    const sources = props.source.sources;
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
       // TODO: add better error message
-      return
+      return;
     }
-  
-    const sourceNames = sources.map(source => source.name)
-    const geneList = genes.toString().split(/\s*,\s*|\s+/)
-    props.searchActions.setQuery(genes)
-    props.searchActions.searchStarted({ geneList, sourceNames })
-    
-  }
+
+    const sourceNames = sources.map(source => source.name);
+    const geneList = genes.toString().split(/\s*,\s*|\s+/);
+    props.searchActions.setQuery(genes);
+    props.searchActions.searchStarted({ geneList, sourceNames });
+  };
 
   return (
-    <Paper className={'search-text-box'} elevation={1}>
+    <Paper className={"search-text-box"} elevation={1}>
       <div>
         <IconButton
           className={classes.iconButton}
@@ -114,12 +113,12 @@ const SearchTextBox = props => {
         <Menu
           anchorEl={state.anchorEl}
           anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
+            vertical: "top",
+            horizontal: "right"
           }}
           transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
+            vertical: "top",
+            horizontal: "right"
           }}
           open={open}
           onClose={handleClose}
@@ -129,13 +128,13 @@ const SearchTextBox = props => {
               <MenuItem key={idx} onClick={() => handleExample(idx)}>
                 {example.name}
               </MenuItem>
-            )
+            );
           })}
         </Menu>
       </div>
       <Divider className={classes.divider} />
       <IconButton
-        color={'default'}
+        color={"default"}
         className={classes.iconButton}
         aria-label="Directions"
         onClick={handleClear}
@@ -145,13 +144,13 @@ const SearchTextBox = props => {
       <InputBase
         className={classes.input}
         placeholder="Enter gene list (...or click menu for examples)"
-        onChange={handleChange('query')}
+        onChange={handleChange("query")}
         onKeyDown={handleKeyPress}
         value={state.query}
       />
       <IconButton
         ref={searchButtonEl}
-        color={'primary'}
+        color={"primary"}
         className={classes.iconButton}
         aria-label="Search"
         onClick={handleSearch}
@@ -159,11 +158,11 @@ const SearchTextBox = props => {
         <SearchIcon />
       </IconButton>
     </Paper>
-  )
-}
+  );
+};
 
 SearchTextBox.propTypes = {
   classes: PropTypes.object.isRequired
-}
+};
 
-export default (withStyles(styles)(SearchTextBox))
+export default withStyles(styles)(SearchTextBox);

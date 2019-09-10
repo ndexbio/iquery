@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import SortPanel from "./SortPanel";
 
 import "./style.css";
+import { callbackify } from "util";
 
 const styles = theme => ({
   inline: {
@@ -129,11 +130,20 @@ const NetworkList = props => {
 
   const selectedIndex = props.network.listIndex;
 
+  let enrichmentStyle;
+  if (props.uiState.selectedSource === "enrichment") {
+    enrichmentStyle = {
+      height: `calc(100% - 49px)`
+    };
+  } else {
+    enrichmentStyle = {}
+  }
+
   if (props.search.actualResults.length > 0) {
     return (
       <div className="network-list-wrapper">
         <SortPanel {...props} />
-        <div className="network-list">
+        <div className="network-list" style={enrichmentStyle}>
           <MenuList className={props.classes.noPadding}>
             {props.search.actualResults.map(entry =>
               props.renderNetworkListItem(
