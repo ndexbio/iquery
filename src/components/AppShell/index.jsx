@@ -49,15 +49,15 @@ const AppShell = props => {
     }
     return () => {}
   }, [])
-  const { classes } = props
+  const { classes, ...others } = props
 
   const open = props.uiState.isSettingsOpen
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <TitleBar {...props} />
-      <SettingsPanel {...props}/>
+      <TitleBar {...others} />
+      <SettingsPanel {...others}/>
 
       <div
         className={classNames(classes.content, {

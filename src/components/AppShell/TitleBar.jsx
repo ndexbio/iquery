@@ -81,7 +81,7 @@ class TitleBar extends React.Component {
   }
 
   render() {
-    const { classes, ...props } = this.props
+    const { classes, ...others } = this.props
     const open = this.props.uiState.isSettingsOpen
 
     return (
@@ -107,7 +107,7 @@ class TitleBar extends React.Component {
             <div />
           ) : (
             <div className={classes.textBox}>
-              <GeneTextBox {...props} />
+              <GeneTextBox {...others} />
              </div>
           )}
 
