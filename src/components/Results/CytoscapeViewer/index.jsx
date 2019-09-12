@@ -49,14 +49,13 @@ const CytoscapeViewer = props => {
     if (cyInstance === undefined || cyInstance === null) {
       return;
     }
-    
+
     cyInstance.on("tap", function(event) {
       try {
         // cyInstance.nodes().removeClass('connected')
         const target = event.target;
         if (target === cyInstance) {
           props.networkActions.changeTab(0);
-          console.log("UNSELECT");
         }
       } catch (e) {
         console.warn(e);
@@ -70,7 +69,11 @@ const CytoscapeViewer = props => {
         selectedEdges.forEach(element => {
           edges.push(element.data());
         });
-        props.networkActions.selectEdges(edges);
+        if (edges.length === 0) {
+          props.networkActions.unselectEdges();
+        } else {
+          props.networkActions.selectEdges(edges);
+        }
       }, 1);
     };
 
@@ -83,7 +86,11 @@ const CytoscapeViewer = props => {
             nodes.push(element.data());
           }
         });
-        props.networkActions.selectNodes(nodes);
+        if (nodes.length === 0) {
+          props.networkActions.unselectNodes()
+        } else {
+          props.networkActions.selectNodes(nodes);
+        }
       }, 1);
     };
 
@@ -95,7 +102,7 @@ const CytoscapeViewer = props => {
       }
       selectNode();
     });
-    
+
     cyInstance.on("tap", "edge", function() {
       try {
         cyInstance.nodes().removeClass("connected");
@@ -113,13 +120,32 @@ const CytoscapeViewer = props => {
       selectNode();
     });
 
-    // Reset the UI state (hilight)
-    props.uiStateActions.setHighlights(true);
-    
     if (layout === COSE_SETTING) {
       setTimeout(() => {
-        props.networkActions.fitNetworkView(true);
-      }, 1);
+        cyInstance.animate(
+          {
+            fit: {
+              eles: cyInstance.elements(),
+              padding: 6
+            }
+          },
+          {
+            duration: 500
+          }
+        );
+      }, 100);
+    }
+
+    // Reset the UI state (hilight)
+    if (highlights) {
+      cyInstance.elements().addClass("faded");
+      const query = cyInstance.filter('node[querynode = "true"]');
+      query.addClass("highlight");
+    } else {
+      cyInstance
+        .elements()
+        .removeClass("faded")
+        .removeClass("highlight");
     }
 
     return () => {
@@ -184,9 +210,7 @@ const CytoscapeViewer = props => {
           duration: 500
         }
       );
-      setTimeout(() => {
-        props.networkActions.fitNetworkView(false);
-      });
+      props.networkActions.fitNetworkView(false);
     }
   }, [fit]);
 
@@ -229,7 +253,6 @@ const CytoscapeViewer = props => {
         .removeClass("highlight");
     }
   }
-
   return (
     <CytoscapeComponent
       elements={cyjs.elements}
@@ -243,4 +266,16 @@ const CytoscapeViewer = props => {
   );
 };
 
-export default CytoscapeViewer;
+const MemoCytoscapeViewer = React.memo(
+  CytoscapeViewer,
+  (prevProps, newProps) => {
+    return (
+      prevProps.network.uuid == newProps.network.uuid &&
+      prevProps.network.fit == newProps.network.fit &&
+      prevProps.uiState.highlights == newProps.uiState.highlights &&
+      prevProps.search.selectedGenes == newProps.search.selectedGenes
+    );
+  }
+);
+
+export default MemoCytoscapeViewer;

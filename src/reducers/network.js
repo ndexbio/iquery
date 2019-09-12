@@ -172,7 +172,7 @@ const network = handleActions(
     [unselectNodes]: (state, payload) => {
       return {
         ...state,
-        selectedNodes: payload.payload
+        selectedNodes: []
       };
     },
     [selectEdges]: (state, payload) => {
@@ -185,7 +185,7 @@ const network = handleActions(
     [unselectEdges]: (state, payload) => {
       return {
         ...state,
-        selectedEdges: payload.payload
+        selectedEdges: []
       };
     },
     [deselectAll]: (state, payload) => {

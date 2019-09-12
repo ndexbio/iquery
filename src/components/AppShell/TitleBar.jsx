@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import HelpIcon from '@material-ui/icons/Help'
 import Tooltip from '@material-ui/core/Tooltip'
+import Button from "@material-ui/core/Button";
+
 
 import classNames from 'classnames'
 
@@ -91,11 +93,13 @@ class TitleBar extends React.Component {
         })}
       >
         <Toolbar disableGutters={!open}>
-          <Tooltip title="Search by Pathway Enrichment / Gene Neighborhoods / Keywords" aria-label="NDEx_tooltip">
+          <Tooltip title="Search by Pathway Enrichment / Protein-Protein Interactions / Gene Association" aria-label="NDEx_tooltip">
             <div>
-              <Typography variant="h6" color="inherit" style={titleStyle}>
+              <Button style={titleStyle}>
+              <Typography variant="h6" color="inherit">
                 NDEx Network Search
               </Typography>
+              </Button>
             </div>
           </Tooltip>
 

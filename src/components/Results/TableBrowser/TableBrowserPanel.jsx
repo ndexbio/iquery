@@ -3,6 +3,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { makeStyles, withStyles } from "@material-ui/styles";
 
+import { findAttributes } from "./attribute-util";
+
 import MemoNetworkProperties from "./NetworkProperties";
 import NodeProperties from "./NodeProperties";
 import MemoEdgeProperties from "./EdgeProperties";
@@ -36,10 +38,25 @@ const HoverTab = withStyles(theme => ({
 
 const TabContent = props => {
   const { value } = props;
+
+  //Find @context
+  let context = {};
+  let networkAttr = findAttributes(
+    props.network.originalCX,
+    "networkAttributes"
+  );
+  if (networkAttr != null) {
+    for (let i = 0; i < networkAttr.length; i++) {
+      if (networkAttr[i].n === "@context") {
+        context = JSON.parse(networkAttr[i].v);
+      }
+    }
+  }
+
   if (value === 0) {
     return <MemoNetworkProperties {...props} />;
   } else if (value === 1) {
-    return <NodeProperties {...props} />;
+    return <NodeProperties context={context} {...props} />;
   } else {
     return <MemoEdgeProperties {...props} />;
   }

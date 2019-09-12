@@ -27,7 +27,7 @@ import {
 
 const API_CALL_INTERVAL = 1000;
 
-const SELECTED_SOURCES = ["enrichment", "interactome"];
+const SELECTED_SOURCES = ["interactome-ppi"];
 
 export default function* rootSaga() {
   yield takeLatest(SEARCH_STARTED, watchSearch);
@@ -116,6 +116,7 @@ function* watchSearchResult(action) {
         const resultJson = yield call([resultRes, "json"]);
         //
 
+        console.log("One")
         yield put({
           type: SET_SEARCH_RESULT,
           payload: {
@@ -148,6 +149,7 @@ function* watchSearchResult(action) {
 
           currentResult[sourceName] = json;
 
+          console.log("Two")
           yield put({
             type: SET_SEARCH_RESULT,
             payload: {
@@ -201,7 +203,7 @@ function* fetchSource(action) {
     const sources = yield call(cySearchApi.getSource, null);
     const json = yield call([sources, "json"]);
 
-    const orderedSources = json.results
+    const orderedSources = json.results;
     /*
     const reducedSources = json.results.filter(entry =>
       SELECTED_SOURCES.includes(entry["name"])

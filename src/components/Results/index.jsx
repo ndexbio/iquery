@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Empty from "./Empty";
 import TabContent from "./TabContent";
 import { ListItem } from "@material-ui/core";
+import { isEqual } from "lodash";
 
 const styles = theme => ({
   tabs: {},

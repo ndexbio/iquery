@@ -11,8 +11,17 @@ import SearchIcon from "@material-ui/icons/Search";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Typography from "@material-ui/core/Typography";
+import { Tooltip } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+import searchLogo from '../../assets/images/search-logo.svg'
 
 import * as examples from "./example-genes";
+
+import { createMuiTheme } from "@material-ui/core/styles";
+import purple from "@material-ui/core/colors/purple";
+import { ThemeProvider } from "@material-ui/styles";
 
 const EXAMPLES = examples.default.examples;
 
@@ -48,6 +57,13 @@ const SearchTextBox = props => {
       props.history.push(`/${jobId}`);
     }
   }, []);
+
+  const theme = createMuiTheme({
+    palette: {
+      primary: { main: purple[500] }, // Purple and green play nicely together.
+      secondary: { main: "#11cb5f" } // This is just green.A700 as hex.
+    }
+  });
 
   const open = Boolean(state.anchorEl);
 
@@ -101,8 +117,9 @@ const SearchTextBox = props => {
   };
 
   return (
-    <Paper className={"search-text-box"} elevation={1}>
-      <div>
+    <React.Fragment>
+      <Paper className={"search-text-box"} elevation={1}>
+        {/*<div>
         <IconButton
           className={classes.iconButton}
           aria-label="Menu"
@@ -132,32 +149,75 @@ const SearchTextBox = props => {
           })}
         </Menu>
       </div>
-      <Divider className={classes.divider} />
-      <IconButton
-        color={"default"}
-        className={classes.iconButton}
-        aria-label="Directions"
-        onClick={handleClear}
+        <Divider className={classes.divider} />*/}
+        <IconButton
+          color={"default"}
+          className={classes.iconButton}
+          aria-label="Directions"
+          onClick={handleClear}
+        >
+          <DeleteIcon />
+        </IconButton>
+        <InputBase
+          className={classes.input}
+          placeholder="Enter gene list (or click an example below)"
+          onChange={handleChange("query")}
+          onKeyDown={handleKeyPress}
+          value={state.query}
+        />
+          <IconButton
+            ref={searchButtonEl}
+            className={classes.iconButton}
+            aria-label="Search"
+            onClick={handleSearch}
+          >
+            <img alt="Search icon" src={searchLogo} style={{height: "27px"}}/>
+          </IconButton>
+      </Paper>
+      <Typography
+        variant="caption"
+        style={{ paddingTop: "4px" }}
+        color="textSecondary"
       >
-        <DeleteIcon />
-      </IconButton>
-      <InputBase
-        className={classes.input}
-        placeholder="Enter gene list (...or click menu for examples)"
-        onChange={handleChange("query")}
-        onKeyDown={handleKeyPress}
-        value={state.query}
-      />
-      <IconButton
-        ref={searchButtonEl}
-        color={"primary"}
-        className={classes.iconButton}
-        aria-label="Search"
-        onClick={handleSearch}
+        <em>Try this pre-release version, send us </em>
+        <Link>
+          <font color="#00A1DE">
+            <em>feedback</em>
+          </font>
+        </Link>
+      </Typography>
+      <Typography
+        align="left"
+        style={{ paddingLeft: "116.14px", paddingTop: "16px" }}
       >
-        <SearchIcon />
-      </IconButton>
-    </Paper>
+        Query gene set examples:
+      </Typography>
+      <Tooltip title="Hypoxia description">
+        <Button onClick={() => handleExample(0)}>
+          <font color="#00A1DE">Hypoxia</font>
+        </Button>
+      </Tooltip>
+      <Tooltip title="Adenyl cyclase description">
+        <Button color="primary" onClick={() => handleExample(1)}>
+          <font color="#00A1DE">Adenyl Cyclase</font>
+        </Button>
+      </Tooltip>
+      <Tooltip title="D4DGI description">
+        <Button color="primary" onClick={() => handleExample(2)}>
+          <font color="#00A1DE">D4DGI</font>
+        </Button>
+      </Tooltip>
+      <Tooltip title="Angiotensin description">
+        <Button color="primary" onClick={() => handleExample(3)}>
+          <font color="#00A1DE">Angiotensin</font>
+        </Button>
+      </Tooltip>
+      <Tooltip title="Estrogen description">
+        <Button color="primary" onClick={() => handleExample(4)}>
+          <font color="#00A1DE">Estrogen</font>
+        </Button>
+      </Tooltip>
+    </React.Fragment>
   );
 };
 

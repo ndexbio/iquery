@@ -2,7 +2,6 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { DialogContentText, DialogActions, Button } from '@material-ui/core'
 
-import config from './assets/config'
 import './style.css'
 
 const styles = theme => ({
@@ -28,13 +27,14 @@ class NDExSave extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
-    const token = this.props.ndexSave.profile ? this.props.ndexSave.profile.authorization.token : null
-    const cx = this.props.network.originalCX
+    const { classes, ndexSave, network } = this.props
+    console.log(ndexSave)
+    const token = ndexSave.profile ? ndexSave.profile.authorization.token : null
+    const cx = network.originalCX
 
-    const networkUrl = this.props.ndexSave.networkUrl
+    const networkUrl = ndexSave.networkUrl
 
-    return this.props.ndexSave.profile ? (
+    return ndexSave && ndexSave.profile ? (
       <div className="ndex-save">
         <DialogContentText>
           Now that you're logged in, you can save the network to your NDEx

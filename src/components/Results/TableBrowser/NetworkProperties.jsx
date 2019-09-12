@@ -83,7 +83,11 @@ const NetworkProperties = props => {
         const networkInfo =
           props.search.actualResults[props.network.listIndex - 1];
         content =
-          networkInfo.nodes + " nodes, " + networkInfo.edges + " edges<br/>" + content;
+          networkInfo.nodes +
+          " nodes, " +
+          networkInfo.edges +
+          " edges<br/>" +
+          content;
         attributes.push({
           title: newTitle,
           content: content, //TODO

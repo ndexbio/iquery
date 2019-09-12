@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/styles";
 
 import { camelCaseToTitleCase } from "./camel-case-util.js";
 import { stripScripts } from "./strip-scripts-util.js";
+import { findAttributes } from "./attribute-util";
 
 import GeneAnnotationList from "./GeneAnnotationList";
 import ExpandPanel from "./ExpandPanel";
@@ -41,10 +42,11 @@ const useStyles = makeStyles(theme => ({
 const NodeProperties = props => {
   const classes = useStyles();
   const nodes = props.network.selectedNodes;
+  const context = props.context;
 
   const [defaultExpanded, setDefaultExpanded] = useState(true);
 
-  const entityProperties = ["Name", "HGNC", "Ensembl", "Type"];
+  const entityProperties = ["Name", "HGNC", "Ensembl", "Alias", "Type"];
 
   const nodeProperties = [
     "Height",
@@ -63,16 +65,17 @@ const NodeProperties = props => {
 
   const displayItems = [entityProperties, nodeProperties];
 
-  const sortedNodes = nodes/*nodes.sort((a, b) => {
+  const sortedNodes = nodes.sort((a, b) => {
     if (a.name.toUpperCase() > b.name.toUpperCase()) {
       return 1;
     } else {
       return -1;
     }
-  });*/
+  });
 
   const topDisplay = [];
   sortedNodes.forEach(node => {
+    console.log(node)
     //Filter properties
     const attributes = [];
     let content;
@@ -103,11 +106,23 @@ const NodeProperties = props => {
         content !== "null" &&
         content !== ""
       ) {
-        attributes.push({
-          title: camelCaseToTitleCase(title),
-          content: content,
-          displayed: false
-        });
+        if (title === "alias") {
+          const [prefix, id] = content.split(":");
+          if (prefix in context) {
+            attributes.push({
+              title: "Alias",
+              content:
+                '<a href="' + context[prefix] + id + '">' + content + "</a>",
+              displayed: false
+            });
+          }
+        } else {
+          attributes.push({
+            title: camelCaseToTitleCase(title),
+            content: content,
+            displayed: false
+          });
+        }
       }
     }
 

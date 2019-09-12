@@ -1,31 +1,26 @@
-import React from 'react'
+import React from "react";
 
-import Ndex from './Ndex'
-import LoadingPanel from '../LoadingPanel'
+import Ndex from "./Ndex";
+import LoadingPanel from "../LoadingPanel";
+
+import { isEqual } from "lodash";
 
 const TabContent = props => {
-  const results = props.results
+  const results = props.results;
+  console.log("render")
 
-  if (results === null || results === undefined) {
+  if (results === null || results === undefined ) {
     return (
-      <LoadingPanel 
-        title={'Loading results'} 
-        message={
-          <div style={{color: 'black'}}>
-            Please wait...
-          </div>
-        }
+      <LoadingPanel
+        title={"Loading results"}
+        message={<div style={{ color: "black" }}>Please wait...</div>}
       />
-    )
+    );
   } else {
     return (
-      <Ndex 
-        hits={results.results} 
-        sourceUUID={results.sourceUUID}
-        {...props}
-      />
-    )
+      <Ndex hits={results.results} sourceUUID={results.sourceUUID} {...props} />
+    );
   }
-}
+};
 
-export default TabContent
+export default TabContent;

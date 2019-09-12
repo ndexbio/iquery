@@ -253,7 +253,7 @@ class NDExSignInModal extends React.Component {
   }
 
   render() {
-    const { props } = this.props
+    const { ...props } = this.props
     const onLogout = this.onLogout
     const onLoginSuccess = this.onLoginSuccess
     const handleClose = this.handleClose
