@@ -196,27 +196,27 @@ const SearchTextBox = props => {
       >
         Query gene set examples:
       </Typography>
-      <Tooltip title="Hypoxia description">
+      <Tooltip title="Hypoxia description" open={false}>
         <Button onClick={() => handleExample(0)}>
           <font color="#00A1DE">Hypoxia</font>
         </Button>
       </Tooltip>
-      <Tooltip title="Adenyl cyclase description">
+      <Tooltip title="Adenyl cyclase description" open={false}>
         <Button color="primary" onClick={() => handleExample(1)}>
           <font color="#00A1DE">Adenyl Cyclase</font>
         </Button>
       </Tooltip>
-      <Tooltip title="D4DGI description">
+      <Tooltip title="D4DGI description" open={false}>
         <Button color="primary" onClick={() => handleExample(2)}>
           <font color="#00A1DE">D4DGI</font>
         </Button>
       </Tooltip>
-      <Tooltip title="Angiotensin description">
+      <Tooltip title="Angiotensin description" open={false}>
         <Button color="primary" onClick={() => handleExample(3)}>
           <font color="#00A1DE">Angiotensin</font>
         </Button>
       </Tooltip>
-      <Tooltip title="Estrogen description">
+      <Tooltip title="Estrogen description" open={false}>
         <Button color="primary" onClick={() => handleExample(4)}>
           <font color="#00A1DE">Estrogen</font>
         </Button>
