@@ -29,7 +29,7 @@ const MessageSnackbar = props => {
           color="inherit"
           key="close"
           aria-label="Close"
-          onClick={props.handleClose}
+          onClick={props.handleClose || handleClose}
         >
           <CloseIcon />
         </IconButton>

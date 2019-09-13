@@ -64,23 +64,7 @@ const GeneTextBox = props => {
     // Show message
     setOpen(true);
   };
-  /*
-  const handleSearch = event => {
-    const genes = state.query
-    const sources = props.source.sources
 
-    if (genes.length === 0 || sources === null || sources.length === 0) {
-      // TODO: add better error message
-      return
-    }
-  
-    const sourceNames = sources.map(source => source.name)
-    const geneList = genes.toString().split(/\s*,\s*|\s+/)
-    props.searchActions.setQuery(genes)
-    props.searchActions.searchStarted({ geneList, sourceNames })
-    
-  }
-*/
   const handleSearch = evt => {
     const genes = queryText;
     const sources = props.source.sources;
@@ -96,6 +80,7 @@ const GeneTextBox = props => {
     const geneList = geneListString.split(/\s*,\s*|\s+/);
 
     props.searchActions.clearAll();
+    props.uiStateActions.setSelectedSource("enrichment")
     props.history.push("/");
     props.searchActions.setQuery(genes);
     props.searchActions.searchStarted({ geneList, sourceNames });

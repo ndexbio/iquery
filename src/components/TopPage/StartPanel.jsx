@@ -42,12 +42,12 @@ const StartPanel = props => {
         <div
           style={{
             position: "relative",
-            paddingTop: "2px",
-            paddingBottom: "24px",
+            paddingTop: "0.1em",
+            paddingBottom: "2em",
 
             display: "flex",
             flexDirection: "column",
-            marginBottom: "-8px"
+            marginBottom: "-0.5em"
           }}
         >
           <Typography align="center" color="textSecondary">
@@ -65,37 +65,38 @@ const StartPanel = props => {
             className="start-logo-main"
             src={ndex}
             alt="logo"
-            style={{ height: "140px", paddingRight: "16px" }}
+            style={{ height: "8.75em", paddingRight: "1em" }}
           />
           <div className="flex">
             <Typography
               variant="h3"
               align="left"
-              style={{ whiteSpace: "noWrap", position: "relative", top: "4px" }}
+              style={{
+                whiteSpace: "noWrap",
+                position: "relative",
+                top: "0.1em"
+              }}
             >
               NDEx Integrated Query
             </Typography>
             <Typography
               align="left"
-              style={{ position: "relative", left: "3px", top: "-2px" }}
+              style={{ position: "relative", left: "0.25em", top: "-0.1em" }}
             >
               v0.2 Pre-Release.
             </Typography>
           </div>
         </div>
 
-        <div
-          align="center"
-          style={{ paddingBottom: "48px", paddingTop: "16px" }}
-        >
+        <div align="center" style={{ paddingBottom: "3em", paddingTop: "1em" }}>
           <SearchTextBox {...props} />
         </div>
       </div>
       <div className="height">
         <div className="flex">
           <Typography variant="caption" align="center">
-            Cytoscape Integrated Network Query (Cytoscape INQ) uses selected
-            pathway and interactome networks in NDEx to power gene set analysis.
+            NDEx Integrated Query uses selected pathway and interactome networks
+            in NDEx to power gene set analysis.
           </Typography>
           <Typography variant="caption" align="center">
             The networks come from many different sources and new networks will
@@ -103,7 +104,7 @@ const StartPanel = props => {
           </Typography>
           <Typography variant="caption" align="center">
             Do you have a pathway or an interaction network that you would like
-            to include in these querys? Click{" "}
+            to include in these queries? Click{" "}
             <Link>
               <font color="#00A1DE">
                 <em>here</em>

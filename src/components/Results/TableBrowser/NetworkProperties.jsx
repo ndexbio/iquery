@@ -26,8 +26,8 @@ const useStyles = makeStyles(theme => ({
     boxSizing: "content-box"
   },
   padding: {
-    paddingLeft: "16px",
-    paddingTop: "12px"
+    paddingLeft: "1em",
+    paddingTop: "0.75em"
   },
   lessPadding: {
     paddingTop: "2.49px"

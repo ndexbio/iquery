@@ -75,7 +75,6 @@ const NodeProperties = props => {
 
   const topDisplay = [];
   sortedNodes.forEach(node => {
-    console.log(node)
     //Filter properties
     const attributes = [];
     let content;
@@ -116,7 +115,7 @@ const NodeProperties = props => {
               displayed: false
             });
           }
-        } else {
+        } else if (title !== "query") {
           attributes.push({
             title: camelCaseToTitleCase(title),
             content: content,

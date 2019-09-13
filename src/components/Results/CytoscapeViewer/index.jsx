@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CytoscapeComponent from "react-cytoscapejs";
+import { CxToJs, CyNetworkUtils } from "cytoscape-cx2js";
 import "./style.css";
 import Warning from "./Warning";
 
@@ -87,7 +88,7 @@ const CytoscapeViewer = props => {
           }
         });
         if (nodes.length === 0) {
-          props.networkActions.unselectNodes()
+          props.networkActions.unselectNodes();
         } else {
           props.networkActions.selectNodes(nodes);
         }
@@ -122,18 +123,8 @@ const CytoscapeViewer = props => {
 
     if (layout === COSE_SETTING) {
       setTimeout(() => {
-        cyInstance.animate(
-          {
-            fit: {
-              eles: cyInstance.elements(),
-              padding: 6
-            }
-          },
-          {
-            duration: 500
-          }
-        );
-      }, 100);
+        props.networkActions.fitNetworkView(true);
+      }, 1);
     }
 
     // Reset the UI state (hilight)
@@ -226,7 +217,7 @@ const CytoscapeViewer = props => {
 
   const networkAreaStyle = {
     width: "100%",
-    height: "100%",
+    height: "100%"
     background: props.network.backgroundColor
   };
 
@@ -253,6 +244,9 @@ const CytoscapeViewer = props => {
         .removeClass("highlight");
     }
   }
+
+  //drawAnnotations(cyInstance, props.network.originalCX);
+
   return (
     <CytoscapeComponent
       elements={cyjs.elements}
@@ -264,6 +258,218 @@ const CytoscapeViewer = props => {
       }}
     />
   );
+};
+
+const drawAnnotations = (cyInstance, originalCX) => {
+  var utils = new CyNetworkUtils();
+  var cx2Js = new CxToJs(utils);
+  const niceCX = utils.rawCXtoNiceCX(originalCX);
+  drawAnnotationsFromNiceCX(cyInstance, niceCX, cx2Js);
+};
+
+const drawAnnotationsFromNiceCX = (cytoscapeInstance, niceCX, cx2Js) => {
+  const annotationElements = getAnnotationElementsFromNiceCX(niceCX);
+  drawAnnotationsFromAnnotationElements(
+    cytoscapeInstance,
+    annotationElements,
+    cx2Js
+  );
+};
+
+const getAnnotationElementsFromNiceCX = niceCX => {
+  if (niceCX["networkAttributes"]) {
+    return niceCX["networkAttributes"]["elements"].filter(function(element) {
+      return element["n"] == "__Annotations";
+    });
+  } else {
+    return [];
+  }
+};
+
+const drawAnnotationsFromAnnotationElements = (
+  cytoscapeInstance,
+  annotationElements,
+  cx2Js
+) => {
+  const bottomLayer = cytoscapeInstance.cyCanvas({
+    zIndex: -1
+  });
+
+  const topLayer = cytoscapeInstance.cyCanvas({
+    zIndex: 1
+  });
+
+  const bottomCanvas = bottomLayer.getCanvas();
+  const bottomCtx = bottomCanvas.getContext("2d");
+
+  const topCanvas = topLayer.getCanvas();
+  const topCtx = topCanvas.getContext("2d");
+
+  cytoscapeInstance.on("render cyCanvas.resize", evt => {
+    var colorFromInt = this._colorFromInt;
+    var shapeFunctions = this._shapeFunctions;
+    //console.log("render cyCanvas.resize event");
+    bottomLayer.resetTransform(bottomCtx);
+    bottomLayer.clear(bottomCtx);
+    bottomLayer.setTransform(bottomCtx);
+
+    bottomCtx.save();
+
+    topLayer.resetTransform(topCtx);
+    topLayer.clear(topCtx);
+    topLayer.setTransform(topCtx);
+
+    topCtx.save();
+
+    var indexedAnnotations = {};
+    var topAnnotations = [];
+    var bottomAnnotations = [];
+
+    annotationElements.forEach(function(element) {
+      element["v"].forEach(function(annotation) {
+        var annotationKVList = annotation.split("|");
+        var annotationMap = {};
+        annotationKVList.forEach(function(annotationKV) {
+          var kvPair = annotationKV.split("=");
+          annotationMap[kvPair[0]] = kvPair[1];
+        });
+
+        indexedAnnotations[annotationMap["uuid"]] = annotationMap;
+
+        if (annotationMap["canvas"] == "foreground") {
+          topAnnotations.push(annotationMap["uuid"]);
+        } else {
+          bottomAnnotations.push(annotationMap["uuid"]);
+        }
+      });
+    });
+    var zOrderCompare = function(a, b) {
+      let annotationA = indexedAnnotations[a];
+      let annotationB = indexedAnnotations[b];
+      return parseInt(annotationB["z"]) - parseInt(annotationA["z"]);
+    };
+
+    topAnnotations.sort(zOrderCompare);
+    bottomAnnotations.sort(zOrderCompare);
+
+    var contextAnnotationMap = [
+      { context: topCtx, annotations: topAnnotations },
+      { context: bottomCtx, annotations: bottomAnnotations }
+    ];
+    contextAnnotationMap.forEach(function(contextAnnotationPair) {
+      let ctx = contextAnnotationPair.context;
+      contextAnnotationPair.annotations.forEach(function(annotationUUID) {
+        let annotationMap = indexedAnnotations[annotationUUID];
+        if (
+          annotationMap["type"] ==
+            "org.cytoscape.view.presentation.annotations.ShapeAnnotation" ||
+          annotationMap["type"] ==
+            "org.cytoscape.view.presentation.annotations.BoundedTextAnnotation"
+        ) {
+          //ctx.beginPath();
+          ctx.lineWidth = annotationMap["edgeThickness"];
+
+          annotationMap["width"] =
+            parseFloat(annotationMap["width"]) /
+            parseFloat(annotationMap["zoom"]);
+          annotationMap["height"] =
+            parseFloat(annotationMap["height"]) /
+            parseFloat(annotationMap["zoom"]);
+          if (shapeFunctions[annotationMap["shapeType"]]) {
+            ctx.strokeStyle = colorFromInt(
+              annotationMap["edgeColor"],
+              annotationMap["edgeOpacity"]
+            );
+            shapeFunctions[annotationMap["shapeType"]](annotationMap, ctx);
+
+            //ctx.stroke();
+          } else {
+            console.warn("Invalid shape type: " + annotationMap["shapeType"]);
+          }
+        } else if (
+          annotationMap["type"] ==
+          "org.cytoscape.view.presentation.annotations.ArrowAnnotation"
+        ) {
+          if (
+            annotationMap["targetAnnotation"] &&
+            annotationMap["sourceAnnotation"]
+          ) {
+            let sourceAnnotation =
+              indexedAnnotations[annotationMap["sourceAnnotation"]];
+            let targetAnnotation =
+              indexedAnnotations[annotationMap["targetAnnotation"]];
+            ctx.stroke();
+          }
+        }
+
+        var text;
+        var textX;
+        var textY;
+
+        if (
+          annotationMap["type"] ==
+          "org.cytoscape.view.presentation.annotations.TextAnnotation"
+        ) {
+          text = annotationMap["text"];
+          ctx.textBaseline = "top";
+          ctx.textAlign = "left";
+          textX = annotationMap["x"];
+          textY = annotationMap["y"];
+        } else if (
+          annotationMap["type"] ==
+          "org.cytoscape.view.presentation.annotations.BoundedTextAnnotation"
+        ) {
+          text = annotationMap["text"];
+
+          ctx.textBaseline = "middle";
+          ctx.textAlign = "center";
+
+          textX = parseFloat(annotationMap["x"]) + annotationMap["width"] / 2;
+          textY = parseFloat(annotationMap["y"]) + annotationMap["height"] / 2;
+        }
+        if (text && textX && textY) {
+          var fontSize =
+            parseFloat(annotationMap["fontSize"]) /
+            parseFloat(annotationMap["zoom"]);
+          var fontFamily;
+
+          if (annotationMap["fontFamily"]) {
+            if (
+              cx2Js.JavaLogicalFontConstants.FONT_FAMILY_LIST.includes(
+                annotationMap["fontFamily"]
+              )
+            ) {
+              fontFamily =
+                cx2Js.JavaLogicalFontConstants.FONT_STACK_MAP[
+                  annotationMap["fontFamily"]
+                ];
+            } else if (
+              cx2Js.CommonOSFontConstants.FONT_STACK_MAP[
+                annotationMap["fontFamily"]
+              ]
+            ) {
+              fontFamily =
+                cx2Js.CommonOSFontConstants.FONT_STACK_MAP[
+                  annotationMap["fontFamily"]
+                ];
+            } else {
+              fontFamily = "sans-serif";
+            }
+          }
+          ctx.font = fontSize + "px " + fontFamily;
+
+          if (annotationMap["color"]) {
+            let fillColor = colorFromInt(annotationMap["color"], "100");
+            ctx.fillStyle = fillColor;
+          }
+          ctx.fillText(text.toString(), textX, textY);
+        }
+      });
+    });
+
+    topCtx.restore();
+    bottomCtx.restore();
+  });
 };
 
 const MemoCytoscapeViewer = React.memo(

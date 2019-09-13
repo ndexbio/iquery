@@ -40,7 +40,7 @@ const styles = theme => ({
   },
   logo: {
     height: '1em',
-    width: '1.5em'
+    width: '1.5em',
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -57,14 +57,19 @@ const styles = theme => ({
     })
   },
   textBox: {
-    paddingLeft: '16px',
-    paddingRight: '16px'
+    paddingLeft: '1em',
+    paddingRight: '1em'
+  },
+  noWrap: {
+    display: "inline-block",
+    whiteSpace: "nowrap"
   }
 })
 
 const titleStyle = {
   position: 'relative',
-  left: '16px'
+  left: '1em',
+  textTransform: 'none'
 }
 
 class TitleBar extends React.Component {
@@ -76,6 +81,7 @@ class TitleBar extends React.Component {
 
   handleHomeButton = () => {
     this.props.searchActions.clearAll()
+    this.props.uiStateActions.setSelectedSource("enrichment")
     this.props.networkActions.networkClear()
     this.props.history.push('/')
   }
@@ -92,12 +98,14 @@ class TitleBar extends React.Component {
           [classes.appBarShift]: open
         })}
       >
+<div className={classes.noWrap}>
         <Toolbar disableGutters={!open}>
           <Tooltip title="Search by Pathway Enrichment / Protein-Protein Interactions / Gene Association" aria-label="NDEx_tooltip">
             <div>
-              <Button style={titleStyle}>
-              <Typography variant="h6" color="inherit">
-                NDEx Network Search
+              <Button style={titleStyle} onClick={this.handleHomeButton}>
+              <HomeIcon fontSize="default" className={classes.logo}/>
+              <Typography variant="h6" color="inherit" noWrap={true}>
+                NDEx Integrated Query
               </Typography>
               </Button>
             </div>
@@ -112,8 +120,9 @@ class TitleBar extends React.Component {
           )}
 
           <div className={classes.grow} />
-
+          
           <div>
+            {/*}
           <Tooltip title="Home" placement="bottom">
               <IconButton
                 aria-haspopup="true"
@@ -123,8 +132,8 @@ class TitleBar extends React.Component {
                 <HomeIcon fontSize="default" className={classes.logo}/>
               </IconButton>
             </Tooltip>
-              
-            <Tooltip title="Help" placement="bottom">
+          */}
+            <Tooltip title="Help" placement="bottom" style={{paddingRight: "1.5em"}}>
               <IconButton
                 aria-haspopup="true"
                 color="default"
@@ -133,7 +142,7 @@ class TitleBar extends React.Component {
                 <HelpIcon fontSize="default" className={classes.logo}/>
               </IconButton>
             </Tooltip>
-
+{/*}
             <Tooltip title="Ideker Lab" placement="bottom">
               <IconButton
                 color='default'
@@ -179,9 +188,10 @@ class TitleBar extends React.Component {
               >
                 <img alt="WikiPathways Logo" src={wpLogo} className={classes.logo}/>
               </IconButton>
-            </Tooltip>
+          </Tooltip>*/}
           </div>
         </Toolbar>
+        </div>
       </AppBar>
     )
   }
