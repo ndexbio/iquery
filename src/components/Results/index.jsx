@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react'
-
 import { withStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Button from '@material-ui/core/Button'
-
 import Empty from './Empty'
 import TabContent from './TabContent'
 import { ListItem } from '@material-ui/core'
-import { isEqual } from 'lodash'
 
 const styles = theme => ({
   tabs: {},
@@ -27,7 +23,7 @@ const HoverTab = withStyles(theme => ({
 }))(props => <Tab {...props} />)
 
 const Results = props => {
-  const { classes } = props
+  const { classes, ...others } = props
   // For tab selection
   const [idx, setSelectedTabIndex] = useState(0)
 
@@ -92,7 +88,7 @@ const Results = props => {
             </HoverTab>
           ))}
         </Tabs>
-        <TabContent results={results} {...props} />
+        <TabContent results={results} {...others} />
       </div>
     </div>
   )
