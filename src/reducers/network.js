@@ -108,7 +108,7 @@ const network = handleActions(
         originalCX: null,
         network: null,
         isLayoutComplete: false,
-        backgroundColor: "blue",
+        backgroundColor: "",
         selectedNodes: [],
         selectedEdges: [],
         tableDisplayTab: 0
@@ -240,7 +240,7 @@ const convertCx2cyjs = (cx, queryGenes) => {
 
 const VS_TAG = "cyVisualProperties";
 const getBackGround = cx => {
-  let color = "pink";
+  let color = "#FFFFFF";
 
   const vps = cx.filter(entry => entry[VS_TAG]);
   if (vps !== undefined && vps !== null && vps.length !== 0) {

@@ -3276,10 +3276,10 @@ cytoscape-canvas@3.0.1:
   resolved "https://registry.yarnpkg.com/cytoscape-canvas/-/cytoscape-canvas-3.0.1.tgz#7d963be51e6e5f3f2482b05d22562c8ee941d125"
   integrity sha512-R1nCLnJHGTR5fWEpNQQBPyoigdnfhnk1lOHegzmzz1Kg6yxzVf0hfdRAMa0wPAhtC4kkgyoViiIfZ/zyCqMhEQ==
 
-cytoscape-cx2js@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/cytoscape-cx2js/-/cytoscape-cx2js-0.5.3.tgz#f1ac78cb641612d5830ba2b87daa3602425782a0"
-  integrity sha512-8brgCfXxyYRvRRxR3nrHAc+503CpqYSJVos12wmxsAQKl2daKPPvdXzi6yXX6+o86eqrNjsC4hpcGWjrlg8pfg==
+cytoscape-cx2js@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/cytoscape-cx2js/-/cytoscape-cx2js-0.5.5.tgz#c664c55d725a829f0192d155f48c8f2e7ca65f39"
+  integrity sha512-yH+3BVrxYN+syVXpDmgQ0yOfLedDZ9xXzbUtt2+OB78X8CXjQIKEqpikbGtYECA3+KkP7AE8cOQFk4HrdBzMRg==
   dependencies:
     cytoscape-canvas "3.0.1"
     lodash "^4.17.10"

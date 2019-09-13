@@ -13,7 +13,7 @@ import './style.css'
 const Empty = props => (
   <div className="results-container">
     <div className="message">
-      <Typography variant="title">{}</Typography>
+      <Typography variant="h3">{props.message}</Typography>
     </div>
   </div>
 )

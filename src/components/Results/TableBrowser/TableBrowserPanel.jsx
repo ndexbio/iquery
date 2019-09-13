@@ -1,6 +1,6 @@
 import React from 'react'
 import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+import HoverTab from '../HoverTab'
 import { makeStyles, withStyles } from '@material-ui/styles'
 
 import { findAttributes } from './attribute-util'
@@ -8,8 +8,6 @@ import { findAttributes } from './attribute-util'
 import MemoNetworkProperties from './NetworkProperties'
 import NodeProperties from './NodeProperties'
 import MemoEdgeProperties from './EdgeProperties'
-
-let update = 0
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -26,15 +24,6 @@ const useStyles = makeStyles(theme => ({
     minHeight: 0
   }
 }))
-
-const HoverTab = withStyles(theme => ({
-  root: {
-    '&:hover': {
-      backgroundColor: 'rgb(220,220,220)',
-      opacity: 1
-    }
-  }
-}))(props => <Tab {...props} />)
 
 const TabContent = props => {
   const { value } = props
@@ -70,11 +59,6 @@ const TableBrowserPanel = props => {
   //const network = props.network
   const classes = useStyles()
   let value = props.network.tableDisplayTab
-  /*
-  if (network === null) {
-    return <div style={DISABLED_STYLE} />
-  }
-*/
   const originalCX = props.network.originalCX
   if (originalCX === null) {
     return <div style={DISABLED_STYLE} />
@@ -95,38 +79,19 @@ const TableBrowserPanel = props => {
   //Get current tab selection
   return (
     <div className="table-browser-panel">
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        className={classes.root}
-        buttonStyle={{ height: '28px' }}
-      >
+      <Tabs value={value} onChange={handleChange} className={classes.root}>
         <HoverTab
           className={classes.root}
           key={'network-tab'}
           label={'Network'}
-          buttonStyle={{ height: '28px' }}
         />
-        <HoverTab
-          className={classes.root}
-          key={'nodes-tab'}
-          label={'Nodes'}
-          buttonStyle={{ height: '28px' }}
-        />
-        <HoverTab
-          className={classes.root}
-          key={'edges-tab'}
-          label={'Edges'}
-          buttonStyle={{ height: '28px' }}
-        />
+        <HoverTab className={classes.root} key={'nodes-tab'} label={'Nodes'} />
+        <HoverTab className={classes.root} key={'edges-tab'} label={'Edges'} />
       </Tabs>
       <TabContent value={value} nodeList={nodeList} {...props} />
     </div>
   )
 }
 
-const MemoTableBrowserPanel = TableBrowserPanel /*React.memo(TableBrowserPanel, (prevProps, newProps) => {
-  return isEqual(prevProps.network.tableDisplayTab, newProps.network.tableDisplayTab)
-})*/
+export default TableBrowserPanel
 
-export default MemoTableBrowserPanel

@@ -113,11 +113,6 @@ const NetworkList = props => {
     props.networkActions.changeListIndex(1);
   }, [props.uiState.sortOrder, props.uiState.selectedSource]);
 
-  useEffect(() => {
-    //Open first hit
-    openFirst();
-  }, [props.uiState.selectedSource]);
-
   if (!hits) {
     return <div className="network-list-wrapper" />;
   }

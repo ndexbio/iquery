@@ -1,92 +1,90 @@
-import React, { useState } from "react";
-import Linkify from "linkifyjs/react";
-import parse from "html-react-parser";
+import React, { useState } from 'react'
+import Linkify from 'linkifyjs/react'
+import parse from 'html-react-parser'
 
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/styles";
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/styles'
 
-import { camelCaseToTitleCase } from "./camel-case-util.js";
-import { stripScripts } from "./strip-scripts-util.js";
-import { findAttributes } from "./attribute-util";
+import { camelCaseToTitleCase } from './camel-case-util.js'
+import { stripScripts } from './strip-scripts-util.js'
 
-import GeneAnnotationList from "./GeneAnnotationList";
-import ExpandPanel from "./ExpandPanel";
+import GeneAnnotationList from './GeneAnnotationList'
+import ExpandPanel from './ExpandPanel'
 
-let index = 0;
+let index = 0
 
 const useStyles = makeStyles(theme => ({
   noPadding: {
-    paddingTop: "0",
-    paddingBottom: "0"
+    paddingTop: '0',
+    paddingBottom: '0'
   },
   center: {
-    justifyContent: "center",
-    alignItems: "center",
-    display: "flex",
-    width: "100%"
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    width: '100%'
   },
   wideList: {
-    marginTop: "0",
-    width: "100%",
-    padding: "0"
+    marginTop: '0',
+    width: '100%',
+    padding: '0'
   },
   table: {
-    width: "100%",
-    tableLayout: "fixed"
+    width: '100%',
+    tableLayout: 'fixed'
   }
-}));
+}))
 
 const NodeProperties = props => {
-  const classes = useStyles();
-  const nodes = props.network.selectedNodes;
-  const context = props.context;
+  const classes = useStyles()
+  const nodes = props.network.selectedNodes
+  const context = props.context
 
-  const [defaultExpanded, setDefaultExpanded] = useState(true);
+  const [defaultExpanded, setDefaultExpanded] = useState(true)
 
-  const entityProperties = ["Name", "HGNC", "Ensembl", "Alias", "Type"];
+  const entityProperties = ['Name', 'HGNC', 'Ensembl', 'Alias', 'Type']
 
   const nodeProperties = [
-    "Height",
-    "Width",
-    "Shape",
-    "Is GPML Shape",
-    "Color",
-    "Fill Color",
-    "Transparent",
-    "Border Thickness",
-    "Border Style",
-    "Label Size",
-    "Label Font",
-    "Id"
-  ];
+    'Height',
+    'Width',
+    'Shape',
+    'Is GPML Shape',
+    'Color',
+    'Fill Color',
+    'Transparent',
+    'Border Thickness',
+    'Border Style',
+    'Label Size',
+    'Label Font',
+    'Id'
+  ]
 
-  const displayItems = [entityProperties, nodeProperties];
+  const displayItems = [entityProperties, nodeProperties]
 
   const sortedNodes = nodes.sort((a, b) => {
     if (a.name.toUpperCase() > b.name.toUpperCase()) {
-      return 1;
+      return 1
     } else {
-      return -1;
+      return -1
     }
-  });
+  })
 
-  const topDisplay = [];
+  const topDisplay = []
   sortedNodes.forEach(node => {
-    console.log(node)
     //Filter properties
-    const attributes = [];
-    let content;
-    let title;
-    let geneAnnotation = null;
-    let inset = false;
+    const attributes = []
+    let content
+    let title
+    let geneAnnotation = null
+    let inset = false
     if (
       props.search.results != null &&
       props.search.results.genes.get(node.name) != null
     ) {
-      inset = true;
+      inset = true
       geneAnnotation = (
         <List className={classes.noPadding}>
           <GeneAnnotationList
@@ -95,59 +93,59 @@ const NodeProperties = props => {
             geneSymbol={node.name}
           />
         </List>
-      );
+      )
     }
     for (let key in node) {
-      content = extractContent(node[key]);
-      title = extractTitle(key);
+      content = extractContent(node[key])
+      title = extractTitle(key)
       if (
-        !title.startsWith("__") &&
+        !title.startsWith('__') &&
         content != null &&
-        content !== "null" &&
-        content !== ""
+        content !== 'null' &&
+        content !== ''
       ) {
-        if (title === "alias") {
-          const [prefix, id] = content.split(":");
+        if (title === 'alias') {
+          const [prefix, id] = content.split(':')
           if (prefix in context) {
             attributes.push({
-              title: "Alias",
+              title: 'Alias',
               content:
-                '<a href="' + context[prefix] + id + '">' + content + "</a>",
+                '<a href="' + context[prefix] + id + '">' + content + '</a>',
               displayed: false
-            });
+            })
           }
-        } else {
+        } else if (title !== 'query') {
           attributes.push({
             title: camelCaseToTitleCase(title),
             content: content,
             displayed: false
-          });
+          })
         }
       }
     }
 
-    const displayCol1 = [];
-    const displayCol2 = [];
-    let primaryString;
-    let secondaryString;
+    const displayCol1 = []
+    const displayCol2 = []
+    let primaryString
+    let secondaryString
     displayItems.forEach(list => {
-      primaryString = "";
-      let currentEntry;
+      primaryString = ''
+      let currentEntry
       list.forEach(element => {
         currentEntry = attributes.filter(entry => {
-          return entry.title === element;
-        })[0];
+          return entry.title === element
+        })[0]
         if (currentEntry != null && currentEntry.content != null) {
           primaryString +=
-            currentEntry.title + ": " + currentEntry.content + "<br>";
-          currentEntry.displayed = true;
+            currentEntry.title + ': ' + currentEntry.content + '<br>'
+          currentEntry.displayed = true
         }
-      });
-      primaryString = formatPrimary(primaryString);
-      if (primaryString !== "") {
+      })
+      primaryString = formatPrimary(primaryString)
+      if (primaryString !== '') {
         switch (list) {
           case entityProperties:
-            secondaryString = "Entity Properties";
+            secondaryString = 'Entity Properties'
             displayCol1.push(
               <ListItem key={index++} className={classes.noPadding}>
                 <ListItemText
@@ -164,10 +162,10 @@ const NodeProperties = props => {
                   }
                 />
               </ListItem>
-            );
-            break;
+            )
+            break
           case nodeProperties:
-            secondaryString = "Node Properties";
+            secondaryString = 'Node Properties'
             displayCol2.push(
               <ListItem
                 key={index++}
@@ -187,23 +185,23 @@ const NodeProperties = props => {
                   }
                 />
               </ListItem>
-            );
-            break;
+            )
+            break
         }
       }
-    });
+    })
 
-    primaryString = "";
+    primaryString = ''
     attributes.forEach(entry => {
       if (!entry.displayed) {
-        primaryString += entry.title + ": " + entry.content + "<br>";
-        entry.displayed = true;
+        primaryString += entry.title + ': ' + entry.content + '<br>'
+        entry.displayed = true
       }
-    });
-    primaryString = formatPrimary(primaryString);
-    secondaryString = "Additional properties";
+    })
+    primaryString = formatPrimary(primaryString)
+    secondaryString = 'Additional properties'
 
-    if (primaryString !== "") {
+    if (primaryString !== '') {
       displayCol1.push(
         <ListItem key={index++} className={classes.noPadding}>
           <ListItemText
@@ -220,10 +218,10 @@ const NodeProperties = props => {
             }
           />
         </ListItem>
-      );
+      )
     }
 
-    const summary = <Typography variant="body2">{node.name}</Typography>;
+    const summary = <Typography variant="body2">{node.name}</Typography>
     const details = (
       <table className={classes.table}>
         <tbody>
@@ -233,97 +231,97 @@ const NodeProperties = props => {
             </td>
           </tr>
           <tr>
-            <td valign={"top"}>{displayCol1}</td>
-            <td valign={"top"}>{displayCol2}</td>
+            <td valign={'top'}>{displayCol1}</td>
+            <td valign={'top'}>{displayCol2}</td>
           </tr>
         </tbody>
       </table>
-    );
+    )
     topDisplay.push(
       <ExpandPanel
         summary={summary}
         details={details}
         defaultExpanded={defaultExpanded}
-        keyId={node.id + index++}
+        key={node.id + index++}
         divider={true}
       />
-    );
-  });
+    )
+  })
 
   //Don't return nothing
   if (topDisplay.length === 0) {
     return (
-      <div className={"outer-rectangle"}>
+      <div className={'outer-rectangle'}>
         <div className={classes.center}>
           <Typography color="textSecondary" variant="subtitle1">
             Select a node to view node properties
           </Typography>
         </div>
       </div>
-    );
+    )
   } else if (topDisplay.length === 1) {
     if (!defaultExpanded) {
-      setDefaultExpanded(true);
+      setDefaultExpanded(true)
     }
     return (
-      <div className={"outer-rectangle"}>
-        <div className={"inner-rectangle"}>
+      <div className={'outer-rectangle'}>
+        <div className={'inner-rectangle'}>
           <List className={classes.noPadding}>{topDisplay}</List>
         </div>
       </div>
-    );
+    )
   } else {
     if (defaultExpanded) {
-      setDefaultExpanded(false);
+      setDefaultExpanded(false)
     }
     return (
-      <div className={"outer-rectangle"}>
-        <div className={"inner-rectangle"}>
+      <div className={'outer-rectangle'}>
+        <div className={'inner-rectangle'}>
           <div>
             <List className={classes.noPadding}>{topDisplay}</List>
           </div>
         </div>
       </div>
-    );
+    )
   }
-};
+}
 
 const extractContent = entry => {
   if (entry == null) {
-    return "";
+    return ''
   }
-  return stripScripts(entry);
-};
+  return stripScripts(entry)
+}
 
 const extractTitle = entry => {
   if (entry == null) {
-    return "";
+    return ''
   }
-  return stripScripts(entry);
-};
+  return stripScripts(entry)
+}
 
 const formatPrimary = entry => {
-  if (entry === "") {
-    return entry;
+  if (entry === '') {
+    return entry
   }
   let modifiedText = entry
-    .replace(/<\/?p\/?>/gi, "<br>")
-    .replace(/(<\/?br\/?>)+/gi, "<br>")
-    .replace(/(\n)+/gi, "\n")
+    .replace(/<\/?p\/?>/gi, '<br>')
+    .replace(/(<\/?br\/?>)+/gi, '<br>')
+    .replace(/(\n)+/gi, '\n')
     .replace(/<a\s+href=/gi, '<a target="_blank" href=')
-    .trim();
-  if (modifiedText.startsWith("<br>")) {
-    modifiedText = modifiedText.slice(4, modifiedText.length - 1);
+    .trim()
+  if (modifiedText.startsWith('<br>')) {
+    modifiedText = modifiedText.slice(4, modifiedText.length - 1)
   }
-  if (modifiedText.endsWith("<br>")) {
-    modifiedText = modifiedText.slice(0, modifiedText.length - 4);
+  if (modifiedText.endsWith('<br>')) {
+    modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
-  modifiedText = parse(camelCaseToTitleCase(modifiedText));
+  modifiedText = parse(camelCaseToTitleCase(modifiedText))
   return (
-    <Linkify key={"link" + index++} newTab={true}>
+    <Linkify key={'link' + index++}>
       {modifiedText}
     </Linkify>
-  );
-};
+  )
+}
 
-export default NodeProperties;
+export default NodeProperties

@@ -7,7 +7,6 @@ import { isEqual } from "lodash";
 
 const TabContent = props => {
   const results = props.results;
-  console.log("render")
 
   if (results === null || results === undefined ) {
     return (

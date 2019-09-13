@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+import HoverTab from './HoverTab'
 import Empty from './Empty'
 import TabContent from './TabContent'
-import { ListItem } from '@material-ui/core'
+
+// Conversion table from tab ID to human-readable labels
+const TAB_LABELS = {
+  enrichment: {
+    label: 'Gene Enrichment'
+  },
+  'interactome-ppi': {
+    label: 'Protein Interactions'
+  },
+  'interactome-association': {
+    label: 'Gene Association'
+  }
+}
 
 const styles = theme => ({
   tabs: {},
@@ -13,17 +25,9 @@ const styles = theme => ({
   }
 })
 
-const HoverTab = withStyles(theme => ({
-  root: {
-    '&:hover': {
-      backgroundColor: 'rgb(230,230,230)',
-      opacity: 1
-    }
-  }
-}))(props => <Tab {...props} />)
-
 const Results = props => {
   const { classes, ...others } = props
+
   // For tab selection
   const [idx, setSelectedTabIndex] = useState(0)
 
@@ -56,8 +60,8 @@ const Results = props => {
   }
 
   // Source list is not available.  Just return empty result
-  const sources = props.source.sources
-  if (sources === null || sources === undefined) {
+  const { sources } = props.source
+  if (sources === null || sources === undefined || sources.length === 0) {
     return <Empty />
   }
 
@@ -72,20 +76,7 @@ const Results = props => {
       <div className="results-wrapper">
         <Tabs value={idx} onChange={handleChange} className={classes.tabs}>
           {sources.map(source => (
-            <HoverTab
-              key={source.uuid}
-              label={
-                source.name === 'enrichment'
-                  ? 'Gene Enrichment'
-                  : source.name === 'interactome-ppi'
-                  ? 'Protein Interactions'
-                  : source.name === 'interactome-association'
-                  ? 'Gene Association'
-                  : source.name
-              }
-            >
-              <ListItem button>hey</ListItem>
-            </HoverTab>
+            <HoverTab key={source.uuid} label={TAB_LABELS[source.name].label} />
           ))}
         </Tabs>
         <TabContent results={results} {...others} />
@@ -93,10 +84,6 @@ const Results = props => {
     </div>
   )
 }
-
-/*
-
-              */
 
 const getSourceName = (sources, idx) => {
   return sources[idx].name

@@ -31,10 +31,7 @@ const subtitleStyle = {
  * @constructor
  */
 const Ndex = props => {
-  
-
-  console.log('ndex')
-  const handleFetch = (
+    const handleFetch = (
     networkUUID,
     networkName,
     nodeCount,

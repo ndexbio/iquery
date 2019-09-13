@@ -15,7 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import { Tooltip } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Link from "@material-ui/core/Link";
-import searchLogo from '../../assets/images/search-logo.svg'
+import searchLogo from "../../assets/images/search-logo.svg";
 
 import * as examples from "./example-genes";
 
@@ -27,7 +27,7 @@ const EXAMPLES = examples.default.examples;
 
 const styles = {
   root: {
-    padding: "2px 4px",
+    padding: "0.1em 0.25em",
     display: "flex",
     alignItems: "center"
   },
@@ -165,22 +165,26 @@ const SearchTextBox = props => {
           onKeyDown={handleKeyPress}
           value={state.query}
         />
-          <IconButton
-            ref={searchButtonEl}
-            className={classes.iconButton}
-            aria-label="Search"
-            onClick={handleSearch}
-          >
-            <img alt="Search icon" src={searchLogo} style={{height: "27px"}}/>
-          </IconButton>
+        <IconButton
+          ref={searchButtonEl}
+          className={classes.iconButton}
+          aria-label="Search"
+          onClick={handleSearch}
+        >
+          <img
+            alt="Search icon"
+            src={searchLogo}
+            style={{ height: "1.25em" }}
+          />
+        </IconButton>
       </Paper>
       <Typography
         variant="caption"
-        style={{ paddingTop: "4px" }}
+        style={{ paddingTop: "0.25em" }}
         color="textSecondary"
       >
         <em>Try this pre-release version, send us </em>
-        <Link>
+        <Link href={"https://home.ndexbio.org/contact-us/"}>
           <font color="#00A1DE">
             <em>feedback</em>
           </font>
@@ -188,7 +192,7 @@ const SearchTextBox = props => {
       </Typography>
       <Typography
         align="left"
-        style={{ paddingLeft: "116.14px", paddingTop: "16px" }}
+        style={{ paddingLeft: "7.25em", paddingTop: "1em" }}
       >
         Query gene set examples:
       </Typography>

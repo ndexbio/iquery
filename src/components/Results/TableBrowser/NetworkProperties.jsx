@@ -26,8 +26,8 @@ const useStyles = makeStyles(theme => ({
     boxSizing: 'content-box'
   },
   padding: {
-    paddingLeft: '16px',
-    paddingTop: '12px'
+    paddingLeft: '1em',
+    paddingTop: '0.75em'
   },
   lessPadding: {
     paddingTop: '2.49px'
@@ -180,7 +180,7 @@ const NetworkProperties = props => {
         )
         const details = <Typography variant="body2">{primaryString}</Typography>
         leftDisplay.push(
-          <React.Fragment>
+          <React.Fragment key={index}>
             <div className={classes.padding}>
               <Typography
                 component="span"
@@ -306,11 +306,7 @@ const formatPrimary = entry => {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
   modifiedText = parse(modifiedText)
-  return (
-    <Linkify key={'link' + index++} newTab={true}>
-      {modifiedText}
-    </Linkify>
-  )
+  return <Linkify key={'link:' + modifiedText + index++}>{modifiedText}</Linkify>
 }
 
 const formatContext = entry => {
