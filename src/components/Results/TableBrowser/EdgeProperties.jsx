@@ -167,7 +167,7 @@ const EdgeProperties = props => {
           case entityProperties:
             secondaryString = 'Entity Properties'
             displayCol1.push(
-              <ListItem key={index++} className={classes.noPadding}>
+              <ListItem key={Math.randon()} className={classes.noPadding}>
                 <ListItemText
                   inset={false}
                   primary={
@@ -188,7 +188,7 @@ const EdgeProperties = props => {
             secondaryString = 'Edge Properties'
             displayCol2.push(
               <ListItem
-                key={index++}
+                key={Math.random()}
                 className={classes.listPadding}
                 disableGutters={true}
               >
@@ -335,7 +335,7 @@ const formatPrimary = entry => {
   }
   modifiedText = parse(camelCaseToTitleCase(modifiedText))
   return (
-    <Linkify key={'link' + index++}>
+    <Linkify key={'link:' + index++}>
       {modifiedText}
     </Linkify>
   )

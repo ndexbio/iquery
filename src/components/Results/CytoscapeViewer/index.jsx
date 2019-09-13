@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
-import './style.css'
 import Warning from './Warning'
 import { CONCENTRIC_LAYOUT, COSE_LAYOUT, PRESET_LAYOUT } from './LayoutSettings'
+
+import './style.css'
 
 export const MAX_NETWORK_SIZE = 5000
 
@@ -208,6 +209,14 @@ const CytoscapeViewer = props => {
 
   if (cyInstance !== null) {
     cyInstance.resize()
+    if(layout === COSE_LAYOUT) {
+      layout.stop = () => {
+        setTimeout(()=> {
+          cyInstance.fit()
+        }, 200)
+      }
+
+    }
 
     if (highlights) {
       cyInstance.elements().addClass('faded')
