@@ -3,34 +3,7 @@ import CytoscapeComponent from 'react-cytoscapejs'
 import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
 import './style.css'
 import Warning from './Warning'
-
-
-const PRESET_LAYOUT = {
-  name: 'preset',
-  padding: 6,
-  animate: false
-}
-
-const CONCENTRIC_LAYOUT = {
-  name: 'concentric',
-  padding: 6,
-  minNodeSpacing: 100,
-  animate: false
-}
-
-const COSE_SETTING = {
-  name: 'cose',
-  padding: 6,
-  nodeRepulsion: function(node) {
-    return 10080000
-  },
-  nodeOverlap: 400000,
-  idealEdgeLength: function(edge) {
-    return 10
-  },
-  animate: false,
-  fit: true
-}
+import { CONCENTRIC_LAYOUT, COSE_LAYOUT, PRESET_LAYOUT } from './LayoutSettings'
 
 export const MAX_NETWORK_SIZE = 5000
 
@@ -45,10 +18,12 @@ let cyInstance = null
  * @constructor
  */
 const CytoscapeViewer = props => {
-
   const { highlights } = props.uiState
   const { fit } = props.network
 
+  /*
+    Node/Edge Selections
+   */
   useEffect(() => {
     // Event handler can be set only when Cytoscape.js instance is available.
     if (cyInstance === undefined || cyInstance === null) {
@@ -58,6 +33,7 @@ const CytoscapeViewer = props => {
     // Event handlers
 
     // Background tapped: Remove selection
+    // (This is the standard Cytosape UX)
     cyInstance.on('tap', function() {
       try {
         props.networkActions.unselectEdges()
@@ -125,8 +101,7 @@ const CytoscapeViewer = props => {
       selectNode()
     })
 
-
-    // Reset the UI state (hilight)
+    // Reset the UI state (highlight)
     if (highlights) {
       cyInstance.elements().addClass('faded')
       const query = cyInstance.filter('node[querynode = "true"]')
@@ -204,11 +179,13 @@ const CytoscapeViewer = props => {
     }
   }, [fit])
 
+  // Check network size and show warning if it's too big for this renderer
   const numObjects = props.network.nodeCount + props.network.edgeCount
   if (numObjects > MAX_NETWORK_SIZE) {
     return <Warning {...props} />
   }
 
+  // Render actual network
   const cyjs = props.network.network
   if (cyjs === null || cyjs === undefined) {
     return null
@@ -224,20 +201,13 @@ const CytoscapeViewer = props => {
 
   let layout = PRESET_LAYOUT
   if (!isLayoutAvailable && cyjs.elements.length < 500) {
-    layout = COSE_SETTING
+    layout = COSE_LAYOUT
   } else if (!isLayoutAvailable) {
     layout = CONCENTRIC_LAYOUT
   }
 
-  // Add Callback for layout
-
   if (cyInstance !== null) {
     cyInstance.resize()
-
-    layout.stop = () => {
-      console.log('========== Stop =========')
-      cyInstance.fit()
-    }
 
     if (highlights) {
       cyInstance.elements().addClass('faded')
@@ -474,6 +444,5 @@ const drawAnnotationsFromAnnotationElements = (
     bottomCtx.restore()
   })
 }
-
 
 export default CytoscapeViewer

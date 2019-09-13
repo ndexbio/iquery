@@ -1,20 +1,16 @@
 import React, { useState } from 'react'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
-
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
-
 import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
-
 import GeneAnnotationList from './GeneAnnotationList'
 import ExpandPanel from './ExpandPanel'
 
-let index = 0
 
 const useStyles = makeStyles(theme => ({
   noPadding: {
@@ -37,6 +33,8 @@ const useStyles = makeStyles(theme => ({
     tableLayout: 'fixed'
   }
 }))
+
+let index = 0
 
 const NodeProperties = props => {
   const classes = useStyles()

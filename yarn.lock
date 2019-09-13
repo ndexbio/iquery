@@ -3266,6 +3266,14 @@ csstype@^2.6.5:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.6.tgz#c34f8226a94bbb10c32cc0d714afdf942291fc41"
   integrity sha512-RpFbQGUE74iyPgvr46U9t1xoQBM8T4BL8SxrN66Le2xYAPSaDJJKeztV3awugusb3g3G9iL8StmkBBXhcbbXhg==
 
+cyannotation-cx2js@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/cyannotation-cx2js/-/cyannotation-cx2js-0.8.2.tgz#7f12bc9c72d6bcf7793c625c712a9434f156d38f"
+  integrity sha512-l/hFOt+9MrcY7uUA25Nk6HflxKHLuUryrq0N1xEelrBlcvEw3y/Q+Myv0Sim+wx4x4H5sszNSw1OuJu7VmD8JQ==
+  dependencies:
+    cytoscape-canvas "3.0.1"
+    lodash "^4.17.10"
+
 cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
@@ -8813,10 +8821,10 @@ react-app-polyfill@^1.0.1:
     regenerator-runtime "0.13.2"
     whatwg-fetch "3.0.0"
 
-react-cytoscapejs@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-cytoscapejs/-/react-cytoscapejs-1.1.0.tgz#2175e444f12f4023901a960f71e761cb5b5d0b3a"
-  integrity sha512-CdeEVsOQmw3Cqz47Hx83RelZLT9y3ct6t+YTQ0nRdAt7n+bYD/bTskAmfAm1GvQhzCKylYi2VcY05B8nC4u2Gw==
+react-cytoscapejs@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-cytoscapejs/-/react-cytoscapejs-1.2.0.tgz#fa05bdd7efa26f93219d756b48d123b907dc3a70"
+  integrity sha512-VhOhICJbI+X377RvTX7X+lpMSLWiI2Y7O6xJOc82u2dIF2qrtksP9H4IMGoo2TYL6otLuYV81RfFyywk4KCxBg==
   dependencies:
     cytoscape "^3.2.19"
     prop-types "^15.6.2"
