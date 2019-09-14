@@ -24,6 +24,7 @@ import purple from "@material-ui/core/colors/purple";
 import { ThemeProvider } from "@material-ui/styles";
 
 const EXAMPLES = examples.default.examples;
+const feedbackURL = "https://home.ndexbio.org/contact-us/";
 
 const styles = {
   root: {
@@ -184,7 +185,7 @@ const SearchTextBox = props => {
         color="textSecondary"
       >
         <em>Try this pre-release version, send us </em>
-        <Link href={"https://home.ndexbio.org/contact-us/"}>
+        <Link href={feedbackURL} target="_blank">
           <font color="#00A1DE">
             <em>feedback</em>
           </font>

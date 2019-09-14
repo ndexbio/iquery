@@ -100,7 +100,13 @@ const styles = theme => ({
 
 const NetworkToolbar = props => {
   const { classes, ...other } = props;
-  const [prefix, name] = props.network.networkName.split(":");
+  let [prefix, name] = ["",""]
+
+  if (props.search.actualResults.length !== 0) {
+    [prefix, name] = props.network.networkName.split(":");
+  }
+  console.log(prefix)
+  console.log(name)
 
   return (
     <div className={classes.toolbar}>
