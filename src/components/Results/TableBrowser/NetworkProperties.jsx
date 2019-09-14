@@ -306,7 +306,9 @@ const formatPrimary = entry => {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
   modifiedText = parse(modifiedText)
-  return <Linkify key={'link:' + modifiedText + index++}>{modifiedText}</Linkify>
+  return (
+    <Linkify key={Math.random().toString()}>{modifiedText}</Linkify>
+  )
 }
 
 const formatContext = entry => {
@@ -326,8 +328,5 @@ const formatContext = entry => {
   return formatPrimary(result)
 }
 
-const MemoNetworkProperties = NetworkProperties /*React.memo(NetworkProperties, (prevProps, newProps) => {
-  return true
-})*/
 
-export default MemoNetworkProperties
+export default NetworkProperties

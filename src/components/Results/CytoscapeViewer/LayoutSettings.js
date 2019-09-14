@@ -22,5 +22,5 @@ export const COSE_LAYOUT = {
     return 10
   },
   animate: false,
-  fit: true
+  fit: false
 }
