@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
 import Cytoscape from 'cytoscape'
@@ -14,6 +14,12 @@ export const MAX_NETWORK_SIZE = 5000
 Cytoscape.use(CyCanvas)
 let cyInstance = null
 
+const annotationRenderer = new CxToCyCanvas(CxToJs)
+const utils = new CyNetworkUtils()
+
+// This is the network attributes storing graphical annotations.
+const ANNOTATION_TAG = '__Annotations'
+
 /**
  *
  * Simple wrapper for cytoscape.js react component
@@ -24,7 +30,41 @@ let cyInstance = null
  */
 const CytoscapeViewer = props => {
   const { highlights } = props.uiState
-  const { fit } = props.network
+  const { fit, originalCX, backgroundColor } = props.network
+
+  const [backgroundLayer, setBackgroundLayer] = useState(null)
+
+  let niceCX = useMemo(() => {
+    const networkAttr = originalCX.filter(
+      entry => entry.networkAttributes !== undefined
+    )
+
+    if (networkAttr !== undefined) {
+      const firstEntry = networkAttr[0]
+      if (
+        firstEntry === undefined ||
+        firstEntry.networkAttributes === undefined
+      ) {
+        return
+      }
+
+      const netAttrArray = firstEntry.networkAttributes
+      const annotationEntry = netAttrArray.filter(
+        attr => attr.n === ANNOTATION_TAG
+      )
+      if (annotationEntry.length !== 0) {
+        console.log(
+          '* This CX contains __Annotations. Converting CX to niceCX...',
+          originalCX,
+          netAttrArray,
+          annotationEntry
+        )
+        return utils.rawCXtoNiceCX(originalCX)
+      }
+    }
+
+    return null
+  }, originalCX)
 
   /*
     Node/Edge Selections
@@ -33,6 +73,25 @@ const CytoscapeViewer = props => {
     // Event handler can be set only when Cytoscape.js instance is available.
     if (cyInstance === undefined || cyInstance === null) {
       return
+    }
+
+    // Create background layer: this should be done only once!!
+    if (!backgroundLayer) {
+      const bg = cyInstance.cyCanvas({
+        zIndex: -10
+      })
+
+      const canvas = bg.getCanvas()
+      const ctx = bg.getCanvas().getContext('2d')
+      cyInstance.on('cyCanvas.resize', function() {
+        if (ctx.fillStyle.toUpperCase() !== backgroundColor.toUpperCase()) {
+          console.log('* update ->Drawing background:', backgroundColor)
+          ctx.fillStyle = backgroundColor
+          ctx.fillRect(0, 0, canvas.width, canvas.height)
+        }
+      })
+
+      setBackgroundLayer(bg)
     }
 
     // Event handlers
@@ -211,15 +270,21 @@ const CytoscapeViewer = props => {
     layout = CONCENTRIC_LAYOUT
   }
 
+
   if (cyInstance !== null) {
     cyInstance.resize()
-    if(layout === COSE_LAYOUT) {
+
+    if (niceCX !== null && niceCX !== undefined) {
+      console.log('* rendering annotation for this niceCX:', niceCX)
+      annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, niceCX)
+    }
+
+    if (layout === COSE_LAYOUT) {
       layout.stop = () => {
-        setTimeout(()=> {
+        setTimeout(() => {
           cyInstance.fit()
         }, 200)
       }
-
     }
 
     if (highlights) {
@@ -242,28 +307,6 @@ const CytoscapeViewer = props => {
       stylesheet={cyjs.style}
       cy={cy => {
         cyInstance = cy
-        console.log("network background color:" + props.network.backgroundColor)
-        if (props.network.backgroundColor) {
-          const backgroundLayer = cyInstance.cyCanvas({
-            zIndex: -2
-          })
-          const canvas = backgroundLayer.getCanvas()
-          const ctx = backgroundLayer.getCanvas().getContext('2d')
-
-          cyInstance.on('render cyCanvas.resize', function() {
-            console.log('resize CyCanvas', props.network.backgroundColor)
-            ctx.fillStyle = props.network.backgroundColor
-            ctx.fillRect(0, 0, canvas.width, canvas.height)
-          })
-        }
-
-        const utils = new CyNetworkUtils();
-        const niceCX = utils.rawCXtoNiceCX(props.network.originalCX);
-
-        if (niceCX) {
-          const annotations = new CxToCyCanvas(CxToJs)
-          annotations.drawAnnotationsFromNiceCX(cyInstance, niceCX)
-        }
       }}
     />
   )

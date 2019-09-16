@@ -3266,12 +3266,20 @@ csstype@^2.6.5:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.6.tgz#c34f8226a94bbb10c32cc0d714afdf942291fc41"
   integrity sha512-RpFbQGUE74iyPgvr46U9t1xoQBM8T4BL8SxrN66Le2xYAPSaDJJKeztV3awugusb3g3G9iL8StmkBBXhcbbXhg==
 
+cyannotation-cx2js@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/cyannotation-cx2js/-/cyannotation-cx2js-0.8.3.tgz#fd9b62a3e08818286647c7916991fb37e0765c03"
+  integrity sha512-JVhouV7n8wjk08PsXEqBdRfrtEboYoigPf1NVCikueU0+xx5s4l5PeJdHslovf2p3QaQfkJnPhrvhUNDFa5VuQ==
+  dependencies:
+    cytoscape-canvas "3.0.1"
+    lodash "^4.17.10"
+
 cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
   integrity sha1-GzN5LhHpFKL9bW7WRHRkRE5fpkA=
 
-cytoscape-canvas@3.0.1:
+cytoscape-canvas@3.0.1, cytoscape-canvas@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/cytoscape-canvas/-/cytoscape-canvas-3.0.1.tgz#7d963be51e6e5f3f2482b05d22562c8ee941d125"
   integrity sha512-R1nCLnJHGTR5fWEpNQQBPyoigdnfhnk1lOHegzmzz1Kg6yxzVf0hfdRAMa0wPAhtC4kkgyoViiIfZ/zyCqMhEQ==
@@ -3290,6 +3298,14 @@ cytoscape-panzoom@^2.5.3:
   integrity sha512-//qLOqbbFUCGddarNKHDZArItOJHgnkQ1TvxI9nV2/8aOOl/5wuEOHmra3fL/aWSjB4AYpYTG4LX7w96uWfRTQ==
   dependencies:
     jquery "^1.4 || ^2.0 || ^3.0"
+
+cytoscape@^3.10.0:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/cytoscape/-/cytoscape-3.10.0.tgz#3b462e0d35121ecd2d2702f470915fd6dae01777"
+  integrity sha512-lWOnG4HJQD0cy+tCiBmbV/QRknInuZ8HvjcUifQZ7E4LWmKMvl6d5eP0LaaRLfBJAplXWcJfwc17ZJ/nwPeaYg==
+  dependencies:
+    heap "^0.2.6"
+    lodash.debounce "^4.0.8"
 
 cytoscape@^3.2.19:
   version "3.5.4"

@@ -9,6 +9,7 @@
     "@material-ui/styles": "^3.0.0-alpha.10",
     "cyannotation-cx2js": "^0.8.3",
     "cytoscape": "^3.10.0",
+    "cytoscape-canvas": "^3.0.1",
     "cytoscape-cx2js": "^0.5.5",
     "cytoscape-panzoom": "^2.5.3",
     "fg-loadcss": "^2.1.0",
