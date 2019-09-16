@@ -133,7 +133,7 @@ class TitleBar extends React.Component {
               </IconButton>
             </Tooltip>
           */}
-            <Tooltip title="Help" placement="bottom" style={{paddingRight: "1.5em"}}>
+            <Tooltip title="Help" placement="bottom" style={{paddingRight: "1em"}}>
               <IconButton
                 aria-haspopup="true"
                 color="default"
