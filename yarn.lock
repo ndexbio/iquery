@@ -3266,14 +3266,6 @@ csstype@^2.6.5:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.6.tgz#c34f8226a94bbb10c32cc0d714afdf942291fc41"
   integrity sha512-RpFbQGUE74iyPgvr46U9t1xoQBM8T4BL8SxrN66Le2xYAPSaDJJKeztV3awugusb3g3G9iL8StmkBBXhcbbXhg==
 
-cyannotation-cx2js@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/cyannotation-cx2js/-/cyannotation-cx2js-0.8.2.tgz#7f12bc9c72d6bcf7793c625c712a9434f156d38f"
-  integrity sha512-l/hFOt+9MrcY7uUA25Nk6HflxKHLuUryrq0N1xEelrBlcvEw3y/Q+Myv0Sim+wx4x4H5sszNSw1OuJu7VmD8JQ==
-  dependencies:
-    cytoscape-canvas "3.0.1"
-    lodash "^4.17.10"
-
 cyclist@~0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"

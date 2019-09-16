@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
+import Cytoscape from 'cytoscape'
+import CyCanvas from 'cytoscape-canvas'
+import { CxToCyCanvas } from 'cyannotation-cx2js'
 import Warning from './Warning'
 import { CONCENTRIC_LAYOUT, COSE_LAYOUT, PRESET_LAYOUT } from './LayoutSettings'
 
@@ -8,6 +11,7 @@ import './style.css'
 
 export const MAX_NETWORK_SIZE = 5000
 
+Cytoscape.use(CyCanvas)
 let cyInstance = null
 
 /**
@@ -238,220 +242,31 @@ const CytoscapeViewer = props => {
       stylesheet={cyjs.style}
       cy={cy => {
         cyInstance = cy
+        console.log("network background color:" + props.network.backgroundColor)
+        if (props.network.backgroundColor) {
+          const backgroundLayer = cyInstance.cyCanvas({
+            zIndex: -2
+          })
+          const canvas = backgroundLayer.getCanvas()
+          const ctx = backgroundLayer.getCanvas().getContext('2d')
+
+          cyInstance.on('render cyCanvas.resize', function() {
+            console.log('resize CyCanvas', props.network.backgroundColor)
+            ctx.fillStyle = props.network.backgroundColor
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
+          })
+        }
+
+        const utils = new CyNetworkUtils();
+        const niceCX = utils.rawCXtoNiceCX(props.network.originalCX);
+
+        if (niceCX) {
+          const annotations = new CxToCyCanvas(CxToJs)
+          annotations.drawAnnotationsFromNiceCX(cyInstance, niceCX)
+        }
       }}
     />
   )
-}
-
-const drawAnnotations = (cyInstance, originalCX) => {
-  var utils = new CyNetworkUtils()
-  var cx2Js = new CxToJs(utils)
-  const niceCX = utils.rawCXtoNiceCX(originalCX)
-  drawAnnotationsFromNiceCX(cyInstance, niceCX, cx2Js)
-}
-
-const drawAnnotationsFromNiceCX = (cytoscapeInstance, niceCX, cx2Js) => {
-  const annotationElements = getAnnotationElementsFromNiceCX(niceCX)
-  drawAnnotationsFromAnnotationElements(
-    cytoscapeInstance,
-    annotationElements,
-    cx2Js
-  )
-}
-
-const getAnnotationElementsFromNiceCX = niceCX => {
-  if (niceCX['networkAttributes']) {
-    return niceCX['networkAttributes']['elements'].filter(function(element) {
-      return element['n'] == '__Annotations'
-    })
-  } else {
-    return []
-  }
-}
-
-const drawAnnotationsFromAnnotationElements = (
-  cytoscapeInstance,
-  annotationElements,
-  cx2Js
-) => {
-  const bottomLayer = cytoscapeInstance.cyCanvas({
-    zIndex: -1
-  })
-
-  const topLayer = cytoscapeInstance.cyCanvas({
-    zIndex: 1
-  })
-
-  const bottomCanvas = bottomLayer.getCanvas()
-  const bottomCtx = bottomCanvas.getContext('2d')
-
-  const topCanvas = topLayer.getCanvas()
-  const topCtx = topCanvas.getContext('2d')
-
-  cytoscapeInstance.on('render cyCanvas.resize', evt => {
-    var colorFromInt = this._colorFromInt
-    var shapeFunctions = this._shapeFunctions
-    //console.log("render cyCanvas.resize event");
-    bottomLayer.resetTransform(bottomCtx)
-    bottomLayer.clear(bottomCtx)
-    bottomLayer.setTransform(bottomCtx)
-
-    bottomCtx.save()
-
-    topLayer.resetTransform(topCtx)
-    topLayer.clear(topCtx)
-    topLayer.setTransform(topCtx)
-
-    topCtx.save()
-
-    var indexedAnnotations = {}
-    var topAnnotations = []
-    var bottomAnnotations = []
-
-    annotationElements.forEach(function(element) {
-      element['v'].forEach(function(annotation) {
-        var annotationKVList = annotation.split('|')
-        var annotationMap = {}
-        annotationKVList.forEach(function(annotationKV) {
-          var kvPair = annotationKV.split('=')
-          annotationMap[kvPair[0]] = kvPair[1]
-        })
-
-        indexedAnnotations[annotationMap['uuid']] = annotationMap
-
-        if (annotationMap['canvas'] == 'foreground') {
-          topAnnotations.push(annotationMap['uuid'])
-        } else {
-          bottomAnnotations.push(annotationMap['uuid'])
-        }
-      })
-    })
-    var zOrderCompare = function(a, b) {
-      let annotationA = indexedAnnotations[a]
-      let annotationB = indexedAnnotations[b]
-      return parseInt(annotationB['z']) - parseInt(annotationA['z'])
-    }
-
-    topAnnotations.sort(zOrderCompare)
-    bottomAnnotations.sort(zOrderCompare)
-
-    var contextAnnotationMap = [
-      { context: topCtx, annotations: topAnnotations },
-      { context: bottomCtx, annotations: bottomAnnotations }
-    ]
-    contextAnnotationMap.forEach(function(contextAnnotationPair) {
-      let ctx = contextAnnotationPair.context
-      contextAnnotationPair.annotations.forEach(function(annotationUUID) {
-        let annotationMap = indexedAnnotations[annotationUUID]
-        if (
-          annotationMap['type'] ===
-            'org.cytoscape.view.presentation.annotations.ShapeAnnotation' ||
-          annotationMap['type'] ===
-            'org.cytoscape.view.presentation.annotations.BoundedTextAnnotation'
-        ) {
-          //ctx.beginPath();
-          ctx.lineWidth = annotationMap['edgeThickness']
-
-          annotationMap['width'] =
-            parseFloat(annotationMap['width']) /
-            parseFloat(annotationMap['zoom'])
-          annotationMap['height'] =
-            parseFloat(annotationMap['height']) /
-            parseFloat(annotationMap['zoom'])
-          if (shapeFunctions[annotationMap['shapeType']]) {
-            ctx.strokeStyle = colorFromInt(
-              annotationMap['edgeColor'],
-              annotationMap['edgeOpacity']
-            )
-            shapeFunctions[annotationMap['shapeType']](annotationMap, ctx)
-
-            //ctx.stroke();
-          } else {
-            console.warn('Invalid shape type: ' + annotationMap['shapeType'])
-          }
-        } else if (
-          annotationMap['type'] ===
-          'org.cytoscape.view.presentation.annotations.ArrowAnnotation'
-        ) {
-          if (
-            annotationMap['targetAnnotation'] &&
-            annotationMap['sourceAnnotation']
-          ) {
-            let sourceAnnotation =
-              indexedAnnotations[annotationMap['sourceAnnotation']]
-            let targetAnnotation =
-              indexedAnnotations[annotationMap['targetAnnotation']]
-            ctx.stroke()
-          }
-        }
-
-        var text
-        var textX
-        var textY
-
-        if (
-          annotationMap['type'] ===
-          'org.cytoscape.view.presentation.annotations.TextAnnotation'
-        ) {
-          text = annotationMap['text']
-          ctx.textBaseline = 'top'
-          ctx.textAlign = 'left'
-          textX = annotationMap['x']
-          textY = annotationMap['y']
-        } else if (
-          annotationMap['type'] ===
-          'org.cytoscape.view.presentation.annotations.BoundedTextAnnotation'
-        ) {
-          text = annotationMap['text']
-
-          ctx.textBaseline = 'middle'
-          ctx.textAlign = 'center'
-
-          textX = parseFloat(annotationMap['x']) + annotationMap['width'] / 2
-          textY = parseFloat(annotationMap['y']) + annotationMap['height'] / 2
-        }
-        if (text && textX && textY) {
-          var fontSize =
-            parseFloat(annotationMap['fontSize']) /
-            parseFloat(annotationMap['zoom'])
-          var fontFamily
-
-          if (annotationMap['fontFamily']) {
-            if (
-              cx2Js.JavaLogicalFontConstants.FONT_FAMILY_LIST.includes(
-                annotationMap['fontFamily']
-              )
-            ) {
-              fontFamily =
-                cx2Js.JavaLogicalFontConstants.FONT_STACK_MAP[
-                  annotationMap['fontFamily']
-                ]
-            } else if (
-              cx2Js.CommonOSFontConstants.FONT_STACK_MAP[
-                annotationMap['fontFamily']
-              ]
-            ) {
-              fontFamily =
-                cx2Js.CommonOSFontConstants.FONT_STACK_MAP[
-                  annotationMap['fontFamily']
-                ]
-            } else {
-              fontFamily = 'sans-serif'
-            }
-          }
-          ctx.font = fontSize + 'px ' + fontFamily
-
-          if (annotationMap['color']) {
-            ctx.fillStyle = colorFromInt(annotationMap['color'], '99')
-          }
-          ctx.fillText(text.toString(), textX, textY)
-        }
-      })
-    })
-
-    topCtx.restore()
-    bottomCtx.restore()
-  })
 }
 
 export default CytoscapeViewer
