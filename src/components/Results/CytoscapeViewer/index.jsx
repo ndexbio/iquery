@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
 import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
 import Cytoscape from 'cytoscape'
@@ -11,7 +11,10 @@ import './style.css'
 
 export const MAX_NETWORK_SIZE = 5000
 
+// For supporting visual annotation
 Cytoscape.use(CyCanvas)
+
+// This is the global instance of Cytoscape.js
 let cyInstance = null
 
 // For annotation rendering
@@ -62,7 +65,10 @@ const CytoscapeViewer = props => {
       )
       if (annotationEntry.length !== 0) {
         const nice = utils.rawCXtoNiceCX(originalCX)
-        console.log('* Registering annotation renderer for this niceCX:', annotationEntry)
+        console.log(
+          '* Registering annotation renderer for this niceCX:',
+          annotationEntry
+        )
         annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
         return nice
       }
