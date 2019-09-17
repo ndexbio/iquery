@@ -4,13 +4,8 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
 import { Tooltip } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -18,10 +13,6 @@ import Link from "@material-ui/core/Link";
 import searchLogo from "../../assets/images/search-logo.svg";
 
 import * as examples from "./example-genes";
-
-import { createMuiTheme } from "@material-ui/core/styles";
-import purple from "@material-ui/core/colors/purple";
-import { ThemeProvider } from "@material-ui/styles";
 
 const EXAMPLES = examples.default.examples;
 const feedbackURL = "https://home.ndexbio.org/contact-us/";
@@ -58,13 +49,6 @@ const SearchTextBox = props => {
       props.history.push(`/${jobId}`);
     }
   }, []);
-
-  const theme = createMuiTheme({
-    palette: {
-      primary: { main: purple[500] }, // Purple and green play nicely together.
-      secondary: { main: "#11cb5f" } // This is just green.A700 as hex.
-    }
-  });
 
   const open = Boolean(state.anchorEl);
 
@@ -120,37 +104,6 @@ const SearchTextBox = props => {
   return (
     <React.Fragment>
       <Paper className={"search-text-box"} elevation={1}>
-        {/*<div>
-        <IconButton
-          className={classes.iconButton}
-          aria-label="Menu"
-          onClick={handleMenu}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Menu
-          anchorEl={state.anchorEl}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right"
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right"
-          }}
-          open={open}
-          onClose={handleClose}
-        >
-          {EXAMPLES.map((example, idx) => {
-            return (
-              <MenuItem key={idx} onClick={() => handleExample(idx)}>
-                {example.name}
-              </MenuItem>
-            );
-          })}
-        </Menu>
-      </div>
-        <Divider className={classes.divider} />*/}
         <IconButton
           color={"default"}
           className={classes.iconButton}

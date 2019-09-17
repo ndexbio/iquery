@@ -11,6 +11,8 @@ import queryString from "query-string";
 import { Tooltip } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 
+const feedbackURL = "https://home.ndexbio.org/contact-us/";
+
 const StartPanel = props => {
   useEffect(() => {
     const params = queryString.parse(props.location.search);
@@ -105,7 +107,7 @@ const StartPanel = props => {
           <Typography variant="caption" align="center">
             Do you have a pathway or an interaction network that you would like
             to include in these queries? Click{" "}
-            <Link>
+            <Link href={feedbackURL} target="_blank">
               <font color="#00A1DE">
                 <em>here</em>
               </font>

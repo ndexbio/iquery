@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react'
 import CytoscapeComponent from 'react-cytoscapejs'
-import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
-import Cytoscape from 'cytoscape'
-import CyCanvas from 'cytoscape-canvas'
-import { CxToCyCanvas } from 'cyannotation-cx2js'
+//import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
+//import Cytoscape from 'cytoscape'
+//import CyCanvas from 'cytoscape-canvas'
+//import { CxToCyCanvas } from 'cyannotation-cx2js'
 import Warning from './Warning'
 import { CONCENTRIC_LAYOUT, COSE_LAYOUT, PRESET_LAYOUT } from './LayoutSettings'
 
@@ -12,14 +12,14 @@ import './style.css'
 export const MAX_NETWORK_SIZE = 5000
 
 // For supporting visual annotation
-Cytoscape.use(CyCanvas)
+//Cytoscape.use(CyCanvas)
 
 // This is the global instance of Cytoscape.js
 let cyInstance = null
 
 // For annotation rendering
-const annotationRenderer = new CxToCyCanvas(CxToJs)
-const utils = new CyNetworkUtils()
+//const annotationRenderer = new CxToCyCanvas(CxToJs)
+//const utils = new CyNetworkUtils()
 
 // This is the network attributes storing graphical annotations.
 const ANNOTATION_TAG = '__Annotations'
@@ -44,7 +44,7 @@ const CytoscapeViewer = props => {
   if (backgroundColor === null || backgroundColor === undefined) {
     backgroundColor = DEF_BG_COLOR
   }
-
+/*
   let niceCX = useMemo(() => {
     const networkAttr = originalCX.filter(
       entry => entry.networkAttributes !== undefined
@@ -76,7 +76,7 @@ const CytoscapeViewer = props => {
 
     return null
   }, originalCX)
-
+*/
   /*
     Node/Edge Selections
    */
