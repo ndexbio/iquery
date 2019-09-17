@@ -16,14 +16,20 @@ function delay(duration) {
 }
 
 export function* _fetchCyRESTAvailable(action) {
+  // This is for avoiding too many unnecessary state updates.
+  let currentConnectionState = false
+
   while (true) {
     try {
-      const statusResponse = yield call(cyrest.status, 1234)
-      const statusJson = yield call([statusResponse, 'json'])
-      yield put({ type: SET_AVAILABLE, payload: true })
+      yield call(cyrest.status, 1234)
+
+      if (currentConnectionState !== true) {
+        yield put({ type: SET_AVAILABLE, payload: true })
+      }
     } catch (e) {
-      //console.log(e)
-      yield put({ type: SET_AVAILABLE, payload: false })
+      if (currentConnectionState === true) {
+        yield put({ type: SET_AVAILABLE, payload: false })
+      }
     }
     yield call(delay, 20000)
   }
