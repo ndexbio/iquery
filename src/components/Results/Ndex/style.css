@@ -68,6 +68,7 @@
   position: relative;
   bottom: 0;
   right: 0;
+  z-index: 0;
 }
 
 .nv-container {

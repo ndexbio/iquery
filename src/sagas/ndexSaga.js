@@ -1,7 +1,7 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
-import * as api from "../api/ndex";
-import * as myGeneApi from "../api/mygene";
-import * as cySearchApi from "../api/search";
+import { all, call, put, takeLatest } from 'redux-saga/effects'
+import * as api from '../api/ndex'
+import * as myGeneApi from '../api/mygene'
+import * as cySearchApi from '../api/search'
 
 import {
   SEARCH_STARTED,
@@ -11,29 +11,29 @@ import {
   FETCH_RESULT_SUCCEEDED,
   FETCH_RESULT_FAILED,
   SET_SEARCH_RESULT
-} from "../actions/search";
+} from '../actions/search'
 
 import {
   FIND_SOURCE_STARTED,
   FIND_SOURCE_FAILED,
   FIND_SOURCE_SUCCEEDED
-} from "../actions/source";
+} from '../actions/source'
 
 import {
   NETWORK_FETCH_STARTED,
   NETWORK_FETCH_SUCCEEDED,
   NETWORK_FETCH_FAILED
-} from "../actions/network";
+} from '../actions/network'
 
-const API_CALL_INTERVAL = 1000;
+const API_CALL_INTERVAL = 1000
 
-const SELECTED_SOURCES = ["interactome-ppi"];
+const SELECTED_SOURCES = ['interactome-ppi']
 
 export default function* rootSaga() {
-  yield takeLatest(SEARCH_STARTED, watchSearch);
-  yield takeLatest(FETCH_RESULT_STARTED, watchSearchResult);
-  yield takeLatest(NETWORK_FETCH_STARTED, fetchNetwork);
-  yield takeLatest(FIND_SOURCE_STARTED, fetchSource);
+  yield takeLatest(SEARCH_STARTED, watchSearch)
+  yield takeLatest(FETCH_RESULT_STARTED, watchSearchResult)
+  yield takeLatest(NETWORK_FETCH_STARTED, fetchNetwork)
+  yield takeLatest(FIND_SOURCE_STARTED, fetchSource)
 }
 
 /**
@@ -43,8 +43,8 @@ export default function* rootSaga() {
  * @returns {IterableIterator<*>}
  */
 function* watchSearch(action) {
-  const geneList = action.payload.geneList;
-  let sourceNames = action.payload.sourceNames;
+  const geneList = action.payload.geneList
+  let sourceNames = action.payload.sourceNames
 
   // If source names are missing, find them:
   if (
@@ -52,26 +52,26 @@ function* watchSearch(action) {
     sourceNames === null ||
     sourceNames.length === 0
   ) {
-    const sources = yield call(cySearchApi.getSource, null);
-    const sourceJson = yield call([sources, "json"]);
-    const sourceList = sourceJson.results;
-    sourceNames = sourceList.map(source => source.name);
-    sourceNames = sourceNames.filter(name => name !== "keyword");
+    const sources = yield call(cySearchApi.getSource, null)
+    const sourceJson = yield call([sources, 'json'])
+    const sourceList = sourceJson.results
+    sourceNames = sourceList.map(source => source.name)
+    sourceNames = sourceNames.filter(name => name !== 'keyword')
   }
-  const geneListString = geneList.join();
+  const geneListString = geneList.join()
 
   try {
     // Call 1: Send query and get JobID w/ gene props from MyGene
     const [geneRes, searchRes] = yield all([
       call(myGeneApi.searchGenes, geneListString),
       call(cySearchApi.postQuery, geneList, sourceNames)
-    ]);
+    ])
 
-    const geneJson = yield call([geneRes, "json"]);
-    const resultLocation = searchRes.headers.get("Location");
-    const parts = resultLocation.split("/");
-    const jobId = parts[parts.length - 1];
-    const filtered = filterGenes(geneJson);
+    const geneJson = yield call([geneRes, 'json'])
+    const resultLocation = searchRes.headers.get('Location')
+    const parts = resultLocation.split('/')
+    const jobId = parts[parts.length - 1]
+    const filtered = filterGenes(geneJson)
 
     yield put({
       type: SEARCH_SUCCEEDED,
@@ -81,162 +81,155 @@ function* watchSearch(action) {
         resultLocation,
         jobId
       }
-    });
+    })
   } catch (e) {
-    console.warn("NDEx search error:", e);
+    console.warn('NDEx search error:', e)
     yield put({
       type: SEARCH_FAILED,
       payload: {
-        message: "NDEx network search error",
+        message: 'NDEx network search error',
         query: geneListString,
         error: e.message
       }
-    });
+    })
   }
 }
 
 // Simple sleep function using Promise
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 function* watchSearchResult(action) {
-  const jobId = action.payload.jobId;
+  const jobId = action.payload.jobId
 
-  const currentResult = {};
+  const currentResult = {}
 
   try {
     while (true) {
       // Check overall status
-      const statusRes = yield call(cySearchApi.checkStatus, jobId);
-      const statusJson = yield call([statusRes, "json"]);
+      const statusRes = yield call(cySearchApi.checkStatus, jobId)
+      const statusJson = yield call([statusRes, 'json'])
 
-      const { progress } = statusJson;
+      const { progress } = statusJson
       if (progress === 100) {
         // All results are available.  Simply return it.
-        const resultRes = yield call(cySearchApi.getResult, jobId);
-        const resultJson = yield call([resultRes, "json"]);
-        //
+        const resultRes = yield call(cySearchApi.getResult, jobId)
+        const resultJson = yield call([resultRes, 'json'])
 
-        console.log("One")
         yield put({
           type: SET_SEARCH_RESULT,
           payload: {
             singleResult: resultJson
           }
-        });
+        })
 
         yield put({
           type: FETCH_RESULT_SUCCEEDED,
           payload: {
             searchResults: resultJson
           }
-        });
-        return;
+        })
+        return
       }
 
-      const status = statusJson.sources;
+      const status = statusJson.sources
 
-      let idx = status.length;
+      let idx = status.length
+
+      // This will be true if all results are finished (100%)
+      let allDone = false
+
       while (idx--) {
-        const src = status[idx];
-        const { progress, sourceName } = src;
+        const src = status[idx]
+        const { progress, sourceName } = src
         if (progress === 100) {
-          const resultRes = yield call(
-            cySearchApi.getResult,
-            jobId,
-            sourceName
-          );
-          const json = yield call([resultRes, "json"]);
+          allDone = true
+          const resultRes = yield call(cySearchApi.getResult, jobId, sourceName)
+          const json = yield call([resultRes, 'json'])
 
-          currentResult[sourceName] = json;
-
-          console.log("Two")
+          currentResult[sourceName] = json
           yield put({
             type: SET_SEARCH_RESULT,
             payload: {
               singleResult: json
             }
-          });
+          })
+        } else {
+          allDone = false
         }
       }
-      yield call(sleep, API_CALL_INTERVAL);
+
+      if (allDone) {
+        break
+      }
+
+      // Wait 1 sec. and try API call again.
+      yield call(sleep, API_CALL_INTERVAL)
     }
 
-    const resultRes = yield call(cySearchApi.getResult, jobId);
-    const resultJson = yield call([resultRes, "json"]);
+    const resultRes = yield call(cySearchApi.getResult, jobId)
+    const resultJson = yield call([resultRes, 'json'])
     yield put({
       type: FETCH_RESULT_SUCCEEDED,
       payload: {
         searchResults: resultJson
       }
-    });
+    })
   } catch (e) {
-    console.warn("NDEx search error:", e);
+    console.warn('NDEx search error:', e)
     yield put({
       type: FETCH_RESULT_FAILED,
       payload: {
-        message: "Failed to fetch search result",
+        message: 'Failed to fetch search result',
         jobId,
         error: e.message
       }
-    });
+    })
   }
 }
 
 function* fetchNetwork(action) {
   try {
-    const params = action.payload;
-    const id = params.id;
-    const sourceUUID = params.sourceUUID;
-    const networkUUID = params.networkUUID;
+    const params = action.payload
+    const id = params.id
+    const sourceUUID = params.sourceUUID
+    const networkUUID = params.networkUUID
 
-    const cx = yield call(api.fetchNetwork, id, sourceUUID, networkUUID);
-    const json = yield call([cx, "json"]);
+    const cx = yield call(api.fetchNetwork, id, sourceUUID, networkUUID)
+    const json = yield call([cx, 'json'])
 
-    yield put({ type: NETWORK_FETCH_SUCCEEDED, cx: json });
+    yield put({ type: NETWORK_FETCH_SUCCEEDED, cx: json })
   } catch (error) {
-    yield put({ type: NETWORK_FETCH_FAILED, error });
+    yield put({ type: NETWORK_FETCH_FAILED, error })
   }
 }
 
 function* fetchSource(action) {
   try {
-    const sources = yield call(cySearchApi.getSource, null);
-    const json = yield call([sources, "json"]);
-
-    const orderedSources = json.results;
-    /*
-    const reducedSources = json.results.filter(entry =>
-      SELECTED_SOURCES.includes(entry["name"])
-    );
-
-    const orderedSources = reducedSources.sort(
-      (firstEl, secondEl) =>
-        SELECTED_SOURCES.indexOf(firstEl["name"]) -
-        SELECTED_SOURCES.indexOf(secondEl["name"])
-    );
-*/
-    yield put({ type: FIND_SOURCE_SUCCEEDED, sources: orderedSources });
+    const sources = yield call(cySearchApi.getSource, null)
+    const json = yield call([sources, 'json'])
+    const orderedSources = json.results
+    yield put({ type: FIND_SOURCE_SUCCEEDED, sources: orderedSources })
   } catch (error) {
-    yield put({ type: FIND_SOURCE_FAILED, error });
+    yield put({ type: FIND_SOURCE_FAILED, error })
   }
 }
 
 const filterGenes = resultList => {
-  const uniqueGeneMap = new Map();
-  const notFound = [];
+  const uniqueGeneMap = new Map()
+  const notFound = []
 
-  let len = resultList.length;
+  let len = resultList.length
   while (len--) {
-    const entry = resultList[len];
+    const entry = resultList[len]
     if (entry.notfound) {
-      notFound.push(entry.query);
+      notFound.push(entry.query)
     } else {
-      uniqueGeneMap.set(entry.query, entry);
+      uniqueGeneMap.set(entry.query, entry)
     }
   }
 
   return {
     uniqueGeneMap,
     notFound
-  };
-};
+  }
+}
