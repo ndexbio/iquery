@@ -21,7 +21,8 @@ const utils = new CyNetworkUtils()
 // This is the network attributes storing graphical annotations.
 const ANNOTATION_TAG = '__Annotations'
 
-const DEF_BG_COLOR = 'blue'
+// Default network background color
+const DEF_BG_COLOR = '#FFFFFF'
 
 /**
  *
@@ -35,9 +36,9 @@ const CytoscapeViewer = props => {
   const { highlights } = props.uiState
   const { fit, originalCX } = props.network
 
+  // Use default color if this property is not available.
   let backgroundColor = props.network.backgroundColor
-
-  if(backgroundColor === null || backgroundColor === undefined) {
+  if (backgroundColor === null || backgroundColor === undefined) {
     backgroundColor = DEF_BG_COLOR
   }
 
@@ -60,13 +61,8 @@ const CytoscapeViewer = props => {
         attr => attr.n === ANNOTATION_TAG
       )
       if (annotationEntry.length !== 0) {
-        console.log(
-          '* This CX contains __Annotations. Converting CX to niceCX...',
-          annotationEntry
-        )
-
         const nice = utils.rawCXtoNiceCX(originalCX)
-        console.log('* Registering annotation renderer for this niceCX:')
+        console.log('* Registering annotation renderer for this niceCX:', annotationEntry)
         annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
         return nice
       }
@@ -83,8 +79,6 @@ const CytoscapeViewer = props => {
     if (cyInstance === undefined || cyInstance === null) {
       return
     }
-
-    // Event handlers
 
     // Background tapped: Remove selection
     // (This is the standard Cytosape UX)
@@ -245,6 +239,7 @@ const CytoscapeViewer = props => {
     return null
   }
 
+  // Network background should be set via CSS.
   const networkAreaStyle = {
     width: '100%',
     height: '100%',
