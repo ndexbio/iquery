@@ -17,10 +17,11 @@ let cyInstance = null
 // For annotation rendering
 const annotationRenderer = new CxToCyCanvas(CxToJs)
 const utils = new CyNetworkUtils()
-const BACKGROUND_LAYER_Z_IDX = -2
 
 // This is the network attributes storing graphical annotations.
 const ANNOTATION_TAG = '__Annotations'
+
+const DEF_BG_COLOR = 'blue'
 
 /**
  *
@@ -32,9 +33,13 @@ const ANNOTATION_TAG = '__Annotations'
  */
 const CytoscapeViewer = props => {
   const { highlights } = props.uiState
-  const { fit, originalCX, backgroundColor } = props.network
+  const { fit, originalCX } = props.network
 
-  const [backgroundLayer, setBackgroundLayer] = useState(null)
+  let backgroundColor = props.network.backgroundColor
+
+  if(backgroundColor === null || backgroundColor === undefined) {
+    backgroundColor = DEF_BG_COLOR
+  }
 
   let niceCX = useMemo(() => {
     const networkAttr = originalCX.filter(
@@ -77,25 +82,6 @@ const CytoscapeViewer = props => {
     // Event handler can be set only when Cytoscape.js instance is available.
     if (cyInstance === undefined || cyInstance === null) {
       return
-    }
-
-    // Create background layer: this should be done only once!!
-    if (!backgroundLayer) {
-      const bg = cyInstance.cyCanvas({
-        zIndex: BACKGROUND_LAYER_Z_IDX
-      })
-
-      const canvas = bg.getCanvas()
-      const ctx = bg.getCanvas().getContext('2d')
-      cyInstance.on('cyCanvas.resize', function() {
-        if (ctx.fillStyle.toUpperCase() !== backgroundColor.toUpperCase()) {
-          console.log('* update ->Drawing background:', backgroundColor)
-          ctx.fillStyle = backgroundColor
-          ctx.fillRect(0, 0, canvas.width, canvas.height)
-        }
-      })
-
-      setBackgroundLayer(bg)
     }
 
     // Event handlers
@@ -262,7 +248,7 @@ const CytoscapeViewer = props => {
   const networkAreaStyle = {
     width: '100%',
     height: '100%',
-    background: props.network.backgroundColor
+    background: backgroundColor
   }
 
   const isLayoutAvailable = cyjs.isLayout
