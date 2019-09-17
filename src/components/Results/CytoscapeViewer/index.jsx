@@ -249,7 +249,7 @@ const CytoscapeViewer = props => {
   const networkAreaStyle = {
     width: '100%',
     height: '100%',
-    background: backgroundColor
+    background: 'rgba(0,0,0,0)'
   }
 
   const isLayoutAvailable = cyjs.isLayout
