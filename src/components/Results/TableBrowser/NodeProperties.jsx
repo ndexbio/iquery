@@ -10,6 +10,7 @@ import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
 import GeneAnnotationList from './GeneAnnotationList'
 import ExpandPanel from './ExpandPanel'
+import { isEqual } from 'lodash'
 
 
 const useStyles = makeStyles(theme => ({
@@ -322,4 +323,8 @@ const formatPrimary = entry => {
   )
 }
 
-export default NodeProperties
+const MemoNodeProperties = React.memo(NodeProperties, (oldProps, newProps) => {
+  return isEqual(oldProps.network.selectedNodes, newProps.network.selectedNodes)
+})
+
+export default MemoNodeProperties

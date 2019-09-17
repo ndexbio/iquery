@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Linkify from 'linkifyjs/react'
 import parse from 'html-react-parser'
+import { isEqual } from 'lodash'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -356,8 +357,9 @@ const findNode = (nodeId, nodeArray) => {
   }
 }
 
-const MemoEdgeProperties = EdgeProperties /*React.memo(EdgeProperties, (prevProps, newProps) => {
+//Necessary because otherwise open list items will collapse every time "SET_AVAILABLE" happens
+const MemoEdgeProperties = React.memo(EdgeProperties, (prevProps, newProps) => {
   return isEqual(prevProps.network.selectedEdges, newProps.network.selectedEdges)
-})*/
+})
 
 export default MemoEdgeProperties
