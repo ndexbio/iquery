@@ -9,6 +9,8 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
 import ExpandPanel from './ExpandPanel'
+import CheckIcon from '@material-ui/icons/Check'
+import Avatar from '@material-ui/core/Avatar'
 
 import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
@@ -34,12 +36,32 @@ const useStyles = makeStyles(theme => ({
   table: {
     width: '100%',
     tableLayout: 'fixed'
+  },
+  matched: {
+    backgroundColor: "#C51162",
+    height: '1em',
+    width: '1em'
+  },
+  icon: {
+    height: '0.5em',
+    weidth: '0.5em'
   }
 }))
 
 const EdgeProperties = props => {
   const classes = useStyles()
-  const edges = props.network.selectedEdges
+  let edges
+  if (props.network.selectedEdges.length === 0) {
+    edges = props.network.network.elements
+      .filter((elem) => {
+        return elem.data.id[0] === 'e'
+      })
+      .map(elem => {
+        return elem.data
+      })
+  } else {
+    edges = props.network.selectedEdges
+  }
   const nodes = props.nodeList
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
@@ -66,7 +88,7 @@ const EdgeProperties = props => {
 
   const displayItems = [entityProperties, edgeProperties]
 
-  const sortedEdges = edges.sort((a, b) => {
+  edges.sort((a, b) => {
     let aScore = 0
     let bScore = 0
     const aSource = findNode(a.source, nodes)
@@ -242,8 +264,55 @@ const EdgeProperties = props => {
       )
     }
 
+    //Create summary
+    let sourceSymbol = source;
+    let targetSymbol = target;
+    if (props.search.queryList.includes(source.toUpperCase())) {
+      sourceSymbol = (
+<React.Fragment>
+            <td>
+              {source}
+            </td>
+            <td>
+            <Avatar className={classes.matched}>
+            <CheckIcon className={classes.icon}/>
+          </Avatar>
+            </td>
+          </React.Fragment>
+      )
+    }
+
+    if (props.search.queryList.includes(target.toUpperCase())) {
+      targetSymbol = (
+        <React.Fragment>
+          
+            <td>
+              {target}
+            </td>
+            <td>
+            <Avatar className={classes.matched}>
+            <CheckIcon className={classes.icon}/>
+          </Avatar>
+            </td>
+
+        </React.Fragment>
+      )
+    }
+
     const summary = (
-      <Typography variant="body2">{source + ' -> ' + target}</Typography>
+      <Typography variant="body2">
+      <table>
+        <tbody>
+          <tr>
+            {sourceSymbol}
+            <td>
+              {' ➝ '}
+            </td>
+            {targetSymbol}
+          </tr>
+        </tbody>
+      </table>
+</Typography>
     )
     const details = (
       <table className={classes.table}>

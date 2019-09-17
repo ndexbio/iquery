@@ -125,7 +125,9 @@ const Ndex = props => {
     if (props.uiState.selectedSource === "enrichment") {
       let pVal = details.PValue;
       if (pVal !== undefined) {
-        if (pVal !== 0) {
+        if (pVal < 1e-15) {
+          pVal = "< 1e-15"
+        } else { 
           pVal = pVal.toExponential(2);
         }
       }

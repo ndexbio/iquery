@@ -11,6 +11,11 @@ import { stripScripts } from './strip-scripts-util.js'
 import GeneAnnotationList from './GeneAnnotationList'
 import ExpandPanel from './ExpandPanel'
 import { isEqual } from 'lodash'
+import { Icon } from '@material-ui/core'
+import CheckIcon from '@material-ui/icons/Check'
+import Avatar from '@material-ui/core/Avatar'
+
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,6 +37,16 @@ const useStyles = makeStyles(theme => ({
   table: {
     width: '100%',
     tableLayout: 'fixed'
+  },
+  matched: {
+    marginLeft: '0.5em',
+    backgroundColor: "#C51162",
+    height: '1em',
+    width: '1em'
+  },
+  icon: {
+    height: '0.5em',
+    weidth: '0.5em'
   }
 }))
 
@@ -39,8 +54,24 @@ let index = 0
 
 const NodeProperties = props => {
   const classes = useStyles()
-  const nodes = props.network.selectedNodes
-  const context = props.context
+
+  let nodes
+  if (props.network.selectedNodes.length === 0) {
+    nodes = props.network.network.elements
+      .filter((elem) => {
+        return elem.data.id[0] !== 'e'
+      })
+      .map(node => {
+        return node.data
+      })
+      .filter(nodeData => {
+        return nodeData.name != null && nodeData.name != '' 
+      })
+  } else {
+    nodes = props.network.selectedNodes
+  }
+
+    const context = props.context
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
@@ -220,7 +251,25 @@ const NodeProperties = props => {
       )
     }
 
-    const summary = <Typography variant="body2">{node.name}</Typography>
+    const summary = (
+    <Typography variant="body2">
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              {node.name}
+            </td>
+            {inset ? (
+            <td>
+            <Avatar className={classes.matched}>
+            <CheckIcon className={classes.icon}/>
+          </Avatar>
+            </td>) : null}
+          </tr>
+        </tbody>
+      </table>
+      </Typography>
+    )
     const details = (
       <table className={classes.table}>
         <tbody>
@@ -323,6 +372,7 @@ const formatPrimary = entry => {
   )
 }
 
+//Necessary because otherwise open list items will collapse every time "SET_AVAILABLE" happens
 const MemoNodeProperties = React.memo(NodeProperties, (oldProps, newProps) => {
   return isEqual(oldProps.network.selectedNodes, newProps.network.selectedNodes)
 })
