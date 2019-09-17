@@ -167,7 +167,7 @@ const EdgeProperties = props => {
           case entityProperties:
             secondaryString = 'Entity Properties'
             displayCol1.push(
-              <ListItem key={Math.randon()} className={classes.noPadding}>
+              <ListItem key={Math.random()} className={classes.noPadding}>
                 <ListItemText
                   inset={false}
                   primary={
