@@ -76,7 +76,8 @@ const NetworkProperties = props => {
     if (!title.startsWith('__') && content != null && content !== '') {
       if (
         title === 'Description' &&
-        props.uiState.selectedSource === 'interactome'
+        (props.uiState.selectedSource === 'interactome-ppi' ||
+        props.uiState.selectedSource === 'interactome-association')
       ) {
         const newTitle = 'Description of parent network'
         leftDisplayItems.splice(1, 0, newTitle)
@@ -91,6 +92,19 @@ const NetworkProperties = props => {
         attributes.push({
           title: newTitle,
           content: content, //TODO
+          displayed: false
+        })
+      } else if (title === 'Organism') {
+        const [latin, english] = content.split("(")
+        let newContent
+        if (english == null) {
+          newContent = "<em>" + latin.trim() + "</em>"
+        } else {
+          newContent = "<em>" + latin.trim() + "</em>" + " (" + english
+        }
+        attributes.push({
+          title: 'Organism',
+          content: newContent,
           displayed: false
         })
       } else {

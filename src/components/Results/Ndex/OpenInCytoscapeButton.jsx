@@ -4,6 +4,7 @@ import logo from "../../../assets/images/cytoscape-logo.svg";
 import logoDisabled from "../../../assets/images/cytoscape-logo-mono-light.svg";
 import { withStyles } from "@material-ui/core";
 import Tooltip from "@material-ui/core/Tooltip";
+import {fade} from "./color-manipulator-util"
 
 import MessageSnackbar from "../../AppShell/MessageSnackbar.jsx";
 
@@ -13,6 +14,9 @@ const BootstrapButton = withStyles({
     borderColor: "#EA9123",
     "&:active": {
       borderColor: "#EA9123"
+    },
+    '&:hover': {
+      backgroundColor: fade('#EA9123', 0.08)
     }
   }
 })(Button);

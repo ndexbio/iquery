@@ -52,4 +52,6 @@ const Highlighter = props => {
   );
 };
 
+
+
 export default withStyles(styles)(Highlighter);

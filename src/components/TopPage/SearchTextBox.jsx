@@ -118,6 +118,7 @@ const SearchTextBox = props => {
           onChange={handleChange("query")}
           onKeyDown={handleKeyPress}
           value={state.query}
+          autoFocus={true}
         />
         <IconButton
           ref={searchButtonEl}
@@ -132,6 +133,7 @@ const SearchTextBox = props => {
           />
         </IconButton>
       </Paper>
+      <Link href={feedbackURL} target="_blank" color="textSecondary" underline="none">
       <Typography
         variant="caption"
         style={{ paddingTop: "0.25em" }}
@@ -144,6 +146,7 @@ const SearchTextBox = props => {
           </font>
         </Link>
       </Typography>
+      </Link>
       <Typography
         align="left"
         style={{ paddingLeft: "7.25em", paddingTop: "1em" }}

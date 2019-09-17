@@ -6,6 +6,8 @@ import logo from '../../../assets/images/ndex-logo.svg'
 import logoDisabled from '../../../assets/images/ndex-logo-mono-light.svg'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
+import {fade} from "./color-manipulator-util";
+
 
 const styles = theme => ({
   buttonIcon: {
@@ -30,6 +32,9 @@ const BootstrapButton = withStyles({
       borderColor: '#4DA1DE',
       color: '#4DA1DE'
     },
+    '&:hover': {
+      backgroundColor: fade('#4DA1DE', 0.08)
+    }
   },
 })(Button);
 

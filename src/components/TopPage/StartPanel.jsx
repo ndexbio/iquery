@@ -95,6 +95,7 @@ const StartPanel = props => {
         </div>
       </div>
       <div className="height">
+        <Link href={feedbackURL} target="_blank" color="textSecondary" underline="none">
         <div className="flex">
           <Typography variant="caption" align="center">
             NDEx Integrated Query uses selected pathway and interactome networks
@@ -114,7 +115,9 @@ const StartPanel = props => {
             </Link>{" "}
             to find out how.
           </Typography>
+          
         </div>
+        </Link>
       </div>
       <Footer />
     </div>

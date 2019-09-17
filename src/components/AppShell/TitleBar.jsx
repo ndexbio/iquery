@@ -40,7 +40,7 @@ const styles = theme => ({
   },
   logo: {
     height: '1em',
-    width: '1.5em',
+    width: '1em'//1.5em', when more than one logo present, for spacing
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -69,7 +69,7 @@ const styles = theme => ({
 const titleStyle = {
   position: 'relative',
   left: '1em',
-  textTransform: 'none'
+  textTransform: 'none',
 }
 
 class TitleBar extends React.Component {
@@ -103,10 +103,10 @@ class TitleBar extends React.Component {
           <Tooltip title="Search by Pathway Enrichment / Protein-Protein Interactions / Gene Association" aria-label="NDEx_tooltip">
             <div>
               <Button style={titleStyle} onClick={this.handleHomeButton}>
-              <HomeIcon fontSize="default" className={classes.logo}/>
-              <Typography variant="h6" color="inherit" noWrap={true}>
-                NDEx Integrated Query
-              </Typography>
+                <HomeIcon fontSize="default" className={classes.logo} style={{marginRight: '0.5em'}}/>
+                <Typography variant="h6" color="inherit" noWrap={true}>
+                  NDEx Integrated Query
+                </Typography>
               </Button>
             </div>
           </Tooltip>
@@ -133,7 +133,7 @@ class TitleBar extends React.Component {
               </IconButton>
             </Tooltip>
           */}
-            <Tooltip title="Help" placement="bottom" style={{paddingRight: "1em"}}>
+            <Tooltip title="Help" placement="bottom" style={{marginRight: "1em"}}>
               <IconButton
                 aria-haspopup="true"
                 color="default"
