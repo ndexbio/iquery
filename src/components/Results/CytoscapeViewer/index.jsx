@@ -14,8 +14,10 @@ export const MAX_NETWORK_SIZE = 5000
 Cytoscape.use(CyCanvas)
 let cyInstance = null
 
+// For annotation rendering
 const annotationRenderer = new CxToCyCanvas(CxToJs)
 const utils = new CyNetworkUtils()
+const BACKGROUND_LAYER_Z_IDX = -2
 
 // This is the network attributes storing graphical annotations.
 const ANNOTATION_TAG = '__Annotations'
@@ -55,11 +57,13 @@ const CytoscapeViewer = props => {
       if (annotationEntry.length !== 0) {
         console.log(
           '* This CX contains __Annotations. Converting CX to niceCX...',
-          originalCX,
-          netAttrArray,
           annotationEntry
         )
-        return utils.rawCXtoNiceCX(originalCX)
+
+        const nice = utils.rawCXtoNiceCX(originalCX)
+        console.log('* Registering annotation renderer for this niceCX:')
+        annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
+        return nice
       }
     }
 
@@ -78,7 +82,7 @@ const CytoscapeViewer = props => {
     // Create background layer: this should be done only once!!
     if (!backgroundLayer) {
       const bg = cyInstance.cyCanvas({
-        zIndex: -10
+        zIndex: BACKGROUND_LAYER_Z_IDX
       })
 
       const canvas = bg.getCanvas()
@@ -270,14 +274,8 @@ const CytoscapeViewer = props => {
     layout = CONCENTRIC_LAYOUT
   }
 
-
   if (cyInstance !== null) {
     cyInstance.resize()
-
-    if (niceCX !== null && niceCX !== undefined) {
-      console.log('* rendering annotation for this niceCX:', niceCX)
-      annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, niceCX)
-    }
 
     if (layout === COSE_LAYOUT) {
       layout.stop = () => {
