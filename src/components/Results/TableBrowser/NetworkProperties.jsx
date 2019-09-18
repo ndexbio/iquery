@@ -50,7 +50,7 @@ const NetworkProperties = props => {
   }
 
   //What to display
-  const leftDisplayItems = ['Name', 'Description', 'Reference', '@context']
+  const leftDisplayItems = ['Name', 'Description', 'Methods', 'Reference', '@context']
   const properties = ['Organism', 'Cell', 'Disease']
   const contributors = ['Author', 'Reviewers', 'Rights Holder', 'Rights']
   const wikiPathways = [
@@ -58,11 +58,16 @@ const NetworkProperties = props => {
     'WikiPathways Version',
     'WikiPathways IRI'
   ]
+  const indraGO = [
+    'GO Hierarchy',
+    'GO ID'
+  ]
   const networkInformation = ['Version', 'Network Type', 'Labels']
   const rightDisplayItems = [
     properties,
     contributors,
     wikiPathways,
+    indraGO,
     networkInformation
   ]
 
@@ -76,7 +81,8 @@ const NetworkProperties = props => {
     if (!title.startsWith('__') && content != null && content !== '') {
       if (
         title === 'Description' &&
-        props.uiState.selectedSource === 'interactome'
+        (props.uiState.selectedSource === 'interactome-ppi' ||
+        props.uiState.selectedSource === 'interactome-association')
       ) {
         const newTitle = 'Description of parent network'
         leftDisplayItems.splice(1, 0, newTitle)
@@ -134,6 +140,9 @@ const NetworkProperties = props => {
         break
       case wikiPathways:
         secondaryString = 'WikiPathways'
+        break
+      case indraGO:
+        secondaryString = 'Gene Ontology'
         break
       case networkInformation:
         secondaryString = 'Network Information'
@@ -286,7 +295,12 @@ const extractTitle = entry => {
   } else {
     modifiedText = ''
   }
-  return stripScripts(modifiedText.trim())
+  modifiedText = stripScripts(modifiedText.trim())
+  if (modifiedText === 'GO hierarchy') {
+    return 'GO Hierarchy'
+  } else {
+    return modifiedText
+  }
 }
 
 const formatPrimary = entry => {
