@@ -63,6 +63,7 @@ const EdgeProperties = props => {
     edges = props.network.selectedEdges
   }
   const nodes = props.nodeList
+  const context = props.context
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
