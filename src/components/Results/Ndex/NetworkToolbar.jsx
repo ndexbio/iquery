@@ -18,7 +18,7 @@ import { camelCaseToTitleCase } from '../TableBrowser/camel-case-util'
 
 const styles = theme => ({
   toolbar: {
-    background: '#FFFFFF',//'#EFEFEF',
+    background: '#EFEFEF',
     height: '4em',
     paddingTop: '0',
     paddingBottom: '0',
