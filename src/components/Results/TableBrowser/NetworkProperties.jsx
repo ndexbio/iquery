@@ -50,7 +50,7 @@ const NetworkProperties = props => {
   }
 
   //What to display
-  const leftDisplayItems = ['Name', 'Description', 'Reference', '@context']
+  const leftDisplayItems = ['Name', 'Description', 'Methods', 'Reference', '@context']
   const properties = ['Organism', 'Cell', 'Disease']
   const contributors = ['Author', 'Reviewers', 'Rights Holder', 'Rights']
   const wikiPathways = [
@@ -58,11 +58,16 @@ const NetworkProperties = props => {
     'WikiPathways Version',
     'WikiPathways IRI'
   ]
+  const indraGO = [
+    'GO Hierarchy',
+    'GO ID'
+  ]
   const networkInformation = ['Version', 'Network Type', 'Labels']
   const rightDisplayItems = [
     properties,
     contributors,
     wikiPathways,
+    indraGO,
     networkInformation
   ]
 
@@ -81,14 +86,6 @@ const NetworkProperties = props => {
       ) {
         const newTitle = 'Description of parent network'
         leftDisplayItems.splice(1, 0, newTitle)
-        const networkInfo =
-          props.search.actualResults[props.network.listIndex - 1]
-        content =
-          networkInfo.nodes +
-          ' nodes, ' +
-          networkInfo.edges +
-          ' edges<br/>' +
-          content
         attributes.push({
           title: newTitle,
           content: content, //TODO
@@ -107,6 +104,12 @@ const NetworkProperties = props => {
           content: newContent,
           displayed: false
         })
+      } else if (title === 'GO hierarchy') {
+        attributes.push({
+          title: 'GO Hierarchy',
+          content: content,
+          displayed: false
+        }) 
       } else {
         attributes.push({
           title: camelCaseToTitleCase(title),
@@ -148,6 +151,9 @@ const NetworkProperties = props => {
         break
       case wikiPathways:
         secondaryString = 'WikiPathways'
+        break
+      case indraGO:
+        secondaryString = 'Gene Ontology'
         break
       case networkInformation:
         secondaryString = 'Network Information'

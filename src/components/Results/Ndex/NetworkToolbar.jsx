@@ -103,7 +103,7 @@ const NetworkToolbar = props => {
   let [prefix, name] = ['', '']
 
   if (props.search.actualResults.length !== 0) {
-    ;[prefix, name] = props.network.networkName.split(':')
+    [prefix, name] = props.network.networkName.replace(":", "&").split('&')
   }
 
   return (
