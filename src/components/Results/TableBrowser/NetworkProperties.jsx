@@ -1,40 +1,40 @@
-import React from 'react'
-import Split from 'react-split'
+import React from "react"
+import Split from "react-split"
 
-import { makeStyles } from '@material-ui/styles'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import Typography from '@material-ui/core/Typography'
-import List from '@material-ui/core/List'
+import { makeStyles } from "@material-ui/styles"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemText from "@material-ui/core/ListItemText"
+import Typography from "@material-ui/core/Typography"
+import List from "@material-ui/core/List"
 
-import { camelCaseToTitleCase } from './camel-case-util'
-import { stripScripts } from './strip-scripts-util'
-import { findAttributes } from './attribute-util'
+import { camelCaseToTitleCase } from "./camel-case-util"
+import { stripScripts } from "./strip-scripts-util"
+import { findAttributes } from "./attribute-util"
 
-import Linkify from 'linkifyjs/react'
-import parse from 'html-react-parser'
-import ExpandPanel from './ExpandPanel'
+import Linkify from "linkifyjs/react"
+import parse from "html-react-parser"
+import ExpandPanel from "./ExpandPanel"
 
 let index = 0
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: '0.2em',
-    backgroundColor: '#FFFFFF',
-    overflow: 'auto',
-    height: '100%',
-    boxSizing: 'content-box'
+    padding: "0.2em",
+    backgroundColor: "#FFFFFF",
+    overflow: "auto",
+    height: "100%",
+    boxSizing: "content-box"
   },
   padding: {
-    paddingLeft: '1em',
-    paddingTop: '0.75em'
+    paddingLeft: "1em",
+    paddingTop: "0.75em"
   },
   lessPadding: {
-    paddingTop: '2.49px'
+    paddingTop: "2.49px"
   },
   noPadding: {
-    paddingTop: '0',
-    paddingBottom: '0'
+    paddingTop: "0",
+    paddingBottom: "0"
   }
 }))
 
@@ -44,25 +44,25 @@ const NetworkProperties = props => {
   const classes = useStyles()
 
   //Find network props
-  let networkAttr = findAttributes(originalCX, 'networkAttributes')
+  let networkAttr = findAttributes(originalCX, "networkAttributes")
   if (networkAttr === null) {
     return
   }
 
   //What to display
-  const leftDisplayItems = ['Name', 'Description', 'Methods', 'Reference', '@context']
-  const properties = ['Organism', 'Cell', 'Disease']
-  const contributors = ['Author', 'Reviewers', 'Rights Holder', 'Rights']
+  const leftDisplayItems = ["Name", "Description", "Methods", "Reference", "@context"]
+  const properties = ["Organism", "Cell", "Disease"]
+  const contributors = ["Author", "Reviewers", "Rights Holder", "Rights"]
   const wikiPathways = [
-    'WikiPathways ID',
-    'WikiPathways Version',
-    'WikiPathways IRI'
+    "WikiPathways ID",
+    "WikiPathways Version",
+    "WikiPathways IRI"
   ]
   const indraGO = [
-    'GO Hierarchy',
-    'GO ID'
+    "GO Hierarchy",
+    "GO ID"
   ]
-  const networkInformation = ['Version', 'Network Type', 'Labels']
+  const networkInformation = ["Version", "Network Type", "Labels"]
   const rightDisplayItems = [
     properties,
     contributors,
@@ -78,20 +78,20 @@ const NetworkProperties = props => {
   networkAttr.forEach(element => {
     content = extractContent(element)
     title = extractTitle(element)
-    if (!title.startsWith('__') && content != null && content !== '') {
+    if (!title.startsWith("__") && content != null && content !== "") {
       if (
-        title === 'Description' &&
-        (props.uiState.selectedSource === 'interactome-ppi' ||
-        props.uiState.selectedSource === 'interactome-association')
+        title === "Description" &&
+        (props.uiState.selectedSource === "interactome-ppi" ||
+        props.uiState.selectedSource === "interactome-association")
       ) {
-        const newTitle = 'Description of parent network'
+        const newTitle = "Description of parent network"
         leftDisplayItems.splice(1, 0, newTitle)
         attributes.push({
           title: newTitle,
           content: content, //TODO
           displayed: false
         })
-      } else if (title === 'Organism') {
+      } else if (title === "Organism") {
         const [latin, english] = content.split("(")
         let newContent
         if (english == null) {
@@ -100,13 +100,13 @@ const NetworkProperties = props => {
           newContent = "<em>" + latin.trim() + "</em>" + " (" + english
         }
         attributes.push({
-          title: 'Organism',
+          title: "Organism",
           content: newContent,
           displayed: false
         })
-      } else if (title === 'GO hierarchy') {
+      } else if (title === "GO hierarchy") {
         attributes.push({
-          title: 'GO Hierarchy',
+          title: "GO Hierarchy",
           content: content,
           displayed: false
         }) 
@@ -117,10 +117,10 @@ const NetworkProperties = props => {
           displayed: false
         })
       }
-    } else if (title === 'Name') {
+    } else if (title === "Name") {
       attributes.push({
         title: title,
-        content: 'Untitled',
+        content: "Untitled",
         displayed: false
       })
     }
@@ -129,7 +129,7 @@ const NetworkProperties = props => {
   //Right side of display
   const rightDisplay = []
   rightDisplayItems.forEach(list => {
-    let primaryString = ''
+    let primaryString = ""
     let currentEntry
     list.forEach(element => {
       currentEntry = attributes.filter(entry => {
@@ -137,30 +137,30 @@ const NetworkProperties = props => {
       })[0]
       if (currentEntry != null) {
         primaryString +=
-          currentEntry.title + ': ' + currentEntry.content + '<br>'
+          currentEntry.title + ": " + currentEntry.content + "<br>"
         currentEntry.displayed = true
       }
     })
     let secondaryString
     switch (list) {
-      case properties:
-        secondaryString = 'Properties'
-        break
-      case contributors:
-        secondaryString = 'Contributors'
-        break
-      case wikiPathways:
-        secondaryString = 'WikiPathways'
-        break
-      case indraGO:
-        secondaryString = 'Gene Ontology'
-        break
-      case networkInformation:
-        secondaryString = 'Network Information'
-        break
+    case properties:
+      secondaryString = "Properties"
+      break
+    case contributors:
+      secondaryString = "Contributors"
+      break
+    case wikiPathways:
+      secondaryString = "WikiPathways"
+      break
+    case indraGO:
+      secondaryString = "Gene Ontology"
+      break
+    case networkInformation:
+      secondaryString = "Network Information"
+      break
     }
     primaryString = formatPrimary(primaryString)
-    if (primaryString !== '') {
+    if (primaryString !== "") {
       rightDisplay.push(
         <ListItem key={index++} className={classes.noPadding}>
           <ListItemText
@@ -190,7 +190,7 @@ const NetworkProperties = props => {
       return entry.title === element
     })[0]
     if (currentEntry != null) {
-      if (element === '@context') {
+      if (element === "@context") {
         primaryString = formatContext(currentEntry.content)
         currentEntry.displayed = true
         const summary = (
@@ -281,10 +281,10 @@ const NetworkProperties = props => {
   //Display panes
   return (
     <Split sizes={[70, 30]} gutterSize={7} className="network-info">
-      <div className={'network-info-panel'}>
+      <div className={"network-info-panel"}>
         <List className={classes.lessPadding}>{leftDisplay}</List>
       </div>
-      <div className={'network-info-panel'}>
+      <div className={"network-info-panel"}>
         <List className={classes.lessPadding}>{rightDisplay}</List>
       </div>
     </Split>
@@ -294,7 +294,7 @@ const NetworkProperties = props => {
 const extractContent = entry => {
   let modifiedText = entry.v
   if (Array.isArray(entry.v)) {
-    modifiedText = entry.v.join(', ')
+    modifiedText = entry.v.join(", ")
   }
   return stripScripts(modifiedText.trim())
 }
@@ -304,25 +304,25 @@ const extractTitle = entry => {
   if (entry.n != null) {
     modifiedText = entry.n.charAt(0).toUpperCase() + entry.n.slice(1)
   } else {
-    modifiedText = ''
+    modifiedText = ""
   }
   return stripScripts(modifiedText.trim())
 }
 
 const formatPrimary = entry => {
-  if (entry === '') {
+  if (entry === "") {
     return entry
   }
   let modifiedText = entry
-    .replace(/<\/?p\/?>/gi, '<br>')
-    .replace(/(<\/?br\/?>)+/gi, '<br>')
-    .replace(/(\n)+/gi, '\n')
-    .replace(/<a\s+href=/gi, '<a target="_blank" href=')
+    .replace(/<\/?p\/?>/gi, "<br>")
+    .replace(/(<\/?br\/?>)+/gi, "<br>")
+    .replace(/(\n)+/gi, "\n")
+    .replace(/<a\s+href=/gi, "<a target=\"_blank\" href=")
     .trim()
-  if (modifiedText.startsWith('<br>')) {
+  if (modifiedText.startsWith("<br>")) {
     modifiedText = modifiedText.slice(4, modifiedText.length - 1)
   }
-  if (modifiedText.endsWith('<br>')) {
+  if (modifiedText.endsWith("<br>")) {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
   modifiedText = parse(modifiedText)
@@ -332,19 +332,19 @@ const formatPrimary = entry => {
 }
 
 const formatContext = entry => {
-  const elements = entry.split(',')
+  const elements = entry.split(",")
   let splitResults
-  let result = '<table><tbody>'
+  let result = "<table><tbody>"
   elements.forEach(item => {
-    splitResults = item.split('"')
+    splitResults = item.split("\"")
     result +=
-      '<tr><td>' +
+      "<tr><td>" +
       splitResults[1] +
-      '</td><td>' +
+      "</td><td>" +
       splitResults[3] +
-      '</td></tr>'
+      "</td></tr>"
   })
-  result += '</tbody></table>'
+  result += "</tbody></table>"
   return formatPrimary(result)
 }
 

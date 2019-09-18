@@ -1,29 +1,31 @@
-import React from 'react'
-import Tabs from '@material-ui/core/Tabs'
-import HoverTab from '../HoverTab'
-import { makeStyles, withStyles } from '@material-ui/styles'
+import React from "react"
+import Tabs from "@material-ui/core/Tabs"
+import HoverTab from "../HoverTab"
+import { makeStyles, withStyles } from "@material-ui/styles"
 
-import { findAttributes } from './attribute-util'
+import { findAttributes } from "./attribute-util"
 
-import MemoNetworkProperties from './NetworkProperties'
-import NodeProperties from './NodeProperties'
-import MemoEdgeProperties from './EdgeProperties'
+import MemoNetworkProperties from "./NetworkProperties"
+import NodeProperties from "./NodeProperties"
+import MemoEdgeProperties from "./EdgeProperties"
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: '0.2em',
-    backgroundColor: '#FFFFFF',
-    overflow: 'auto'
+    padding: "0.2em",
+    backgroundColor: "#FFFFFF",
+    overflow: "auto"
   },
   list: {},
   subtitle: {
-    marginLeft: '1em',
-    marginTop: '0.5em'
+    marginLeft: "1em",
+    marginTop: "0.5em"
   },
   root: {
     minHeight: 0
   }
 }))
+
+const backgroundColor = "rgb(220, 220, 220)"
 
 const TabContent = props => {
   const { value } = props
@@ -32,11 +34,11 @@ const TabContent = props => {
   let context = {}
   let networkAttr = findAttributes(
     props.network.originalCX,
-    'networkAttributes'
+    "networkAttributes"
   )
   if (networkAttr != null) {
     for (let i = 0; i < networkAttr.length; i++) {
-      if (networkAttr[i].n === '@context') {
+      if (networkAttr[i].n === "@context") {
         context = JSON.parse(networkAttr[i].v)
       }
     }
@@ -52,7 +54,7 @@ const TabContent = props => {
 }
 
 const DISABLED_STYLE = {
-  width: '100%'
+  width: "100%"
 }
 
 const TableBrowserPanel = props => {
@@ -82,11 +84,12 @@ const TableBrowserPanel = props => {
       <Tabs value={value} onChange={handleChange} className={classes.root}>
         <HoverTab
           className={classes.root}
-          key={'network-tab'}
-          label={'Network'}
+          key={"network-tab"}
+          label={"Network"}
+          backgroundColor={backgroundColor}
         />
-        <HoverTab className={classes.root} key={'nodes-tab'} label={'Nodes'} />
-        <HoverTab className={classes.root} key={'edges-tab'} label={'Edges'} />
+        <HoverTab className={classes.root} key={"nodes-tab"} label={"Nodes"} backgroundColor={backgroundColor}/>
+        <HoverTab className={classes.root} key={"edges-tab"} label={"Edges"} backgroundColor={backgroundColor}/>
       </Tabs>
       <TabContent value={value} nodeList={nodeList} {...props} />
     </div>

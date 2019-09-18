@@ -1,7 +1,7 @@
-import React from "react";
-import "./style.css";
-import MemoCytoscapeViewer from "../CytoscapeViewer";
-import LoadingPanel from "../../LoadingPanel";
+import React from "react"
+import "./style.css"
+import MemoCytoscapeViewer from "../CytoscapeViewer"
+import LoadingPanel from "../../LoadingPanel"
 
 const NetworkViewer = props => {
   if (props.network.isFetching) {
@@ -9,9 +9,9 @@ const NetworkViewer = props => {
       <div className="network-view">
         <LoadingPanel title="Loading Network..." color="#FFFFFF" />
       </div>
-    );
+    )
   } else if (props.search.actualResults.length === 0) {
-    return <div className="network-view" />;
+    return <div className="network-view" />
   } else {
     return (
       <div className="network-view">
@@ -21,8 +21,8 @@ const NetworkViewer = props => {
           <MemoCytoscapeViewer resized={props.resized} {...props} />
         )}
       </div>
-    );
+    )
   }
-};
+}
 
-export default NetworkViewer;
+export default NetworkViewer

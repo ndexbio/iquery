@@ -1,12 +1,12 @@
-import { call, put, all, take, race } from 'redux-saga/effects'
+import { call, put, all, take, race } from "redux-saga/effects"
 
 import {
   SET_AVAILABLE,
   START_CYREST_POLLING,
   STOP_CYREST_POLLING
-} from '../actions/cyrest'
+} from "../actions/cyrest"
 
-import * as cyrest from '../api/cyrest'
+import * as cyrest from "../api/cyrest"
 
 function delay(duration) {
   const promise = new Promise(resolve => {

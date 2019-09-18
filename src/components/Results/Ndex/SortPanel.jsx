@@ -1,67 +1,67 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 
-import { withStyles } from '@material-ui/styles'
-import Typography from '@material-ui/core/Typography'
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputBase from '@material-ui/core/InputBase';
+import { withStyles } from "@material-ui/styles"
+import Typography from "@material-ui/core/Typography"
+import FormControl from "@material-ui/core/FormControl"
+import Select from "@material-ui/core/Select"
+import MenuItem from "@material-ui/core/MenuItem"
+import InputBase from "@material-ui/core/InputBase"
 
 const BootstrapInput = withStyles(theme => ({
   root: {
-    'label + &': {
-      marginTop: '0',
+    "label + &": {
+      marginTop: "0",
     },
   },
   input: {
     borderRadius: 4,
-    position: 'relative',
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #ced4da',
-    textColor: '#757575',
-    padding: '5px 26px 5px 12px',
-    '&:focus': {
+    position: "relative",
+    backgroundColor: "#FFFFFF",
+    border: "1px solid #ced4da",
+    textColor: "#757575",
+    padding: "5px 26px 5px 12px",
+    "&:focus": {
       borderRadius: 4,
-      backgroundColor: '#FFFFFF'
+      backgroundColor: "#FFFFFF"
     },
   },
-}))(InputBase);
+}))(InputBase)
 
 const formStyle = {
-  position: 'relative',
-  left: '11px',
-  marginTop: '8px',
-  marginBottom: '8px'
+  position: "relative",
+  left: "11px",
+  marginTop: "8px",
+  marginBottom: "8px"
 }
 
 const divStyle = {
-  paddingLeft: '16px',
-  borderBottom: '1px solid rgba(239, 239, 239, 1)',
+  paddingLeft: "16px",
+  borderBottom: "1px solid rgba(239, 239, 239, 1)",
 }
 
 const typeStyle = {
-  position: 'relative',
-  top: '14.5px'
+  position: "relative",
+  top: "14.5px"
 }
 
 const selectStyle = {
-  color: 'secondary'
+  color: "secondary"
 }
 
 const SortPanel = props => {
   const [sortPValueOn, setSortPValueOn] = useState(true)
 
   const handleChange = event => {
-    if (event.target.value === 'p-Value') {
+    if (event.target.value === "p-Value") {
       setSortPValueOn(true)
-      props.uiStateActions.setSortOrder(['p-Value', 'Overlap'])
+      props.uiStateActions.setSortOrder(["p-Value", "Overlap"])
     } else {
       setSortPValueOn(false)
-      props.uiStateActions.setSortOrder(['Overlap', 'p-Value'])
+      props.uiStateActions.setSortOrder(["Overlap", "p-Value"])
     }
   }
   
-  if (props.uiState.selectedSource === 'enrichment') {
+  if (props.uiState.selectedSource === "enrichment") {
     return (
       <div style={divStyle}>
         <Typography 
@@ -74,19 +74,19 @@ const SortPanel = props => {
         </Typography>
         <FormControl style={formStyle}>
           <Select
-            value={sortPValueOn ? 'p-Value' : 'Overlap'}
+            value={sortPValueOn ? "p-Value" : "Overlap"}
             onChange={handleChange}
             displayEmpty
             name="Sort by"
             style={selectStyle}
             input={<BootstrapInput name="age" id="age-customized-select" />}
           >
-            <MenuItem value={'p-Value'}>
+            <MenuItem value={"p-Value"}>
               <Typography variant="body2" color='textSecondary'>
                 p-Value
               </Typography>
             </MenuItem>
-            <MenuItem value={'Overlap'}>
+            <MenuItem value={"Overlap"}>
               <Typography variant="body2" color='textSecondary'>
                 Overlap
               </Typography>

@@ -1,33 +1,33 @@
-import { call, put, all, take, race } from 'redux-saga/effects'
-import { runSaga } from 'redux-saga'
-import * as cyRestStatusSaga from './cyRestStatusSaga'
-import rootSaga from './cyRestStatusSaga'
-import { _cyRestStatusSaga, _fetchCyRESTAvailable } from './cyRestStatusSaga'
-import * as cyrest from '../api/cyrest'
-import sinon from 'sinon'
+import { call, put, all, take, race } from "redux-saga/effects"
+import { runSaga } from "redux-saga"
+import * as cyRestStatusSaga from "./cyRestStatusSaga"
+import rootSaga from "./cyRestStatusSaga"
+import { _cyRestStatusSaga, _fetchCyRESTAvailable } from "./cyRestStatusSaga"
+import * as cyrest from "../api/cyrest"
+import sinon from "sinon"
 import {
   SET_AVAILABLE,
   startCyRestPolling,
   stopCyRestPolling,
   START_CYREST_POLLING,
   STOP_CYREST_POLLING
-} from '../actions/cyrest'
+} from "../actions/cyrest"
 
 beforeEach(() => {
-  sinon.stub(cyrest, 'status') //add stub
+  sinon.stub(cyrest, "status") //add stub
 })
 
 afterEach(() => {
   cyrest.status.restore() //remove stub
 })
 
-test('root saga', () => {
+test("root saga", () => {
   const generator = rootSaga()
   expect(generator.next().value).toMatchObject(all([{}]))
   expect(generator.next().done).toEqual(true)
 })
 
-test('_cyRestStatusSaga start polling', () => {
+test("_cyRestStatusSaga start polling", () => {
   const generator = _cyRestStatusSaga()
   let next = generator.next()
   //console.log(value)
@@ -38,19 +38,19 @@ test('_cyRestStatusSaga start polling', () => {
   )
 })
 
-test('_fetchCyRESTAvailable success', async done => {
+test("_fetchCyRESTAvailable success", async done => {
   expect.assertions(1)
 
   const dispatched = []
 
   cyrest.status.onCall(0).callsFake(cyRESTPort => ({
     json: () => ({
-      some: 'value'
+      some: "value"
     })
   }))
 
   cyrest.status.onCall(1).callsFake(() => {
-    expect(dispatched).toEqual([{ type: 'SET_AVAILABLE', payload: true }])
+    expect(dispatched).toEqual([{ type: "SET_AVAILABLE", payload: true }])
     done()
   })
 
@@ -58,7 +58,7 @@ test('_fetchCyRESTAvailable success', async done => {
     const result = await runSaga(
       {
         dispatch: action => dispatched.push(action),
-        getState: () => ({ value: 'test' })
+        getState: () => ({ value: "test" })
       },
       _fetchCyRESTAvailable,
       {}
@@ -68,17 +68,17 @@ test('_fetchCyRESTAvailable success', async done => {
   }
 }, 7000)
 
-test('_fetchCyRESTAvailable failure', async done => {
+test("_fetchCyRESTAvailable failure", async done => {
   expect.assertions(1)
 
   const dispatched = []
 
   cyrest.status.onCall(0).callsFake(cyRESTPort => {
-    throw 'kaboom'
+    throw "kaboom"
   })
 
   cyrest.status.onCall(1).callsFake(() => {
-    expect(dispatched).toEqual([{ type: 'SET_AVAILABLE', payload: false }])
+    expect(dispatched).toEqual([{ type: "SET_AVAILABLE", payload: false }])
     done()
   })
 
@@ -86,7 +86,7 @@ test('_fetchCyRESTAvailable failure', async done => {
     const result = await runSaga(
       {
         dispatch: action => dispatched.push(action),
-        getState: () => ({ value: 'test' })
+        getState: () => ({ value: "test" })
       },
       _fetchCyRESTAvailable,
       {}

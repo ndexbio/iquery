@@ -1,10 +1,10 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from "redux-actions"
 import {
   findSourceFailed,
   findSourceStarted,
   findSourceSucceeded,
   setCurrentSource
-} from '../actions/source'
+} from "../actions/source"
 
 const defaultState = {
   isFetchingSource: false,
@@ -32,7 +32,7 @@ const source = handleActions(
       }
     },
     [findSourceFailed]: (state, payload) => {
-      console.warn('Error:', payload.error)
+      console.warn("Error:", payload.error)
       return {
         ...state,
         isFetchingSource: false,

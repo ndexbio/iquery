@@ -1,10 +1,10 @@
-import React from "react";
+import React from "react"
 
-import MemoTableBrowserPanel from "./TableBrowserPanel";
+import MemoTableBrowserPanel from "./TableBrowserPanel"
 
 const DISABLED_STYLE = {
   width: "100%"
-};
+}
 
 /**
  *
@@ -19,18 +19,18 @@ const TableBrowser = props => {
     props.network.originalCX === null ||
     props.search.actualResults.length === 0
   ) {
-    return <div style={DISABLED_STYLE} />;
+    return <div style={DISABLED_STYLE} />
   }
 
   return (
     <div className={"table-browser"}>
       <MemoTableBrowserPanel {...props} />
     </div>
-  );
-};
+  )
+}
 
-const MemoTableBrowser = TableBrowser; /*React.memo(TableBrowser, (prevProps, newProps) => {
+const MemoTableBrowser = TableBrowser /*React.memo(TableBrowser, (prevProps, newProps) => {
   return isEqual(prevProps.network.isFetching, newProps.network.isFetching)
 })*/
 
-export default MemoTableBrowser;
+export default MemoTableBrowser

@@ -1,50 +1,50 @@
-import React, { useState } from 'react'
-import Linkify from 'linkifyjs/react'
-import parse from 'html-react-parser'
-import { isEqual } from 'lodash'
+import React, { useState } from "react"
+import Linkify from "linkifyjs/react"
+import parse from "html-react-parser"
+import { isEqual } from "lodash"
 
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/styles'
-import ExpandPanel from './ExpandPanel'
-import CheckIcon from '@material-ui/icons/Check'
-import Avatar from '@material-ui/core/Avatar'
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemText from "@material-ui/core/ListItemText"
+import Typography from "@material-ui/core/Typography"
+import { makeStyles } from "@material-ui/styles"
+import ExpandPanel from "./ExpandPanel"
+import CheckIcon from "@material-ui/icons/Check"
+import Avatar from "@material-ui/core/Avatar"
 
-import { camelCaseToTitleCase } from './camel-case-util.js'
-import { stripScripts } from './strip-scripts-util.js'
+import { camelCaseToTitleCase } from "./camel-case-util.js"
+import { stripScripts } from "./strip-scripts-util.js"
 
 let index = 0
 
 const useStyles = makeStyles(theme => ({
   noPadding: {
-    paddingTop: '0',
-    paddingBottom: '0'
+    paddingTop: "0",
+    paddingBottom: "0"
   },
   center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    display: 'flex',
-    width: '100%'
+    justifyContent: "center",
+    alignItems: "center",
+    display: "flex",
+    width: "100%"
   },
   wideList: {
-    marginTop: '0',
-    width: '100%',
-    padding: '0'
+    marginTop: "0",
+    width: "100%",
+    padding: "0"
   },
   table: {
-    width: '100%',
-    tableLayout: 'fixed'
+    width: "100%",
+    tableLayout: "fixed"
   },
   matched: {
     backgroundColor: "#C51162",
-    height: '1em',
-    width: '1em'
+    height: "1em",
+    width: "1em"
   },
   icon: {
-    height: '0.5em',
-    weidth: '0.5em'
+    height: "0.5em",
+    weidth: "0.5em"
   }
 }))
 
@@ -54,7 +54,7 @@ const EdgeProperties = props => {
   if (props.network.selectedEdges.length === 0) {
     edges = props.network.network.elements
       .filter((elem) => {
-        return elem.data.id[0] === 'e'
+        return elem.data.id[0] === "e"
       })
       .map(elem => {
         return elem.data
@@ -68,23 +68,23 @@ const EdgeProperties = props => {
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
   const entityProperties = [
-    'Source',
-    'Target',
-    'Type',
-    'SBO Type',
-    'Interaction',
-    'Throughput',
-    'Location'
+    "Source",
+    "Target",
+    "Type",
+    "SBO Type",
+    "Interaction",
+    "Throughput",
+    "Location"
   ]
 
   const edgeProperties = [
-    'Start Arrow',
-    'End Arrow',
-    'Connector Type',
-    'Line Thickness',
-    'Line Style',
-    'Color',
-    'Id'
+    "Start Arrow",
+    "End Arrow",
+    "Connector Type",
+    "Line Thickness",
+    "Line Style",
+    "Color",
+    "Id"
   ]
 
   const displayItems = [entityProperties, edgeProperties]
@@ -96,23 +96,23 @@ const EdgeProperties = props => {
     const aTarget = findNode(a.target, nodes)
     const bSource = findNode(b.source, nodes)
     const bTarget = findNode(b.target, nodes)
-    if (aSource !== '') {
+    if (aSource !== "") {
       aScore++
     }
-    if (aTarget !== '') {
+    if (aTarget !== "") {
       aScore++
     }
-    if (bSource !== '') {
+    if (bSource !== "") {
       bScore++
     }
-    if (bTarget !== '') {
+    if (bTarget !== "") {
       bScore++
     }
     if (bScore - aScore !== 0) {
       return bScore - aScore
-    } else if (aSource === '') {
+    } else if (aSource === "") {
       return 1
-    } else if (bSource === '') {
+    } else if (bSource === "") {
       return -1
     }
 
@@ -139,22 +139,22 @@ const EdgeProperties = props => {
       content = extractContent(edge[key])
       title = extractTitle(key)
       if (
-        !title.startsWith('__') &&
+        !title.startsWith("__") &&
         content != null &&
-        content !== 'null' &&
-        content !== ''
+        content !== "null" &&
+        content !== ""
       ) {
-        if (title === 'source') {
+        if (title === "source") {
           source = findNode(content, nodes)
           attributes.push({
-            title: 'Source',
+            title: "Source",
             content: source,
             displayed: false
           })
-        } else if (title === 'target') {
+        } else if (title === "target") {
           target = findNode(content, nodes)
           attributes.push({
-            title: 'Target',
+            title: "Target",
             content: target,
             displayed: false
           })
@@ -173,7 +173,7 @@ const EdgeProperties = props => {
     let primaryString
     let secondaryString
     displayItems.forEach(list => {
-      primaryString = ''
+      primaryString = ""
       let currentEntry
       list.forEach(element => {
         currentEntry = attributes.filter(entry => {
@@ -181,71 +181,71 @@ const EdgeProperties = props => {
         })[0]
         if (currentEntry != null && currentEntry.content != null) {
           primaryString +=
-            currentEntry.title + ': ' + currentEntry.content + '<br>'
+            currentEntry.title + ": " + currentEntry.content + "<br>"
           currentEntry.displayed = true
         }
       })
       primaryString = formatPrimary(primaryString)
-      if (primaryString !== '') {
+      if (primaryString !== "") {
         switch (list) {
-          case entityProperties:
-            secondaryString = 'Entity Properties'
-            displayCol1.push(
-              <ListItem key={Math.random()} className={classes.noPadding}>
-                <ListItemText
-                  inset={false}
-                  primary={
-                    <React.Fragment>
-                      <Typography variant="caption" color="textSecondary">
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography variant="body2">{primaryString}</Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
-            break
-          case edgeProperties:
-            secondaryString = 'Edge Properties'
-            displayCol2.push(
-              <ListItem
-                key={Math.random()}
-                className={classes.listPadding}
-                disableGutters={true}
-              >
-                <ListItemText
-                  primary={
-                    <React.Fragment>
-                      <Typography variant="caption" color="textSecondary">
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography variant="body2">{primaryString}</Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
-            break
+        case entityProperties:
+          secondaryString = "Entity Properties"
+          displayCol1.push(
+            <ListItem key={Math.random()} className={classes.noPadding}>
+              <ListItemText
+                inset={false}
+                primary={
+                  <React.Fragment>
+                    <Typography variant="caption" color="textSecondary">
+                      {secondaryString}
+                    </Typography>
+                    <div>
+                      <Typography variant="body2">{primaryString}</Typography>
+                    </div>
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+          )
+          break
+        case edgeProperties:
+          secondaryString = "Edge Properties"
+          displayCol2.push(
+            <ListItem
+              key={Math.random()}
+              className={classes.listPadding}
+              disableGutters={true}
+            >
+              <ListItemText
+                primary={
+                  <React.Fragment>
+                    <Typography variant="caption" color="textSecondary">
+                      {secondaryString}
+                    </Typography>
+                    <div>
+                      <Typography variant="body2">{primaryString}</Typography>
+                    </div>
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+          )
+          break
         }
       }
     })
 
-    primaryString = ''
+    primaryString = ""
     attributes.forEach(entry => {
       if (!entry.displayed) {
-        primaryString += entry.title + ': ' + entry.content + '<br>'
+        primaryString += entry.title + ": " + entry.content + "<br>"
         entry.displayed = true
       }
     })
     primaryString = formatPrimary(primaryString)
-    secondaryString = 'Additional properties'
+    secondaryString = "Additional properties"
 
-    if (primaryString !== '') {
+    if (primaryString !== "") {
       displayCol1.push(
         <ListItem key={index++} className={classes.noPadding}>
           <ListItemText
@@ -266,35 +266,34 @@ const EdgeProperties = props => {
     }
 
     //Create summary
-    let sourceSymbol = source;
-    let targetSymbol = target;
+    let sourceSymbol = source
+    let targetSymbol = target
     if (props.search.queryList.includes(source.toUpperCase())) {
       sourceSymbol = (
-<React.Fragment>
-            <td>
-              {source}
-            </td>
-            <td>
+        <React.Fragment>
+          <td>
+            {source}
+          </td>
+          <td>
             <Avatar className={classes.matched}>
-            <CheckIcon className={classes.icon}/>
-          </Avatar>
-            </td>
-          </React.Fragment>
+              <CheckIcon className={classes.icon}/>
+            </Avatar>
+          </td>
+        </React.Fragment>
       )
     }
 
     if (props.search.queryList.includes(target.toUpperCase())) {
       targetSymbol = (
         <React.Fragment>
-          
-            <td>
-              {target}
-            </td>
-            <td>
+          <td>
+            {target}
+          </td>
+          <td>
             <Avatar className={classes.matched}>
-            <CheckIcon className={classes.icon}/>
-          </Avatar>
-            </td>
+              <CheckIcon className={classes.icon}/>
+            </Avatar>
+          </td>
 
         </React.Fragment>
       )
@@ -302,25 +301,25 @@ const EdgeProperties = props => {
 
     const summary = (
       <Typography variant="body2">
-      <table>
-        <tbody>
-          <tr>
-            {sourceSymbol}
-            <td>
-              {' ➝ '}
-            </td>
-            {targetSymbol}
-          </tr>
-        </tbody>
-      </table>
-</Typography>
+        <table>
+          <tbody>
+            <tr>
+              {sourceSymbol}
+              <td>
+                {" ➝ "}
+              </td>
+              {targetSymbol}
+            </tr>
+          </tbody>
+        </table>
+      </Typography>
     )
     const details = (
       <table className={classes.table}>
         <tbody>
           <tr>
-            <td valign={'top'}>{displayCol1}</td>
-            <td valign={'top'}>{displayCol2}</td>
+            <td valign={"top"}>{displayCol1}</td>
+            <td valign={"top"}>{displayCol2}</td>
           </tr>
         </tbody>
       </table>
@@ -339,7 +338,7 @@ const EdgeProperties = props => {
   //Don't return nothing
   if (topDisplay.length === 0) {
     return (
-      <div className={'outer-rectangle'}>
+      <div className={"outer-rectangle"}>
         <div className={classes.center}>
           <Typography variant="subtitle1" color="textSecondary">
             Select an edge to view edge properties
@@ -352,8 +351,8 @@ const EdgeProperties = props => {
       setDefaultExpanded(true)
     }
     return (
-      <div className={'outer-rectangle'}>
-        <div className={'inner-rectangle'}>
+      <div className={"outer-rectangle"}>
+        <div className={"inner-rectangle"}>
           <List className={classes.noPadding}>{topDisplay}</List>
         </div>
       </div>
@@ -363,8 +362,8 @@ const EdgeProperties = props => {
       setDefaultExpanded(false)
     }
     return (
-      <div className={'outer-rectangle'}>
-        <div className={'inner-rectangle'}>
+      <div className={"outer-rectangle"}>
+        <div className={"inner-rectangle"}>
           <div>
             <List className={classes.noPadding}>{topDisplay}</List>
           </div>
@@ -376,54 +375,54 @@ const EdgeProperties = props => {
 
 const extractContent = entry => {
   if (entry == null) {
-    return ''
+    return ""
   }
   return stripScripts(entry)
 }
 
 const extractTitle = entry => {
   if (entry == null) {
-    return ''
+    return ""
   }
   return stripScripts(entry)
 }
 
 const formatPrimary = entry => {
-  if (entry === '') {
+  if (entry === "") {
     return entry
   }
   let modifiedText = entry
-    .replace(/<\/?p\/?>/gi, '<br>')
-    .replace(/(<\/?br\/?>)+/gi, '<br>')
-    .replace(/(\n)+/gi, '\n')
-    .replace(/<a\s+href=/gi, '<a target="_blank" href=')
+    .replace(/<\/?p\/?>/gi, "<br>")
+    .replace(/(<\/?br\/?>)+/gi, "<br>")
+    .replace(/(\n)+/gi, "\n")
+    .replace(/<a\s+href=/gi, "<a target=\"_blank\" href=")
     .trim()
-  if (modifiedText.startsWith('<br>')) {
+  if (modifiedText.startsWith("<br>")) {
     modifiedText = modifiedText.slice(4, modifiedText.length - 1)
   }
-  if (modifiedText.endsWith('<br>')) {
+  if (modifiedText.endsWith("<br>")) {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
   modifiedText = parse(camelCaseToTitleCase(modifiedText))
   return (
-    <Linkify key={'link:' + index++}>
+    <Linkify key={"link:" + index++}>
       {modifiedText}
     </Linkify>
   )
 }
 
 const findNode = (nodeId, nodeArray) => {
-  if (isNaN(nodeId) || nodeId === '') {
+  if (isNaN(nodeId) || nodeId === "") {
     return nodeId
   }
   const returnNode = nodeArray.filter(
-    item => item['@id'].toString() === nodeId.toString()
+    item => item["@id"].toString() === nodeId.toString()
   )[0]
 
   if (returnNode != null) {
     return returnNode.n
   } else {
-    return ''
+    return ""
   }
 }
 

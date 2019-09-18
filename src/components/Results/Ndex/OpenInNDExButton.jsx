@@ -1,42 +1,42 @@
-import React from 'react'
-import './style.css'
+import React from "react"
+import "./style.css"
 
-import Button from '@material-ui/core/Button'
-import logo from '../../../assets/images/ndex-logo.svg'
-import logoDisabled from '../../../assets/images/ndex-logo-mono-light.svg'
-import { withStyles } from '@material-ui/core'
-import Tooltip from '@material-ui/core/Tooltip'
-import {fade} from "./color-manipulator-util";
+import Button from "@material-ui/core/Button"
+import logo from "../../../assets/images/ndex-logo.svg"
+import logoDisabled from "../../../assets/images/ndex-logo-mono-light.svg"
+import { withStyles } from "@material-ui/core"
+import Tooltip from "@material-ui/core/Tooltip"
+import {fade} from "./color-manipulator-util"
 
 
 const styles = theme => ({
   buttonIcon: {
-    height: '2em'
+    height: "2em"
   },
   button: {
-    height: '3em',
-    width: '4.3em',
-    minWidth: '4.3em',
-    marginLeft: '0.5em',
-    color: '#4DA1DE'
+    height: "3em",
+    width: "4.3em",
+    minWidth: "4.3em",
+    marginLeft: "0.5em",
+    color: "#4DA1DE"
     
   }
 })
 
 const BootstrapButton = withStyles({
   root: {
-    width: '4.3em',
-    borderColor: '#4DA1DE',
-    color: '#4DA1DE',
-    '&:active': {
-      borderColor: '#4DA1DE',
-      color: '#4DA1DE'
+    width: "4.3em",
+    borderColor: "#4DA1DE",
+    color: "#4DA1DE",
+    "&:active": {
+      borderColor: "#4DA1DE",
+      color: "#4DA1DE"
     },
-    '&:hover': {
-      backgroundColor: fade('#4DA1DE', 0.08)
+    "&:hover": {
+      backgroundColor: fade("#4DA1DE", 0.08)
     }
   },
-})(Button);
+})(Button)
 
 const OpenInNDExButton = props => {
   const { classes } = props

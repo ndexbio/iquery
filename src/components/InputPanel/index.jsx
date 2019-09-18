@@ -1,7 +1,7 @@
-import React from 'react'
-import './style.css'
+import React from "react"
+import "./style.css"
 
-import GeneList from '../GeneList'
+import GeneList from "../GeneList"
 
 /**
  * Top page for the application
