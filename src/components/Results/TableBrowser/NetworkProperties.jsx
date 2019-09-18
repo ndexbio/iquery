@@ -86,19 +86,17 @@ const NetworkProperties = props => {
       ) {
         const newTitle = 'Description of parent network'
         leftDisplayItems.splice(1, 0, newTitle)
-        const networkInfo =
-          props.search.actualResults[props.network.listIndex - 1]
-        content =
-          networkInfo.nodes +
-          ' nodes, ' +
-          networkInfo.edges +
-          ' edges<br/>' +
-          content
         attributes.push({
           title: newTitle,
           content: content, //TODO
           displayed: false
         })
+      } else if (title === 'GO hierarchy') {
+        attributes.push({
+          title: 'GO Hierarchy',
+          content: content,
+          displayed: false
+        }) 
       } else {
         attributes.push({
           title: camelCaseToTitleCase(title),
@@ -295,12 +293,7 @@ const extractTitle = entry => {
   } else {
     modifiedText = ''
   }
-  modifiedText = stripScripts(modifiedText.trim())
-  if (modifiedText === 'GO hierarchy') {
-    return 'GO Hierarchy'
-  } else {
-    return modifiedText
-  }
+  return stripScripts(modifiedText.trim())
 }
 
 const formatPrimary = entry => {

@@ -46,34 +46,36 @@ const CytoscapeViewer = props => {
   }
 
   let niceCX = useMemo(() => {
-    const networkAttr = originalCX.filter(
-      entry => entry.networkAttributes !== undefined
-    )
-
-    if (networkAttr !== undefined) {
-      const firstEntry = networkAttr[0]
-      if (
-        firstEntry === undefined ||
-        firstEntry.networkAttributes === undefined
-      ) {
-        return
-      }
-
-      const netAttrArray = firstEntry.networkAttributes
-      const annotationEntry = netAttrArray.filter(
-        attr => attr.n === ANNOTATION_TAG
+    if (originalCX) {
+      const networkAttr = originalCX.filter(
+        entry => entry.networkAttributes !== undefined
       )
-      if (annotationEntry.length !== 0 && cyInstance) {
-        const nice = utils.rawCXtoNiceCX(originalCX)
-        console.log(
-          '* Registering annotation renderer for this niceCX:',
-          annotationEntry
+
+      if (networkAttr !== undefined) {
+        const firstEntry = networkAttr[0]
+        if (
+          firstEntry === undefined ||
+          firstEntry.networkAttributes === undefined
+        ) {
+          return
+        }
+
+        const netAttrArray = firstEntry.networkAttributes
+        const annotationEntry = netAttrArray.filter(
+          attr => attr.n === ANNOTATION_TAG
         )
-        annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
-        return nice
+        if (annotationEntry.length !== 0 && cyInstance) {
+          const nice = utils.rawCXtoNiceCX(originalCX)
+          console.log(
+            '* Registering annotation renderer for this niceCX:',
+            annotationEntry
+          )
+          annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
+          annotationRenderer.drawBackground(cyInstance, backgroundColor)
+          return nice
+        }
       }
     }
-
     return null
   }, [originalCX, cyInstance])
 
