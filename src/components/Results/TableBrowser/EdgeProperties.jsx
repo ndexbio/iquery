@@ -33,7 +33,8 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     width: '100%',
-    tableLayout: 'fixed'
+    tableLayout: 'fixed',
+    overflow: 'visible'
   }
 }))
 
@@ -41,6 +42,7 @@ const EdgeProperties = props => {
   const classes = useStyles()
   const edges = props.network.selectedEdges
   const nodes = props.nodeList
+  const context = props.context
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
@@ -66,7 +68,7 @@ const EdgeProperties = props => {
 
   const displayItems = [entityProperties, edgeProperties]
 
-  const sortedEdges = edges.sort((a, b) => {
+  edges.sort((a, b) => {
     let aScore = 0
     let bScore = 0
     const aSource = findNode(a.source, nodes)

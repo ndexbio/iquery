@@ -47,7 +47,7 @@ const TabContent = props => {
   } else if (value === 1) {
     return <NodeProperties context={context} {...props} />
   } else {
-    return <MemoEdgeProperties {...props} />
+    return <MemoEdgeProperties context={context} {...props} />
   }
 }
 

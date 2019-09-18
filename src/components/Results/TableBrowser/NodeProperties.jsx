@@ -103,7 +103,7 @@ const NodeProperties = props => {
         content !== 'null' &&
         content !== ''
       ) {
-        if (title === 'alias') {
+        if (title === 'alias' || title === 'aliases') {
           const [prefix, id] = content.split(':')
           if (prefix in context) {
             attributes.push({
