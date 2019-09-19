@@ -99,7 +99,8 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 function* watchSearchResult(action) {
   const jobId = action.payload.jobId
 
-  const individualResults = []
+  const resultList = []
+  const finishedSourceNames = new Set()
 
   try {
     while (true) {
@@ -117,8 +118,12 @@ function* watchSearchResult(action) {
           const resultRes = yield call(cySearchApi.getResult, jobId, sourceName)
           const json = yield call([resultRes, 'json'])
 
-          individualResults.push(json.sources[0])
-          json.sources = individualResults
+          if(finishedSourceNames.has(sourceName) === false) {
+            // Need to add this new result.
+            resultList.push(json.sources[0])
+            finishedSourceNames.add(sourceName)
+          }
+          json.sources = resultList
 
           yield put({
             type: SET_SEARCH_RESULT,
@@ -138,7 +143,7 @@ function* watchSearchResult(action) {
         }
       }
       if (finishCount === status.length) {
-        console.log('!! Search & fetch finished:', finishCount, individualResults)
+        console.log('!! Search & fetch finished:', finishCount, resultList)
         break
       }
 
