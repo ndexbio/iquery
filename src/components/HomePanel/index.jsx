@@ -24,25 +24,25 @@ const HomePanel = props => {
   }
 
   const isFetching = props.search.isFetching
-  const searchResult = props.search.searchResult
+  const searchResults = props.search.searchResults
 
   // Still searching and no result is available
-  if (isFetching && searchResult === null) {
+  if (isFetching && searchResults === null) {
     return (
-      <AppShell {...props} >
+      <AppShell {...props}>
         <LoadingPanel title="Loading Results..." />
       </AppShell>
     )
   }
 
   return (
-    <AppShell {...props} >
+    <AppShell {...props}>
       <div className="container">
         <Results {...props} />
-        <InputPanel {...props}/>
+        <InputPanel {...props} />
       </div>
     </AppShell>
   )
 }
 
-export default (HomePanel)
+export default HomePanel

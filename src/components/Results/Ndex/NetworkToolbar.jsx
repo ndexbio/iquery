@@ -103,19 +103,19 @@ const NetworkToolbar = props => {
   let [prefix, name] = ['', '']
 
   if (props.search.actualResults.length !== 0) {
-    [prefix, name] = props.network.networkName.replace(":", "&").split('&')
+    ;[prefix, name] = props.network.networkName.replace(':', '&').split('&')
   }
 
   return (
     <div className={classes.toolbar}>
-      <Tooltip title={name ? camelCaseToTitleCase(prefix) + ':' + name : null}>
+      <Tooltip title={name ? camelCaseToTitleCase(prefix) + ':' + name : ''}>
         <Typography
           className={classes.title}
           variant="subtitle1"
           color="inherit"
           noWrap
         >
-          {name ? camelCaseToTitleCase(prefix) + ':' + name : null}
+          {name ? camelCaseToTitleCase(prefix) + ':' + name : ''}
         </Typography>
       </Tooltip>
       <div className={classes.grow} />

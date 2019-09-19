@@ -25,9 +25,7 @@ import {
   NETWORK_FETCH_FAILED
 } from '../actions/network'
 
-const API_CALL_INTERVAL = 1000
-
-const SELECTED_SOURCES = ['interactome-ppi']
+const API_CALL_INTERVAL = 500
 
 export default function* rootSaga() {
   yield takeLatest(SEARCH_STARTED, watchSearch)
@@ -101,7 +99,7 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 function* watchSearchResult(action) {
   const jobId = action.payload.jobId
 
-  const currentResult = {}
+  const individualResults = []
 
   try {
     while (true) {
@@ -109,56 +107,38 @@ function* watchSearchResult(action) {
       const statusRes = yield call(cySearchApi.checkStatus, jobId)
       const statusJson = yield call([statusRes, 'json'])
 
-      const { progress } = statusJson
-      if (progress === 100) {
-        // All results are available.  Simply return it.
-        const resultRes = yield call(cySearchApi.getResult, jobId)
-        const resultJson = yield call([resultRes, 'json'])
-
-        yield put({
-          type: SET_SEARCH_RESULT,
-          payload: {
-            singleResult: resultJson
-          }
-        })
-
-        yield put({
-          type: FETCH_RESULT_SUCCEEDED,
-          payload: {
-            searchResults: resultJson
-          }
-        })
-        return
-      }
-
       const status = statusJson.sources
-
       let idx = status.length
-
-      // This will be true if all results are finished (100%)
-      let allDone = false
 
       while (idx--) {
         const src = status[idx]
         const { progress, sourceName } = src
         if (progress === 100) {
-          allDone = true
           const resultRes = yield call(cySearchApi.getResult, jobId, sourceName)
           const json = yield call([resultRes, 'json'])
 
-          currentResult[sourceName] = json
+          individualResults.push(json.sources[0])
+          json.sources = individualResults
+
           yield put({
             type: SET_SEARCH_RESULT,
             payload: {
               singleResult: json
             }
           })
-        } else {
-          allDone = false
+          // console.log(idx + ': Individual check finished:', src, json)
         }
       }
 
-      if (allDone) {
+      idx = status.length
+      let finishCount = 0
+      while (idx--) {
+        if (status[idx].progress === 100) {
+          finishCount++
+        }
+      }
+      if (finishCount === status.length) {
+        console.log('!! Search & fetch finished:', finishCount, individualResults)
         break
       }
 
@@ -166,13 +146,9 @@ function* watchSearchResult(action) {
       yield call(sleep, API_CALL_INTERVAL)
     }
 
-    const resultRes = yield call(cySearchApi.getResult, jobId)
-    const resultJson = yield call([resultRes, 'json'])
     yield put({
       type: FETCH_RESULT_SUCCEEDED,
-      payload: {
-        searchResults: resultJson
-      }
+      payload: {}
     })
   } catch (e) {
     console.warn('NDEx search error:', e)
