@@ -25,13 +25,7 @@ import {
   NETWORK_FETCH_FAILED
 } from "../actions/network"
 
-<<<<<<< HEAD
 const API_CALL_INTERVAL = 500
-=======
-const API_CALL_INTERVAL = 1000
-
-const SELECTED_SOURCES = ["interactome-ppi"]
->>>>>>> a2c9b0e1bec849287d20642288b5ae4164dcac1d
 
 export default function* rootSaga() {
   yield takeLatest(SEARCH_STARTED, watchSearch)
@@ -114,31 +108,6 @@ function* watchSearchResult(action) {
       const statusRes = yield call(cySearchApi.checkStatus, jobId)
       const statusJson = yield call([statusRes, "json"])
 
-<<<<<<< HEAD
-=======
-      const { progress } = statusJson
-      if (progress === 100) {
-        // All results are available.  Simply return it.
-        const resultRes = yield call(cySearchApi.getResult, jobId)
-        const resultJson = yield call([resultRes, "json"])
-
-        yield put({
-          type: SET_SEARCH_RESULT,
-          payload: {
-            singleResult: resultJson
-          }
-        })
-
-        yield put({
-          type: FETCH_RESULT_SUCCEEDED,
-          payload: {
-            searchResults: resultJson
-          }
-        })
-        return
-      }
-
->>>>>>> a2c9b0e1bec849287d20642288b5ae4164dcac1d
       const status = statusJson.sources
       let idx = status.length
 
@@ -174,7 +143,7 @@ function* watchSearchResult(action) {
         }
       }
       if (finishCount === status.length) {
-        console.log('!! Search & fetch finished:', finishCount, resultList)
+        console.log("!! Search & fetch finished:", finishCount, resultList)
         break
       }
 
@@ -182,11 +151,6 @@ function* watchSearchResult(action) {
       yield call(sleep, API_CALL_INTERVAL)
     }
 
-<<<<<<< HEAD
-=======
-    const resultRes = yield call(cySearchApi.getResult, jobId)
-    const resultJson = yield call([resultRes, "json"])
->>>>>>> a2c9b0e1bec849287d20642288b5ae4164dcac1d
     yield put({
       type: FETCH_RESULT_SUCCEEDED,
       payload: {}
