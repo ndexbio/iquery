@@ -44,12 +44,33 @@ const TabContent = props => {
     }
   }
 
+  //Find nodelist
+  let nodeList
+  for (let i = 0; i < props.network.originalCX.length; i++) {
+    if (props.network.originalCX[i].nodes != null) {
+      nodeList = props.network.originalCX[i].nodes
+      break
+    }
+  }
+
+  //Find represents
+  const represents = {}
+  if (nodeList != null) {
+    for (let i = 0; i < nodeList.length; i++) {
+      if (nodeList[i].r != null) {
+        represents[nodeList[i].n] = nodeList[i].r
+      }
+    }
+  }
+
+
+
   if (value === 0) {
     return <MemoNetworkProperties {...props} />
   } else if (value === 1) {
-    return <NodeProperties context={context} {...props} />
+    return <NodeProperties context={context} represents={represents} {...props} />
   } else {
-    return <MemoEdgeProperties context={context} {...props} />
+    return <MemoEdgeProperties context={context} nodeList={nodeList} {...props} />
   }
 }
 
@@ -70,14 +91,6 @@ const TableBrowserPanel = props => {
     props.networkActions.changeTab(newValue)
   }
 
-  let nodeList
-  for (let i = 0; i < props.network.originalCX.length; i++) {
-    if (props.network.originalCX[i].nodes != null) {
-      nodeList = props.network.originalCX[i].nodes
-      break
-    }
-  }
-
   //Get current tab selection
   return (
     <div className="table-browser-panel">
@@ -91,7 +104,7 @@ const TableBrowserPanel = props => {
         <HoverTab className={classes.root} key={"nodes-tab"} label={"Nodes"} backgroundColor={backgroundColor}/>
         <HoverTab className={classes.root} key={"edges-tab"} label={"Edges"} backgroundColor={backgroundColor}/>
       </Tabs>
-      <TabContent value={value} nodeList={nodeList} {...props} />
+      <TabContent value={value} {...props} />
     </div>
   )
 }

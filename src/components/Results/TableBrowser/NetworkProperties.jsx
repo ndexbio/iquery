@@ -325,6 +325,7 @@ const formatPrimary = entry => {
   if (modifiedText.endsWith("<br>")) {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
+  modifiedText = modifiedText.charAt(0).toUpperCase() + modifiedText.slice(1)
   modifiedText = parse(modifiedText)
   return (
     <Linkify key={Math.random().toString()}>{modifiedText}</Linkify>

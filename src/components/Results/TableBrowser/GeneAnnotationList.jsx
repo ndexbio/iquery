@@ -104,8 +104,8 @@ class GeneAnnotationList extends React.Component {
           primary={
             <table>
               <tbody>
-                <tr>
-                  <td>
+                <tr style={{marginLeft: '-1'}}>
+                  <td style={{padding: '0'}}>
                     <div>
                       <Typography component="span" variant="body2" >
                         {geneEntry.symbol}
@@ -147,93 +147,5 @@ class GeneAnnotationList extends React.Component {
     )
   }    
 } 
-
-/*
-  getListChildren = (entry, classes) => {
-    const pathway = entry.pathway
-
-    const pathwaySources = Object.keys(pathway)
-
-    return (
-      <Collapse
-        in={this.state[getPathwayStateTag(entry._id)]}
-        timeout="auto"
-        unmountOnExit
-      >
-        <List component="div" disablePadding>
-          {pathwaySources.map(dbName => {
-            const pathways = pathway[dbName]
-
-            if (!Array.isArray(pathways)) {
-              return (
-                <ListItem button className={classes.nested}>
-                  <ListItemIcon>
-                    <InfoIcon />
-                  </ListItemIcon>
-                  <ListItemText inset primary={pathways.name} />
-                </ListItem>
-              )
-            }
-
-            return (
-              <React.Fragment>
-                {pathways.map(pwEntry => (
-                  <ListItem button className={classes.nested}>
-                    <ListItemIcon>
-                      <InfoIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      inset
-                      primary={dbName + ': ' + pwEntry.id}
-                      secondary={
-                        <React.Fragment>
-                          <Typography
-                            component="span"
-                            className={classes.inline}
-                            color="textPrimary"
-                          >
-                            {pwEntry.name}
-                          </Typography>
-                        </React.Fragment>
-                      }
-                    />
-                  </ListItem>
-                ))}
-              </React.Fragment>
-            )
-          })}
-        </List>
-      </Collapse>
-    )
-  }
-
-  getNotFound = (notFound, classes) => {
-    return (
-      <div>
-        <Divider variant="middle" />
-        <Typography className={classes.title} variant="body1">
-          {'Unmatched: ' + notFound.length}
-        </Typography>
-        <List>
-          {notFound.map(entry => this.getUnmatchedListItem(entry, classes))}
-        </List>
-      </div>
-    )
-  }
-
-  getUnmatchedListItem = geneEntry => {
-    return (
-      <ListItem alignItems="flex-start" key={geneEntry}>
-        <ListItemIcon>
-          <ErrorIcon />
-        </ListItemIcon>
-        <ListItemText inset primary={geneEntry} />
-      </ListItem>
-    )
-  }
-}
-
-const getPathwayStateTag = id => 'pw_' + id
-*/
 
 export default withStyles(styles)(GeneAnnotationList)

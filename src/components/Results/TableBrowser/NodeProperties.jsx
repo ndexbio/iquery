@@ -75,7 +75,7 @@ const NodeProperties = props => {
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
-  const entityProperties = ["Name", "HGNC", "Ensembl", "Alias", "Type"]
+  const entityProperties = ["Name", "ID", "HGNC", "Ensembl", "Aliases", "Type"]
 
   const nodeProperties = [
     "Height",
@@ -89,7 +89,7 @@ const NodeProperties = props => {
     "Border Style",
     "Label Size",
     "Label Font",
-    "Id"
+    "Node Id"
   ]
 
   const displayItems = [entityProperties, nodeProperties]
@@ -125,6 +125,24 @@ const NodeProperties = props => {
         </List>
       )
     }
+    if (node.name in props.represents) {
+      const [prefix, id] = props.represents[node.name].split(":")
+          if (prefix in context) {
+            attributes.push({
+              title: "ID",
+              content:
+                "<a href=\"" + context[prefix] + id + "\">" + props.represents[node.name] + "</a>",
+              displayed: false
+            })
+          } else {
+            attributes.push({
+              title: "ID",
+              content:
+                "<a href=\"" + "http://identifiers.org/" + prefix + "/" + id + "\">" + props.represents[node.name] + "</a>",
+              displayed: false
+            })
+          }
+    }
     for (let key in node) {
       content = extractContent(node[key])
       title = extractTitle(key)
@@ -138,12 +156,25 @@ const NodeProperties = props => {
           const [prefix, id] = content.split(":")
           if (prefix in context) {
             attributes.push({
-              title: "Alias",
+              title: "Aliases",
               content:
                 "<a href=\"" + context[prefix] + id + "\">" + content + "</a>",
               displayed: false
             })
+          } else {
+            attributes.push({
+              title: "Aliases",
+              content:
+                "<a href=\"" + "http://identifiers.org/" + prefix + "/" + id + "\">" + content + "</a>",
+              displayed: false
+            })
           }
+        } else if (title === "id") {
+          attributes.push({
+            title: "Node Id",
+            content: content,
+            displayed: false
+          })
         } else if (title !== "query") {
           attributes.push({
             title: camelCaseToTitleCase(title),
@@ -177,7 +208,7 @@ const NodeProperties = props => {
         case entityProperties:
           secondaryString = "Entity Properties"
           displayCol1.push(
-            <ListItem key={index++} className={classes.noPadding}>
+            <ListItem key={index++} className={classes.noPadding} disableGutters={true}>
               <ListItemText
                 inset={inset}
                 primary={
@@ -233,7 +264,7 @@ const NodeProperties = props => {
 
     if (primaryString !== "") {
       displayCol1.push(
-        <ListItem key={index++} className={classes.noPadding}>
+        <ListItem key={index++} className={classes.noPadding} disableGutters={true}>
           <ListItemText
             inset={inset}
             primary={
@@ -364,7 +395,7 @@ const formatPrimary = entry => {
   if (modifiedText.endsWith("<br>")) {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
-  modifiedText = parse(camelCaseToTitleCase(modifiedText))
+  modifiedText = parse(modifiedText)
   return (
     <Linkify key={"link" + index++}>
       {modifiedText}

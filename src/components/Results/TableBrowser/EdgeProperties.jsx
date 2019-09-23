@@ -84,7 +84,7 @@ const EdgeProperties = props => {
     "Line Thickness",
     "Line Style",
     "Color",
-    "Id"
+    "Edge Id"
   ]
 
   const displayItems = [entityProperties, edgeProperties]
@@ -156,6 +156,12 @@ const EdgeProperties = props => {
           attributes.push({
             title: "Target",
             content: target,
+            displayed: false
+          })
+        } else if (title === "id") {
+          attributes.push({
+            title: "Edge Id",
+            content, content,
             displayed: false
           })
         } else {

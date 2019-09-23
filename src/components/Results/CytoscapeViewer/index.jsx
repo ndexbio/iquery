@@ -120,6 +120,7 @@ const CytoscapeViewer = props => {
         const selectedNodes = cyInstance.$("node:selected")
         selectedNodes.forEach(element => {
           if (element.data().name !== "") {
+            console.log(element)
             nodes.push(element.data())
           }
         })
