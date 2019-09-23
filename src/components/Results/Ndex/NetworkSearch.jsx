@@ -1,8 +1,8 @@
-import React from 'react'
-import './style.css'
+import React from "react"
+import "./style.css"
 
-import InputBase from '@material-ui/core/InputBase'
-import SearchIcon from '@material-ui/icons/Search'
+import InputBase from "@material-ui/core/InputBase"
+import SearchIcon from "@material-ui/icons/Search"
 
 const NetworkSearch = props => {
   return (

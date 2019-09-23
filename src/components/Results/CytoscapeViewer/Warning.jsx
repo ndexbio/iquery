@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Typography } from "@material-ui/core";
-import cytoLogo from "../../../assets/images/cytoscape-logo.svg";
-import { withStyles } from "@material-ui/core/styles";
-import MessageSnackbar from "../../AppShell/MessageSnackbar.jsx";
+import React, { useState } from "react"
+import { Typography } from "@material-ui/core"
+import cytoLogo from "../../../assets/images/cytoscape-logo.svg"
+import { withStyles } from "@material-ui/core/styles"
+import MessageSnackbar from "../../AppShell/MessageSnackbar.jsx"
 
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip"
+import IconButton from "@material-ui/core/IconButton"
 
-import "./style.css";
+import "./style.css"
 
 const styles = theme => ({
   logo: {},
@@ -29,18 +29,18 @@ const styles = theme => ({
     marginTop: "15%",
     width: "100%"
   }
-});
+})
 
 const Warning = props => {
-  const { classes } = props;
+  const { classes } = props
 
-  const [open, setOpen] = useState(false);
-  const [state, setState] = useState("dormant");
-  const [message, setMessage] = useState(null);
+  const [open, setOpen] = useState(false)
+  const [state, setState] = useState("dormant")
+  const [message, setMessage] = useState(null)
 
   const handleClick = () => {
-    props.handleImportNetwork();
-  };
+    props.handleImportNetwork()
+  }
 
   if (
     props.network.uuid &&
@@ -48,61 +48,61 @@ const Warning = props => {
     props.cyrest.available
   ) {
     //Snackbar
-    const isLoadingNetwork = props.cyrest.isLoadingNetwork;
-    const lastResponse = props.cyrest.lastResponse;
+    const isLoadingNetwork = props.cyrest.isLoadingNetwork
+    const lastResponse = props.cyrest.lastResponse
 
-    let cycleId = 0;
-    console.log("cycleId: " + cycleId);
-    console.log("state: " + state);
+    let cycleId = 0
+    console.log("cycleId: " + cycleId)
+    console.log("state: " + state)
 
     if (state === "dormant" && isLoadingNetwork) {
-      setMessage("Opening network in Cytoscape Desktop . . .");
-      setState("openLoading");
+      setMessage("Opening network in Cytoscape Desktop . . .")
+      setState("openLoading")
       if (!open) {
-        setOpen(true);
+        setOpen(true)
       }
     }
     if (
       (state === "openLoading" || state === "closeLoading") &&
       lastResponse != null
     ) {
-      setState("openResult");
+      setState("openResult")
       if (lastResponse.type === "IMPORT_NETWORK_SUCCEEDED") {
-        setMessage("Network opened in Cytoscape Desktop!");
+        setMessage("Network opened in Cytoscape Desktop!")
       } else {
-        setMessage("Network failed to open in Cytoscape Desktop");
+        setMessage("Network failed to open in Cytoscape Desktop")
       }
       if (!open) {
-        setOpen(true);
+        setOpen(true)
       }
     }
     if (state === "openResult" && !open) {
-      setOpen(true);
+      setOpen(true)
     }
     if (state === "openResult" && open) {
-      let currentId = cycleId;
+      let currentId = cycleId
       setTimeout(() => {
         if (state === "openResult" && currentId === cycleId) {
-          setState("dormant");
-          cycleId++;
-          setOpen(false);
+          setState("dormant")
+          cycleId++
+          setOpen(false)
         }
-      }, 6000);
+      }, 6000)
     }
 
     const handleClose = (event, reason) => {
-      console.log("click");
+      console.log("click")
       if (state === "openLoading") {
-        console.log("openLoading to closeLoading");
-        setState("closeLoading");
+        console.log("openLoading to closeLoading")
+        setState("closeLoading")
       } else if (state === "openResult") {
-        console.log("openResult to dormant");
-        setState("dormant");
-        cycleId++;
+        console.log("openResult to dormant")
+        setState("dormant")
+        cycleId++
       }
-      setOpen(false);
-      console.log("open: " + open);
-    };
+      setOpen(false)
+      console.log("open: " + open)
+    }
 
     return (
       <React.Fragment>
@@ -131,7 +131,7 @@ const Warning = props => {
           handleClose={handleClose}
         />
       </React.Fragment>
-    );
+    )
   } else {
     return (
       <div className={classes.outer}>
@@ -142,8 +142,8 @@ const Warning = props => {
           </Typography>
         </div>
       </div>
-    );
+    )
   }
-};
+}
 
-export default withStyles(styles)(Warning);
+export default withStyles(styles)(Warning)

@@ -1,18 +1,18 @@
-import React from "react";
-import "./style.css";
+import React from "react"
+import "./style.css"
 
-import Button from "@material-ui/core/Button";
-import Tooltip from "@material-ui/core/Tooltip";
-import { withStyles } from "@material-ui/core";
+import Button from "@material-ui/core/Button"
+import Tooltip from "@material-ui/core/Tooltip"
+import { withStyles } from "@material-ui/core"
 
-import logo from "../../../assets/images/zoom-logo.svg";
-import disabledLogo from "../../../assets/images/zoom-logo-mono.svg";
+import logo from "../../../assets/images/zoom-logo.svg"
+import disabledLogo from "../../../assets/images/zoom-logo-mono.svg"
 
 const styles = theme => ({
   buttonIcon: {
     height: "1.75em"
   }
-});
+})
 
 const BootstrapButton = withStyles({
   root: {
@@ -27,16 +27,16 @@ const BootstrapButton = withStyles({
       color: "#212121"
     }
   }
-})(Button);
+})(Button)
 
 const ResetZoomButton = props => {
-  const { classes } = props;
+  const { classes } = props
 
-  const disabled = !(props.network.uuid && props.network.uuid.length > 0);
+  const disabled = !(props.network.uuid && props.network.uuid.length > 0)
 
   const handleClick = () => {
-    props.networkActions.fitNetworkView(true);
-  };
+    props.networkActions.fitNetworkView(true)
+  }
 
   return (
     <Tooltip title="Fit network to panel" placement="bottom">
@@ -54,7 +54,7 @@ const ResetZoomButton = props => {
         </BootstrapButton>
       </div>
     </Tooltip>
-  );
-};
+  )
+}
 
-export default withStyles(styles)(ResetZoomButton);
+export default withStyles(styles)(ResetZoomButton)

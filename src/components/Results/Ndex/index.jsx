@@ -1,22 +1,22 @@
-import React from "react";
-import "./style.css";
+import React from "react"
+import "./style.css"
 
-import Split from "react-split";
+import Split from "react-split"
 
-import NetworkView from "./NetworkView";
-import NetworkList from "./NetworkList";
+import NetworkView from "./NetworkView"
+import NetworkList from "./NetworkList"
 
-import { camelCaseToTitleCase } from "../TableBrowser/camel-case-util";
+import { camelCaseToTitleCase } from "../TableBrowser/camel-case-util"
 
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Typography from "@material-ui/core/Typography";
-import { ListItem } from "@material-ui/core";
+import ListItemText from "@material-ui/core/ListItemText"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
+import Typography from "@material-ui/core/Typography"
+import { ListItem } from "@material-ui/core"
 
 const titleStyle = {
   lineHeight: "1.33",
   wordBreak: "break-word"
-};
+}
 
 const subtitleStyle = {
   lineHeight: "1",
@@ -31,7 +31,7 @@ const subtitleStyle = {
  * @constructor
  */
 const Ndex = props => {
-    const handleFetch = (
+  const handleFetch = (
     networkUUID,
     networkName,
     nodeCount,
@@ -39,13 +39,13 @@ const Ndex = props => {
     hitGenes
   ) => {
     //checkCytoscapeConnection(props)
-    const geneList = props.search.queryList;
-    const sourceUUID = props.sourceUUID;
-    const id = props.search.results.jobId;
+    const geneList = props.search.queryList
+    const sourceUUID = props.sourceUUID
+    const id = props.search.results.jobId
 
     // Reset selection
-    props.searchActions.clearSelectedGenes();
-    props.uiStateActions.setHighlights(true);
+    props.searchActions.clearSelectedGenes()
+    props.uiStateActions.setHighlights(true)
     props.networkActions.networkFetchStarted({
       id,
       sourceUUID,
@@ -55,32 +55,32 @@ const Ndex = props => {
       hitGenes,
       nodeCount,
       edgeCount
-    });
-    updateHistory(networkUUID);
-  };
+    })
+    updateHistory(networkUUID)
+  }
 
   const updateHistory = networkUUID => {
     // Update URL
-    const jobId = props.search.results.jobId;
-    const searchResults = props.search.searchResults;
-    const sourceName = props.uiState.selectedSource;
+    const jobId = props.search.results.jobId
+    const searchResults = props.search.searchResults
+    const sourceName = props.uiState.selectedSource
 
     if (searchResults !== undefined && searchResults !== null) {
-      console.log("** network changed:", jobId, sourceName);
-      props.history.push(`/${jobId}/${sourceName}/${networkUUID}`);
+      console.log("** network changed:", jobId, sourceName)
+      props.history.push(`/${jobId}/${sourceName}/${networkUUID}`)
     }
-  };
+  }
 
   const handleImportNetwork = () => {
     // Reset the UI state (hilight)
-    props.uiStateActions.setHighlights(true);
+    props.uiStateActions.setHighlights(true)
 
     props.cyrestActions.importNetworkStarted({
       cx: props.network.originalCX,
       source: props.network.sourceId,
       uuid: props.network.uuid
-    });
-  };
+    })
+  }
 
   const renderNetworkListItem = (
     querySize,
@@ -98,7 +98,7 @@ const Ndex = props => {
       imageURL,
       hitGenes,
       details
-    } = networkEntry;
+    } = networkEntry
 
     const genes = (
       <div display="inline">
@@ -114,19 +114,21 @@ const Ndex = props => {
           genes
         </Typography>
       </div>
-    );
+    )
 
     const icon = (
       <ListItemIcon style={{ width: "20px" }}>
         <img className="list-icon" src={imageURL} alt="list icon" />
       </ListItemIcon>
-    );
+    )
 
     if (props.uiState.selectedSource === "enrichment") {
-      let pVal = details.PValue;
+      let pVal = details.PValue
       if (pVal !== undefined) {
-        if (pVal !== 0) {
-          pVal = pVal.toExponential(2);
+        if (pVal < 1e-15) {
+          pVal = "< 1e-15"
+        } else { 
+          pVal = pVal.toExponential(2)
         }
       }
       const pv = (
@@ -143,13 +145,13 @@ const Ndex = props => {
             pv
           </Typography>
         </div>
-      );
+      )
 
       const title = (
         <Typography style={titleStyle}>
           {description.split(":").slice(1)}
         </Typography>
-      );
+      )
 
       const subtitle = (
         <Typography
@@ -160,15 +162,15 @@ const Ndex = props => {
           Nodes: {nodes}, Edges: {edges}, Source:{" "}
           {camelCaseToTitleCase(description.split(":")[0])}
         </Typography>
-      );
+      )
 
       return (
         <ListItem
           button
           key={networkUUID}
           onClick={event => {
-            handleFetch(networkUUID, description, nodes, edges, hitGenes);
-            handleListItemClick(event, index);
+            handleFetch(networkUUID, description, nodes, edges, hitGenes)
+            handleListItemClick(event, index)
           }}
           selected={selectedIndex === index}
         >
@@ -196,7 +198,7 @@ const Ndex = props => {
             </tbody>
           </table>
         </ListItem>
-      );
+      )
     } else {
       const node = (
         <div display="inline">
@@ -212,7 +214,7 @@ const Ndex = props => {
             {"nodes "}
           </Typography>
         </div>
-      );
+      )
 
       const edge = (
         <div display="inline">
@@ -228,7 +230,7 @@ const Ndex = props => {
             {"edges"}
           </Typography>
         </div>
-      );
+      )
 
       const title = (
         <React.Fragment>
@@ -236,22 +238,22 @@ const Ndex = props => {
             {description}
           </Typography>
         </React.Fragment>
-      );
+      )
 
       const subtitle = (
         <Typography variant="caption" color="textSecondary" style={subtitleStyle}>
           Parent: {details.parent_network_nodes} nodes,{" "}
           {details.parent_network_edges} edges
         </Typography>
-      );
+      )
 
       return (
         <ListItem
           button
           key={networkUUID}
           onClick={event => {
-            handleFetch(networkUUID, description, nodes, edges, hitGenes);
-            handleListItemClick(event, index);
+            handleFetch(networkUUID, description, nodes, edges, hitGenes)
+            handleListItemClick(event, index)
           }}
           selected={selectedIndex === index}
         >
@@ -282,9 +284,9 @@ const Ndex = props => {
             </tbody>
           </table>
         </ListItem>
-      );
+      )
     }
-  };
+  }
 
   return (
     <Split sizes={[40, 60]} gutterSize={7} className="ndex-base">
@@ -296,11 +298,11 @@ const Ndex = props => {
       />
       <NetworkView handleImportNetwork={handleImportNetwork} {...props} />
     </Split>
-  );
-};
+  )
+}
 
 /*const MemoNdex = React.memo(Ndex, (oldProps, newProps) => {
   
 })*/
 
-export default Ndex;
+export default Ndex

@@ -1,33 +1,33 @@
-import React, { useEffect } from "react";
-import "./style.css";
+import React, { useEffect } from "react"
+import "./style.css"
 
-import SearchTextBox from "./SearchTextBox";
-import Footer from "./Footer";
-import LoadingPanel from "../LoadingPanel";
-import Typography from "@material-ui/core/Typography";
+import SearchTextBox from "./SearchTextBox"
+import Footer from "./Footer"
+import LoadingPanel from "../LoadingPanel"
+import Typography from "@material-ui/core/Typography"
 
-import ndex from "../../assets/images/ndex-logo.svg";
-import queryString from "query-string";
-import { Tooltip } from "@material-ui/core";
-import Link from "@material-ui/core/Link";
+import ndex from "../../assets/images/ndex-logo.svg"
+import queryString from "query-string"
+import { Tooltip } from "@material-ui/core"
+import Link from "@material-ui/core/Link"
 
-const feedbackURL = "https://home.ndexbio.org/contact-us/";
+const feedbackURL = "https://home.ndexbio.org/contact-us/"
 
 const StartPanel = props => {
   useEffect(() => {
-    const params = queryString.parse(props.location.search);
-    const genes = params.genes;
+    const params = queryString.parse(props.location.search)
+    const genes = params.genes
 
     if (genes !== undefined) {
-      const geneList = genes.split(",");
-      props.searchActions.setQuery(genes);
-      props.searchActions.searchStarted({ geneList });
+      const geneList = genes.split(",")
+      props.searchActions.setQuery(genes)
+      props.searchActions.searchStarted({ geneList })
     }
 
-    props.sourceActions.findSourceStarted();
+    props.sourceActions.findSourceStarted()
 
-    return () => {};
-  }, []);
+    return () => {}
+  }, [])
 
   if (props.search.isSearching) {
     return (
@@ -35,7 +35,7 @@ const StartPanel = props => {
         title={"Searching Remote Database"}
         message={<div style={{ color: "black" }}>Please wait...</div>}
       />
-    );
+    )
   }
 
   return (
@@ -95,30 +95,33 @@ const StartPanel = props => {
         </div>
       </div>
       <div className="height">
-        <div className="flex">
-          <Typography variant="caption" align="center">
+        <Link href={feedbackURL} target="_blank" color="textSecondary" underline="none">
+          <div className="flex">
+            <Typography variant="caption" align="center">
             NDEx Integrated Query uses selected pathway and interactome networks
             in NDEx to power gene set analysis.
-          </Typography>
-          <Typography variant="caption" align="center">
+            </Typography>
+            <Typography variant="caption" align="center">
             The networks come from many different sources and new networks will
             be continously added.
-          </Typography>
-          <Typography variant="caption" align="center">
+            </Typography>
+            <Typography variant="caption" align="center">
             Do you have a pathway or an interaction network that you would like
             to include in these queries? Click{" "}
-            <Link href={feedbackURL} target="_blank">
-              <font color="#00A1DE">
-                <em>here</em>
-              </font>
-            </Link>{" "}
+              <Link href={feedbackURL} target="_blank">
+                <font color="#00A1DE">
+                  <em>here</em>
+                </font>
+              </Link>{" "}
             to find out how.
-          </Typography>
-        </div>
+            </Typography>
+          
+          </div>
+        </Link>
       </div>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default StartPanel;
+export default StartPanel

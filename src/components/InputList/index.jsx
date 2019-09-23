@@ -1,51 +1,51 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import Avatar from '@material-ui/core/Avatar'
-import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
-import ErrorIcon from '@material-ui/icons/Error'
-import IconButton from '@material-ui/core/IconButton'
-import LinkIcon from '@material-ui/icons/Launch'
-import InfoIcon from '@material-ui/icons/Info'
+import React from "react"
+import { withStyles } from "@material-ui/core/styles"
+import List from "@material-ui/core/List"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemText from "@material-ui/core/ListItemText"
+import ListItemAvatar from "@material-ui/core/ListItemAvatar"
+import Avatar from "@material-ui/core/Avatar"
+import Typography from "@material-ui/core/Typography"
+import Divider from "@material-ui/core/Divider"
+import ErrorIcon from "@material-ui/icons/Error"
+import IconButton from "@material-ui/core/IconButton"
+import LinkIcon from "@material-ui/icons/Launch"
+import InfoIcon from "@material-ui/icons/Info"
 
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
+import ExpandLess from "@material-ui/icons/ExpandLess"
+import ExpandMore from "@material-ui/icons/ExpandMore"
 
-import Tooltip from '@material-ui/core/Tooltip'
+import Tooltip from "@material-ui/core/Tooltip"
 
-import './style.css'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import Collapse from '@material-ui/core/Collapse'
+import "./style.css"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction"
+import Collapse from "@material-ui/core/Collapse"
 
 const MAX_DESCRIPTION_LENGTH = 150
 
-const GENE_CARDS_URL = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene='
+const GENE_CARDS_URL = "https://www.genecards.org/cgi-bin/carddisp.pl?gene="
 
 const styles = theme => ({
   inline: {
-    display: 'inline'
+    display: "inline"
   },
   title: {
-    marginLeft: '0.5em',
-    marginTop: '0.3em'
+    marginLeft: "0.5em",
+    marginTop: "0.3em"
   },
   description: {
-    marginLeft: '1em',
-    marginTop: '0.3em'
+    marginLeft: "1em",
+    marginTop: "0.3em"
   },
   matched: {
-    backgroundColor: 'teal'
+    backgroundColor: "teal"
   },
   unmatched: {
-    backgroundColor: 'red'
+    backgroundColor: "red"
   },
   linkIcon: {
-    paddingLeft: '1em'
+    paddingLeft: "1em"
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4
@@ -58,8 +58,8 @@ class InputList extends React.Component {
   componentDidMount() {}
 
   handleClick = id => {
-    console.log('OPEN = = = ', id)
-    const tag = 'pw_' + id
+    console.log("OPEN = = = ", id)
+    const tag = "pw_" + id
     const curState = this.state[tag]
 
     if (curState === undefined || curState == null) {
@@ -70,7 +70,7 @@ class InputList extends React.Component {
   }
 
   render() {
-    console.log('STTTTT,', this.state)
+    console.log("STTTTT,", this.state)
     const { classes } = this.props
 
     const results = this.props.search.results
@@ -94,7 +94,7 @@ class InputList extends React.Component {
       <div className="gene-list-wrapper">
         <Typography variant="h6">Search Result</Typography>
         <Typography variant="body1">
-          {'Matched Genes: ' + values.length + ''}
+          {"Matched Genes: " + values.length + ""}
         </Typography>
 
         <div className="gene-list">
@@ -109,7 +109,7 @@ class InputList extends React.Component {
   getListItem = (geneEntry, classes) => {
     let description = geneEntry.summary
     if (description.length > MAX_DESCRIPTION_LENGTH) {
-      description = description.substring(0, MAX_DESCRIPTION_LENGTH - 1) + '...'
+      description = description.substring(0, MAX_DESCRIPTION_LENGTH - 1) + "..."
     }
     return (
       <React.Fragment>
@@ -148,7 +148,7 @@ class InputList extends React.Component {
               </Tooltip>
             </IconButton>
           </ListItemSecondaryAction>
-          {this.state['pw_' + geneEntry._id] ? <ExpandLess /> : <ExpandMore />}
+          {this.state["pw_" + geneEntry._id] ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         {this.getListChildren(geneEntry, classes)}
       </React.Fragment>
@@ -160,7 +160,7 @@ class InputList extends React.Component {
 
     const pathwaySources = Object.keys(pathway)
 
-    console.log('PW===', pathway)
+    console.log("PW===", pathway)
 
     return (
       <Collapse
@@ -192,7 +192,7 @@ class InputList extends React.Component {
                     </ListItemIcon>
                     <ListItemText
                       inset
-                      primary={dbName + ': ' + pwEntry.id}
+                      primary={dbName + ": " + pwEntry.id}
                       secondary={
                         <React.Fragment>
                           <Typography
@@ -220,7 +220,7 @@ class InputList extends React.Component {
       <div>
         <Divider variant="middle" />
         <Typography className={classes.title} variant="body1">
-          {'Unmatched: ' + notFound.length}
+          {"Unmatched: " + notFound.length}
         </Typography>
         <List>
           {notFound.map(entry => this.getUnmatchedListItem(entry, classes))}
@@ -241,6 +241,6 @@ class InputList extends React.Component {
   }
 }
 
-const getPathwayStateTag = id => 'pw_' + id
+const getPathwayStateTag = id => "pw_" + id
 
 export default withStyles(styles)(InputList)

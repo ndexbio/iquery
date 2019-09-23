@@ -1,10 +1,10 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
-import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
+import React from "react"
+import Button from "@material-ui/core/Button"
+import { withStyles } from "@material-ui/core"
+import Tooltip from "@material-ui/core/Tooltip"
+import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser"
 
-import { SERVICE_SERVER_URL } from "../../../api/apiConstants";
+import { SERVICE_SERVER_URL } from "../../../api/apiConstants"
 
 const styles = theme => ({
   buttonIcon: {
@@ -18,7 +18,7 @@ const styles = theme => ({
     minWidth: "4.3em",
     marginLeft: "0.5em"
   }
-});
+})
 
 /**
  * Simply open the parent network
@@ -28,9 +28,9 @@ const styles = theme => ({
  * @constructor
  */
 const OpenOriginalNetworkButton = props => {
-  const { classes } = props;
+  const { classes } = props
 
-  const disabled = !(props.network.uuid && props.network.uuid.length > 0);
+  const disabled = !(props.network.uuid && props.network.uuid.length > 0)
 
   const BootstrapButton = withStyles({
     root: {
@@ -42,7 +42,7 @@ const OpenOriginalNetworkButton = props => {
         color: "#212121"
       }
     }
-  })(Button);
+  })(Button)
 
   return (
     <Tooltip
@@ -65,16 +65,16 @@ const OpenOriginalNetworkButton = props => {
         </BootstrapButton>
       </div>
     </Tooltip>
-  );
-};
+  )
+}
 
 const handleOpen = uuid => {
-  const url = SERVICE_SERVER_URL + "#/network/" + uuid;
-  console.log(SERVICE_SERVER_URL);
-  console.log(url);
+  const url = SERVICE_SERVER_URL + "#/network/" + uuid
+  console.log(SERVICE_SERVER_URL)
+  console.log(url)
 
-  console.log("Opening original network entry:", url);
-  window.open(url, "_blank");
-};
+  console.log("Opening original network entry:", url)
+  window.open(url, "_blank")
+}
 
-export default withStyles(styles)(OpenOriginalNetworkButton);
+export default withStyles(styles)(OpenOriginalNetworkButton)

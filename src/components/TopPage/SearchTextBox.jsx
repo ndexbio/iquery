@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect, useRef } from "react"
+import PropTypes from "prop-types"
 
-import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import Typography from "@material-ui/core/Typography";
-import { Tooltip } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
-import searchLogo from "../../assets/images/search-logo.svg";
+import { withStyles } from "@material-ui/core/styles"
+import Paper from "@material-ui/core/Paper"
+import InputBase from "@material-ui/core/InputBase"
+import IconButton from "@material-ui/core/IconButton"
+import DeleteIcon from "@material-ui/icons/Delete"
+import Typography from "@material-ui/core/Typography"
+import { Tooltip } from "@material-ui/core"
+import Button from "@material-ui/core/Button"
+import Link from "@material-ui/core/Link"
+import searchLogo from "../../assets/images/search-logo.svg"
 
-import * as examples from "./example-genes";
+import * as examples from "./example-genes"
 
-const EXAMPLES = examples.default.examples;
-const feedbackURL = "https://home.ndexbio.org/contact-us/";
+const EXAMPLES = examples.default.examples
+const feedbackURL = "https://home.ndexbio.org/contact-us/"
 
 const styles = {
   root: {
@@ -35,71 +35,71 @@ const styles = {
     height: 28,
     margin: 4
   }
-};
+}
 
 const SearchTextBox = props => {
-  const { classes } = props;
-  const searchButtonEl = useRef();
+  const { classes } = props
+  const searchButtonEl = useRef()
 
-  const [state, setState] = useState({ anchorEl: null, query: "" });
+  const [state, setState] = useState({ anchorEl: null, query: "" })
 
   useEffect(() => {
     if (props.search.results !== null) {
-      const jobId = props.search.results.jobId;
-      props.history.push(`/${jobId}`);
+      const jobId = props.search.results.jobId
+      props.history.push(`/${jobId}`)
     }
-  }, []);
+  }, [])
 
-  const open = Boolean(state.anchorEl);
+  const open = Boolean(state.anchorEl)
 
   const handleMenu = event => {
-    setState({ ...state, anchorEl: event.currentTarget });
-  };
+    setState({ ...state, anchorEl: event.currentTarget })
+  }
 
   const handleClose = () => {
-    setState({ ...state, anchorEl: null });
-  };
+    setState({ ...state, anchorEl: null })
+  }
 
   const handleExample = exampleIdx => {
     setState({
       ...props,
       query: EXAMPLES[exampleIdx].genes,
       anchorEl: null
-    });
-  };
+    })
+  }
 
   const handleChange = name => event => {
     setState({
       ...props,
       [name]: event.target.value
-    });
-  };
+    })
+  }
 
   const handleKeyPress = event => {
     if (event.key === "Enter") {
       // TODO: add validator here
-      handleSearch();
+      handleSearch()
     }
-  };
+  }
 
   const handleClear = () => {
-    setState({ ...state, query: "" });
-  };
+    setState({ ...state, query: "" })
+  }
 
   const handleSearch = event => {
-    const genes = state.query;
-    const sources = props.source.sources;
+    const genes = state.query
+    const sources = props.source.sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
       // TODO: add better error message
-      return;
+      return
     }
 
-    const sourceNames = sources.map(source => source.name);
-    const geneList = genes.toString().split(/\s*,\s*|\s+/);
-    props.searchActions.setQuery(genes);
-    props.searchActions.searchStarted({ geneList, sourceNames });
-  };
+    const sourceNames = sources.map(source => source.name)
+    const geneList = genes.toString().split(/\s*,\s*|\s+/)
+    props.searchActions.setQuery(genes)
+    props.searchActions.searchStarted({ geneList, sourceNames })
+  }
 
   return (
     <React.Fragment>
@@ -118,6 +118,7 @@ const SearchTextBox = props => {
           onChange={handleChange("query")}
           onKeyDown={handleKeyPress}
           value={state.query}
+          autoFocus={true}
         />
         <IconButton
           ref={searchButtonEl}
@@ -132,18 +133,20 @@ const SearchTextBox = props => {
           />
         </IconButton>
       </Paper>
-      <Typography
-        variant="caption"
-        style={{ paddingTop: "0.25em" }}
-        color="textSecondary"
-      >
-        <em>Try this pre-release version, send us </em>
-        <Link href={feedbackURL} target="_blank">
-          <font color="#00A1DE">
-            <em>feedback</em>
-          </font>
-        </Link>
-      </Typography>
+      <Link href={feedbackURL} target="_blank" color="textSecondary" underline="none">
+        <Typography
+          variant="caption"
+          style={{ paddingTop: "0.25em" }}
+          color="textSecondary"
+        >
+          <em>Try this pre-release version, send us </em>
+          <Link href={feedbackURL} target="_blank">
+            <font color="#00A1DE">
+              <em>feedback</em>
+            </font>
+          </Link>
+        </Typography>
+      </Link>
       <Typography
         align="left"
         style={{ paddingLeft: "7.25em", paddingTop: "1em" }}
@@ -176,11 +179,11 @@ const SearchTextBox = props => {
         </Button>
       </Tooltip>
     </React.Fragment>
-  );
-};
+  )
+}
 
 SearchTextBox.propTypes = {
   classes: PropTypes.object.isRequired
-};
+}
 
-export default withStyles(styles)(SearchTextBox);
+export default withStyles(styles)(SearchTextBox)

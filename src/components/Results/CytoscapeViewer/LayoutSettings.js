@@ -1,18 +1,18 @@
 export const PRESET_LAYOUT = {
-  name: 'preset',
+  name: "preset",
   padding: 6,
   animate: false
 }
 
 export const CONCENTRIC_LAYOUT = {
-  name: 'concentric',
+  name: "concentric",
   padding: 6,
   minNodeSpacing: 100,
   animate: false
 }
 
 export const COSE_LAYOUT = {
-  name: 'cose',
+  name: "cose",
   padding: 6,
   nodeRepulsion: function(node) {
     return 10080000

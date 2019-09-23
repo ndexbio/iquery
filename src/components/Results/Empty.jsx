@@ -1,7 +1,7 @@
-import React from 'react'
-import { Typography } from '@material-ui/core'
+import React from "react"
+import { Typography } from "@material-ui/core"
 
-import './style.css'
+import "./style.css"
 
 /**
  * Default panel when user start searching

@@ -183,4 +183,4 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "revision": "6a4c26cd6c270d15ed2eeac32d506c96",
     "url": "/static/media/zoom-logo.6a4c26cd.svg"
   }
-]);
+])

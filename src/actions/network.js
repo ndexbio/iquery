@@ -1,20 +1,20 @@
-import { createAction } from 'redux-actions'
+import { createAction } from "redux-actions"
 
-export const NETWORK_FETCH_STARTED = 'NETWORK_FETCH_STARTED'
-export const NETWORK_FETCH_SUCCEEDED = 'NETWORK_FETCH_SUCCEEDED'
-export const NETWORK_FETCH_FAILED = 'NETWORK_FETCH_FAILED'
+export const NETWORK_FETCH_STARTED = "NETWORK_FETCH_STARTED"
+export const NETWORK_FETCH_SUCCEEDED = "NETWORK_FETCH_SUCCEEDED"
+export const NETWORK_FETCH_FAILED = "NETWORK_FETCH_FAILED"
 
-export const NETWORK_CLEAR = 'NETWORK_CLEAR'
+export const NETWORK_CLEAR = "NETWORK_CLEAR"
 
-export const SELECT_NODES = 'SELECT_NODES'
-export const UNSELECT_NODES = 'UNSELECT_NODES'
-export const SELECT_EDGES = 'SELECT_EDGES'
-export const UNSELECT_EDGES = 'UNSELECT_EDGES'
-export const DESELECT_ALL = 'DESELECT_ALL'
-export const CHANGE_TAB = 'CHANGE_TAB'
-export const CHANGE_LIST_INDEX = 'CHANGE_LIST_INDEX'
+export const SELECT_NODES = "SELECT_NODES"
+export const UNSELECT_NODES = "UNSELECT_NODES"
+export const SELECT_EDGES = "SELECT_EDGES"
+export const UNSELECT_EDGES = "UNSELECT_EDGES"
+export const DESELECT_ALL = "DESELECT_ALL"
+export const CHANGE_TAB = "CHANGE_TAB"
+export const CHANGE_LIST_INDEX = "CHANGE_LIST_INDEX"
 
-export const FIT_NETWORK_VIEW = 'FIT_NETWORK_VIEW'
+export const FIT_NETWORK_VIEW = "FIT_NETWORK_VIEW"
 
 export const networkFetchStarted = createAction(NETWORK_FETCH_STARTED)
 export const networkFetchSucceeded = createAction(NETWORK_FETCH_SUCCEEDED)

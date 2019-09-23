@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
-import "./style.css";
+import React, { useEffect } from "react"
+import "./style.css"
 
-import TitleBar from "./TitleBar";
-import SettingsPanel from "../SettingsPanel";
+import TitleBar from "./TitleBar"
+import SettingsPanel from "../SettingsPanel"
 
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { withStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline"
+import { withStyles } from "@material-ui/core/styles"
 
-import classNames from "classnames";
+import classNames from "classnames"
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const styles = theme => ({
   root: {
@@ -38,20 +38,20 @@ const styles = theme => ({
     }),
     marginLeft: 0
   }
-});
+})
 
 const AppShell = props => {
   useEffect(() => {
-    const urlParams = new URLSearchParams(props.history.location.search);
-    const cyrestport = urlParams.get("cyrestport");
+    const urlParams = new URLSearchParams(props.history.location.search)
+    const cyrestport = urlParams.get("cyrestport")
     if (cyrestport) {
-      props.cyrestActions.setPort(cyrestport);
+      props.cyrestActions.setPort(cyrestport)
     }
-    return () => {};
-  }, []);
-  const { classes, ...others } = props;
+    return () => {}
+  }, [])
+  const { classes, ...others } = props
 
-  const open = props.uiState.isSettingsOpen;
+  const open = props.uiState.isSettingsOpen
 
   return (
     <div className={classes.root}>
@@ -66,7 +66,7 @@ const AppShell = props => {
       />
       {props.children}
     </div>
-  );
-};
+  )
+}
 
-export default withStyles(styles, { withTheme: true })(AppShell);
+export default withStyles(styles, { withTheme: true })(AppShell)

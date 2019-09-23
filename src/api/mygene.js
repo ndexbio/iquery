@@ -1,6 +1,6 @@
-import { METHOD_POST } from './apiConstants'
+import { METHOD_POST } from "./apiConstants"
 
-const MYGENE_BASE_URL = 'http://mygene.info/v3/query'
+const MYGENE_BASE_URL = "http://mygene.info/v3/query"
 
 /**
  * Client for MyGene.info
@@ -10,9 +10,9 @@ const MYGENE_BASE_URL = 'http://mygene.info/v3/query'
  */
 const searchGenes = geneList => {
   const fields =
-    'fields=symbol,name,taxid,entrezgene,summary,genomic_pos,go,pathway'
+    "fields=symbol,name,taxid,entrezgene,summary,genomic_pos,go,pathway"
   const searchUrl =
-    MYGENE_BASE_URL + '?q=' + geneList + '&scopes=symbol&' + fields
+    MYGENE_BASE_URL + "?q=" + geneList + "&scopes=symbol&" + fields
 
   return fetch(searchUrl, {
     method: METHOD_POST

@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import React, { useState } from "react"
+import Snackbar from "@material-ui/core/Snackbar"
+import IconButton from "@material-ui/core/IconButton"
+import CloseIcon from "@material-ui/icons/Close"
 
 const MessageSnackbar = props => {
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
-      return;
+      return
     }
-    props.setOpen(false);
-  };
+    props.setOpen(false)
+  }
 
   return (
     <Snackbar
@@ -35,7 +35,7 @@ const MessageSnackbar = props => {
         </IconButton>
       ]}
     />
-  );
-};
+  )
+}
 
-export default MessageSnackbar;
+export default MessageSnackbar
