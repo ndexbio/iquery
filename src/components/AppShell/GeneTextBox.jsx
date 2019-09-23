@@ -11,15 +11,22 @@ import classNames from "classnames"
 import IconButton from "@material-ui/core/IconButton"
 import SearchIcon from "@material-ui/icons/Search"
 import DeleteIcon from "@material-ui/icons/Delete"
+import MenuIcon from '@material-ui/icons/Menu'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import MessageSnackbar from "./MessageSnackbar"
+
+import * as examples from "../TopPage/example-genes"
+
+const EXAMPLES = examples.default.examples
 
 const styles = {
   root: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: "50vmin",
+    width: "60vmin",
     padding: "0.3em",
     background: "#f1f1f1",
     marginLeft: "1em"
@@ -42,10 +49,12 @@ const ORIGINAL_GENE_TEXT = "original-gene-text"
 
 const GeneTextBox = props => {
   const { classes } = props
-  const geneTextRef = useRef(null)
+  const geneTextRef = useRef()
 
-  const [queryText, setQuery] = useState(props.search.queryGenes)
+  const [state, setState] = useState({anchorEl: null, query: props.search.queryGenes})
   const [open, setOpen] = useState(false)
+
+  const menuOpen = Boolean(state.anchorEl)
 
   useEffect(() => {
     loadCSS(
@@ -66,7 +75,7 @@ const GeneTextBox = props => {
   }
 
   const handleSearch = evt => {
-    const genes = queryText
+    const genes = state.query
     const sources = props.source.sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
@@ -86,19 +95,37 @@ const GeneTextBox = props => {
     props.searchActions.searchStarted({ geneList, sourceNames })
   }
 
-  const handleChange = evt => {
-    const value = evt.target.value
-    setQuery(value)
+  const handleChange = name => event => {
+    setState({
+      ...props,
+      [name]: event.target.value
+    })
   }
 
-  const handleClear = evt => {
-    setQuery("")
+  const handleClear = () => {
+    setState({ ...state, query: '' })
   }
 
   const handleKeyPress = event => {
     if (event.key === "Enter") {
-      handleSearch(event)
+      handleSearch()
     }
+  }
+
+  const handleMenu = event => {
+    setState({ ...state, anchorEl: event.currentTarget })
+  }
+
+  const handleClose = () => {
+    setState({ ...state, anchorEl: null })
+  }
+
+  const handleExample = exampleIdx => {
+    setState({
+      ...props,
+      query: EXAMPLES[exampleIdx].genes,
+      anchorEl: null
+    })
   }
 
   return (
@@ -112,6 +139,37 @@ const GeneTextBox = props => {
         vertical={"bottom"}
       />
       <Paper className={classes.root} elevation={0}>
+      <div>
+        <IconButton
+          className={classes.iconButton}
+          aria-label="Menu"
+          onClick={handleMenu}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          anchorEl={state.anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          open={menuOpen}
+          onClose={handleClose}
+        >
+          {EXAMPLES.map((example, idx) => {
+            return (
+              <MenuItem key={idx} onClick={() => handleExample(idx)}>
+                {example.name}
+              </MenuItem>
+            )
+          })}
+        </Menu>
+      </div>
+      <Divider className={classes.divider} />
         <Tooltip title="Copy" placement="bottom">
           <IconButton
             color="default"
@@ -138,8 +196,8 @@ const GeneTextBox = props => {
           id={ORIGINAL_GENE_TEXT}
           className={classes.input}
           placeholder="Genes entered"
-          value={queryText}
-          onChange={handleChange}
+          value={state.query}
+          onChange={handleChange('query')}
           onKeyDown={handleKeyPress}
           ref={geneTextRef}
         />
