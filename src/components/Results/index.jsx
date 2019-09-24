@@ -55,7 +55,7 @@ const Results = props => {
     const searchResults = props.search.searchResults
     if (searchResults !== undefined && searchResults !== null) {
       const sourceName = getSourceName(sources, newValue)
-      console.log('* Tab change:', jobId, sourceName)
+      console.log("* Tab change:", jobId, sourceName)
       props.uiStateActions.setSelectedSource(sourceName)
       props.history.push(`/${jobId}/${sourceName}`)
     }

@@ -108,14 +108,14 @@ const NetworkToolbar = props => {
 
   return (
     <div className={classes.toolbar}>
-      <Tooltip title={name ? camelCaseToTitleCase(prefix) + ':' + name : ''}>
+      <Tooltip title={name ? camelCaseToTitleCase(prefix) + ":" + name : ""}>
         <Typography
           className={classes.title}
           variant="subtitle1"
           color="inherit"
           noWrap
         >
-          {name ? camelCaseToTitleCase(prefix) + ':' + name : ''}
+          {name ? camelCaseToTitleCase(prefix) + ":" + name : ""}
         </Typography>
       </Tooltip>
       <div className={classes.grow} />

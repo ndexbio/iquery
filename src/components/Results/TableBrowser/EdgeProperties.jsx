@@ -164,12 +164,29 @@ const EdgeProperties = props => {
             content, content,
             displayed: false
           })
-        } else {
+        } else if (title === "sboType") {
+          const id = content.split(":")[1]
           attributes.push({
-            title: camelCaseToTitleCase(title),
-            content: content,
-            displayed: false
+            title: "SBO Type",
+            content:
+              "<a href=\"" + "http://identifiers.org/SBO:" + id + "\">" + content + "</a>"
           })
+        } else {
+          const [prefix, id] = content.split(":")
+          if (prefix in context) {
+            attributes.push({
+              title: "Citation",
+              content: 
+                "<a href=\"" + context[prefix] + id + "\">" + content + "</a>",
+              displayed: false
+            })
+          } else {
+            attributes.push({
+              title: camelCaseToTitleCase(title),
+              content: content,
+              displayed: false
+            })
+          }
         }
       }
     }

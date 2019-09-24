@@ -11,9 +11,9 @@ import classNames from "classnames"
 import IconButton from "@material-ui/core/IconButton"
 import SearchIcon from "@material-ui/icons/Search"
 import DeleteIcon from "@material-ui/icons/Delete"
-import MenuIcon from '@material-ui/icons/Menu'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+import MenuIcon from "@material-ui/icons/Menu"
+import Menu from "@material-ui/core/Menu"
+import MenuItem from "@material-ui/core/MenuItem"
 
 import MessageSnackbar from "./MessageSnackbar"
 
@@ -103,7 +103,7 @@ const GeneTextBox = props => {
   }
 
   const handleClear = () => {
-    setState({ ...state, query: '' })
+    setState({ ...state, query: "" })
   }
 
   const handleKeyPress = event => {
@@ -139,37 +139,37 @@ const GeneTextBox = props => {
         vertical={"bottom"}
       />
       <Paper className={classes.root} elevation={0}>
-      <div>
-        <IconButton
-          className={classes.iconButton}
-          aria-label="Menu"
-          onClick={handleMenu}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Menu
-          anchorEl={state.anchorEl}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
-          }}
-          open={menuOpen}
-          onClose={handleClose}
-        >
-          {EXAMPLES.map((example, idx) => {
-            return (
-              <MenuItem key={idx} onClick={() => handleExample(idx)}>
-                {example.name}
-              </MenuItem>
-            )
-          })}
-        </Menu>
-      </div>
-      <Divider className={classes.divider} />
+        <div>
+          <IconButton
+            className={classes.iconButton}
+            aria-label="Menu"
+            onClick={handleMenu}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            anchorEl={state.anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right"
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right"
+            }}
+            open={menuOpen}
+            onClose={handleClose}
+          >
+            {EXAMPLES.map((example, idx) => {
+              return (
+                <MenuItem key={idx} onClick={() => handleExample(idx)}>
+                  {example.name}
+                </MenuItem>
+              )
+            })}
+          </Menu>
+        </div>
+        <Divider className={classes.divider} />
         <Tooltip title="Copy" placement="bottom">
           <IconButton
             color="default"
@@ -197,7 +197,7 @@ const GeneTextBox = props => {
           className={classes.input}
           placeholder="Genes entered"
           value={state.query}
-          onChange={handleChange('query')}
+          onChange={handleChange("query")}
           onKeyDown={handleKeyPress}
           ref={geneTextRef}
         />

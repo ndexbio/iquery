@@ -104,8 +104,8 @@ class GeneAnnotationList extends React.Component {
           primary={
             <table>
               <tbody>
-                <tr style={{marginLeft: '-1'}}>
-                  <td style={{padding: '0'}}>
+                <tr style={{marginLeft: "-1"}}>
+                  <td style={{padding: "0"}}>
                     <div>
                       <Typography component="span" variant="body2" >
                         {geneEntry.symbol}

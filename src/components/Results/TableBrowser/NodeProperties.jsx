@@ -127,21 +127,29 @@ const NodeProperties = props => {
     }
     if (node.name in props.represents) {
       const [prefix, id] = props.represents[node.name].split(":")
-          if (prefix in context) {
-            attributes.push({
-              title: "ID",
-              content:
-                "<a href=\"" + context[prefix] + id + "\">" + props.represents[node.name] + "</a>",
-              displayed: false
-            })
-          } else {
-            attributes.push({
-              title: "ID",
-              content:
-                "<a href=\"" + "http://identifiers.org/" + prefix + "/" + id + "\">" + props.represents[node.name] + "</a>",
-              displayed: false
-            })
-          }
+      if (id != undefined) {
+        if (prefix in context) {
+          attributes.push({
+            title: "ID",
+            content:
+                  "<a href=\"" + context[prefix] + id + "\">" + props.represents[node.name] + "</a>",
+            displayed: false
+          })
+        } else {
+          attributes.push({
+            title: "ID",
+            content:
+                  "<a href=\"" + "http://identifiers.org/" + prefix + "/" + id + "\">" + props.represents[node.name] + "</a>",
+            displayed: false
+          })
+        }
+      }
+    } else if (props.represents[node.name] != undefined) {
+      attributes.push({
+        title: "ID",
+        content: props.represents[node.name],
+        displayed: false
+      })
     }
     for (let key in node) {
       content = extractContent(node[key])
@@ -176,11 +184,28 @@ const NodeProperties = props => {
             displayed: false
           })
         } else if (title !== "query") {
-          attributes.push({
-            title: camelCaseToTitleCase(title),
-            content: content,
-            displayed: false
-          })
+          const [prefix, id] = content.split(":")
+          if (prefix in context) {
+            attributes.push({
+              title: camelCaseToTitleCase(title),
+              content:
+                "<a href=\"" + context[prefix] + id + "\">" + content + "</a>",
+              displayed: false
+            })
+          } else if (prefix === "hgnc.symbol") {
+            attributes.push({
+              title: camelCaseToTitleCase(title),
+              content:
+                "<a href=\"http://identifiers.org/hgnc/"  + id + "\">" + content + "</a>",
+              displayed: false
+            })
+          } else {
+            attributes.push({
+              title: camelCaseToTitleCase(title),
+              content: content,
+              displayed: false
+            })
+          }
         }
       }
     }
