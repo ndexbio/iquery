@@ -6,6 +6,7 @@ import CyCanvas from "cytoscape-canvas"
 import { CxToCyCanvas } from "cyannotation-cx2js"
 import Warning from "./Warning"
 import { CONCENTRIC_LAYOUT, COSE_LAYOUT, PRESET_LAYOUT } from "./LayoutSettings"
+import { isEqual } from "lodash"
 
 import "./style.css"
 
@@ -70,8 +71,14 @@ const CytoscapeViewer = props => {
             "* Registering annotation renderer for this niceCX:",
             annotationEntry
           )
-          annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
-          annotationRenderer.drawBackground(cyInstance, backgroundColor)
+          new Promise(function(resolve, reject) {
+            annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
+            annotationRenderer.drawBackground(cyInstance, backgroundColor)
+            resolve()
+          }).then(() => {
+            props.networkActions.setAnnotations(true)
+          })
+          
           return nice
         }
       }
@@ -300,4 +307,14 @@ const CytoscapeViewer = props => {
   )
 }
 
-export default CytoscapeViewer
+const MemoCytoscapeViewer = React.memo(CytoscapeViewer, (oldProps, newProps) => {
+  if (newProps.network.annotations) {
+    newProps.networkActions.setAnnotations(false)
+    return false
+  }
+  return oldProps.network.fit === newProps.network.fit &&
+    oldProps.uiState.highlights === newProps.uiState.highlights &&
+    isEqual(oldProps.search.selectedGenes, newProps.search.selectedGenes)
+})
+
+export default MemoCytoscapeViewer

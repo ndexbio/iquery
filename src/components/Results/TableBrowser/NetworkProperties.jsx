@@ -43,7 +43,6 @@ const NetworkProperties = props => {
   const originalCX = props.network.originalCX
   const context = props.context
   const classes = useStyles()
-  console.log(originalCX)
 
   //Find network props
   let networkAttr = findAttributes(originalCX, "networkAttributes")

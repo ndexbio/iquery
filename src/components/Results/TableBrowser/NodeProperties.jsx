@@ -105,8 +105,6 @@ const NodeProperties = props => {
 
   const topDisplay = []
   nodes.forEach(node => {
-    console.log("node")
-    console.log(node)
     //Filter properties
     const attributes = []
     let content

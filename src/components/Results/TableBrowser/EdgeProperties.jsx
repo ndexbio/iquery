@@ -62,9 +62,9 @@ const EdgeProperties = props => {
   } else {
     edges = props.network.selectedEdges
   }
+
   const nodes = props.nodeList
   const context = props.context
-
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
   const entityProperties = [
