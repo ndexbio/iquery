@@ -5,8 +5,8 @@ import { makeStyles, withStyles } from "@material-ui/styles"
 
 import { findAttributes } from "./attribute-util"
 
-import MemoNetworkProperties from "./NetworkProperties"
-import NodeProperties from "./NodeProperties"
+import NetworkProperties from "./NetworkProperties"
+import MemoNodeProperties from "./NodeProperties"
 import MemoEdgeProperties from "./EdgeProperties"
 
 const useStyles = makeStyles(theme => ({
@@ -44,31 +44,54 @@ const TabContent = props => {
     }
   }
 
-  //Find nodelist
+  //Find nodelist and nodeAttributes
   let nodeList
+  let nodeAttributes
   for (let i = 0; i < props.network.originalCX.length; i++) {
     if (props.network.originalCX[i].nodes != null) {
       nodeList = props.network.originalCX[i].nodes
-      break
+      if (nodeAttributes != undefined) {
+        break
+      }
+    }
+    if (props.network.originalCX[i].nodeAttributes != null) {
+      nodeAttributes = props.network.originalCX[i].nodeAttributes
+      if (nodeList != undefined) {
+        break
+      }
     }
   }
 
-  //Find represents
   const represents = {}
+  const aliasList = {}
   if (nodeList != null) {
+    //Find represents
     for (let i = 0; i < nodeList.length; i++) {
       if (nodeList[i].r != null) {
         represents[nodeList[i].n] = nodeList[i].r
       }
     }
-  }
-
-
+    //Find aliasList
+    if (nodeAttributes != null) {
+      for (let i = 0; i < nodeAttributes.length; i++) {
+        if (nodeAttributes[i].n = "alias" && nodeAttributes[i].d === "list_of_string") {
+          const geneName = nodeList.filter(node => (node["@id"] === nodeAttributes[i].po))[0].n
+          if (geneName != null) {
+            if (aliasList[geneName] == null) {
+              aliasList[geneName] = nodeAttributes[i].v
+            } else {
+              aliasList[geneName] = aliasList[geneName].concat(nodeAttributes[i].v)
+            }
+          }
+        }
+      }
+    }
+  }  
 
   if (value === 0) {
-    return <MemoNetworkProperties {...props} />
+    return <NetworkProperties context={context} {...props} />
   } else if (value === 1) {
-    return <NodeProperties context={context} represents={represents} {...props} />
+    return <MemoNodeProperties context={context} represents={represents} aliasList={aliasList} {...props} />
   } else {
     return <MemoEdgeProperties context={context} nodeList={nodeList} {...props} />
   }

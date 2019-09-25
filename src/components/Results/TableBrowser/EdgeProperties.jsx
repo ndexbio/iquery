@@ -173,9 +173,9 @@ const EdgeProperties = props => {
           })
         } else {
           const [prefix, id] = content.split(":")
-          if (prefix in context) {
+          if (prefix in context && id != undefined) {
             attributes.push({
-              title: "Citation",
+              title: camelCaseToTitleCase(title),
               content: 
                 "<a href=\"" + context[prefix] + id + "\">" + content + "</a>",
               displayed: false

@@ -139,36 +139,39 @@ const GeneTextBox = props => {
         vertical={"bottom"}
       />
       <Paper className={classes.root} elevation={0}>
-        <div>
-          <IconButton
-            className={classes.iconButton}
-            aria-label="Menu"
-            onClick={handleMenu}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            anchorEl={state.anchorEl}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right"
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right"
-            }}
-            open={menuOpen}
-            onClose={handleClose}
-          >
-            {EXAMPLES.map((example, idx) => {
-              return (
-                <MenuItem key={idx} onClick={() => handleExample(idx)}>
-                  {example.name}
-                </MenuItem>
-              )
-            })}
-          </Menu>
-        </div>
+        <Tooltip title="Query gene set examples" placement="bottom">
+          <div>
+            <IconButton
+              className={classes.iconButton}
+              aria-label="Menu"
+              onClick={handleMenu}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              anchorEl={state.anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right"
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right"
+              }}
+              open={menuOpen}
+              onClose={handleClose}
+            >
+              {EXAMPLES.map((example, idx) => {
+                return (
+                  <MenuItem key={idx} onClick={() => handleExample(idx)}>
+                    {example.name}
+                  </MenuItem>
+                )
+              })}
+            </Menu>
+          
+          </div>
+        </Tooltip>
         <Divider className={classes.divider} />
         <Tooltip title="Copy" placement="bottom">
           <IconButton

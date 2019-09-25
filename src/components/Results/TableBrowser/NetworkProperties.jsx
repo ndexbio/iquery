@@ -41,7 +41,9 @@ const useStyles = makeStyles(theme => ({
 const NetworkProperties = props => {
   index = 0
   const originalCX = props.network.originalCX
+  const context = props.context
   const classes = useStyles()
+  console.log(originalCX)
 
   //Find network props
   let networkAttr = findAttributes(originalCX, "networkAttributes")
@@ -109,7 +111,23 @@ const NetworkProperties = props => {
           title: "GO Hierarchy",
           content: content,
           displayed: false
-        }) 
+        })
+      } else if (title === "GO ID") {
+        const id = content.split(":")[1]
+        if (id != undefined) {
+          attributes.push({
+            title: "GO ID",
+            content: 
+              "<a href=\"http://identifiers.org/GO:" + id + "\">" + content + "</a>",
+            displayed: false
+          })
+        } else {
+          attributes.push({
+            title: "GO ID",
+            content: content,
+            displayed: false
+          })
+        }
       } else {
         attributes.push({
           title: camelCaseToTitleCase(title),

@@ -72,10 +72,11 @@ const NodeProperties = props => {
   }
 
   const context = props.context
+  const aliasList = props.aliasList
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
-  const entityProperties = ["Name", "ID", "HGNC", "Ensembl", "Aliases", "Type"]
+  const entityProperties = ["Name", "Type", "ID", "HGNC", "Ensembl", "Alias"]
 
   const nodeProperties = [
     "Height",
@@ -94,7 +95,7 @@ const NodeProperties = props => {
 
   const displayItems = [entityProperties, nodeProperties]
 
-  const sortedNodes = nodes.sort((a, b) => {
+  nodes.sort((a, b) => {
     if (a.name.toUpperCase() > b.name.toUpperCase()) {
       return 1
     } else {
@@ -103,13 +104,18 @@ const NodeProperties = props => {
   })
 
   const topDisplay = []
-  sortedNodes.forEach(node => {
+  nodes.forEach(node => {
+    console.log("node")
+    console.log(node)
     //Filter properties
     const attributes = []
     let content
     let title
     let geneAnnotation = null
     let inset = false
+    let aliases = new Set(aliasList[node.name])
+    
+    //Add gene annotation
     if (
       props.search.results != null &&
       props.search.results.genes.get(node.name) != null
@@ -125,6 +131,8 @@ const NodeProperties = props => {
         </List>
       )
     }
+
+    //Add represents
     if (node.name in props.represents) {
       const [prefix, id] = props.represents[node.name].split(":")
       if (id != undefined) {
@@ -151,6 +159,7 @@ const NodeProperties = props => {
         displayed: false
       })
     }
+
     for (let key in node) {
       content = extractContent(node[key])
       title = extractTitle(key)
@@ -160,23 +169,8 @@ const NodeProperties = props => {
         content !== "null" &&
         content !== ""
       ) {
-        if (title === "alias" || title === "aliases") {
-          const [prefix, id] = content.split(":")
-          if (prefix in context) {
-            attributes.push({
-              title: "Aliases",
-              content:
-                "<a href=\"" + context[prefix] + id + "\">" + content + "</a>",
-              displayed: false
-            })
-          } else {
-            attributes.push({
-              title: "Aliases",
-              content:
-                "<a href=\"" + "http://identifiers.org/" + prefix + "/" + id + "\">" + content + "</a>",
-              displayed: false
-            })
-          }
+        if (title === "aliases" || title === "alias") {
+          aliases.add(content)
         } else if (title === "id") {
           attributes.push({
             title: "Node Id",
@@ -185,7 +179,7 @@ const NodeProperties = props => {
           })
         } else if (title !== "query") {
           const [prefix, id] = content.split(":")
-          if (prefix in context) {
+          if (prefix in context && id != undefined) {
             attributes.push({
               title: camelCaseToTitleCase(title),
               content:
@@ -210,6 +204,22 @@ const NodeProperties = props => {
       }
     }
 
+    //Handle aliases
+    let aliasLinks = ""
+    aliases.forEach(alias => {
+      const [prefix, id] = alias.split(":")
+      if (prefix in context) {
+        aliasLinks += "<a href=\"" + context[prefix] + id + "\">\t" + alias + "</a><br/>"
+      } else {
+        aliasLinks += "<a href=\"" + "http://identifiers.org/" + prefix + "/" + id + "\">\t" + alias + "</a><br/>"
+      }
+    })
+    attributes.push({
+      title: "Alias",
+      content: "<div style=\"padding-left:1em;\">" + aliasLinks + "</div>",
+      displayed: false
+    })
+        
     const displayCol1 = []
     const displayCol2 = []
     let primaryString
