@@ -74,7 +74,8 @@ const EdgeProperties = props => {
     "SBO Type",
     "Interaction",
     "Throughput",
-    "Location"
+    "Location",
+    "Citation"
   ]
 
   const edgeProperties = [

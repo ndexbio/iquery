@@ -214,11 +214,19 @@ const NodeProperties = props => {
         aliasLinks += "<a href=\"" + "http://identifiers.org/" + prefix + "/" + id + "\">\t" + alias + "</a><br/>"
       }
     })
-    attributes.push({
-      title: "Alias",
-      content: "<div style=\"padding-left:1em;\">" + aliasLinks + "</div>",
-      displayed: false
-    })
+    if (aliases.size > 1) {
+      attributes.push({
+        title: "Alias",
+        content: "<div style=\"padding-left:1em;\">" + aliasLinks + "</div>",
+        displayed: false
+      })
+    } else if (aliases.size === 1) {
+      attributes.push({
+        title: "Alias",
+        content: aliasLinks,
+        displayed: false
+      })
+    }
         
     const displayCol1 = []
     const displayCol2 = []

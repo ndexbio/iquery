@@ -8,7 +8,6 @@ import NetworkList from "./NetworkList"
 
 import { camelCaseToTitleCase } from "../TableBrowser/camel-case-util"
 
-import ListItemText from "@material-ui/core/ListItemText"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import Typography from "@material-ui/core/Typography"
 import { ListItem } from "@material-ui/core"
@@ -21,6 +20,11 @@ const titleStyle = {
 const subtitleStyle = {
   lineHeight: "1",
   wordBreak: "break-word"
+}
+
+const infoStyle = {
+  display: "inline",
+  lineHeight: "1",
 }
 
 /**
@@ -101,15 +105,15 @@ const Ndex = props => {
     } = networkEntry
 
     const genes = (
-      <div display="inline">
-        <Typography display="inline" style={{ lineHeight: "1.33" }}>
-          <strong>{hitGenes ? hitGenes.length : "?"}</strong>{" "}
+      <div style={infoStyle}>
+        <Typography display="inline" color={props.uiState.sortOrder[0] === "Overlap" ? "textPrimary" : "textSecondary"}>
+          <strong>{hitGenes.length}</strong>{" "}
         </Typography>
         <Typography
           variant="caption"
           display="inline"
-          color="textSecondary"
           style={{ lineHeight: "1" }}
+          color={props.uiState.sortOrder[0] === "Overlap" ? "textPrimary" : "textSecondary"}        
         >
           genes
         </Typography>
@@ -131,16 +135,17 @@ const Ndex = props => {
           pVal = pVal.toExponential(2)
         }
       }
+
       const pv = (
-        <div display="inline">
-          <Typography display="inline" style={{ lineHeight: "1" }}>
-            <strong>{pVal}</strong>{" "}
+        <div style={infoStyle}>
+          <Typography display="inline" color={props.uiState.sortOrder[0] === "p-Value" ? "textPrimary" : "textSecondary"}>
+            <strong>{pVal}{" "}</strong>
           </Typography>
           <Typography
             variant="caption"
             display="inline"
-            color="textSecondary"
             style={{ lineHeight: "1" }}
+            color={props.uiState.sortOrder[0] === "p-Value" ? "textPrimary" : "textSecondary"}          
           >
             pv
           </Typography>

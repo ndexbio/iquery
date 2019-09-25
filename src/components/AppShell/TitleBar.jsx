@@ -13,7 +13,7 @@ import Button from "@material-ui/core/Button"
 
 import classNames from "classnames"
 
-import logo from "../../assets/images/ndex-logo-mono-dark.svg"
+import logo from "../../assets/images/ndex-logo.svg"
 import cytoLogo from "../../assets/images/cytoscape-logo-mono-dark.svg"
 import nrnbLogo from "../../assets/images/nrnb-logo-mono-dark.svg"
 import wpLogo from "../../assets/images/wp-logo-mono-dark.svg"
@@ -40,7 +40,12 @@ const styles = theme => ({
   },
   logo: {
     height: "1em",
-    width: "1em"//1.5em', when more than one logo present, for spacing
+    width: "1.5em"
+  },
+  homeLogo: {
+    height: "1em",
+    width: "1em",
+    marginRight: "0.5em"
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -103,7 +108,7 @@ class TitleBar extends React.Component {
             <Tooltip title="Search by Pathway Enrichment / Protein-Protein Interactions / Gene Association" aria-label="NDEx_tooltip">
               <div>
                 <Button style={titleStyle} onClick={this.handleHomeButton}>
-                  <HomeIcon fontSize="default" className={classes.logo} style={{marginRight: "0.5em"}}/>
+                  <HomeIcon fontSize="default" className={classes.homeLogo}/>
                   <Typography variant="h6" color="inherit" noWrap={true}>
                   NDEx Integrated Query
                   </Typography>
@@ -133,13 +138,25 @@ class TitleBar extends React.Component {
               </IconButton>
             </Tooltip>
           */}
+              <Tooltip title="NDEx" placement="bottom">
+                <IconButton
+                  color="default"
+                  aria-label="Home"
+                  onClick={() => openLink(NDEX_URL)}
+                >
+                  <img alt="NDEx logo" src={logo} className={classes.logo} />
+                </IconButton>
+              </Tooltip>
+
               <Tooltip title="Help" placement="bottom" style={{marginRight: "1em"}}>
                 <IconButton
                   aria-haspopup="true"
                   color="default"
                   onClick={() => openLink(HELP_URL)}
                 >
-                  <HelpIcon fontSize="default" className={classes.logo}/>
+                  <Typography color="textPrimary">
+                    <HelpIcon fontSize="default" className={classes.logo}/>
+                  </Typography>
                 </IconButton>
               </Tooltip>
               {/*}
@@ -149,16 +166,6 @@ class TitleBar extends React.Component {
                 onClick={() => openLink(IL_URL)}
               >
                 <img alt="Ideker Lab Logo" src={idekerLogo} className={classes.logo} />
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="NDEx" placement="bottom">
-              <IconButton
-                color="default"
-                aria-label="Home"
-                onClick={() => openLink(NDEX_URL)}
-              >
-                <img alt="NDEx logo" src={logo} className={classes.logo} />
               </IconButton>
             </Tooltip>
 
