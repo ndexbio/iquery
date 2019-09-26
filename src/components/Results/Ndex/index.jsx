@@ -106,7 +106,7 @@ const Ndex = props => {
 
     const genes = (
       <div style={infoStyle}>
-        <Typography display="inline" color={props.uiState.sortOrder[0] === "Overlap" ? "textPrimary" : "textSecondary"}>
+        <Typography display="inline" color={props.uiState.selectedSource === "enrichment" && props.uiState.sortOrder[0] === "p-Value" ? "textSecondary" : "textPrimary"}>
           <strong>{hitGenes.length}</strong>{" "}
         </Typography>
         <Typography
