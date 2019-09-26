@@ -1,11 +1,19 @@
 import "./style.css"
-import React from "react"
+import React, {useState} from "react"
 import PropTypes from "prop-types"
 
 import Typography from "@material-ui/core/Typography"
 import { fade } from "@material-ui/core/styles/colorManipulator"
 import { withStyles } from "@material-ui/core/styles"
 import { Tooltip } from "@material-ui/core"
+import FormControl from "@material-ui/core/FormControl"
+import Select from "@material-ui/core/Select"
+import MenuItem from "@material-ui/core/MenuItem"
+import InputBase from "@material-ui/core/InputBase"
+import InputLabel from '@material-ui/core/InputLabel';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import purple from "@material-ui/core/colors/purple";
+
 
 import OpenInCytoscapeButton from "./OpenInCytoscapeButton"
 import ResetZoomButton from "./ResetZoomButton"
@@ -95,7 +103,35 @@ const styles = theme => ({
   },
   openIcon: {
     marginRight: "0.5em"
-  }
+  },
+  formControl: {
+    position: "relative",
+    top: "1.5px"
+  },
+  input: {
+    padding: "8px 26px 8px 12px",
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    borderRadius: 4,
+    "&:focus": {
+      backgroundColor: "rgba(0, 0, 0, 0)",
+      borderRadius: 4
+    }
+  },
+  root: {
+    borderColor: "#ced4da",
+    "& $notchedOutline": {
+      borderColor: "rgb(65, 84, 178)",
+    },
+    "&:hover $notchedOutline": {
+      borderColor: "rgb(65, 84, 178)"
+    },
+    "&$focused $notchedOutline": {
+      borderColor: "rgb(65, 84, 178)",
+      borderWidth: "1px"
+    }
+  },
+  focused: {},
+  notchedOutline: {}
 })
 
 const NetworkToolbar = props => {
@@ -104,6 +140,20 @@ const NetworkToolbar = props => {
 
   if (props.search.actualResults.length !== 0) {
     [prefix, name] = props.network.networkName.replace(":", "&").split("&")
+  }
+
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
+  const menuItems = ["Default", "Cose", "Concentric"]
+  const [value, setValue] = useState(props.network.layout)
+
+  const handleChange = (event) => {
+    setValue(event.target.value)
+    props.networkActions.setLayout(event.target.value)
   }
 
   return (
@@ -118,7 +168,32 @@ const NetworkToolbar = props => {
           {name ? camelCaseToTitleCase(prefix) + ":" + name : ""}
         </Typography>
       </Tooltip>
+    
       <div className={classes.grow} />
+
+      <div className={classes.formControl}>
+        <FormControl variant="outlined">
+          <InputLabel ref={inputLabel} htmlFor="outlined">
+            <font color="#4154b2">
+              Layout
+            </font>
+          </InputLabel>
+          <Select
+            value={value}
+            onChange={handleChange}
+            input={<OutlinedInput labelWidth={labelWidth} name="layout" id="outlined-layout" classes={classes}/>}
+          >
+            {menuItems.map((item) => (
+            <MenuItem value={item}>
+              <Typography variant="body2" color="textSecondary">
+                {item}
+              </Typography>
+            </MenuItem>
+          ))}
+          </Select>
+        </FormControl>
+      </div>
+
       <ResetZoomButton {...other} />
       <Highlighter {...other} />
       <NDExSignInModal {...other}>

@@ -1,12 +1,12 @@
-import React, { useEffect, useMemo } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import CytoscapeComponent from "react-cytoscapejs"
 import { CxToJs, CyNetworkUtils } from "cytoscape-cx2js"
 import Cytoscape from "cytoscape"
 import CyCanvas from "cytoscape-canvas"
 import { CxToCyCanvas } from "cyannotation-cx2js"
 import Warning from "./Warning"
-import { CONCENTRIC_LAYOUT, COSE_LAYOUT, PRESET_LAYOUT } from "./LayoutSettings"
-import { isEqual } from "lodash"
+import { CONCENTRIC_LAYOUT, COSE_LAYOUT, /*PRESET_LAYOUT*/ } from "./LayoutSettings"
+import { isEqual, cloneDeep } from "lodash"
 
 import "./style.css"
 
@@ -28,6 +28,7 @@ const ANNOTATION_TAG = "__Annotations"
 // Default network background color
 const DEF_BG_COLOR = "#FFFFFF"
 
+
 /**
  *
  * Simple wrapper for cytoscape.js react component
@@ -39,6 +40,23 @@ const DEF_BG_COLOR = "#FFFFFF"
 const CytoscapeViewer = props => {
   const { highlights } = props.uiState
   const { fit, originalCX } = props.network
+  const cyjs = props.network.network
+  const [originalElements, setOriginalElements] = useState(cloneDeep(cyjs.elements))
+
+  const PRESET_LAYOUT = {
+    name: "preset",
+    padding: 6,
+    animate: false,
+    positions: function(node) {
+      const id = node[0]._private.data.id
+      const analog = originalElements.filter(elem => {
+        return elem.data.id.toString() === id.toString()
+      })
+      const position = analog[0].position
+      return position
+    }
+  }
+  const [layout, setLayout] = useState(PRESET_LAYOUT)
 
   // Use default color if this property is not available.
   let backgroundColor = props.network.backgroundColor
@@ -47,7 +65,9 @@ const CytoscapeViewer = props => {
   }
 
   let niceCX = useMemo(() => {
-    if (originalCX) {
+    console.log('one')
+    if (originalCX && layout === PRESET_LAYOUT) {
+      console.log('two')
       const networkAttr = originalCX.filter(
         entry => entry.networkAttributes !== undefined
       )
@@ -84,7 +104,7 @@ const CytoscapeViewer = props => {
       }
     }
     return null
-  }, [originalCX, cyInstance])
+  }, [originalCX, cyInstance, layout])
 
   /*
     Node/Edge Selections
@@ -127,7 +147,6 @@ const CytoscapeViewer = props => {
         const selectedNodes = cyInstance.$("node:selected")
         selectedNodes.forEach(element => {
           if (element.data().name !== "") {
-            console.log(element)
             nodes.push(element.data())
           }
         })
@@ -243,6 +262,27 @@ const CytoscapeViewer = props => {
     }
   }, [fit])
 
+  useEffect(() => {
+    const isLayoutAvailable = cyjs.isLayout
+    if (props.network.layout === "Default") {
+      setLayout(PRESET_LAYOUT)
+      if (!isLayoutAvailable && cyjs.elements.length < 500) {
+        setLayout(COSE_LAYOUT)
+      } else if (!isLayoutAvailable) {
+        setLayout(CONCENTRIC_LAYOUT)
+      }
+    } else {
+      switch (props.network.layout) {
+        case "Cose":
+          setLayout(COSE_LAYOUT)
+          break
+        case "Concentric":
+          setLayout(CONCENTRIC_LAYOUT)
+          break
+      }
+    }
+  }, [props.network.layout])
+
   // Check network size and show warning if it's too big for this renderer
   const numObjects = props.network.nodeCount + props.network.edgeCount
   if (numObjects > MAX_NETWORK_SIZE) {
@@ -250,7 +290,6 @@ const CytoscapeViewer = props => {
   }
 
   // Render actual network
-  const cyjs = props.network.network
   if (cyjs === null || cyjs === undefined) {
     return null
   }
@@ -262,14 +301,7 @@ const CytoscapeViewer = props => {
     background: "rgba(0,0,0,0)"
   }
 
-  const isLayoutAvailable = cyjs.isLayout
-
-  let layout = PRESET_LAYOUT
-  if (!isLayoutAvailable && cyjs.elements.length < 500) {
-    layout = COSE_LAYOUT
-  } else if (!isLayoutAvailable) {
-    layout = CONCENTRIC_LAYOUT
-  }
+  
 
   if (cyInstance !== null) {
     cyInstance.resize()
@@ -294,6 +326,7 @@ const CytoscapeViewer = props => {
     }
   }
 
+
   return (
     <CytoscapeComponent
       elements={cyjs.elements}
@@ -313,6 +346,7 @@ const MemoCytoscapeViewer = React.memo(CytoscapeViewer, (oldProps, newProps) => 
     return false
   }
   return oldProps.network.fit === newProps.network.fit &&
+    oldProps.network.layout === newProps.network.layout &&
     oldProps.uiState.highlights === newProps.uiState.highlights &&
     isEqual(oldProps.search.selectedGenes, newProps.search.selectedGenes)
 })

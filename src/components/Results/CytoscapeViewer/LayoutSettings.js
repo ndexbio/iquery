@@ -1,7 +1,16 @@
 export const PRESET_LAYOUT = {
   name: "preset",
   padding: 6,
-  animate: false
+  animate: false,
+  positions: function(node) {
+    const x = node[0]._private.position.x * 0
+    const y = node[0]._private.position.y * 0
+    console.log("HEY")
+    return {
+      x: x,//node[0]._private.position.x,
+      y: y//node[0]._private.position.y
+    }
+  }
 }
 
 export const CONCENTRIC_LAYOUT = {
