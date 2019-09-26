@@ -41,7 +41,7 @@ const CytoscapeViewer = props => {
   const { highlights } = props.uiState
   const { fit, originalCX } = props.network
   const cyjs = props.network.network
-  const [originalElements, setOriginalElements] = useState(cloneDeep(cyjs.elements))
+  const [originalElements, setOriginalElements] = useState(cyjs ? cloneDeep(cyjs.elements) : null)
 
   const PRESET_LAYOUT = {
     name: "preset",
@@ -65,9 +65,7 @@ const CytoscapeViewer = props => {
   }
 
   let niceCX = useMemo(() => {
-    console.log('one')
-    if (originalCX && layout === PRESET_LAYOUT) {
-      console.log('two')
+    if (originalCX && layout.name === "preset") {
       const networkAttr = originalCX.filter(
         entry => entry.networkAttributes !== undefined
       )
@@ -98,7 +96,6 @@ const CytoscapeViewer = props => {
           }).then(() => {
             props.networkActions.setAnnotations(true)
           })
-          
           return nice
         }
       }
@@ -196,9 +193,28 @@ const CytoscapeViewer = props => {
         .removeClass("highlight")
     }
 
+    //Layout
+    const isLayoutAvailable = cyjs.isLayout
+    if (isLayoutAvailable) {
+      props.networkActions.setLayouts(["Preset", "Cose", "Concentric"])
+      props.networkActions.setLayout("Preset")
+      setLayout(PRESET_LAYOUT)
+    } else {
+      props.networkActions.setLayouts(["Cose", "Concentric"])
+      if (cyjs.elements.length < 500) {
+        props.networkActions.setLayout("Cose")
+        setLayout(COSE_LAYOUT)
+      } else {
+        props.networkActions.setLayout("Concentric")
+        setLayout(CONCENTRIC_LAYOUT)
+      }
+    }
+
     return () => {
       console.log("Network viewer unmounted")
     }
+
+
   }, [])
 
   useEffect(() => {
@@ -262,24 +278,17 @@ const CytoscapeViewer = props => {
     }
   }, [fit])
 
-  useEffect(() => {
-    const isLayoutAvailable = cyjs.isLayout
-    if (props.network.layout === "Default") {
+  useEffect(() => {    
+    switch (props.network.layout) {
+    case "Preset":
       setLayout(PRESET_LAYOUT)
-      if (!isLayoutAvailable && cyjs.elements.length < 500) {
-        setLayout(COSE_LAYOUT)
-      } else if (!isLayoutAvailable) {
-        setLayout(CONCENTRIC_LAYOUT)
-      }
-    } else {
-      switch (props.network.layout) {
-        case "Cose":
-          setLayout(COSE_LAYOUT)
-          break
-        case "Concentric":
-          setLayout(CONCENTRIC_LAYOUT)
-          break
-      }
+      break
+    case "Cose":
+      setLayout(COSE_LAYOUT)
+      break
+    case "Concentric":
+      setLayout(CONCENTRIC_LAYOUT)
+      break
     }
   }, [props.network.layout])
 
@@ -306,11 +315,21 @@ const CytoscapeViewer = props => {
   if (cyInstance !== null) {
     cyInstance.resize()
 
-    if (layout === COSE_LAYOUT) {
+    if (layout === COSE_LAYOUT || layout === CONCENTRIC_LAYOUT) {
       layout.stop = () => {
-        setTimeout(() => {
-          cyInstance.fit()
-        }, 200)
+        //setTimeout(() => {
+        cyInstance.animate(
+          {
+            fit: {
+              eles: cyInstance.elements(),
+              padding: 6
+            }
+          },
+          {
+            duration: 0
+          }
+        )
+        //}, 0)
       }
     }
 

@@ -7,8 +7,8 @@ import TabContent from "./TabContent"
 
 // Conversion table from tab ID to human-readable labels
 const TAB_LABELS = {
-  enrichment: {
-    label: "Gene Enrichment"
+  "enrichment": {
+    label: "Pathway Enrichment"
   },
   "interactome-ppi": {
     label: "Protein Interactions"

@@ -110,7 +110,7 @@ class TitleBar extends React.Component {
                 <Button style={titleStyle} onClick={this.handleHomeButton}>
                   <HomeIcon fontSize="default" className={classes.homeLogo}/>
                   <Typography variant="h6" color="inherit" noWrap={true}>
-                  NDEx Integrated Query
+                     NDEx Integrated Query
                   </Typography>
                 </Button>
               </div>
@@ -127,17 +127,6 @@ class TitleBar extends React.Component {
             <div className={classes.grow} />
           
             <div>
-              {/*}
-          <Tooltip title="Home" placement="bottom">
-              <IconButton
-                aria-haspopup="true"
-                color="default"
-                onClick={this.handleHomeButton}
-              >
-                <HomeIcon fontSize="default" className={classes.logo}/>
-              </IconButton>
-            </Tooltip>
-          */}
               <Tooltip title="NDEx" placement="bottom">
                 <IconButton
                   color="default"
@@ -149,15 +138,15 @@ class TitleBar extends React.Component {
               </Tooltip>
 
               <Tooltip title="Help" placement="bottom" style={{marginRight: "1em"}}>
-                <IconButton
-                  aria-haspopup="true"
-                  color="default"
-                  onClick={() => openLink(HELP_URL)}
-                >
-                  <Typography color="textPrimary">
-                    <HelpIcon fontSize="default" className={classes.logo}/>
-                  </Typography>
-                </IconButton>
+                <Typography color="textPrimary" noWrap={true} display="inline">
+                  <IconButton
+                    aria-haspopup="true"
+                    onClick={() => openLink(HELP_URL)}
+                    color="inherit"
+                  >  
+                    <HelpIcon className={classes.logo}/> 
+                  </IconButton>
+                </Typography>
               </Tooltip>
               {/*}
             <Tooltip title="Ideker Lab" placement="bottom">

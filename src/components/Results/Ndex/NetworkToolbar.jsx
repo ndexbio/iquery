@@ -1,5 +1,5 @@
 import "./style.css"
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import PropTypes from "prop-types"
 
 import Typography from "@material-ui/core/Typography"
@@ -9,10 +9,8 @@ import { Tooltip } from "@material-ui/core"
 import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
-import InputBase from "@material-ui/core/InputBase"
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import purple from "@material-ui/core/colors/purple";
+import InputLabel from "@material-ui/core/InputLabel"
+import OutlinedInput from "@material-ui/core/OutlinedInput"
 
 
 import OpenInCytoscapeButton from "./OpenInCytoscapeButton"
@@ -106,7 +104,8 @@ const styles = theme => ({
   },
   formControl: {
     position: "relative",
-    top: "1.5px"
+    top: "1.5px",
+    marginLeft: "0.3em"
   },
   input: {
     padding: "8px 26px 8px 12px",
@@ -115,6 +114,9 @@ const styles = theme => ({
     "&:focus": {
       backgroundColor: "rgba(0, 0, 0, 0)",
       borderRadius: 4
+    },
+    "&:hover": {
+      backgroundColor: fade("rgb(65, 84, 178)", 0.08)
     }
   },
   root: {
@@ -142,13 +144,13 @@ const NetworkToolbar = props => {
     [prefix, name] = props.network.networkName.replace(":", "&").split("&")
   }
 
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
+  const inputLabel = React.useRef(null)
+  const [labelWidth, setLabelWidth] = React.useState(0)
   React.useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth);
-  }, []);
+    setLabelWidth(inputLabel.current.offsetWidth)
+  }, [])
 
-  const menuItems = ["Default", "Cose", "Concentric"]
+  const menuItems = props.network.layouts
   const [value, setValue] = useState(props.network.layout)
 
   const handleChange = (event) => {
@@ -156,16 +158,20 @@ const NetworkToolbar = props => {
     props.networkActions.setLayout(event.target.value)
   }
 
+  useEffect(() => {
+    setValue(props.network.layout)
+  }, [props.network.layout])
+
   return (
     <div className={classes.toolbar}>
-      <Tooltip title={name ? camelCaseToTitleCase(prefix) + ":" + name : ""}>
+      <Tooltip title={name ? camelCaseToTitleCase(prefix) + ":" + name : props.network.networkName}>
         <Typography
           className={classes.title}
           variant="subtitle1"
           color="inherit"
           noWrap
         >
-          {name ? camelCaseToTitleCase(prefix) + ":" + name : ""}
+          {name ? camelCaseToTitleCase(prefix) + ":" + name : props.network.networkName}
         </Typography>
       </Tooltip>
     
@@ -184,12 +190,12 @@ const NetworkToolbar = props => {
             input={<OutlinedInput labelWidth={labelWidth} name="layout" id="outlined-layout" classes={classes}/>}
           >
             {menuItems.map((item) => (
-            <MenuItem value={item}>
-              <Typography variant="body2" color="textSecondary">
-                {item}
-              </Typography>
-            </MenuItem>
-          ))}
+              <MenuItem value={item}>
+                <Typography variant="body2" color="textSecondary">
+                  {item}
+                </Typography>
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </div>

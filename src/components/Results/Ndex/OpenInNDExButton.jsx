@@ -6,7 +6,7 @@ import logo from "../../../assets/images/ndex-logo.svg"
 import logoDisabled from "../../../assets/images/ndex-logo-mono-light.svg"
 import { withStyles } from "@material-ui/core"
 import Tooltip from "@material-ui/core/Tooltip"
-import {fade} from "./color-manipulator-util"
+import { fade } from "@material-ui/core/styles/colorManipulator"
 
 
 const styles = theme => ({

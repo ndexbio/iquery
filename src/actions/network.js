@@ -17,6 +17,7 @@ export const CHANGE_LIST_INDEX = "CHANGE_LIST_INDEX"
 export const FIT_NETWORK_VIEW = "FIT_NETWORK_VIEW"
 export const SET_ANNOTATIONS = "SET_ANNOTATIONS"
 export const SET_LAYOUT = "SET_LAYOUT"
+export const SET_LAYOUTS = "SET_LAYOUTS"
 
 export const networkFetchStarted = createAction(NETWORK_FETCH_STARTED)
 export const networkFetchSucceeded = createAction(NETWORK_FETCH_SUCCEEDED)
@@ -36,3 +37,4 @@ export const changeListIndex = createAction(CHANGE_LIST_INDEX)
 export const fitNetworkView = createAction(FIT_NETWORK_VIEW)
 export const setAnnotations = createAction(SET_ANNOTATIONS)
 export const setLayout = createAction(SET_LAYOUT)
+export const setLayouts = createAction(SET_LAYOUTS)
