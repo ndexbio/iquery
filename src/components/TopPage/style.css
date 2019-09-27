@@ -29,10 +29,6 @@
   padding-top: 16px;
 }
 
-.height {
-
-}
-
 .heightChild {
   flex: 1;
   overflow: auto;

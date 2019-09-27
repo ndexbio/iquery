@@ -94,7 +94,6 @@ const StartPanel = props => {
           <SearchTextBox {...props} />
         </div>
       </div>
-      <div className="height">
         <Link href={feedbackURL} target="_blank" color="textSecondary" underline="none">
           <div className="flex">
             <Typography variant="caption" align="center">
@@ -118,7 +117,6 @@ const StartPanel = props => {
           
           </div>
         </Link>
-      </div>
       <Footer />
     </div>
   )
