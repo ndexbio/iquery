@@ -49,16 +49,12 @@ const selectStyle = {
 }
 
 const SortPanel = props => {
-  const [sortPValueOn, setSortPValueOn] = useState(true)
+  const [sortBy, setSortBy] = useState(props.uiState.sortBy)
+  const menuItems = props.uiState.sortOptions
 
   const handleChange = event => {
-    if (event.target.value === "p-Value") {
-      setSortPValueOn(true)
-      props.uiStateActions.setSortOrder(["p-Value", "Overlap"])
-    } else {
-      setSortPValueOn(false)
-      props.uiStateActions.setSortOrder(["Overlap", "p-Value"])
-    }
+    props.uiStateActions.setSortBy(event.target.value)
+    setSortBy(event.target.value)
   }
   
   if (props.uiState.selectedSource === "enrichment") {
@@ -74,23 +70,20 @@ const SortPanel = props => {
         </Typography>
         <FormControl style={formStyle}>
           <Select
-            value={sortPValueOn ? "p-Value" : "Overlap"}
+            value={sortBy}
             onChange={handleChange}
             displayEmpty
             name="Sort by"
             style={selectStyle}
-            input={<BootstrapInput name="age" id="age-customized-select" />}
+            input={<BootstrapInput name="sort" id="sort-customized-select" />}
           >
-            <MenuItem value={"p-Value"}>
-              <Typography variant="body2" color='textSecondary'>
-                p-Value
-              </Typography>
-            </MenuItem>
-            <MenuItem value={"Overlap"}>
-              <Typography variant="body2" color='textSecondary'>
-                Overlap
-              </Typography>
-            </MenuItem>
+            {menuItems.map(item => (
+              <MenuItem value={item}>
+                <Typography variant="body2" color="textSecondary">
+                  item
+                </Typography>
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </div>

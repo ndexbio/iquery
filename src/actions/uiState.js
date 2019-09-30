@@ -23,5 +23,7 @@ export const SET_SELECTED_SOURCE = "SET_SELECTED_SOURCE"
 export const setSelectedSource = createAction(SET_SELECTED_SOURCE)
 
 // Sort settings
-export const SET_SORT_ORDER = "SET_SORT_ORDER"
-export const setSortOrder = createAction(SET_SORT_ORDER)
+export const SET_SORT_OPTIONS = "SET_SORT_OPTIONS"
+export const SET_SORT_BY = "SET_SORT_BY"
+export const setSortOptions = createAction(SET_SORT_OPTIONS)
+export const setSortBy = createAction(SET_SORT_BY)

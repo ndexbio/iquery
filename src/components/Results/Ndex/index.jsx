@@ -106,14 +106,14 @@ const Ndex = props => {
 
     const genes = (
       <div style={infoStyle}>
-        <Typography display="inline" color={props.uiState.selectedSource === "enrichment" && props.uiState.sortOrder[0] === "p-Value" ? "textSecondary" : "textPrimary"}>
+        <Typography display="inline" color={props.uiState.selectedSource === "enrichment" && props.uiState.sortBy !== "Overlap" ? "textSecondary" : "textPrimary"}>
           <strong>{hitGenes.length}</strong>{" "}
         </Typography>
         <Typography
           variant="caption"
           display="inline"
           style={{ lineHeight: "1" }}
-          color={props.uiState.sortOrder[0] === "Overlap" ? "textPrimary" : "textSecondary"}        
+          color={props.uiState.selectedSource === "enrichment" && props.uiState.sortBy !== "Overlap" ? "textSecondary" : "textPrimary"}        
         >
           genes
         </Typography>
@@ -138,16 +138,32 @@ const Ndex = props => {
 
       const pv = (
         <div style={infoStyle}>
-          <Typography display="inline" color={props.uiState.sortOrder[0] === "p-Value" ? "textPrimary" : "textSecondary"}>
+          <Typography display="inline" color={props.uiState.sortBy === "p-Value" ? "textPrimary" : "textSecondary"}>
             <strong>{pVal}{" "}</strong>
           </Typography>
           <Typography
             variant="caption"
             display="inline"
             style={{ lineHeight: "1" }}
-            color={props.uiState.sortOrder[0] === "p-Value" ? "textPrimary" : "textSecondary"}          
+            color={props.uiState.sortBy === "p-Value" ? "textPrimary" : "textSecondary"}          
           >
             pv
+          </Typography>
+        </div>
+      )
+
+      const similarity = (
+        <div style={infoStyle}>
+          <Typography display="inline" color={props.uiState.sortBy === "Similarity" ? "textPrimary" : "textSecondary"}>
+            <strong>{details.similarity.toFixed(2)}</strong>
+          </Typography>
+          <Typography
+            variant="caption"
+            display="inline"
+            style={{ lineHeight: "1" }}
+            color={props.uiState.sortBy === "Similarity" ? "textPrimary" : "textSecondary"}          
+          >
+            similarity
           </Typography>
         </div>
       )
@@ -181,7 +197,7 @@ const Ndex = props => {
         >
           <table style={{ tableLayout: "fixed", wordBreak: "breakWord" }}>
             <tbody>
-              <tr height="50%">
+              <tr >{/*height="50%">*/}
                 <td rowSpan="2" align="center" valign="middle">
                   {icon}
                 </td>
@@ -199,6 +215,9 @@ const Ndex = props => {
                 <td align="left" valign="baseline">
                   {subtitle}
                 </td>
+              </tr>
+              <tr>
+                {similarity}
               </tr>
             </tbody>
           </table>

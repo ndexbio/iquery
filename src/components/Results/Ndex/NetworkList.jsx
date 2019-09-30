@@ -55,15 +55,29 @@ const styles = theme => ({
   }
 })
 
-const findSort = sortOrder => {
-  if (sortOrder[0] === "p-Value") {
+const findSort = sortBy => {
+  if (sortBy === "p-Value") {
     return (a, b) => {
       if (a.details.PValue > b.details.PValue) {
         return 1
       } else if (a.details.PValue < b.details.PValue) {
         return -1
       } else {
-        if (a.hitGenes.length < b.hitGenes.length) {
+        if (a.rank > b.rank) {
+          return 1
+        } else {
+          return -1
+        }
+      }
+    }
+  } else if (sortBy === "Similarity") {
+    return (a, b) => {
+      if (a.similarity < b.similarity) {
+        return 1
+      } else if (a.similarity > b.similarity) {
+        return -1
+      } else {
+        if (a.rank > b.rank) {
           return 1
         } else {
           return -1
@@ -77,7 +91,7 @@ const findSort = sortOrder => {
       } else if (a.hitGenes.length > b.hitGenes.length) {
         return -1
       } else {
-        if (a.details.PValue > b.details.PValue) {
+        if (a.rank > b.rank) {
           return 1
         } else {
           return -1
@@ -105,7 +119,11 @@ const NetworkList = props => {
   //Sort hits
   useEffect(() => {
     if (props.uiState.selectedSource === "enrichment") {
-      const sortFunction = findSort(props.uiState.sortOrder)
+      const sortFunction = findSort(props.uiState.sortBy)
+      //Allow stable sorting
+      for (let i = 0; i < hits.length; i++) {
+        hits[i].rank = i
+      }
       hits = hits.sort(sortFunction)
     }
     props.searchActions.setActualResults(hits)

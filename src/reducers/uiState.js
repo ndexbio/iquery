@@ -4,7 +4,8 @@ import {
   setServicesListOpen,
   setHighlights,
   setSelectedSource,
-  setSortOrder
+  setSortBy,
+  setSortOptions
 } from "../actions/uiState"
 
 const DEF_STATE = {
@@ -12,7 +13,8 @@ const DEF_STATE = {
   servicesListOpen: false,
   highlights: false,
   selectedSource: "enrichment",
-  sortOrder: ["p-Value", "Overlap"]
+  sortOptions: ["Similarity", "p-Value", "Overlap"],
+  sortBy: "Similarity"
 }
 
 const uiState = handleActions(
@@ -30,10 +32,16 @@ const uiState = handleActions(
     [setSelectedSource]: (state, payload) => {
       return { ...state, selectedSource: payload.payload }
     },
-    [setSortOrder]: (state, payload) => {
+    [setSortOptions]: (state, payload) => {
       return {
         ...state,
         sortOrder: payload.payload
+      }
+    },
+    [setSortBy]: (state, payload) => {
+      return {
+        ...state,
+        sortBy: payload.payload
       }
     }
   },
