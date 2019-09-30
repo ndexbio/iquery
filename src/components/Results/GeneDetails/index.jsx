@@ -48,7 +48,7 @@ const styles = theme => ({
     paddingLeft: "1em"
   },
   nested: {
-    paddingLeft: theme.spacing.unit * 4
+    paddingLeft: theme.spacing(4)
   }
 })
 

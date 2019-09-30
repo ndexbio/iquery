@@ -296,7 +296,9 @@ const EdgeProperties = props => {
       sourceSymbol = (
         <React.Fragment>
           <td>
+          <Typography variant="body2">
             {source}
+            </Typography>
           </td>
           <td>
             <Avatar className={classes.matched}>
@@ -311,7 +313,9 @@ const EdgeProperties = props => {
       targetSymbol = (
         <React.Fragment>
           <td>
+          <Typography variant="body2">
             {target}
+            </Typography>
           </td>
           <td>
             <Avatar className={classes.matched}>
@@ -324,19 +328,44 @@ const EdgeProperties = props => {
     }
 
     const summary = (
-      <Typography variant="body2">
-        <table>
-          <tbody>
-            <tr>
-              {sourceSymbol}
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <Typography variant="body2">
+                {source}
+              </Typography>
+            </td>
+            {props.search.queryList.includes(source.toUpperCase()) ?
               <td>
+                <Avatar className={classes.matched}>
+                  <CheckIcon className={classes.icon}/>
+                </Avatar>
+              </td> 
+              : null
+            }
+            <td>
+              <Typography variant="body2">
                 {" ➝ "}
-              </td>
-              {targetSymbol}
-            </tr>
-          </tbody>
-        </table>
-      </Typography>
+              </Typography>
+            </td>
+            <td>
+              <Typography variant="body2">
+                {target}
+              </Typography>
+            </td>
+            {props.search.queryList.includes(target.toUpperCase()) ?
+              <td>
+                <Avatar className={classes.matched}>
+                  <CheckIcon className={classes.icon}/>
+                </Avatar>
+              </td> 
+              : null
+            }
+          </tr>
+        </tbody>
+      </table>
+
     )
     const details = (
       <table className={classes.table}>

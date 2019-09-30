@@ -65,7 +65,7 @@ const NodeProperties = props => {
         return node.data
       })
       .filter(nodeData => {
-        return nodeData.name != null && nodeData.name != "" 
+        return nodeData.name != null && nodeData.name !== "" 
       })
   } else {
     nodes = props.network.selectedNodes
@@ -145,7 +145,7 @@ const NodeProperties = props => {
           attributes.push({
             title: "ID",
             content:
-                  "<a href=\"" + "http://identifiers.org/" + prefix + "/" + id + "\">" + props.represents[node.name] + "</a>",
+                  "<a href=\"http://identifiers.org/" + prefix + "/" + id + "\">" + props.represents[node.name] + "</a>",
             displayed: false
           })
         }
@@ -209,7 +209,7 @@ const NodeProperties = props => {
       if (prefix in context) {
         aliasLinks += "<a href=\"" + context[prefix] + id + "\">\t" + alias + "</a><br/>"
       } else {
-        aliasLinks += "<a href=\"" + "http://identifiers.org/" + prefix + "/" + id + "\">\t" + alias + "</a><br/>"
+        aliasLinks += "<a href=\"http://identifiers.org/" + prefix + "/" + id + "\">\t" + alias + "</a><br/>"
       }
     })
     if (aliases.size > 1) {
@@ -324,23 +324,23 @@ const NodeProperties = props => {
     }
 
     const summary = (
-      <Typography variant="body2">
-        <table>
-          <tbody>
-            <tr>
-              <td>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <Typography variant="body2">
                 {node.name}
-              </td>
-              {inset ? (
-                <td>
-                  <Avatar className={classes.matched}>
-                    <CheckIcon className={classes.icon}/>
-                  </Avatar>
-                </td>) : null}
-            </tr>
-          </tbody>
-        </table>
-      </Typography>
+              </Typography>
+            </td>
+            {inset ? (
+              <td>
+                <Avatar className={classes.matched}>
+                  <CheckIcon className={classes.icon}/>
+                </Avatar>
+              </td>) : null}
+          </tr>
+        </tbody>
+      </table>
     )
     const details = (
       <table className={classes.table}>

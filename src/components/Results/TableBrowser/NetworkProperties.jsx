@@ -215,7 +215,7 @@ const NetworkProperties = props => {
             Click to view the namespaces associated with this network
           </Typography>
         )
-        const details = <Typography variant="body2">{primaryString}</Typography>
+        const details = primaryString
         leftDisplay.push(
           <React.Fragment key={index}>
             <div className={classes.padding}>
@@ -351,19 +351,29 @@ const formatPrimary = entry => {
 
 const formatContext = entry => {
   const elements = entry.split(",")
-  let splitResults
-  let result = "<table><tbody>"
-  elements.forEach(item => {
-    splitResults = item.split("\"")
-    result +=
-      "<tr><td>" +
-      splitResults[1] +
-      "</td><td>" +
-      splitResults[3] +
-      "</td></tr>"
-  })
-  result += "</tbody></table>"
-  return formatPrimary(result)
+  return (
+    <table>
+      <tbody>
+        {elements.map(item => {
+          const splitResults = item.split("\"")
+          return (
+            <tr key={Math.random().toString()}>
+              <td valign="top">
+                <Typography variant="body2">
+                  {splitResults[1]}
+                </Typography>
+              </td>
+              <td valign="top">
+                <Typography variant="body2">
+                  {splitResults[3]}
+                </Typography>
+              </td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
 }
 
 

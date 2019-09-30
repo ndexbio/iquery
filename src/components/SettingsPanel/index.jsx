@@ -33,7 +33,7 @@ const styles = theme => ({
     width: drawerWidth
   },
   nested: {
-    paddingLeft: theme.spacing.unit * 4
+    paddingLeft: theme.spacing(4)
   }
 })
 
