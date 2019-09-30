@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography'
 import { Tooltip } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
 import searchLogo from '../../assets/images/search-logo.svg'
 
 import * as examples from './example-genes'
@@ -48,16 +47,6 @@ const SearchTextBox = props => {
       props.history.push(`/${jobId}`)
     }
   }, [])
-
-  const open = Boolean(state.anchorEl)
-
-  const handleMenu = event => {
-    setState({ ...state, anchorEl: event.currentTarget })
-  }
-
-  const handleClose = () => {
-    setState({ ...state, anchorEl: null })
-  }
 
   const handleExample = exampleIdx => {
     setState({
