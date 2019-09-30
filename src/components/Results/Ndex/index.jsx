@@ -1,30 +1,30 @@
-import React from 'react'
-import './style.css'
+import React from "react"
+import "./style.css"
 
-import Split from 'react-split'
+import Split from "react-split"
 
-import NetworkView from './NetworkView'
-import NetworkList from './NetworkList'
+import NetworkView from "./NetworkView"
+import NetworkList from "./NetworkList"
 
-import { camelCaseToTitleCase } from '../TableBrowser/camel-case-util'
+import { camelCaseToTitleCase } from "../TableBrowser/camel-case-util"
 
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import Typography from '@material-ui/core/Typography'
-import { ListItem } from '@material-ui/core'
+import ListItemIcon from "@material-ui/core/ListItemIcon"
+import Typography from "@material-ui/core/Typography"
+import { ListItem } from "@material-ui/core"
 
 const titleStyle = {
-  lineHeight: '1.33',
-  wordBreak: 'break-word'
+  lineHeight: "1.33",
+  wordBreak: "break-word"
 }
 
 const subtitleStyle = {
-  lineHeight: '1',
-  wordBreak: 'break-word'
+  lineHeight: "1",
+  wordBreak: "break-word"
 }
 
 const infoStyle = {
-  display: 'inline',
-  lineHeight: '1'
+  display: "inline",
+  lineHeight: "1"
 }
 
 /**
@@ -70,7 +70,7 @@ const Ndex = props => {
     const sourceName = props.uiState.selectedSource
 
     if (searchResults !== undefined && searchResults !== null) {
-      console.log('** network changed:', jobId, sourceName)
+      console.log("** network changed:", jobId, sourceName)
       props.history.push(`/${jobId}/${sourceName}/${networkUUID}`)
     }
   }
@@ -109,22 +109,22 @@ const Ndex = props => {
         <Typography
           display="inline"
           color={
-            props.uiState.selectedSource === 'enrichment' &&
-            props.uiState.sortOrder[0] === 'p-Value'
-              ? 'textSecondary'
-              : 'textPrimary'
+            props.uiState.selectedSource === "enrichment" &&
+            props.uiState.sortOrder[0] === "p-Value"
+              ? "textSecondary"
+              : "textPrimary"
           }
         >
-          <strong>{hitGenes.length}</strong>{' '}
+          <strong>{hitGenes.length}</strong>{" "}
         </Typography>
         <Typography
           variant="caption"
           display="inline"
-          style={{ lineHeight: '1' }}
+          style={{ lineHeight: "1" }}
           color={
-            props.uiState.sortOrder[0] === 'Overlap'
-              ? 'textPrimary'
-              : 'textSecondary'
+            props.uiState.sortOrder[0] === "Overlap"
+              ? "textPrimary"
+              : "textSecondary"
           }
         >
           genes
@@ -133,16 +133,16 @@ const Ndex = props => {
     )
 
     const icon = (
-      <ListItemIcon style={{ width: '20px' }}>
+      <ListItemIcon style={{ width: "20px" }}>
         <img className="list-icon" src={imageURL} alt="list icon" />
       </ListItemIcon>
     )
 
-    if (props.uiState.selectedSource === 'enrichment') {
+    if (props.uiState.selectedSource === "enrichment") {
       let pVal = details.PValue
       if (pVal !== undefined) {
         if (pVal < 1e-15) {
-          pVal = '< 1e-15'
+          pVal = "< 1e-15"
         } else {
           pVal = pVal.toExponential(2)
         }
@@ -153,9 +153,9 @@ const Ndex = props => {
           <Typography
             display="inline"
             color={
-              props.uiState.sortOrder[0] === 'p-Value'
-                ? 'textPrimary'
-                : 'textSecondary'
+              props.uiState.sortOrder[0] === "p-Value"
+                ? "textPrimary"
+                : "textSecondary"
             }
           >
             <strong>{pVal} </strong>
@@ -163,11 +163,11 @@ const Ndex = props => {
           <Typography
             variant="caption"
             display="inline"
-            style={{ lineHeight: '1' }}
+            style={{ lineHeight: "1" }}
             color={
-              props.uiState.sortOrder[0] === 'p-Value'
-                ? 'textPrimary'
-                : 'textSecondary'
+              props.uiState.sortOrder[0] === "p-Value"
+                ? "textPrimary"
+                : "textSecondary"
             }
           >
             pv
@@ -177,7 +177,7 @@ const Ndex = props => {
 
       const title = (
         <Typography style={titleStyle}>
-          {description.split(':').slice(1)}
+          {description.split(":").slice(1)}
         </Typography>
       )
 
@@ -187,8 +187,8 @@ const Ndex = props => {
           color="textSecondary"
           style={subtitleStyle}
         >
-          Nodes: {nodes}, Edges: {edges}, Source:{' '}
-          {camelCaseToTitleCase(description.split(':')[0])}
+          Nodes: {nodes}, Edges: {edges}, Source:{" "}
+          {camelCaseToTitleCase(description.split(":")[0])}
         </Typography>
       )
 
@@ -202,7 +202,7 @@ const Ndex = props => {
           }}
           selected={selectedIndex === index}
         >
-          <table style={{ tableLayout: 'fixed', wordBreak: 'breakWord' }}>
+          <table style={{ tableLayout: "fixed", wordBreak: "breakWord" }}>
             <tbody>
               <tr height="50%">
                 <td rowSpan="2" align="center" valign="middle">
@@ -230,32 +230,32 @@ const Ndex = props => {
     } else {
       const node = (
         <div display="inline">
-          <Typography display="inline" style={{ lineHeight: '1' }}>
-            <strong>{nodes}</strong>{' '}
+          <Typography display="inline" style={{ lineHeight: "1" }}>
+            <strong>{nodes}</strong>{" "}
           </Typography>
           <Typography
             variant="caption"
             display="inline"
             color="textSecondary"
-            style={{ lineHeight: '1' }}
+            style={{ lineHeight: "1" }}
           >
-            {'nodes '}
+            {"nodes "}
           </Typography>
         </div>
       )
 
       const edge = (
         <div display="inline">
-          <Typography display="inline" style={{ lineHeight: '1' }}>
-            <strong>{edges}</strong>{' '}
+          <Typography display="inline" style={{ lineHeight: "1" }}>
+            <strong>{edges}</strong>{" "}
           </Typography>
           <Typography
             variant="caption"
             display="inline"
             color="textSecondary"
-            style={{ lineHeight: '1' }}
+            style={{ lineHeight: "1" }}
           >
-            {'edges'}
+            {"edges"}
           </Typography>
         </div>
       )
@@ -274,7 +274,7 @@ const Ndex = props => {
           color="textSecondary"
           style={subtitleStyle}
         >
-          Parent: {details.parent_network_nodes} nodes,{' '}
+          Parent: {details.parent_network_nodes} nodes,{" "}
           {details.parent_network_edges} edges
         </Typography>
       )
@@ -289,7 +289,7 @@ const Ndex = props => {
           }}
           selected={selectedIndex === index}
         >
-          <table style={{ tableLayout: 'fixed', wordBreak: 'break-word' }}>
+          <table style={{ tableLayout: "fixed", wordBreak: "break-word" }}>
             <tbody>
               <tr height="50%">
                 <td rowSpan="2" align="center" valign="middle" width="50px">

@@ -1,12 +1,12 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { DialogContentText, DialogActions, Button } from '@material-ui/core'
+import React from "react"
+import { withStyles } from "@material-ui/core/styles"
+import { DialogContentText, DialogActions, Button } from "@material-ui/core"
 
-import './style.css'
+import "./style.css"
 
 const styles = theme => ({
   button: {
-    'text-transform': 'none'
+    "text-transform": "none"
   }
 })
 
@@ -14,7 +14,7 @@ class NDExSave extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      networkUrl: ''
+      networkUrl: ""
     }
   }
 

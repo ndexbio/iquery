@@ -296,8 +296,8 @@ const EdgeProperties = props => {
       sourceSymbol = (
         <React.Fragment>
           <td>
-          <Typography variant="body2">
-            {source}
+            <Typography variant="body2">
+              {source}
             </Typography>
           </td>
           <td>
@@ -313,8 +313,8 @@ const EdgeProperties = props => {
       targetSymbol = (
         <React.Fragment>
           <td>
-          <Typography variant="body2">
-            {target}
+            <Typography variant="body2">
+              {target}
             </Typography>
           </td>
           <td>
