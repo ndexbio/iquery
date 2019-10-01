@@ -1,28 +1,28 @@
-import React, { useEffect } from "react"
-import { createStore, applyMiddleware, compose } from "redux"
-import { Provider } from "react-redux"
-import "typeface-roboto"
-import { render } from "react-dom"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import React, { useEffect } from 'react'
+import { createStore, applyMiddleware, compose } from 'redux'
+import { Provider } from 'react-redux'
+import 'typeface-roboto'
+import { render } from 'react-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import createSagaMiddleware from "redux-saga"
-import { composeWithDevTools } from "redux-devtools-extension"
+import createSagaMiddleware from 'redux-saga'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
-import "./index.css"
-import { App, Top } from "./App"
-import * as serviceWorker from "./serviceWorker"
+import './index.css'
+import { App, Top } from './App'
+import * as serviceWorker from './serviceWorker'
 
 // Import root reducers
-import rootReducer from "./reducers"
-import rootSaga from "./sagas/ndexSaga"
-import cyRestSaga from "./sagas/cyRestSaga"
-import cyRestStatusSaga from "./sagas/cyRestStatusSaga"
-import ndexSaveSaga from "./sagas/ndexSaveSaga"
-import ReactGA from "react-ga"
+import rootReducer from './reducers'
+import rootSaga from './sagas/ndexSaga'
+import cyRestSaga from './sagas/cyRestSaga'
+import cyRestStatusSaga from './sagas/cyRestStatusSaga'
+import ndexSaveSaga from './sagas/ndexSaveSaga'
+import ReactGA from 'react-ga'
 
-import { SET_QUERY } from "./actions/search"
+import { SET_QUERY } from './actions/search'
 
-import { GA_DEV_ID, GA_STAGING_ID, GA_PRODUCTION } from "./analytics"
+import { GA_DEV_ID, GA_STAGING_ID, GA_PRODUCTION } from './analytics'
 
 ReactGA.initialize(GA_PRODUCTION, {
   gaOptions: {
@@ -32,8 +32,8 @@ ReactGA.initialize(GA_PRODUCTION, {
 
 const EventActions = {
   SetQuery: SET_QUERY,
-  OpenInCytoscape: "OPEN_IN_CYTOSCAPE",
-  NetworkSelected: "NETWORK_FETCH_STARTED"
+  OpenInCytoscape: 'OPEN_IN_CYTOSCAPE',
+  NetworkSelected: 'NETWORK_FETCH_STARTED'
 }
 
 const gaMiddleware = store => next => action => {
@@ -45,22 +45,22 @@ const handleEvent = event => {
   const eventType = event.type
   if (eventType === SET_QUERY) {
     ReactGA.event({
-      category: "User Action",
+      category: 'User Action',
       action: EventActions.SetQuery,
       label: event.payload
     })
-  } else if (eventType === "IMPORT_NETWORK_STARTED") {
+  } else if (eventType === 'IMPORT_NETWORK_STARTED') {
     ReactGA.event({
-      category: "User Action",
+      category: 'User Action',
       action: EventActions.OpenInCytoscape,
       label: event.payload.uuid
     })
-  } else if ("NETWORK_FETCH_STARTED") {
+  } else if ('NETWORK_FETCH_STARTED') {
     if (event.payload === undefined || event.payload == null) {
       return
     }
     ReactGA.event({
-      category: "User Action",
+      category: 'User Action',
       action: EventActions.NetworkSelected,
       label: `${event.payload.sourceUUID}/${event.payload.networkUUID}`
     })
@@ -95,7 +95,7 @@ const Root = ({ store }) => (
   </Provider>
 )
 
-render(<Root store={store} />, document.getElementById("root"))
+render(<Root store={store} />, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

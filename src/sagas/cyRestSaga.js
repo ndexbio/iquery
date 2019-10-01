@@ -1,11 +1,11 @@
-import { call, put, takeLatest, select } from "redux-saga/effects"
-import * as cyrest from "../api/cyrest"
+import { call, put, takeLatest, select } from 'redux-saga/effects'
+import * as cyrest from '../api/cyrest'
 
 import {
   IMPORT_NETWORK_STARTED,
   IMPORT_NETWORK_FAILED,
-  IMPORT_NETWORK_SUCCEEDED,
-} from "../actions/cyrest"
+  IMPORT_NETWORK_SUCCEEDED
+} from '../actions/cyrest'
 
 export default function* cyrestSaga() {
   yield takeLatest(IMPORT_NETWORK_STARTED, watchImportNetwork)
@@ -27,7 +27,7 @@ function* watchImportNetwork(action) {
     let addNumberVerification = true
 
     originalCX.forEach(aspect => {
-      if (aspect["numberVerification"]) {
+      if (aspect['numberVerification']) {
         addNumberVerification = false
       }
     })
@@ -42,20 +42,20 @@ function* watchImportNetwork(action) {
     //console.log('CX', patchedCX)
 
     const response = yield call(cyrest.importNetwork, cyrestport, patchedCX)
-    const responseJson = yield call([response, "json"])
+    const responseJson = yield call([response, 'json'])
 
-    console.log("CyREST response:", response)
+    console.log('CyREST response:', response)
 
     yield put({
       type: IMPORT_NETWORK_SUCCEEDED,
       payload: responseJson
     })
   } catch (e) {
-    console.warn("CyREST import network error:", e)
+    console.warn('CyREST import network error:', e)
     yield put({
       type: IMPORT_NETWORK_FAILED,
       payload: {
-        message: "CyREST import network error",
+        message: 'CyREST import network error',
         error: e.message
       }
     })

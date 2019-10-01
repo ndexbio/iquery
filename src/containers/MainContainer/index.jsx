@@ -1,18 +1,18 @@
-import React, { useEffect } from "react"
-import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
-import { withRouter } from "react-router-dom"
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 
-import * as searchActions from "../../actions/search"
-import * as uiStateActions from "../../actions/uiState"
-import * as networkActions from "../../actions/network"
-import * as sourceActions from "../../actions/source"
-import * as cyrestActions from "../../actions/cyrest"
-import * as ndexSaveActions from "../../actions/ndexSave"
+import * as searchActions from '../../actions/search'
+import * as uiStateActions from '../../actions/uiState'
+import * as networkActions from '../../actions/network'
+import * as sourceActions from '../../actions/source'
+import * as cyrestActions from '../../actions/cyrest'
+import * as ndexSaveActions from '../../actions/ndexSave'
 
-import ReactGA from "react-ga"
+import ReactGA from 'react-ga'
 
-import HomePanel from "../../components/HomePanel"
+import HomePanel from '../../components/HomePanel'
 
 const MainContainer = props => {
   useEffect(() => {
@@ -23,9 +23,7 @@ const MainContainer = props => {
       ReactGA.pageview(pathname)
     })
   }, [])
-  return (
-    <HomePanel {...props} />
-  )
+  return <HomePanel {...props} />
 }
 
 function mapStateToProps(state) {

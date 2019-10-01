@@ -1,4 +1,4 @@
-import { handleActions } from "redux-actions"
+import { handleActions } from 'redux-actions'
 import {
   importNetworkFailed,
   importNetworkStarted,
@@ -7,8 +7,8 @@ import {
   setAvailable,
   startCyRestPolling,
   stopCyRestPolling,
-  setPort,
-} from "../actions/cyrest"
+  setPort
+} from '../actions/cyrest'
 
 const defaultState = {
   isFetchingAvailable: false,
@@ -39,16 +39,16 @@ const cyrest = handleActions(
       }
     },
     [importNetworkFailed]: (state, payload) => {
-      console.warn("Error===", payload.error)
+      console.warn('Error===', payload.error)
       return {
         ...state,
         lastResponse: payload,
         error: payload.error,
-        isLoadingNetwork: false,
+        isLoadingNetwork: false
       }
     },
     [setPort]: (state, payload) => {
-      console.log("CyREST port = ", payload.payload)
+      console.log('CyREST port = ', payload.payload)
       return { ...state, port: payload.payload }
     },
     [fetchAvailable]: (state, payload) => {
@@ -66,7 +66,7 @@ const cyrest = handleActions(
     },
     [stopCyRestPolling]: (state, payload) => {
       return { ...state }
-    },
+    }
   },
   defaultState
 )

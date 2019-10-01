@@ -1,62 +1,62 @@
-import React, { useEffect } from "react"
+import React, { useEffect } from 'react'
 
-import { withStyles } from "@material-ui/core/styles"
+import { withStyles } from '@material-ui/core/styles'
 
-import MenuList from "@material-ui/core/MenuList"
-import Typography from "@material-ui/core/Typography"
+import MenuList from '@material-ui/core/MenuList'
+import Typography from '@material-ui/core/Typography'
 
-import SortPanel from "./SortPanel"
+import SortPanel from './SortPanel'
 
-import "./style.css"
-import { callbackify } from "util"
+import './style.css'
+import { callbackify } from 'util'
 
 const styles = theme => ({
   inline: {
-    display: "inline"
+    display: 'inline'
   },
   subtitle: {
-    marginLeft: "1em",
-    marginTop: "0.5em"
+    marginLeft: '1em',
+    marginTop: '0.5em'
   },
   networkAvatar: {
     margin: 5,
-    color: "#fff",
-    backgroundColor: "#FAFAFA"
+    color: '#fff',
+    backgroundColor: '#FAFAFA'
   },
   menuItem: {
-    "&:focus": {
-      backgroundColor: "rgba(230,230,230,0.6)"
+    '&:focus': {
+      backgroundColor: 'rgba(230,230,230,0.6)'
     }
   },
   menuText: {
-    "&:focus": {}
+    '&:focus': {}
   },
   secondary: {
-    width: "15em",
-    display: "flex",
-    alignItems: "center",
-    padding: "0.2em"
+    width: '15em',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0.2em'
   },
   plot: {
-    width: "80%",
-    background: "teal"
+    width: '80%',
+    background: 'teal'
   },
   noPadding: {
-    paddingTop: "0",
-    paddingBottom: "0"
+    paddingTop: '0',
+    paddingBottom: '0'
   },
   center: {
-    justifyContent: "center",
-    position: "relative",
-    top: "25%",
-    display: "flex",
-    width: "100%",
-    height: "100%"
+    justifyContent: 'center',
+    position: 'relative',
+    top: '25%',
+    display: 'flex',
+    width: '100%',
+    height: '100%'
   }
 })
 
 const findSort = sortOrder => {
-  if (sortOrder[0] === "p-Value") {
+  if (sortOrder[0] === 'p-Value') {
     return (a, b) => {
       if (a.details.PValue > b.details.PValue) {
         return 1
@@ -104,7 +104,7 @@ const NetworkList = props => {
 
   //Sort hits
   useEffect(() => {
-    if (props.uiState.selectedSource === "enrichment") {
+    if (props.uiState.selectedSource === 'enrichment') {
       const sortFunction = findSort(props.uiState.sortOrder)
       //Allow stable sorting
       for (let i = 0; i < hits.length; i++) {
@@ -130,9 +130,9 @@ const NetworkList = props => {
   const selectedIndex = props.network.listIndex
 
   let enrichmentStyle
-  if (props.uiState.selectedSource === "enrichment") {
+  if (props.uiState.selectedSource === 'enrichment') {
     enrichmentStyle = {
-      height: "calc(100% - 49px)"
+      height: 'calc(100% - 49px)'
     }
   } else {
     enrichmentStyle = {}
@@ -163,8 +163,8 @@ const NetworkList = props => {
       <div className="network-list-wrapper">
         <div className="network-list">
           <Typography
-            variant={"subtitle1"}
-            color={"textSecondary"}
+            variant={'subtitle1'}
+            color={'textSecondary'}
             className={props.classes.center}
           >
             No results found

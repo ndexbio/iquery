@@ -1,4 +1,4 @@
-import { handleActions } from "redux-actions"
+import { handleActions } from 'redux-actions'
 import {
   setNDExModalOpen,
   setProfile,
@@ -7,7 +7,7 @@ import {
   saveToNDEx,
   setErrorMessage,
   setNetworkUrl
-} from "../actions/ndexSave"
+} from '../actions/ndexSave'
 
 const DEF_STATE = {
   ndexModal: false,

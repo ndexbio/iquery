@@ -1,44 +1,44 @@
-import React, {useEffect} from "react"
+import React, { useEffect } from 'react'
 
-import FormControl from "@material-ui/core/FormControl"
-import Select from "@material-ui/core/Select"
-import MenuItem from "@material-ui/core/MenuItem"
-import InputLabel from "@material-ui/core/InputLabel"
-import OutlinedInput from "@material-ui/core/OutlinedInput"
-import Typography from "@material-ui/core/Typography"
-import { withStyles } from "@material-ui/core/styles"
-import { fade } from "@material-ui/core/styles/colorManipulator"
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import InputLabel from '@material-ui/core/InputLabel'
+import OutlinedInput from '@material-ui/core/OutlinedInput'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
+import { fade } from '@material-ui/core/styles/colorManipulator'
 
 const formControl = {
-  position: "relative",
-  top: "1.5px",
-  marginLeft: "0.3em"
+  position: 'relative',
+  top: '1.5px',
+  marginLeft: '0.3em'
 }
 
 const styles = theme => ({
   input: {
-    padding: "8px 26px 8px 12px",
-    backgroundColor: "rgba(0, 0, 0, 0)",
+    padding: '8px 26px 8px 12px',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     borderRadius: 4,
-    "&:focus": {
-      backgroundColor: "rgba(0, 0, 0, 0)",
+    '&:focus': {
+      backgroundColor: 'rgba(0, 0, 0, 0)',
       borderRadius: 4
     },
-    "&:hover": {
-      backgroundColor: fade("rgb(65, 84, 178)", 0.08)
+    '&:hover': {
+      backgroundColor: fade('rgb(65, 84, 178)', 0.08)
     }
   },
   root: {
-    borderColor: "#ced4da",
-    "& $notchedOutline": {
-      borderColor: "rgb(65, 84, 178)"
+    borderColor: '#ced4da',
+    '& $notchedOutline': {
+      borderColor: 'rgb(65, 84, 178)'
     },
-    "&:hover $notchedOutline": {
-      borderColor: "rgb(65, 84, 178)"
+    '&:hover $notchedOutline': {
+      borderColor: 'rgb(65, 84, 178)'
     },
-    "&$focused $notchedOutline": {
-      borderColor: "rgb(65, 84, 178)",
-      borderWidth: "1px"
+    '&$focused $notchedOutline': {
+      borderColor: 'rgb(65, 84, 178)',
+      borderWidth: '1px'
     }
   },
   focused: {},
@@ -46,12 +46,11 @@ const styles = theme => ({
 })
 
 const LayoutSelector = props => {
-
   const { classes } = props
   const menuItems = props.network.layouts
   const inputLabel = React.useRef(null)
   const [labelWidth, setLabelWidth] = React.useState(0)
-  
+
   useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth)
   }, [])

@@ -1,10 +1,10 @@
-import React, { useState } from "react"
-import "./style.css"
-import Split from "react-split"
+import React, { useState } from 'react'
+import './style.css'
+import Split from 'react-split'
 
-import NetworkViewer from "./NetworkViewer"
-import MemoTableBrowser from "../TableBrowser"
-import NetworkToolbar from "./NetworkToolbar"
+import NetworkViewer from './NetworkViewer'
+import MemoTableBrowser from '../TableBrowser'
+import NetworkToolbar from './NetworkToolbar'
 
 const DEFAULT_RATIO = [50, 50]
 
@@ -16,7 +16,6 @@ const DEFAULT_RATIO = [50, 50]
  * @constructor
  */
 const NetworkView = props => {
-
   const [resized, setResize] = useState(null)
 
   const handleResizeEnd = e => {
@@ -24,13 +23,13 @@ const NetworkView = props => {
   }
 
   return (
-    <div className={"network-view-top"}>
+    <div className={'network-view-top'}>
       <NetworkToolbar {...props} />
       <Split
         sizes={DEFAULT_RATIO}
         direction="vertical"
         gutterSize={7}
-        className={"nv-container"}
+        className={'nv-container'}
         onDragEnd={handleResizeEnd}
       >
         <NetworkViewer resized={resized} {...props} />

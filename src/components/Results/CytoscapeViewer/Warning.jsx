@@ -1,33 +1,33 @@
-import React, { useState } from "react"
-import { Typography } from "@material-ui/core"
-import cytoLogo from "../../../assets/images/cytoscape-logo.svg"
-import { withStyles } from "@material-ui/core/styles"
-import MessageSnackbar from "../../AppShell/MessageSnackbar.jsx"
+import React, { useState } from 'react'
+import { Typography } from '@material-ui/core'
+import cytoLogo from '../../../assets/images/cytoscape-logo.svg'
+import { withStyles } from '@material-ui/core/styles'
+import MessageSnackbar from '../../AppShell/MessageSnackbar.jsx'
 
-import Tooltip from "@material-ui/core/Tooltip"
-import IconButton from "@material-ui/core/IconButton"
+import Tooltip from '@material-ui/core/Tooltip'
+import IconButton from '@material-ui/core/IconButton'
 
-import "./style.css"
+import './style.css'
 
 const styles = theme => ({
   logo: {},
   button: {
-    height: "50%",
-    display: "block",
-    marginLeft: "auto",
-    marginRight: "auto",
-    position: "relative",
-    top: "15%"
+    height: '50%',
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    position: 'relative',
+    top: '15%'
   },
   outer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   inner: {
-    position: "relative",
-    marginTop: "15%",
-    width: "100%"
+    position: 'relative',
+    marginTop: '15%',
+    width: '100%'
   }
 })
 
@@ -35,7 +35,7 @@ const Warning = props => {
   const { classes } = props
 
   const [open, setOpen] = useState(false)
-  const [state, setState] = useState("dormant")
+  const [state, setState] = useState('dormant')
   const [message, setMessage] = useState(null)
 
   const handleClick = () => {
@@ -52,38 +52,38 @@ const Warning = props => {
     const lastResponse = props.cyrest.lastResponse
 
     let cycleId = 0
-    console.log("cycleId: " + cycleId)
-    console.log("state: " + state)
+    console.log('cycleId: ' + cycleId)
+    console.log('state: ' + state)
 
-    if (state === "dormant" && isLoadingNetwork) {
-      setMessage("Opening network in Cytoscape Desktop . . .")
-      setState("openLoading")
+    if (state === 'dormant' && isLoadingNetwork) {
+      setMessage('Opening network in Cytoscape Desktop . . .')
+      setState('openLoading')
       if (!open) {
         setOpen(true)
       }
     }
     if (
-      (state === "openLoading" || state === "closeLoading") &&
+      (state === 'openLoading' || state === 'closeLoading') &&
       lastResponse != null
     ) {
-      setState("openResult")
-      if (lastResponse.type === "IMPORT_NETWORK_SUCCEEDED") {
-        setMessage("Network opened in Cytoscape Desktop!")
+      setState('openResult')
+      if (lastResponse.type === 'IMPORT_NETWORK_SUCCEEDED') {
+        setMessage('Network opened in Cytoscape Desktop!')
       } else {
-        setMessage("Network failed to open in Cytoscape Desktop")
+        setMessage('Network failed to open in Cytoscape Desktop')
       }
       if (!open) {
         setOpen(true)
       }
     }
-    if (state === "openResult" && !open) {
+    if (state === 'openResult' && !open) {
       setOpen(true)
     }
-    if (state === "openResult" && open) {
+    if (state === 'openResult' && open) {
       let currentId = cycleId
       setTimeout(() => {
-        if (state === "openResult" && currentId === cycleId) {
-          setState("dormant")
+        if (state === 'openResult' && currentId === cycleId) {
+          setState('dormant')
           cycleId++
           setOpen(false)
         }
@@ -91,17 +91,17 @@ const Warning = props => {
     }
 
     const handleClose = (event, reason) => {
-      console.log("click")
-      if (state === "openLoading") {
-        console.log("openLoading to closeLoading")
-        setState("closeLoading")
-      } else if (state === "openResult") {
-        console.log("openResult to dormant")
-        setState("dormant")
+      console.log('click')
+      if (state === 'openLoading') {
+        console.log('openLoading to closeLoading')
+        setState('closeLoading')
+      } else if (state === 'openResult') {
+        console.log('openResult to dormant')
+        setState('dormant')
         cycleId++
       }
       setOpen(false)
-      console.log("open: " + open)
+      console.log('open: ' + open)
     }
 
     return (
@@ -126,8 +126,8 @@ const Warning = props => {
           message={message}
           setMessage={setMessage}
           autoHideDuration={null}
-          horizontal={"right"}
-          vertical={"bottom"}
+          horizontal={'right'}
+          vertical={'bottom'}
           handleClose={handleClose}
         />
       </React.Fragment>

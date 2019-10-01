@@ -1,7 +1,7 @@
-import React from "react"
-import "./style.css"
-import MemoCytoscapeViewer from "../CytoscapeViewer"
-import LoadingPanel from "../../LoadingPanel"
+import React from 'react'
+import './style.css'
+import MemoCytoscapeViewer from '../CytoscapeViewer'
+import LoadingPanel from '../../LoadingPanel'
 
 const NetworkViewer = props => {
   if (props.network.isFetching) {

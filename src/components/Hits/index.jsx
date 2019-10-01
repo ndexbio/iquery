@@ -1,55 +1,54 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/core/styles"
-import GridList from "@material-ui/core/GridList"
-import GridListTile from "@material-ui/core/GridListTile"
-import GridListTileBar from "@material-ui/core/GridListTileBar"
-import IconButton from "@material-ui/core/IconButton"
-import StarBorderIcon from "@material-ui/icons/StarBorder"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import GridList from '@material-ui/core/GridList'
+import GridListTile from '@material-ui/core/GridListTile'
+import GridListTileBar from '@material-ui/core/GridListTileBar'
+import IconButton from '@material-ui/core/IconButton'
+import StarBorderIcon from '@material-ui/icons/StarBorder'
 
-import Paper from "@material-ui/core/Paper"
-import Typography from "@material-ui/core/Typography"
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
 
 const dummyServices = [
   {
-    name: "Enrichment",
-    title: "Pathway Enrichment",
+    name: 'Enrichment',
+    title: 'Pathway Enrichment',
     hits: 10
   },
   {
-    name: "Interactome",
-    title: "Interactome search",
+    name: 'Interactome',
+    title: 'Interactome search',
     hits: 20
   },
   {
-    name: "NDEx",
-    title: "NDEx network search",
+    name: 'NDEx',
+    title: 'NDEx network search',
     hits: 30
   }
 ]
 
 const styles = theme => ({
   tiles: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    overflow: "hidden",
-    backgroundColor: "#AAAAAA"
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: '#AAAAAA'
   },
   card: {
-    height: "10em",
-    padding: "0.5em"
+    height: '10em',
+    padding: '0.5em'
   },
   gridList: {
-    flexWrap: "nowrap",
+    flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: "translateZ(0)"
+    transform: 'translateZ(0)'
   },
   title: {
     color: theme.palette.primary.light
   },
-  titleBar: {
-  }
+  titleBar: {}
 })
 
 const Hits = props => {

@@ -1,12 +1,12 @@
-import React from "react"
-import "./style.css"
-import Typography from "@material-ui/core/Typography"
-import { withStyles } from "@material-ui/core/styles"
+import React from 'react'
+import './style.css'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
 
 const styles = theme => ({
   ...theme,
   button: {
-    padding: "0.3em"
+    padding: '0.3em'
   }
 })
 

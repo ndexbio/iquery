@@ -1,35 +1,35 @@
-import React, { useState, useEffect, useRef } from "react"
-import { withStyles } from "@material-ui/core/styles"
-import Paper from "@material-ui/core/Paper"
-import InputBase from "@material-ui/core/InputBase"
-import Divider from "@material-ui/core/Divider"
+import React, { useState, useEffect, useRef } from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import InputBase from '@material-ui/core/InputBase'
+import Divider from '@material-ui/core/Divider'
 
-import { loadCSS } from "fg-loadcss/src/loadCSS"
-import Icon from "@material-ui/core/Icon"
-import Tooltip from "@material-ui/core/Tooltip"
-import classNames from "classnames"
-import IconButton from "@material-ui/core/IconButton"
-import SearchIcon from "@material-ui/icons/Search"
-import DeleteIcon from "@material-ui/icons/Delete"
-import MenuIcon from "@material-ui/icons/Menu"
-import Menu from "@material-ui/core/Menu"
-import MenuItem from "@material-ui/core/MenuItem"
+import { loadCSS } from 'fg-loadcss/src/loadCSS'
+import Icon from '@material-ui/core/Icon'
+import Tooltip from '@material-ui/core/Tooltip'
+import classNames from 'classnames'
+import IconButton from '@material-ui/core/IconButton'
+import SearchIcon from '@material-ui/icons/Search'
+import DeleteIcon from '@material-ui/icons/Delete'
+import MenuIcon from '@material-ui/icons/Menu'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 
-import MessageSnackbar from "./MessageSnackbar"
+import MessageSnackbar from './MessageSnackbar'
 
-import * as examples from "../TopPage/example-genes"
+import * as examples from '../TopPage/example-genes'
 
 const EXAMPLES = examples.default.examples
 
 const styles = {
   root: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "60vmin",
-    padding: "0.3em",
-    background: "#f1f1f1",
-    marginLeft: "1em"
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '60vmin',
+    padding: '0.3em',
+    background: '#f1f1f1',
+    marginLeft: '1em'
   },
   input: {
     marginLeft: 8,
@@ -45,7 +45,7 @@ const styles = {
   }
 }
 
-const ORIGINAL_GENE_TEXT = "original-gene-text"
+const ORIGINAL_GENE_TEXT = 'original-gene-text'
 
 const GeneTextBox = props => {
   const { classes } = props
@@ -61,8 +61,8 @@ const GeneTextBox = props => {
 
   useEffect(() => {
     loadCSS(
-      "https://use.fontawesome.com/releases/v5.1.0/css/all.css",
-      document.querySelector("#insertion-point-jss")
+      'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+      document.querySelector('#insertion-point-jss')
     )
     return () => {}
   }, [])
@@ -71,7 +71,7 @@ const GeneTextBox = props => {
     // This is a hack...
     const copyText = document.getElementById(ORIGINAL_GENE_TEXT)
     copyText.select()
-    document.execCommand("copy")
+    document.execCommand('copy')
 
     // Show message
     setOpen(true)
@@ -88,12 +88,12 @@ const GeneTextBox = props => {
 
     const sourceNames = sources.map(source => source.name)
 
-    const geneListString = genes.replace(",", " ")
+    const geneListString = genes.replace(',', ' ')
     const geneList = geneListString.split(/\s*,\s*|\s+/)
 
     props.searchActions.clearAll()
-    props.uiStateActions.setSelectedSource("enrichment")
-    props.history.push("/")
+    props.uiStateActions.setSelectedSource('enrichment')
+    props.history.push('/')
     props.searchActions.setQuery(genes)
     props.searchActions.searchStarted({ geneList, sourceNames })
   }
@@ -106,11 +106,11 @@ const GeneTextBox = props => {
   }
 
   const handleClear = () => {
-    setState({ ...state, query: "" })
+    setState({ ...state, query: '' })
   }
 
   const handleKeyPress = event => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       handleSearch()
     }
   }
@@ -136,10 +136,10 @@ const GeneTextBox = props => {
       <MessageSnackbar
         open={open}
         setOpen={setOpen}
-        message={"Genes are copied to clipboard!"}
+        message={'Genes are copied to clipboard!'}
         autoHideDuration={4000}
-        horizontal={"left"}
-        vertical={"bottom"}
+        horizontal={'left'}
+        vertical={'bottom'}
       />
       <Paper className={classes.root} elevation={0}>
         <Tooltip title="Query gene set examples" placement="bottom">
@@ -154,12 +154,12 @@ const GeneTextBox = props => {
             <Menu
               anchorEl={state.anchorEl}
               anchorOrigin={{
-                vertical: "top",
-                horizontal: "right"
+                vertical: 'top',
+                horizontal: 'right'
               }}
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right"
+                vertical: 'top',
+                horizontal: 'right'
               }}
               open={menuOpen}
               onClose={handleClose}
@@ -182,7 +182,7 @@ const GeneTextBox = props => {
             aria-label="Copy"
             onClick={handleCopy}
           >
-            <Icon className={classNames(classes.icon, "far fa-clipboard")} />
+            <Icon className={classNames(classes.icon, 'far fa-clipboard')} />
           </IconButton>
         </Tooltip>
         <Divider className={classes.divider} />
@@ -202,7 +202,7 @@ const GeneTextBox = props => {
           className={classes.input}
           placeholder="Genes entered"
           value={state.query}
-          onChange={handleChange("query")}
+          onChange={handleChange('query')}
           onKeyDown={handleKeyPress}
           ref={geneTextRef}
         />

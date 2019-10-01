@@ -1,18 +1,18 @@
-import { METHOD_GET, BASE_URL } from "./apiConstants"
+import { METHOD_GET, BASE_URL } from './apiConstants'
 
 const fetchNetwork = (id, sourceUUID, networkUUID) => {
   const headers = {
-    "Content-Type": "application/json"
+    'Content-Type': 'application/json'
   }
   const fetchUrl =
     BASE_URL +
     id +
-    "/overlaynetwork?sourceUUID=" +
+    '/overlaynetwork?sourceUUID=' +
     sourceUUID +
-    "&networkUUID=" +
+    '&networkUUID=' +
     networkUUID
 
-  console.log("Calling CX API:", fetchUrl)
+  console.log('Calling CX API:', fetchUrl)
 
   return fetch(fetchUrl, {
     method: METHOD_GET,

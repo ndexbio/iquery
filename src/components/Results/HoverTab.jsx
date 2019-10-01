@@ -1,20 +1,19 @@
-import React from "react"
-import Tab from "@material-ui/core/Tab"
-import { withStyles } from "@material-ui/core/styles"
+import React from 'react'
+import Tab from '@material-ui/core/Tab'
+import { withStyles } from '@material-ui/core/styles'
 
-const HoverTab = props =>
-{
-  const {backgroundColor, ...other} = props
+const HoverTab = props => {
+  const { backgroundColor, ...other } = props
 
   const Hover = withStyles(theme => ({
     root: {
-      "&:hover": {
+      '&:hover': {
         backgroundColor: props.backgroundColor,
-        opacity: 1,
+        opacity: 1
       }
     }
   }))(props => <Tab {...other} />)
-  return <Hover {...props}/>
+  return <Hover {...props} />
 }
 
 export default HoverTab

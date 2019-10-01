@@ -1,24 +1,24 @@
-import { handleActions } from "redux-actions"
+import { handleActions } from 'redux-actions'
 import {
   setSettingsOpen,
   setServicesListOpen,
   setHighlights,
   setSelectedSource,
   setSortOrder
-} from "../actions/uiState"
+} from '../actions/uiState'
 
 const DEF_STATE = {
   isSettingsOpen: false,
   servicesListOpen: false,
   highlights: false,
-  selectedSource: "enrichment",
-  sortOrder: ["p-Value", "Overlap"]
+  selectedSource: 'enrichment',
+  sortOrder: ['p-Value', 'Overlap']
 }
 
 const uiState = handleActions(
   {
     [setSettingsOpen]: (state, payload) => {
-      console.log("OPEN = ", payload.payload)
+      console.log('OPEN = ', payload.payload)
       return { ...state, isSettingsOpen: payload.payload }
     },
     [setServicesListOpen]: (state, payload) => {

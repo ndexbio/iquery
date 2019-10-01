@@ -1,4 +1,4 @@
-import { handleActions } from "redux-actions"
+import { handleActions } from 'redux-actions'
 import {
   setQuery,
   clearQuery,
@@ -13,12 +13,12 @@ import {
   fetchResultFailed,
   setSearchResult,
   setActualResults
-} from "../actions/search"
+} from '../actions/search'
 
 const EMPTY_STATE = {
   isSearching: false,
   isFetching: false,
-  queryGenes: "",
+  queryGenes: '',
   queryList: [],
   results: null,
   searchStatus: null,
@@ -34,7 +34,7 @@ const search = handleActions(
       return { ...state, queryGenes: payload.payload }
     },
     [clearQuery]: (state, payload) => {
-      return { ...state, queryGenes: "", queryList: [] }
+      return { ...state, queryGenes: '', queryList: [] }
     },
     [clearAll]: (state, payload) => {
       return EMPTY_STATE
@@ -44,7 +44,7 @@ const search = handleActions(
         ...state,
         isSearching: true,
         resultList: [],
-        queryList: state.queryGenes.split(" ")
+        queryList: state.queryGenes.split(' ')
       }
     },
     [searchSucceeded]: (state, payload) => {

@@ -1,45 +1,43 @@
-import React from "react"
+import React from 'react'
 
-import { withStyles } from "@material-ui/core/styles"
-import ListItem from "@material-ui/core/ListItem"
-import ListItemText from "@material-ui/core/ListItemText"
-import ListItemAvatar from "@material-ui/core/ListItemAvatar"
-import Avatar from "@material-ui/core/Avatar"
-import Typography from "@material-ui/core/Typography"
-import IconButton from "@material-ui/core/IconButton"
-import LinkIcon from "@material-ui/icons/Launch"
-import Tooltip from "@material-ui/core/Tooltip"
-import CheckIcon from "@material-ui/icons/Check"
+import { withStyles } from '@material-ui/core/styles'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import Avatar from '@material-ui/core/Avatar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import LinkIcon from '@material-ui/icons/Launch'
+import Tooltip from '@material-ui/core/Tooltip'
+import CheckIcon from '@material-ui/icons/Check'
 
-import { camelCaseToTitleCase } from "./camel-case-util.js"
-import "./style.css"
-
-
+import { camelCaseToTitleCase } from './camel-case-util.js'
+import './style.css'
 
 // For external link
 
-const GENE_CARDS_URL = "https://www.genecards.org/cgi-bin/carddisp.pl?gene="
+const GENE_CARDS_URL = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene='
 
 const styles = theme => ({
   inline: {
-    display: "inline"
+    display: 'inline'
   },
   title: {
-    marginLeft: "0.5em",
-    marginTop: "0.3em"
+    marginLeft: '0.5em',
+    marginTop: '0.3em'
   },
   description: {
-    marginLeft: "1em",
-    marginTop: "0.3em"
+    marginLeft: '1em',
+    marginTop: '0.3em'
   },
   matched: {
-    backgroundColor: "#C51162"
+    backgroundColor: '#C51162'
   },
   unmatched: {
-    backgroundColor: "red"
+    backgroundColor: 'red'
   },
   linkIcon: {
-    paddingLeft: "1em"
+    paddingLeft: '1em'
   },
   nested: {
     paddingLeft: theme.spacing(4)
@@ -50,7 +48,7 @@ class GeneAnnotationList extends React.Component {
   state = {}
 
   handleClick = id => {
-    const tag = "pw_" + id
+    const tag = 'pw_' + id
     const curState = this.state[tag]
 
     if (curState === undefined || curState == null) {
@@ -92,7 +90,7 @@ class GeneAnnotationList extends React.Component {
         key={geneEntry._id}
         onClick={e => this.handleClick(geneEntry._id)}
         disableGutters={true}
-        style={{padding: "0"}}
+        style={{ padding: '0' }}
       >
         <ListItemAvatar>
           <Avatar className={classes.matched}>
@@ -104,10 +102,10 @@ class GeneAnnotationList extends React.Component {
           primary={
             <table>
               <tbody>
-                <tr style={{marginLeft: "-1"}}>
-                  <td style={{padding: "0"}}>
+                <tr style={{ marginLeft: '-1' }}>
+                  <td style={{ padding: '0' }}>
                     <div>
-                      <Typography component="span" variant="body2" >
+                      <Typography component="span" variant="body2">
                         {geneEntry.symbol}
                       </Typography>
                     </div>
@@ -116,13 +114,13 @@ class GeneAnnotationList extends React.Component {
                         component="span"
                         className={classes.inline}
                         variant="caption"
-                        color='textSecondary'
+                        color="textSecondary"
                       >
                         {camelCaseToTitleCase(geneEntry.name)}
                       </Typography>
                     </div>
                     <div>
-                      <Typography variant="body2" color='textPrimary'>
+                      <Typography variant="body2" color="textPrimary">
                         {description}
                       </Typography>
                     </div>
@@ -145,7 +143,7 @@ class GeneAnnotationList extends React.Component {
         />
       </ListItem>
     )
-  }    
-} 
+  }
+}
 
 export default withStyles(styles)(GeneAnnotationList)

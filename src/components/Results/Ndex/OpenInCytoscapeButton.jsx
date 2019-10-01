@@ -1,37 +1,36 @@
-import React, { useState, useEffect } from "react"
-import Button from "@material-ui/core/Button"
-import logo from "../../../assets/images/cytoscape-logo.svg"
-import logoDisabled from "../../../assets/images/cytoscape-logo-mono-light.svg"
-import { withStyles } from "@material-ui/core"
-import Tooltip from "@material-ui/core/Tooltip"
+import React, { useState, useEffect } from 'react'
+import Button from '@material-ui/core/Button'
+import logo from '../../../assets/images/cytoscape-logo.svg'
+import logoDisabled from '../../../assets/images/cytoscape-logo-mono-light.svg'
+import { withStyles } from '@material-ui/core'
+import Tooltip from '@material-ui/core/Tooltip'
 //import {fade} from "./color-manipulator-util"
-import { fade } from "@material-ui/core/styles/colorManipulator"
-import {_fetchCyRESTAvailable} from "../../../sagas/cyRestStatusSaga"
+import { fade } from '@material-ui/core/styles/colorManipulator'
+import { _fetchCyRESTAvailable } from '../../../sagas/cyRestStatusSaga'
 
-
-import MessageSnackbar from "../../AppShell/MessageSnackbar.jsx"
+import MessageSnackbar from '../../AppShell/MessageSnackbar.jsx'
 
 const BootstrapButton = withStyles({
   root: {
-    marginLeft: "0.5em",
-    borderColor: "#EA9123",
-    "&:active": {
-      borderColor: "#EA9123"
+    marginLeft: '0.5em',
+    borderColor: '#EA9123',
+    '&:active': {
+      borderColor: '#EA9123'
     },
-    "&:hover": {
-      backgroundColor: fade("#EA9123", 0.08)
+    '&:hover': {
+      backgroundColor: fade('#EA9123', 0.08)
     }
   }
 })(Button)
 
 const styles = theme => ({
   buttonIcon: {
-    height: "2em"
+    height: '2em'
   },
   button: {
-    height: "3em",
-    width: "4.3em",
-    minWidth: "4.3em"
+    height: '3em',
+    width: '4.3em',
+    minWidth: '4.3em'
   }
 })
 
@@ -58,41 +57,41 @@ const OpenInCytoscapeButton = props => {
   const lastResponse = props.cyrest.lastResponse
 
   const [open, setOpen] = useState(false)
-  const [state, setState] = useState("dormant")
+  const [state, setState] = useState('dormant')
   const [message, setMessage] = useState(null)
   let cycleId = 0
   //console.log("cycleId: " + cycleId);
   //console.log("state: " + state);
 
-  if (state === "dormant" && isLoadingNetwork) {
-    setMessage("Opening network in Cytoscape Desktop . . .")
-    setState("openLoading")
+  if (state === 'dormant' && isLoadingNetwork) {
+    setMessage('Opening network in Cytoscape Desktop . . .')
+    setState('openLoading')
     if (!open) {
       setOpen(true)
     }
   }
   if (
-    (state === "openLoading" || state === "closeLoading") &&
+    (state === 'openLoading' || state === 'closeLoading') &&
     lastResponse != null
   ) {
-    setState("openResult")
-    if (lastResponse.type === "IMPORT_NETWORK_SUCCEEDED") {
-      setMessage("Network opened in Cytoscape Desktop!")
+    setState('openResult')
+    if (lastResponse.type === 'IMPORT_NETWORK_SUCCEEDED') {
+      setMessage('Network opened in Cytoscape Desktop!')
     } else {
-      setMessage("Network failed to open in Cytoscape Desktop")
+      setMessage('Network failed to open in Cytoscape Desktop')
     }
     if (!open) {
       setOpen(true)
     }
   }
-  if (state === "openResult" && !open) {
+  if (state === 'openResult' && !open) {
     setOpen(true)
   }
-  if (state === "openResult" && open) {
+  if (state === 'openResult' && open) {
     let currentId = cycleId
     setTimeout(() => {
-      if (state === "openResult" && currentId === cycleId) {
-        setState("dormant")
+      if (state === 'openResult' && currentId === cycleId) {
+        setState('dormant')
         cycleId++
         setOpen(false)
       }
@@ -100,11 +99,11 @@ const OpenInCytoscapeButton = props => {
   }
 
   const handleClose = (event, reason) => {
-    console.log("click")
-    if (state === "openLoading") {
-      setState("closeLoading")
-    } else if (state === "openResult") {
-      setState("dormant")
+    console.log('click')
+    if (state === 'openLoading') {
+      setState('closeLoading')
+    } else if (state === 'openResult') {
+      setState('dormant')
       cycleId++
     }
     setOpen(false)
@@ -138,8 +137,8 @@ const OpenInCytoscapeButton = props => {
         message={message}
         setMessage={setMessage}
         autoHideDuration={null}
-        horizontal={"right"}
-        vertical={"bottom"}
+        horizontal={'right'}
+        vertical={'bottom'}
         handleClose={handleClose}
       />
     </React.Fragment>

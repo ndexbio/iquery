@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react"
-import { withStyles } from "@material-ui/core/styles"
-import Tabs from "@material-ui/core/Tabs"
-import HoverTab from "./HoverTab"
-import Empty from "./Empty"
-import TabContent from "./TabContent"
+import React, { useState, useEffect } from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import Tabs from '@material-ui/core/Tabs'
+import HoverTab from './HoverTab'
+import Empty from './Empty'
+import TabContent from './TabContent'
 
 // Conversion table from tab ID to human-readable labels
 const TAB_LABELS = {
   enrichment: {
-    label: "Pathway Enrichment"
+    label: 'Pathway Enrichment'
   },
-  "interactome-ppi": {
-    label: "Protein Interactions"
+  'interactome-ppi': {
+    label: 'Protein Interactions'
   },
-  "interactome-association": {
-    label: "Gene Association"
+  'interactome-association': {
+    label: 'Gene Association'
   }
 }
 
-const backgroundColor = "rgb(235, 235, 235)"
+const backgroundColor = 'rgb(235, 235, 235)'
 
 const styles = theme => ({
   tabs: {},
@@ -55,7 +55,7 @@ const Results = props => {
     const searchResults = props.search.searchResults
     if (searchResults !== undefined && searchResults !== null) {
       const sourceName = getSourceName(sources, newValue)
-      console.log("* Tab change:", jobId, sourceName)
+      console.log('* Tab change:', jobId, sourceName)
       props.uiStateActions.setSelectedSource(sourceName)
       props.history.push(`/${jobId}/${sourceName}`)
     }
