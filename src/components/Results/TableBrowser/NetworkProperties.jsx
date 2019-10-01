@@ -92,20 +92,25 @@ const NetworkProperties = props => {
         leftDisplayItems.splice(1, 0, newTitle)
         attributes.push({
           title: newTitle,
-          content: content, //TODO
+          content: content,
           displayed: false
         })
       } else if (title === 'Organism') {
-        const [latin, english] = content.split('(')
-        let newContent
-        if (english == null) {
-          newContent = '<em>' + latin.trim() + '</em>'
-        } else {
-          newContent = '<em>' + latin.trim() + '</em>' + ' (' + english
+        const latinName = 'Homo sapiens'
+        const latinIndex = content
+          .toLowerCase()
+          .indexOf(latinName.toLowerCase())
+        if (latinIndex != -1) {
+          content =
+            content.substring(0, latinIndex) +
+            '<em>' +
+            latinName +
+            '</em>' +
+            content.substring(latinIndex + latinName.length)
         }
         attributes.push({
           title: 'Organism',
-          content: newContent,
+          content: content,
           displayed: false
         })
       } else if (title === 'GO hierarchy') {
