@@ -1,22 +1,22 @@
-import React from "react"
-import Button from "@material-ui/core/Button"
-import { withStyles } from "@material-ui/core"
-import Tooltip from "@material-ui/core/Tooltip"
-import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser"
+import React from 'react'
+import Button from '@material-ui/core/Button'
+import { withStyles } from '@material-ui/core'
+import Tooltip from '@material-ui/core/Tooltip'
+import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser'
 
-import { SERVICE_SERVER_URL } from "../../../api/apiConstants"
+import { SERVICE_SERVER_URL } from '../../../api/apiConstants'
 
 const styles = theme => ({
   buttonIcon: {
     padding: 0,
     margin: 0,
-    paddingBottom: "0.1em"
+    paddingBottom: '0.1em'
   },
   button: {
-    height: "3em",
-    width: "4.3em",
-    minWidth: "4.3em",
-    marginLeft: "0.5em"
+    height: '3em',
+    width: '4.3em',
+    minWidth: '4.3em',
+    marginLeft: '0.5em'
   }
 })
 
@@ -34,12 +34,12 @@ const OpenOriginalNetworkButton = props => {
 
   const BootstrapButton = withStyles({
     root: {
-      width: "4.3em",
-      borderColor: "#212121",
-      color: "#212121",
-      "&:active": {
-        borderColor: "#212121",
-        color: "#212121"
+      width: '4.3em',
+      borderColor: '#212121',
+      color: '#212121',
+      '&:active': {
+        borderColor: '#212121',
+        color: '#212121'
       }
     }
   })(Button)
@@ -58,7 +58,7 @@ const OpenOriginalNetworkButton = props => {
           onClick={() => handleOpen(props.network.uuid)}
         >
           <OpenInBrowserIcon
-            color={disabled ? "disabled" : "inherit"}
+            color={disabled ? 'disabled' : 'inherit'}
             fontSize="large"
             className={classes.buttonIcon}
           />
@@ -69,12 +69,12 @@ const OpenOriginalNetworkButton = props => {
 }
 
 const handleOpen = uuid => {
-  const url = SERVICE_SERVER_URL + "#/network/" + uuid
+  const url = SERVICE_SERVER_URL + '#/network/' + uuid
   console.log(SERVICE_SERVER_URL)
   console.log(url)
 
-  console.log("Opening original network entry:", url)
-  window.open(url, "_blank")
+  console.log('Opening original network entry:', url)
+  window.open(url, '_blank')
 }
 
 export default withStyles(styles)(OpenOriginalNetworkButton)

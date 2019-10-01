@@ -1,31 +1,31 @@
-import React from "react"
-import Tabs from "@material-ui/core/Tabs"
-import HoverTab from "../HoverTab"
-import { makeStyles, withStyles } from "@material-ui/styles"
+import React from 'react'
+import Tabs from '@material-ui/core/Tabs'
+import HoverTab from '../HoverTab'
+import { makeStyles, withStyles } from '@material-ui/styles'
 
-import { findAttributes } from "./attribute-util"
+import { findAttributes } from './attribute-util'
 
-import NetworkProperties from "./NetworkProperties"
-import MemoNodeProperties from "./NodeProperties"
-import MemoEdgeProperties from "./EdgeProperties"
+import NetworkProperties from './NetworkProperties'
+import MemoNodeProperties from './NodeProperties'
+import MemoEdgeProperties from './EdgeProperties'
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: "0.2em",
-    backgroundColor: "#FFFFFF",
-    overflow: "auto"
+    padding: '0.2em',
+    backgroundColor: '#FFFFFF',
+    overflow: 'auto'
   },
   list: {},
   subtitle: {
-    marginLeft: "1em",
-    marginTop: "0.5em"
+    marginLeft: '1em',
+    marginTop: '0.5em'
   },
   root: {
     minHeight: 0
   }
 }))
 
-const backgroundColor = "rgb(220, 220, 220)"
+const backgroundColor = 'rgb(220, 220, 220)'
 
 const TabContent = props => {
   const { value } = props
@@ -34,11 +34,11 @@ const TabContent = props => {
   let context = {}
   let networkAttr = findAttributes(
     props.network.originalCX,
-    "networkAttributes"
+    'networkAttributes'
   )
   if (networkAttr != null) {
     for (let i = 0; i < networkAttr.length; i++) {
-      if (networkAttr[i].n === "@context") {
+      if (networkAttr[i].n === '@context') {
         context = JSON.parse(networkAttr[i].v)
       }
     }
@@ -74,31 +74,47 @@ const TabContent = props => {
     //Find aliasList
     if (nodeAttributes != null) {
       for (let i = 0; i < nodeAttributes.length; i++) {
-        if (nodeAttributes[i].n = "alias" && nodeAttributes[i].d === "list_of_string") {
-          const geneName = nodeList.filter(node => (node["@id"] === nodeAttributes[i].po))[0].n
+        if (
+          (nodeAttributes[i].n =
+            'alias' && nodeAttributes[i].d === 'list_of_string')
+        ) {
+          const geneName = nodeList.filter(
+            node => node['@id'] === nodeAttributes[i].po
+          )[0].n
           if (geneName != null) {
             if (aliasList[geneName] == null) {
               aliasList[geneName] = nodeAttributes[i].v
             } else {
-              aliasList[geneName] = aliasList[geneName].concat(nodeAttributes[i].v)
+              aliasList[geneName] = aliasList[geneName].concat(
+                nodeAttributes[i].v
+              )
             }
           }
         }
       }
     }
-  }  
+  }
 
   if (value === 0) {
     return <NetworkProperties context={context} {...props} />
   } else if (value === 1) {
-    return <MemoNodeProperties context={context} represents={represents} aliasList={aliasList} {...props} />
+    return (
+      <MemoNodeProperties
+        context={context}
+        represents={represents}
+        aliasList={aliasList}
+        {...props}
+      />
+    )
   } else {
-    return <MemoEdgeProperties context={context} nodeList={nodeList} {...props} />
+    return (
+      <MemoEdgeProperties context={context} nodeList={nodeList} {...props} />
+    )
   }
 }
 
 const DISABLED_STYLE = {
-  width: "100%"
+  width: '100%'
 }
 
 const TableBrowserPanel = props => {
@@ -120,12 +136,22 @@ const TableBrowserPanel = props => {
       <Tabs value={value} onChange={handleChange} className={classes.root}>
         <HoverTab
           className={classes.root}
-          key={"network-tab"}
-          label={"Network"}
+          key={'network-tab'}
+          label={'Network'}
           backgroundColor={backgroundColor}
         />
-        <HoverTab className={classes.root} key={"nodes-tab"} label={"Nodes"} backgroundColor={backgroundColor}/>
-        <HoverTab className={classes.root} key={"edges-tab"} label={"Edges"} backgroundColor={backgroundColor}/>
+        <HoverTab
+          className={classes.root}
+          key={'nodes-tab'}
+          label={'Nodes'}
+          backgroundColor={backgroundColor}
+        />
+        <HoverTab
+          className={classes.root}
+          key={'edges-tab'}
+          label={'Edges'}
+          backgroundColor={backgroundColor}
+        />
       </Tabs>
       <TabContent value={value} {...props} />
     </div>
@@ -133,4 +159,3 @@ const TableBrowserPanel = props => {
 }
 
 export default TableBrowserPanel
-

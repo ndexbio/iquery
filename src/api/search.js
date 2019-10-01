@@ -1,4 +1,4 @@
-import { METHOD_GET, METHOD_POST, BASE_URL } from "./apiConstants"
+import { METHOD_GET, METHOD_POST, BASE_URL } from './apiConstants'
 
 /**
  * Check the status of the services.
@@ -6,14 +6,14 @@ import { METHOD_GET, METHOD_POST, BASE_URL } from "./apiConstants"
  * @returns {Promise<Response | never | {error: any}>}
  */
 const getSource = () => {
-  const searchUrl = BASE_URL + "source"
+  const searchUrl = BASE_URL + 'source'
   return fetch(searchUrl, {
     method: METHOD_GET,
-    mode: "cors"
+    mode: 'cors'
   })
     .then(response => {
       if (!response.ok) {
-        throw Error("Failed to fetch source list:" + response.status)
+        throw Error('Failed to fetch source list:' + response.status)
       }
       return response
     })
@@ -21,14 +21,14 @@ const getSource = () => {
 }
 
 const checkStatus = jobId => {
-  const checkJobStatusUrl = BASE_URL + jobId + "/status"
+  const checkJobStatusUrl = BASE_URL + jobId + '/status'
 
   return fetch(checkJobStatusUrl, {
     method: METHOD_GET
   })
     .then(response => {
       if (!response.ok) {
-        throw Error("Failed to fetch source list:" + response.status)
+        throw Error('Failed to fetch source list:' + response.status)
       }
       return response
     })
@@ -41,7 +41,7 @@ const getResult = (jobId, sourceName = null) => {
   const resultUrl = new URL(url)
 
   if (sourceName !== null) {
-    resultUrl.searchParams.append("source", sourceName)
+    resultUrl.searchParams.append('source', sourceName)
   }
 
   return fetch(resultUrl, {
@@ -49,7 +49,7 @@ const getResult = (jobId, sourceName = null) => {
   })
     .then(response => {
       if (!response.ok) {
-        throw Error("Failed to fetch search result:" + response.status)
+        throw Error('Failed to fetch search result:' + response.status)
       }
       return response
     })
@@ -65,7 +65,7 @@ const postQuery = (geneList, sourceList) => {
   }
 
   const header = new Headers({
-    "Content-Type": "application/json"
+    'Content-Type': 'application/json'
   })
 
   return fetch(searchUrl, {
@@ -75,7 +75,7 @@ const postQuery = (geneList, sourceList) => {
   })
     .then(response => {
       if (!response.ok) {
-        throw Error("Failed to send query:" + response.status)
+        throw Error('Failed to send query:' + response.status)
       }
       return response
     })

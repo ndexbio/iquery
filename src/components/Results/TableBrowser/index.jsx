@@ -1,9 +1,9 @@
-import React from "react"
+import React from 'react'
 
-import MemoTableBrowserPanel from "./TableBrowserPanel"
+import MemoTableBrowserPanel from './TableBrowserPanel'
 
 const DISABLED_STYLE = {
-  width: "100%"
+  width: '100%'
 }
 
 /**
@@ -23,7 +23,7 @@ const TableBrowser = props => {
   }
 
   return (
-    <div className={"table-browser"}>
+    <div className={'table-browser'}>
       <MemoTableBrowserPanel {...props} />
     </div>
   )

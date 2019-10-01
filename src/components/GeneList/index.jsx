@@ -1,42 +1,42 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { withStyles } from "@material-ui/styles"
-import Avatar from "@material-ui/core/Avatar"
-import Chip from "@material-ui/core/Chip"
-import CheckIcon from "@material-ui/icons/Check"
-import List from "@material-ui/core/List"
-import ListItem from "@material-ui/core/ListItem"
-import MuiToggleButton from "@material-ui/lab/ToggleButton"
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/styles'
+import Avatar from '@material-ui/core/Avatar'
+import Chip from '@material-ui/core/Chip'
+import CheckIcon from '@material-ui/icons/Check'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import MuiToggleButton from '@material-ui/lab/ToggleButton'
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 
 const buttonStyle = {
-  padding: "0",
-  borderRadius: "20px",
-  height: "32px",
-  borderWidth: "0",
-  backgroundColor: "#FFFFFF"
+  padding: '0',
+  borderRadius: '20px',
+  height: '32px',
+  borderWidth: '0',
+  backgroundColor: '#FFFFFF'
 }
 
 const selectedButtonStyle = {
-  padding: "0",
-  borderRadius: "20px",
-  height: "32px",
-  borderWidth: "0",
-  backgroundColor: "rgb(252, 235, 242)"
+  padding: '0',
+  borderRadius: '20px',
+  height: '32px',
+  borderWidth: '0',
+  backgroundColor: 'rgb(252, 235, 242)'
 }
 
 const selectedChipStyle = {
-  margin: "0",
-  borderRadius: "20px"
+  margin: '0',
+  borderRadius: '20px'
 }
 
 const toggleButtonGroupStyle = {
-  backgroundColor: "transparent"
+  backgroundColor: 'transparent'
 }
 
 const ToggleButton = withStyles({
   label: {
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent'
   }
 })(MuiToggleButton)
 
@@ -108,17 +108,17 @@ const GeneList = props => {
 }
 
 const getChip = (value, isValid, props, hitSets) => {
-  let color = "default"
+  let color = 'default'
   let found = false
   if (hitSets.has(value.symbol)) {
-    color = "secondary"
+    color = 'secondary'
     found = true
   }
 
   if (isValid) {
     return (
       <Chip
-        avatar={<Avatar>{found ? <CheckIcon /> : "-"}</Avatar>}
+        avatar={<Avatar>{found ? <CheckIcon /> : '-'}</Avatar>}
         label={value.symbol}
         variant="outlined"
         color={color}
@@ -132,7 +132,7 @@ const getChip = (value, isValid, props, hitSets) => {
     return (
       <Chip
         avatar={<Avatar>G</Avatar>}
-        label={"INVALID: " + value}
+        label={'INVALID: ' + value}
         key={value}
         clickable={true}
       />

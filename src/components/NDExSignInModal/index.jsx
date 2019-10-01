@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 import {
   DialogContent,
@@ -11,26 +11,26 @@ import {
   FormControl,
   Typography,
   Avatar
-} from "@material-ui/core"
-import GoogleLogin from "react-google-login"
+} from '@material-ui/core'
+import GoogleLogin from 'react-google-login'
 
-import GoogleLogo from "./assets/images/google-logo.svg"
-import GoogleLogoDisabled from "./assets/images/google-logo-disabled.svg"
+import GoogleLogo from './assets/images/google-logo.svg'
+import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 
-import NDExSave from "../NDExSave"
+import NDExSave from '../NDExSave'
 
-import "./style.css"
+import './style.css'
 
-import config from "./assets/config"
+import config from './assets/config'
 
 class GoogleSignOn extends React.Component {
   onFailure = err => {
     const message =
       (err.details &&
         err.details.startsWith(
-          "Not a valid origin for the client: http://localhost:"
+          'Not a valid origin for the client: http://localhost:'
         )) ||
-      (err.error && err["error"]) ||
+      (err.error && err['error']) ||
       JSON.stringify(err)
     this.props.onError(message, false)
   }
@@ -39,12 +39,12 @@ class GoogleSignOn extends React.Component {
     const { googleSSO, onSuccess } = this.props
 
     const clsName = googleSSO
-      ? "google-sign-in-button"
-      : "google-sign-in-button googleButtonDisabled"
+      ? 'google-sign-in-button'
+      : 'google-sign-in-button googleButtonDisabled'
     const title = googleSSO
-      ? "Sign in with your Google account"
+      ? 'Sign in with your Google account'
       : "Google Sign In is currently unavailable because the 'BLOCK THIRD-PARTY COOKIES' option is enabled in your web browser." +
-        "To use the Google Sign In feature you can do one of two things:" +
+        'To use the Google Sign In feature you can do one of two things:' +
         "1. Add 'accounts.google.com' to the list of websites allowed to write / read THIRD - PARTY COOKIES, or" +
         "2. Disable the 'BLOCK THIRD-PARTY COOKIES' option in your browser settings."
     const logo = googleSSO ? GoogleLogo : GoogleLogoDisabled
@@ -80,7 +80,7 @@ class CredentialsSignOn extends React.Component {
   render() {
     const { error, handleCredentialsSignOn } = this.props
 
-    const button_cls = error ? "btn btn-primary disabled" : "btn btn-primary"
+    const button_cls = error ? 'btn btn-primary disabled' : 'btn btn-primary'
 
     return (
       <form name="basicAuthSignIn" onSubmit={handleCredentialsSignOn}>
@@ -300,6 +300,4 @@ class NDExSignInModal extends React.Component {
   }
 }
 
-export default (NDExSignInModal)
-
-
+export default NDExSignInModal

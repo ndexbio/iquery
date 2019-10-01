@@ -1,7 +1,7 @@
-import { all, call, put, takeLatest } from "redux-saga/effects"
-import * as api from "../api/ndex"
-import * as myGeneApi from "../api/mygene"
-import * as cySearchApi from "../api/search"
+import { all, call, put, takeLatest } from 'redux-saga/effects'
+import * as api from '../api/ndex'
+import * as myGeneApi from '../api/mygene'
+import * as cySearchApi from '../api/search'
 
 import {
   SEARCH_STARTED,
@@ -11,19 +11,19 @@ import {
   FETCH_RESULT_SUCCEEDED,
   FETCH_RESULT_FAILED,
   SET_SEARCH_RESULT
-} from "../actions/search"
+} from '../actions/search'
 
 import {
   FIND_SOURCE_STARTED,
   FIND_SOURCE_FAILED,
   FIND_SOURCE_SUCCEEDED
-} from "../actions/source"
+} from '../actions/source'
 
 import {
   NETWORK_FETCH_STARTED,
   NETWORK_FETCH_SUCCEEDED,
   NETWORK_FETCH_FAILED
-} from "../actions/network"
+} from '../actions/network'
 
 const API_CALL_INTERVAL = 500
 
@@ -51,10 +51,10 @@ function* watchSearch(action) {
     sourceNames.length === 0
   ) {
     const sources = yield call(cySearchApi.getSource, null)
-    const sourceJson = yield call([sources, "json"])
+    const sourceJson = yield call([sources, 'json'])
     const sourceList = sourceJson.results
     sourceNames = sourceList.map(source => source.name)
-    sourceNames = sourceNames.filter(name => name !== "keyword")
+    sourceNames = sourceNames.filter(name => name !== 'keyword')
   }
   const geneListString = geneList.join()
 
@@ -65,9 +65,9 @@ function* watchSearch(action) {
       call(cySearchApi.postQuery, geneList, sourceNames)
     ])
 
-    const geneJson = yield call([geneRes, "json"])
-    const resultLocation = searchRes.headers.get("Location")
-    const parts = resultLocation.split("/")
+    const geneJson = yield call([geneRes, 'json'])
+    const resultLocation = searchRes.headers.get('Location')
+    const parts = resultLocation.split('/')
     const jobId = parts[parts.length - 1]
     const filtered = filterGenes(geneJson)
 
@@ -81,11 +81,11 @@ function* watchSearch(action) {
       }
     })
   } catch (e) {
-    console.warn("NDEx search error:", e)
+    console.warn('NDEx search error:', e)
     yield put({
       type: SEARCH_FAILED,
       payload: {
-        message: "NDEx network search error",
+        message: 'NDEx network search error',
         query: geneListString,
         error: e.message
       }
@@ -106,7 +106,7 @@ function* watchSearchResult(action) {
     while (true) {
       // Check overall status
       const statusRes = yield call(cySearchApi.checkStatus, jobId)
-      const statusJson = yield call([statusRes, "json"])
+      const statusJson = yield call([statusRes, 'json'])
 
       const status = statusJson.sources
       let idx = status.length
@@ -116,9 +116,9 @@ function* watchSearchResult(action) {
         const { progress, sourceName } = src
         if (progress === 100) {
           const resultRes = yield call(cySearchApi.getResult, jobId, sourceName)
-          const json = yield call([resultRes, "json"])
+          const json = yield call([resultRes, 'json'])
 
-          if(finishedSourceNames.has(sourceName) === false) {
+          if (finishedSourceNames.has(sourceName) === false) {
             // Need to add this new result.
             resultList.push(json.sources[0])
             finishedSourceNames.add(sourceName)
@@ -143,7 +143,7 @@ function* watchSearchResult(action) {
         }
       }
       if (finishCount === status.length) {
-        console.log("!! Search & fetch finished:", finishCount, resultList)
+        console.log('!! Search & fetch finished:', finishCount, resultList)
         break
       }
 
@@ -156,11 +156,11 @@ function* watchSearchResult(action) {
       payload: {}
     })
   } catch (e) {
-    console.warn("NDEx search error:", e)
+    console.warn('NDEx search error:', e)
     yield put({
       type: FETCH_RESULT_FAILED,
       payload: {
-        message: "Failed to fetch search result",
+        message: 'Failed to fetch search result',
         jobId,
         error: e.message
       }
@@ -176,7 +176,7 @@ function* fetchNetwork(action) {
     const networkUUID = params.networkUUID
 
     const cx = yield call(api.fetchNetwork, id, sourceUUID, networkUUID)
-    const json = yield call([cx, "json"])
+    const json = yield call([cx, 'json'])
 
     yield put({ type: NETWORK_FETCH_SUCCEEDED, cx: json })
   } catch (error) {
@@ -187,7 +187,7 @@ function* fetchNetwork(action) {
 function* fetchSource(action) {
   try {
     const sources = yield call(cySearchApi.getSource, null)
-    const json = yield call([sources, "json"])
+    const json = yield call([sources, 'json'])
     const orderedSources = json.results
     yield put({ type: FIND_SOURCE_SUCCEEDED, sources: orderedSources })
   } catch (error) {

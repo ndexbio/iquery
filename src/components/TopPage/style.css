@@ -21,8 +21,17 @@
   flex-direction: column;
 }
 
-.inlineFlex {
-  display: inline-flex;
+.title-panel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-title {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 2.8em;
+  color: #333333;
 }
 
 .padding {
@@ -35,11 +44,13 @@
 }
 
 .start-title {
-  display: inline-block;
+  width: 70vmax;
+  min-width: 30em;
+  max-width: 60em;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2em;
-  align: center;
 }
 
 .start-title-text {
@@ -57,11 +68,32 @@
   height: 4em;
 }
 
+
+/*
+    For SearchTextBox
+ */
+
+.search-text-panel {
+  padding: 2em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .search-text-box {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0.3em;
+  width: 100%;
+}
+
+.query-example-panel {
+  width: 100%;
+  padding-top: 1em;
+
 }
 
 .input-container {
@@ -130,4 +162,43 @@ footer {
   height: 2em;
   padding-left: 1em;
   cursor: pointer;
+}
+
+a {
+  font-weight: bold;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.example-link {
+  color: #00A1DE;
+}
+.example-text {
+  padding-right: 1.2em;
+
+}
+
+.example-text:hover {
+  cursor: pointer;
+}
+
+.query-examples {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-text-caption {
+  padding-top: 7em;
+}
+
+.search-text-note {
+  width: 85%;
+}
+
+.description-panel {
+  width: 90%;
+  padding-bottom: 3em;
 }

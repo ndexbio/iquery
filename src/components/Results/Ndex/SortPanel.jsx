@@ -1,51 +1,51 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
 
-import { withStyles } from "@material-ui/styles"
-import Typography from "@material-ui/core/Typography"
-import FormControl from "@material-ui/core/FormControl"
-import Select from "@material-ui/core/Select"
-import MenuItem from "@material-ui/core/MenuItem"
-import InputBase from "@material-ui/core/InputBase"
+import { withStyles } from '@material-ui/styles'
+import Typography from '@material-ui/core/Typography'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import InputBase from '@material-ui/core/InputBase'
 
 const BootstrapInput = withStyles(theme => ({
   root: {
-    "label + &": {
-      marginTop: "0",
-    },
+    'label + &': {
+      marginTop: '0'
+    }
   },
   input: {
     borderRadius: 4,
-    position: "relative",
-    backgroundColor: "#FFFFFF",
-    border: "1px solid #ced4da",
-    textColor: "#757575",
-    padding: "5px 26px 5px 12px",
-    "&:focus": {
+    position: 'relative',
+    backgroundColor: '#FFFFFF',
+    border: '1px solid #ced4da',
+    textColor: '#757575',
+    padding: '5px 26px 5px 12px',
+    '&:focus': {
       borderRadius: 4,
-      backgroundColor: "#FFFFFF"
-    },
-  },
+      backgroundColor: '#FFFFFF'
+    }
+  }
 }))(InputBase)
 
 const formStyle = {
-  position: "relative",
-  left: "11px",
-  marginTop: "8px",
-  marginBottom: "8px"
+  position: 'relative',
+  left: '11px',
+  marginTop: '8px',
+  marginBottom: '8px'
 }
 
 const divStyle = {
-  paddingLeft: "16px",
-  borderBottom: "1px solid rgba(239, 239, 239, 1)",
+  paddingLeft: '16px',
+  borderBottom: '1px solid rgba(239, 239, 239, 1)'
 }
 
 const typeStyle = {
-  position: "relative",
-  top: "14.5px"
+  position: 'relative',
+  top: '14.5px'
 }
 
 const selectStyle = {
-  color: "secondary"
+  color: 'secondary'
 }
 
 const SortPanel = props => {
@@ -56,15 +56,15 @@ const SortPanel = props => {
     props.uiStateActions.setSortBy(event.target.value)
     setSortBy(event.target.value)
   }
-  
-  if (props.uiState.selectedSource === "enrichment") {
+
+  if (props.uiState.selectedSource === 'enrichment') {
     return (
       <div style={divStyle}>
-        <Typography 
-          variant='body2'
-          display='inline'
+        <Typography
+          variant="body2"
+          display="inline"
           style={typeStyle}
-          color='textSecondary'
+          color="textSecondary"
         >
           Sort by
         </Typography>
@@ -93,5 +93,4 @@ const SortPanel = props => {
   }
 }
 
-export default (SortPanel)
-            
+export default SortPanel

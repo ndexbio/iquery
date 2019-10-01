@@ -1,5 +1,5 @@
-import { call, put, takeLatest, select } from "redux-saga/effects"
-import * as ndexSave from "../api/ndexSave"
+import { call, put, takeLatest, select } from 'redux-saga/effects'
+import * as ndexSave from '../api/ndexSave'
 
 import {
   SET_NDEX_MODAL_OPEN,
@@ -9,7 +9,7 @@ import {
   SAVE_TO_NDEX,
   SET_ERROR_MESSAGE,
   SET_NETWORK_URL
-} from "../actions/ndexSave"
+} from '../actions/ndexSave'
 
 export default function* ndexSaveSaga() {
   yield takeLatest(GOOGLE_SIGN_ON, watchGoogleSignOn)
@@ -25,12 +25,12 @@ export default function* ndexSaveSaga() {
  */
 function* watchGoogleSignOn(action) {
   const resp = action.payload
-  const token = resp.tokenObj.token_type + " " + resp.tokenObj.id_token
+  const token = resp.tokenObj.token_type + ' ' + resp.tokenObj.id_token
   const profile = {
     name: resp.profileObj.name,
     image: resp.profileObj.imageUrl,
     authorization: {
-      type: "google",
+      type: 'google',
       token
     }
   }
@@ -47,9 +47,9 @@ function* watchGoogleSignOn(action) {
     })
   } catch (error) {
     const message =
-      error.response.data.message || "Failed to verify account. " + error
+      error.response.data.message || 'Failed to verify account. ' + error
     if (
-      message.startsWith("User with email") &&
+      message.startsWith('User with email') &&
       message.endsWith("doesn't exist.")
     ) {
       /*
@@ -119,7 +119,7 @@ function* watchCredentialsSignOn(action) {
   const user = window.basicAuthSignIn.accountName.value
   const pwd = window.basicAuthSignIn.password.value
 
-  const auth = "Basic " + window.btoa(user + ":" + pwd)
+  const auth = 'Basic ' + window.btoa(user + ':' + pwd)
   const headers = new Headers({
     Authorization: auth
   })
@@ -128,7 +128,7 @@ function* watchCredentialsSignOn(action) {
     const resp = yield call(ndexSave.ndexValidation, headers)
     //console.log('resp', resp)
 
-    const responseJson = yield call([resp, "json"])
+    const responseJson = yield call([resp, 'json'])
 
     /*
     console.log('responseJson', responseJson)
@@ -146,7 +146,7 @@ function* watchCredentialsSignOn(action) {
         name: responseJson.firstName,
         image: responseJson.image,
         authorization: {
-          type: "ndex",
+          type: 'ndex',
           token: auth
         }
       }
@@ -160,7 +160,7 @@ function* watchCredentialsSignOn(action) {
     console.log(err)
     yield put({
       type: SET_ERROR_MESSAGE,
-      payload: "Unknown error"
+      payload: 'Unknown error'
     })
     //this.setState({ error: 'Unknown error' })
   }
@@ -200,19 +200,19 @@ function* watchSaveToNDEx(action) {
   const cx = action.payload.cx
 
   const headers = new Headers({
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     Authorization: token
   })
 
   const resp = yield call(ndexSave.saveToNDEx, cx, headers)
-  console.log("resp", resp)
-  console.log("resp.body" + resp.body)
+  console.log('resp', resp)
+  console.log('resp.body' + resp.body)
 
-  const responseText = yield call([resp, "text"])
+  const responseText = yield call([resp, 'text'])
 
-  const networkURL = responseText.replace("/v2/", "/#/")
+  const networkURL = responseText.replace('/v2/', '/#/')
 
-  console.log("networkURL", networkURL)
+  console.log('networkURL', networkURL)
 
   yield put({
     type: SET_NETWORK_URL,

@@ -1,10 +1,10 @@
-import React, { useEffect } from "react"
-import "./style.css"
+import React, { useEffect } from 'react'
+import './style.css'
 
-import InputPanel from "../InputPanel"
-import Results from "../Results"
-import AppShell from "../AppShell"
-import LoadingPanel from "../LoadingPanel"
+import InputPanel from '../InputPanel'
+import Results from '../Results'
+import AppShell from '../AppShell'
+import LoadingPanel from '../LoadingPanel'
 
 const HomePanel = props => {
   useEffect(() => {
@@ -20,7 +20,7 @@ const HomePanel = props => {
   const onBackButtonEvent = e => {
     e.preventDefault()
     props.searchActions.clearAll()
-    props.history.push("/")
+    props.history.push('/')
   }
 
   const isFetching = props.search.isFetching
