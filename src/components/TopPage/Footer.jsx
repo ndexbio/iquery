@@ -1,12 +1,12 @@
-import React from "react"
-import "./style.css"
+import React from 'react'
+import './style.css'
 
 // SVG images for links
-import cyLogo from "../../assets/images/cytoscape-logo.svg"
-import ndexLogo from "../../assets/images/ndex-logo.svg"
-import ucsdLogo from "../../assets/images/ucsd-logo.svg"
+import cyLogo from '../../assets/images/cytoscape-logo.svg'
+import ndexLogo from '../../assets/images/ndex-logo.svg'
+import ucsdLogo from '../../assets/images/ucsd-logo.svg'
 
-import Typography from "@material-ui/core/Typography"
+import Typography from '@material-ui/core/Typography'
 
 const Footer = props => (
   <footer className="footer-container">
@@ -34,13 +34,13 @@ const Footer = props => (
   </footer>
 )
 
-const CY_URL = "https://cytoscape.org/"
-const NDEX_URL = "https://www.ndexbio.org/"
+const CY_URL = 'https://cytoscape.org/'
+const NDEX_URL = 'https://www.ndexbio.org/'
 const UCSD_URL =
-  "https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx"
+  'https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx'
 
 const openLink = url => {
-  window.open(url, "_blank")
+  window.open(url, '_blank')
 }
 
 export default Footer

@@ -1,7 +1,7 @@
-import React from "react"
+import React from 'react'
 
-import AppShell from "../AppShell"
-import StartPanel from "./StartPanel"
+import AppShell from '../AppShell'
+import StartPanel from './StartPanel'
 
 const TopPage = props => (
   <AppShell {...props}>
