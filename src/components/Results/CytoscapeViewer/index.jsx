@@ -200,19 +200,21 @@ const CytoscapeViewer = props => {
     }
 
     //Layout
-    const isLayoutAvailable = cyjs.isLayout
-    if (isLayoutAvailable) {
-      props.networkActions.setLayouts(['Preset', 'Cose', 'Concentric'])
-      props.networkActions.setLayout('Preset')
-      setLayout(PRESET_LAYOUT)
-    } else {
-      props.networkActions.setLayouts(['Cose', 'Concentric'])
-      if (cyjs.elements.length < 500) {
-        props.networkActions.setLayout('Cose')
-        setLayout(COSE_LAYOUT)
+    if (cyjs != null) {
+      const isLayoutAvailable = cyjs.isLayout
+      if (isLayoutAvailable) {
+        props.networkActions.setLayouts(['Preset', 'Cose', 'Concentric'])
+        props.networkActions.setLayout('Preset')
+        setLayout(PRESET_LAYOUT)
       } else {
-        props.networkActions.setLayout('Concentric')
-        setLayout(CONCENTRIC_LAYOUT)
+        props.networkActions.setLayouts(['Cose', 'Concentric'])
+        if (cyjs.elements.length < 500) {
+          props.networkActions.setLayout('Cose')
+          setLayout(COSE_LAYOUT)
+        } else {
+          props.networkActions.setLayout('Concentric')
+          setLayout(CONCENTRIC_LAYOUT)
+        }
       }
     }
 

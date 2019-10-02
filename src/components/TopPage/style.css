@@ -188,6 +188,7 @@ a:link {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #00A1DE;
 }
 
 .search-text-caption {

@@ -31,6 +31,22 @@ const infoStyle = {
   padding: '0'
 }
 
+const edgeStyle = {
+  display: 'block',
+  height: '22px',
+  margin: '0',
+  padding: '0',
+  position: 'relative',
+  top: '22px'
+}
+
+const tableStyle = {
+  tableLayout: 'fixed',
+  wordBreak: 'breakWord',
+  borderCollapse: 'collapse',
+  borderSpacing: '0'
+}
+
 /**
  * Top page for the application
  *
@@ -127,9 +143,9 @@ const Ndex = props => {
             display="inline"
             color={
               props.uiState.selectedSource === 'enrichment' &&
-              props.uiState.sortBy !== 'Overlap'
-                ? 'textSecondary'
-                : 'textPrimary'
+              props.uiState.sortBy === 'Overlap'
+                ? 'textPrimary'
+                : 'textSecondary'
             }
           >
             genes
@@ -144,6 +160,8 @@ const Ndex = props => {
       </ListItemIcon>
     )
 
+    const newline = <Typography>{'\n'}</Typography>
+
     if (props.uiState.selectedSource === 'enrichment') {
       let pVal = details.PValue
       if (pVal !== undefined) {
@@ -155,7 +173,7 @@ const Ndex = props => {
       }
 
       const pv = (
-        <Tooltip title="p-value" placement="left">
+        <Tooltip title="Hypergeometric p-value" placement="left">
           <span style={infoStyle}>
             <Typography
               display="inline"
@@ -187,10 +205,9 @@ const Ndex = props => {
       if (sim !== undefined) {
         sim = sim.toFixed(2)
         similarity = (
-          <Tooltip title="Cosine similarity" placement="left">
+          <Tooltip title="Tf-idf based cosine similarity" placement="left">
             <span style={infoStyle}>
               <Typography
-                style={{}}
                 display="inline"
                 color={
                   props.uiState.sortBy === 'Similarity'
@@ -203,7 +220,6 @@ const Ndex = props => {
               <Typography
                 variant="caption"
                 display="inline"
-                style={{}}
                 color={
                   props.uiState.sortBy === 'Similarity'
                     ? 'textPrimary'
@@ -228,13 +244,20 @@ const Ndex = props => {
       const subtitle = (
         <span style={subtitleStyle}>
           <Typography variant="caption" color="textSecondary">
-            Nodes: {nodes}, Edges: {edges}, Source:{' '}
-            {camelCaseToTitleCase(description.split(':')[0])}
+            <Tooltip title="Number of nodes" placement="bottom">
+              <span>Nodes: {nodes}, </span>
+            </Tooltip>
+            <Tooltip title="Number of edges" placement="bottom">
+              <span>Edges: {edges}, </span>
+            </Tooltip>
+            <Tooltip title="Network source" placement="bottom">
+              <span>
+                Source: {camelCaseToTitleCase(description.split(':')[0])}
+              </span>
+            </Tooltip>
           </Typography>
         </span>
       )
-
-      const newline = <Typography>{'\n'}</Typography>
 
       return (
         <ListItem
@@ -246,14 +269,7 @@ const Ndex = props => {
           }}
           selected={selectedIndex === index}
         >
-          <table
-            style={{
-              tableLayout: 'fixed',
-              wordBreak: 'breakWord',
-              borderCollapse: 'collapse',
-              borderSpacing: '0'
-            }}
-          >
+          <table style={tableStyle}>
             <tbody>
               <tr padding="0">
                 <td align="center" valign="middle" rowSpan="2" padding="0">
@@ -278,54 +294,52 @@ const Ndex = props => {
       )
     } else {
       const node = (
-        <div display="inline">
-          <Typography display="inline" style={{}}>
-            <strong>{nodes}</strong>{' '}
-          </Typography>
-          <Typography
-            variant="caption"
-            display="inline"
-            color="textSecondary"
-            style={{}}
-          >
-            {'nodes '}
-          </Typography>
-        </div>
+        <Tooltip title="Number of nodes in network" placement="bottom">
+          <span style={infoStyle}>
+            <Typography display="inline">
+              <strong>{nodes}</strong>{' '}
+            </Typography>
+            <Typography
+              variant="caption"
+              display="inline"
+              color="textSecondary"
+            >
+              {'nodes '}
+            </Typography>
+          </span>
+        </Tooltip>
       )
 
       const edge = (
-        <div display="inline">
-          <Typography display="inline" style={{}}>
-            <strong>{edges}</strong>{' '}
-          </Typography>
-          <Typography
-            variant="caption"
-            display="inline"
-            color="textSecondary"
-            style={{}}
-          >
-            {'edges'}
-          </Typography>
-        </div>
+        <Tooltip title="Number of edges in network" placement="bottom">
+          <span style={edgeStyle}>
+            <Typography display="inline">
+              <strong>{edges}</strong>{' '}
+            </Typography>
+            <Typography
+              variant="caption"
+              display="inline"
+              color="textSecondary"
+            >
+              {'edges'}
+            </Typography>
+          </span>
+        </Tooltip>
       )
 
       const title = (
-        <React.Fragment>
-          <Typography color="textPrimary" style={titleStyle}>
-            {description}
-          </Typography>
-        </React.Fragment>
+        <Typography color="textPrimary" style={titleStyle}>
+          {description}
+        </Typography>
       )
 
       const subtitle = (
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          style={subtitleStyle}
-        >
-          Parent: {details.parent_network_nodes} nodes,{' '}
-          {details.parent_network_edges} edges
-        </Typography>
+        <span style={subtitleStyle}>
+          <Typography variant="caption" color="textSecondary">
+            Parent: {details.parent_network_nodes} nodes,{' '}
+            {details.parent_network_edges} edges
+          </Typography>
+        </span>
       )
 
       return (
@@ -338,32 +352,23 @@ const Ndex = props => {
           }}
           selected={selectedIndex === index}
         >
-          <table
-            style={{
-              tableLayout: 'fixed',
-              wordBreak: 'break-word'
-            }}
-          >
+          <table style={tableStyle}>
             <tbody>
-              <tr height="50%">
-                <td rowSpan="2" align="center" valign="middle" width="50px">
+              <tr padding="0">
+                <td rowSpan="2" align="center" valign="middle" padding="0">
                   {icon}
                 </td>
-                <td colSpan="2" align="left" valign="bottom" width="150px">
-                  {genes}
-                </td>
-                <td align="left" valign="bottom">
-                  {title}
-                </td>
-              </tr>
-              <tr>
                 <td align="left" valign="baseline" width="75px">
+                  {genes}
+                  {newline}
                   {node}
                 </td>
-                <td align="left" valign="baseline" width="80px">
+                <td align="left" valign="baseline" padding="0" width="80px">
                   {edge}
                 </td>
                 <td align="left" valign="baseline">
+                  {title}
+                  {newline}
                   {subtitle}
                 </td>
               </tr>

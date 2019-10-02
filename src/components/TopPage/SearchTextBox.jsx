@@ -7,7 +7,7 @@ import InputBase from '@material-ui/core/InputBase'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography'
-import { Tooltip } from '@material-ui/core'
+import { Tooltip, Button } from '@material-ui/core'
 import searchLogo from '../../assets/images/search-logo.svg'
 
 import * as examples from './example-genes'
@@ -128,56 +128,96 @@ const SearchTextBox = props => {
         </Typography>
 
         <div className={'query-examples'}>
-          <Tooltip title="Known Hypoxia genes" placement={'bottom'}>
-            <Typography
+          <div>
+            <Tooltip title="Known Hypoxia genes" placement={'bottom'}>
+              <Button
+                className="example-text"
+                color="inherit"
+                onClick={() => handleExample(0)}
+              >
+                Hypoxia
+              </Button>
+              {/*<Typography
               className={'example-text'}
               variant={'button'}
-              color={'primary'}
               onClick={() => handleExample(0)}
             >
               Hypoxia
-            </Typography>
-          </Tooltip>
-          <Tooltip title="Known Adenyl Cyclase genes" placement={'bottom'}>
-            <Typography
+            </Typography>*/}
+            </Tooltip>
+          </div>
+          <div>
+            <Tooltip title="Known Adenyl Cyclase genes" placement={'bottom'}>
+              <Button
+                className="example-text"
+                color="inherit"
+                onClick={() => handleExample(1)}
+              >
+                Adenyl Cyclase
+              </Button>
+              {/*<Typography
               className={'example-text'}
               variant={'button'}
-              color={'primary'}
               onClick={() => handleExample(1)}
             >
               Adenyl Cyclase
-            </Typography>
-          </Tooltip>
-          <Tooltip title="D4DGI description" placement={'bottom'}>
-            <Typography
+            </Typography>*/}
+            </Tooltip>
+          </div>
+          <div>
+            <Tooltip title="D4DGI description" placement={'bottom'}>
+              <Button
+                className="example-text"
+                color="inherit"
+                onClick={() => handleExample(2)}
+              >
+                D4DGI
+              </Button>
+              {/*<Typography
               className={'example-text'}
               variant={'button'}
-              color={'primary'}
               onClick={() => handleExample(2)}
             >
               D4DGI
-            </Typography>
-          </Tooltip>
-          <Tooltip title="Angiotensin description" placement={'bottom'}>
-            <Typography
+            </Typography>*/}
+            </Tooltip>
+          </div>
+          <div>
+            <Tooltip title="Angiotensin description" placement={'bottom'}>
+              <Button
+                className="example-text"
+                color="inherit"
+                onClick={() => handleExample(3)}
+              >
+                Angiotensin
+              </Button>
+              {/*<Typography
               className={'example-text'}
               variant={'button'}
-              color={'primary'}
               onClick={() => handleExample(3)}
             >
               Angiotensin
-            </Typography>
-          </Tooltip>
-          <Tooltip title="Estrogen description" placement={'bottom'}>
-            <Typography
+            </Typography>*/}
+            </Tooltip>
+          </div>
+          <div>
+            <Tooltip title="Estrogen description" placement={'bottom'}>
+              <Button
+                className="example-text"
+                color="inherit"
+                onClick={() => handleExample(4)}
+              >
+                Estrogen
+              </Button>
+              {/*<Typography
               className={'example-text'}
               variant={'button'}
-              color={'primary'}
               onClick={() => handleExample(4)}
             >
               Estrogen
-            </Typography>
-          </Tooltip>
+            </Typography>*/}
+            </Tooltip>
+          </div>
         </div>
       </div>
 
