@@ -10,6 +10,7 @@ import { camelCaseToTitleCase } from '../TableBrowser/camel-case-util'
 
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Typography from '@material-ui/core/Typography'
+import Tooltip from '@material-ui/core/Tooltip'
 import { ListItem } from '@material-ui/core'
 
 const titleStyle = {
@@ -108,31 +109,33 @@ const Ndex = props => {
     } = networkEntry
 
     const genes = (
-      <span style={infoStyle}>
-        <Typography
-          display="inline"
-          color={
-            props.uiState.selectedSource === 'enrichment' &&
-            props.uiState.sortBy !== 'Overlap'
-              ? 'textSecondary'
-              : 'textPrimary'
-          }
-        >
-          <strong>{hitGenes.length}</strong>{' '}
-        </Typography>
-        <Typography
-          variant="caption"
-          display="inline"
-          color={
-            props.uiState.selectedSource === 'enrichment' &&
-            props.uiState.sortBy !== 'Overlap'
-              ? 'textSecondary'
-              : 'textPrimary'
-          }
-        >
-          genes
-        </Typography>
-      </span>
+      <Tooltip title="Gene overlap" placement="left">
+        <span style={infoStyle}>
+          <Typography
+            display="inline"
+            color={
+              props.uiState.selectedSource === 'enrichment' &&
+              props.uiState.sortBy !== 'Overlap'
+                ? 'textSecondary'
+                : 'textPrimary'
+            }
+          >
+            <strong>{hitGenes.length}</strong>{' '}
+          </Typography>
+          <Typography
+            variant="caption"
+            display="inline"
+            color={
+              props.uiState.selectedSource === 'enrichment' &&
+              props.uiState.sortBy !== 'Overlap'
+                ? 'textSecondary'
+                : 'textPrimary'
+            }
+          >
+            genes
+          </Typography>
+        </span>
+      </Tooltip>
     )
 
     const icon = (
@@ -152,63 +155,69 @@ const Ndex = props => {
       }
 
       const pv = (
-        <span style={infoStyle}>
-          <Typography
-            display="inline"
-            color={
-              props.uiState.sortBy === 'p-Value'
-                ? 'textPrimary'
-                : 'textSecondary'
-            }
-          >
-            <strong>{pVal} </strong>
-          </Typography>
-          <Typography
-            variant="caption"
-            display="inline"
-            color={
-              props.uiState.sortBy === 'p-Value'
-                ? 'textPrimary'
-                : 'textSecondary'
-            }
-          >
-            pv
-          </Typography>
-        </span>
+        <Tooltip title="p-value" placement="left">
+          <span style={infoStyle}>
+            <Typography
+              display="inline"
+              color={
+                props.uiState.sortBy === 'p-Value'
+                  ? 'textPrimary'
+                  : 'textSecondary'
+              }
+            >
+              <strong>{pVal} </strong>
+            </Typography>
+            <Typography
+              variant="caption"
+              display="inline"
+              color={
+                props.uiState.sortBy === 'p-Value'
+                  ? 'textPrimary'
+                  : 'textSecondary'
+              }
+            >
+              pv
+            </Typography>
+          </span>
+        </Tooltip>
       )
 
+      let similarity
       let sim = details.similarity
       if (sim !== undefined) {
         sim = sim.toFixed(2)
+        similarity = (
+          <Tooltip title="Cosine similarity" placement="left">
+            <span style={infoStyle}>
+              <Typography
+                style={{}}
+                display="inline"
+                color={
+                  props.uiState.sortBy === 'Similarity'
+                    ? 'textPrimary'
+                    : 'textSecondary'
+                }
+              >
+                <strong>{sim} </strong>
+              </Typography>
+              <Typography
+                variant="caption"
+                display="inline"
+                style={{}}
+                color={
+                  props.uiState.sortBy === 'Similarity'
+                    ? 'textPrimary'
+                    : 'textSecondary'
+                }
+              >
+                similarity
+              </Typography>
+            </span>
+          </Tooltip>
+        )
+      } else {
+        similarity = null
       }
-
-      const similarity = (
-        <span style={infoStyle}>
-          <Typography
-            style={{}}
-            display="inline"
-            color={
-              props.uiState.sortBy === 'Similarity'
-                ? 'textPrimary'
-                : 'textSecondary'
-            }
-          >
-            <strong>{sim} </strong>
-          </Typography>
-          <Typography
-            variant="caption"
-            display="inline"
-            style={{}}
-            color={
-              props.uiState.sortBy === 'Similarity'
-                ? 'textPrimary'
-                : 'textSecondary'
-            }
-          >
-            similarity
-          </Typography>
-        </span>
-      )
 
       const title = (
         <Typography style={titleStyle}>
@@ -263,35 +272,6 @@ const Ndex = props => {
                   {subtitle}
                 </td>
               </tr>
-              {/*
-              <tr padding="0">
-                <td align="left" valign="baseline" width="100px" padding="0">
-                  {similarity}
-                </td>
-                <td align="left" valign="baseline" padding="0">
-                  {subtitle}
-                </td>
-              </tr>*/}
-              {/*
-                <td rowSpan="2" align="center" valign="middle">
-                  {icon}
-                </td>
-                <td width="90px" align="left" valign="bottom">
-                  {genes}
-                </td>
-                <td align="left" valign="bottom">
-                  {title}
-                </td>
-              </tr>
-              <tr>
-                <td align="left" valign="baseline">
-                  {pv}
-                </td>
-                <td align="left" valign="baseline">
-                  {subtitle}
-                </td>
-              </tr>
-                <tr>{similarity}</tr>*/}
             </tbody>
           </table>
         </ListItem>

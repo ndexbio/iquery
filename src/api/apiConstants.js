@@ -7,7 +7,7 @@ export const METHOD_GET = 'GET'
 // export const BASE_URL = 'http://secret.ndexbio.org:9080/'
 
 // Server URL
-export const SERVICE_SERVER_URL = 'http://localhost:8080/'
-//export const SERVICE_SERVER_URL = 'http://www.ndexbio.org/'
+//export const SERVICE_SERVER_URL = 'http://localhost:8080/'
+export const SERVICE_SERVER_URL = 'http://dev.ndexbio.org/'
 // Its endpoint
-export const BASE_URL = SERVICE_SERVER_URL //+ 'integratedsearch/'
+export const BASE_URL = SERVICE_SERVER_URL + 'integratedsearch/'
