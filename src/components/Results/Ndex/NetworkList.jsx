@@ -72,9 +72,9 @@ const findSort = sortBy => {
     }
   } else if (sortBy === 'Similarity') {
     return (a, b) => {
-      if (a.similarity < b.similarity) {
+      if (a.details.similarity < b.details.similarity) {
         return 1
-      } else if (a.similarity > b.similarity) {
+      } else if (a.details.similarity > b.details.similarity) {
         return -1
       } else {
         if (a.rank > b.rank) {
@@ -129,7 +129,7 @@ const NetworkList = props => {
     props.searchActions.setActualResults(hits)
     openFirst(hits[0])
     props.networkActions.changeListIndex(1)
-  }, [props.uiState.sortOrder, props.uiState.selectedSource])
+  }, [props.uiState.sortBy, props.uiState.selectedSource])
 
   if (!hits) {
     return <div className="network-list-wrapper" />

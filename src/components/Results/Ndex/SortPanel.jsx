@@ -78,9 +78,9 @@ const SortPanel = props => {
             input={<BootstrapInput name="sort" id="sort-customized-select" />}
           >
             {menuItems.map(item => (
-              <MenuItem value={item}>
+              <MenuItem value={item} key={item}>
                 <Typography variant="body2" color="textSecondary">
-                  item
+                  {item}
                 </Typography>
               </MenuItem>
             ))}

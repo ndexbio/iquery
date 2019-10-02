@@ -13,18 +13,21 @@ import Typography from '@material-ui/core/Typography'
 import { ListItem } from '@material-ui/core'
 
 const titleStyle = {
-  lineHeight: '1.33',
+  lineHeight: '22px',
   wordBreak: 'break-word'
 }
 
 const subtitleStyle = {
-  lineHeight: '1',
+  height: '22px',
+  lineHeight: '22px',
   wordBreak: 'break-word'
 }
 
 const infoStyle = {
-  display: 'inline',
-  lineHeight: '1'
+  display: 'block',
+  height: '22px',
+  margin: '0',
+  padding: '0'
 }
 
 /**
@@ -105,7 +108,7 @@ const Ndex = props => {
     } = networkEntry
 
     const genes = (
-      <div style={infoStyle}>
+      <span style={infoStyle}>
         <Typography
           display="inline"
           color={
@@ -120,7 +123,6 @@ const Ndex = props => {
         <Typography
           variant="caption"
           display="inline"
-          style={{ lineHeight: '1' }}
           color={
             props.uiState.selectedSource === 'enrichment' &&
             props.uiState.sortBy !== 'Overlap'
@@ -130,7 +132,7 @@ const Ndex = props => {
         >
           genes
         </Typography>
-      </div>
+      </span>
     )
 
     const icon = (
@@ -150,7 +152,7 @@ const Ndex = props => {
       }
 
       const pv = (
-        <div style={infoStyle}>
+        <span style={infoStyle}>
           <Typography
             display="inline"
             color={
@@ -164,7 +166,6 @@ const Ndex = props => {
           <Typography
             variant="caption"
             display="inline"
-            style={{ lineHeight: '1' }}
             color={
               props.uiState.sortBy === 'p-Value'
                 ? 'textPrimary'
@@ -173,12 +174,18 @@ const Ndex = props => {
           >
             pv
           </Typography>
-        </div>
+        </span>
       )
 
+      let sim = details.similarity
+      if (sim !== undefined) {
+        sim = sim.toFixed(2)
+      }
+
       const similarity = (
-        <div style={infoStyle}>
+        <span style={infoStyle}>
           <Typography
+            style={{}}
             display="inline"
             color={
               props.uiState.sortBy === 'Similarity'
@@ -186,12 +193,12 @@ const Ndex = props => {
                 : 'textSecondary'
             }
           >
-            <strong>{details.similarity.toFixed(2)}</strong>
+            <strong>{sim} </strong>
           </Typography>
           <Typography
             variant="caption"
             display="inline"
-            style={{ lineHeight: '1' }}
+            style={{}}
             color={
               props.uiState.sortBy === 'Similarity'
                 ? 'textPrimary'
@@ -200,7 +207,7 @@ const Ndex = props => {
           >
             similarity
           </Typography>
-        </div>
+        </span>
       )
 
       const title = (
@@ -210,15 +217,15 @@ const Ndex = props => {
       )
 
       const subtitle = (
-        <Typography
-          variant="caption"
-          color="textSecondary"
-          style={subtitleStyle}
-        >
-          Nodes: {nodes}, Edges: {edges}, Source:{' '}
-          {camelCaseToTitleCase(description.split(':')[0])}
-        </Typography>
+        <span style={subtitleStyle}>
+          <Typography variant="caption" color="textSecondary">
+            Nodes: {nodes}, Edges: {edges}, Source:{' '}
+            {camelCaseToTitleCase(description.split(':')[0])}
+          </Typography>
+        </span>
       )
+
+      const newline = <Typography>{'\n'}</Typography>
 
       return (
         <ListItem
@@ -230,10 +237,42 @@ const Ndex = props => {
           }}
           selected={selectedIndex === index}
         >
-          <table style={{ tableLayout: 'fixed', wordBreak: 'breakWord' }}>
+          <table
+            style={{
+              tableLayout: 'fixed',
+              wordBreak: 'breakWord',
+              borderCollapse: 'collapse',
+              borderSpacing: '0'
+            }}
+          >
             <tbody>
-              <tr>
-                {/*height="50%">*/}
+              <tr padding="0">
+                <td align="center" valign="middle" rowSpan="2" padding="0">
+                  {icon}
+                </td>
+                <td align="left" valign="baseline" width="100px" padding="0">
+                  {genes}
+                  {newline}
+                  {pv}
+                  {newline}
+                  {similarity}
+                </td>
+                <td align="left" valign="baseline" padding="0">
+                  {title}
+                  {newline}
+                  {subtitle}
+                </td>
+              </tr>
+              {/*
+              <tr padding="0">
+                <td align="left" valign="baseline" width="100px" padding="0">
+                  {similarity}
+                </td>
+                <td align="left" valign="baseline" padding="0">
+                  {subtitle}
+                </td>
+              </tr>*/}
+              {/*
                 <td rowSpan="2" align="center" valign="middle">
                   {icon}
                 </td>
@@ -252,7 +291,7 @@ const Ndex = props => {
                   {subtitle}
                 </td>
               </tr>
-              <tr>{similarity}</tr>
+                <tr>{similarity}</tr>*/}
             </tbody>
           </table>
         </ListItem>
@@ -260,14 +299,14 @@ const Ndex = props => {
     } else {
       const node = (
         <div display="inline">
-          <Typography display="inline" style={{ lineHeight: '1' }}>
+          <Typography display="inline" style={{}}>
             <strong>{nodes}</strong>{' '}
           </Typography>
           <Typography
             variant="caption"
             display="inline"
             color="textSecondary"
-            style={{ lineHeight: '1' }}
+            style={{}}
           >
             {'nodes '}
           </Typography>
@@ -276,14 +315,14 @@ const Ndex = props => {
 
       const edge = (
         <div display="inline">
-          <Typography display="inline" style={{ lineHeight: '1' }}>
+          <Typography display="inline" style={{}}>
             <strong>{edges}</strong>{' '}
           </Typography>
           <Typography
             variant="caption"
             display="inline"
             color="textSecondary"
-            style={{ lineHeight: '1' }}
+            style={{}}
           >
             {'edges'}
           </Typography>
@@ -319,7 +358,12 @@ const Ndex = props => {
           }}
           selected={selectedIndex === index}
         >
-          <table style={{ tableLayout: 'fixed', wordBreak: 'break-word' }}>
+          <table
+            style={{
+              tableLayout: 'fixed',
+              wordBreak: 'break-word'
+            }}
+          >
             <tbody>
               <tr height="50%">
                 <td rowSpan="2" align="center" valign="middle" width="50px">

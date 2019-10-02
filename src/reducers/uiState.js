@@ -13,7 +13,7 @@ const DEF_STATE = {
   servicesListOpen: false,
   highlights: false,
   selectedSource: 'enrichment',
-  sortOptions: ['Similarity', 'p-Value', 'Overlap'],
+  sortOptions: ['Overlap', 'p-Value', 'Similarity'],
   sortBy: 'Similarity'
 }
 
