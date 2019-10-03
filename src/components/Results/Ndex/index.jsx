@@ -69,7 +69,6 @@ const Ndex = props => {
 
     // Reset selection
     props.searchActions.clearSelectedGenes()
-    props.uiStateActions.setHighlights(true)
     props.networkActions.networkFetchStarted({
       id,
       sourceUUID,
@@ -97,8 +96,6 @@ const Ndex = props => {
 
   const handleImportNetwork = () => {
     // Reset the UI state (hilight)
-    props.uiStateActions.setHighlights(true)
-
     props.cyrestActions.importNetworkStarted({
       cx: props.network.originalCX,
       source: props.network.sourceId,
@@ -264,8 +261,10 @@ const Ndex = props => {
           button
           key={networkUUID}
           onClick={event => {
-            handleFetch(networkUUID, description, nodes, edges, hitGenes)
-            handleListItemClick(event, index)
+            if (selectedIndex !== index) {
+              handleFetch(networkUUID, description, nodes, edges, hitGenes)
+              handleListItemClick(event, index)
+            }
           }}
           selected={selectedIndex === index}
         >

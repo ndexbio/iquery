@@ -35,7 +35,7 @@ const ResetZoomButton = props => {
   const disabled = !(props.network.uuid && props.network.uuid.length > 0)
 
   const handleClick = () => {
-    props.networkActions.fitNetworkView(true)
+    props.uiStateActions.fitNetworkView(true)
   }
 
   return (

@@ -108,16 +108,16 @@ const NetworkToolbar = props => {
     ;[prefix, name] = props.network.networkName.replace(':', '&').split('&')
   }
 
-  const [value, setValue] = useState(props.network.layout)
+  const [value, setValue] = useState(props.uiState.layout)
 
   const handleChange = event => {
     setValue(event.target.value)
-    props.networkActions.setLayout(event.target.value)
+    props.uiStateActions.setLayout(event.target.value)
   }
 
   useEffect(() => {
-    setValue(props.network.layout)
-  }, [props.network.layout])
+    setValue(props.uiState.layout)
+  }, [props.uiState.layout])
 
   return (
     <div className={classes.toolbar}>

@@ -177,13 +177,12 @@ a:link {
 }
 .example-text {
   padding-right: 1.2em;
-
 }
-
+/*
 .example-text:hover {
   cursor: pointer;
 }
-
+*/
 .query-examples {
   display: flex;
   align-items: center;

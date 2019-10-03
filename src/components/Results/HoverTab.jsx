@@ -3,16 +3,16 @@ import Tab from '@material-ui/core/Tab'
 import { withStyles } from '@material-ui/core/styles'
 
 const HoverTab = props => {
-  const { backgroundColor, ...other } = props
+  //const { backgroundColor, ...other } = props
 
   const Hover = withStyles(theme => ({
     root: {
       '&:hover': {
-        backgroundColor: props.backgroundColor,
+        backgroundColor: props.backgroundcolor,
         opacity: 1
       }
     }
-  }))(props => <Tab {...other} />)
+  }))(props => <Tab {...props} />)
   return <Hover {...props} />
 }
 

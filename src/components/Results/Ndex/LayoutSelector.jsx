@@ -10,8 +10,8 @@ import { withStyles } from '@material-ui/core/styles'
 import { fade } from '@material-ui/core/styles/colorManipulator'
 
 const formControl = {
-  position: 'relative',
-  top: '1.5px',
+  height: '3em',
+  paddingTop: '0.8em',
   marginLeft: '0.3em'
 }
 
@@ -47,7 +47,7 @@ const styles = theme => ({
 
 const LayoutSelector = props => {
   const { classes } = props
-  const menuItems = props.network.layouts
+  const menuItems = props.uiState.layouts
   const inputLabel = React.useRef(null)
   const [labelWidth, setLabelWidth] = React.useState(0)
 
@@ -56,7 +56,7 @@ const LayoutSelector = props => {
   }, [])
 
   return (
-    <div className={formControl}>
+    <div style={formControl}>
       <FormControl variant="outlined">
         <InputLabel ref={inputLabel} htmlFor="outlined">
           <font color="#4154b2">Layout</font>

@@ -184,9 +184,13 @@ class InputList extends React.Component {
             }
 
             return (
-              <React.Fragment>
+              <React.Fragment key={Math.random().toString()}>
                 {pathways.map(pwEntry => (
-                  <ListItem button className={classes.nested}>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    key={Math.random().toString()}
+                  >
                     <ListItemIcon>
                       <InfoIcon />
                     </ListItemIcon>

@@ -18,7 +18,7 @@ const TAB_LABELS = {
   }
 }
 
-const backgroundColor = 'rgb(235, 235, 235)'
+const backgroundcolor = 'rgb(235, 235, 235)'
 
 const styles = theme => ({
   tabs: {},
@@ -81,7 +81,7 @@ const Results = props => {
             <HoverTab
               key={source.uuid}
               label={TAB_LABELS[source.name].label}
-              backgroundColor={backgroundColor}
+              backgroundcolor={backgroundcolor}
             />
           ))}
         </Tabs>

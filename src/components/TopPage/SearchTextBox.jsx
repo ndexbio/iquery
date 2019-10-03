@@ -228,7 +228,7 @@ const SearchTextBox = props => {
         className={'search-text-caption'}
       >
         Try this pre-release version, send us
-        <a href={feedbackURL} target="_blank">
+        <a href={feedbackURL} target="_blank" rel="noopener noreferrer">
           {' '}
           feedback
         </a>

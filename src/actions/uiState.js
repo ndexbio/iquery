@@ -26,3 +26,20 @@ export const SET_SORT_OPTIONS = 'SET_SORT_OPTIONS'
 export const SET_SORT_BY = 'SET_SORT_BY'
 export const setSortOptions = createAction(SET_SORT_OPTIONS)
 export const setSortBy = createAction(SET_SORT_BY)
+
+//Layout
+export const SET_LAYOUT = 'SET_LAYOUT'
+export const SET_LAYOUTS = 'SET_LAYOUTS'
+export const setLayout = createAction(SET_LAYOUT)
+export const setLayouts = createAction(SET_LAYOUTS)
+
+//Annotations
+export const SET_ANNOTATIONS = 'SET_ANNOTATIONS'
+export const setAnnotations = createAction(SET_ANNOTATIONS)
+
+//Fit
+export const FIT_NETWORK_VIEW = 'FIT_NETWORK_VIEW'
+export const fitNetworkView = createAction(FIT_NETWORK_VIEW)
+
+export const UPDATE = 'UPDATE'
+export const update = createAction(UPDATE)

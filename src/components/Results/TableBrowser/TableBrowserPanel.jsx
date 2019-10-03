@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const backgroundColor = 'rgb(220, 220, 220)'
+const backgroundcolor = 'rgb(220, 220, 220)'
 
 const TabContent = props => {
   const { value } = props
@@ -138,19 +138,19 @@ const TableBrowserPanel = props => {
           className={classes.root}
           key={'network-tab'}
           label={'Network'}
-          backgroundColor={backgroundColor}
+          backgroundcolor={backgroundcolor}
         />
         <HoverTab
           className={classes.root}
           key={'nodes-tab'}
           label={'Nodes'}
-          backgroundColor={backgroundColor}
+          backgroundcolor={backgroundcolor}
         />
         <HoverTab
           className={classes.root}
           key={'edges-tab'}
           label={'Edges'}
-          backgroundColor={backgroundColor}
+          backgroundcolor={backgroundcolor}
         />
       </Tabs>
       <TabContent value={value} {...props} />

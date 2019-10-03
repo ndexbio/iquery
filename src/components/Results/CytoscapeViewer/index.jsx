@@ -40,8 +40,8 @@ const DEF_BG_COLOR = '#FFFFFF'
  * @constructor
  */
 const CytoscapeViewer = props => {
-  const { highlights } = props.uiState
-  const { fit, originalCX } = props.network
+  const { highlights, fit } = props.uiState
+  const { originalCX } = props.network
   const cyjs = props.network.network
   const [originalElements, setOriginalElements] = useState(
     cyjs ? cloneDeep(cyjs.elements) : null
@@ -68,6 +68,7 @@ const CytoscapeViewer = props => {
     backgroundColor = DEF_BG_COLOR
   }
 
+  /*
   let niceCX = useMemo(() => {
     if (originalCX && layout.name === 'preset') {
       const networkAttr = originalCX.filter(
@@ -106,6 +107,40 @@ const CytoscapeViewer = props => {
     }
     return null
   }, [originalCX, cyInstance, layout])
+  */
+
+  const renderAnnotations = () => {
+    if (originalCX && layout.name === 'preset') {
+      const networkAttr = originalCX.filter(
+        entry => entry.networkAttributes !== undefined
+      )
+      if (networkAttr !== undefined) {
+        const firstEntry = networkAttr[0]
+        if (
+          firstEntry === undefined ||
+          firstEntry.networkAttributes === undefined
+        ) {
+          return false
+        }
+
+        const netAttrArray = firstEntry.networkAttributes
+        const annotationEntry = netAttrArray.filter(
+          attr => attr.n === ANNOTATION_TAG
+        )
+        if (annotationEntry.length !== 0 && cyInstance) {
+          const nice = utils.rawCXtoNiceCX(originalCX)
+          console.log(
+            '* Registering annotation renderer for this niceCX:',
+            annotationEntry
+          )
+          annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
+          annotationRenderer.drawBackground(cyInstance, backgroundColor)
+          return true
+        }
+      }
+    }
+    return false
+  }
 
   /*
     Node/Edge Selections
@@ -188,35 +223,51 @@ const CytoscapeViewer = props => {
     })
 
     // Reset the UI state (highlight)
-    if (highlights) {
-      cyInstance.elements().addClass('faded')
-      const query = cyInstance.filter('node[querynode = "true"]')
-      query.addClass('highlight')
-    } else {
-      cyInstance
-        .elements()
-        .removeClass('faded')
-        .removeClass('highlight')
-    }
+    cyInstance.elements().addClass('faded')
+    const query = cyInstance.filter('node[querynode = "true"]')
+    query.addClass('highlight')
 
     //Layout
+    let propLayouts
+    let propLayout
     if (cyjs != null) {
       const isLayoutAvailable = cyjs.isLayout
       if (isLayoutAvailable) {
-        props.networkActions.setLayouts(['Preset', 'Cose', 'Concentric'])
-        props.networkActions.setLayout('Preset')
+        propLayouts = ['Preset', 'Cose', 'Concentric']
+        propLayout = 'Preset'
         setLayout(PRESET_LAYOUT)
       } else {
-        props.networkActions.setLayouts(['Cose', 'Concentric'])
+        propLayouts = ['Cose', 'Concentric']
         if (cyjs.elements.length < 500) {
-          props.networkActions.setLayout('Cose')
+          propLayout = 'Cose'
           setLayout(COSE_LAYOUT)
         } else {
-          props.networkActions.setLayout('Concentric')
+          propLayout = 'Concentric'
           setLayout(CONCENTRIC_LAYOUT)
         }
       }
     }
+
+    new Promise(function(resolve, reject) {
+      resolve(renderAnnotations())
+    }).then(bool => {
+      if (bool) {
+        props.uiStateActions.update({
+          annotations: true,
+          fit: true,
+          highlights: true,
+          layouts: propLayouts,
+          layout: propLayout
+        })
+      } else {
+        props.uiStateActions.update({
+          fit: true,
+          highlights: true,
+          layouts: propLayouts,
+          layout: propLayout
+        })
+      }
+    })
 
     return () => {
       console.log('Network viewer unmounted')
@@ -280,12 +331,12 @@ const CytoscapeViewer = props => {
           duration: 500
         }
       )
-      props.networkActions.fitNetworkView(false)
+      props.uiStateActions.fitNetworkView(false)
     }
   }, [fit])
 
   useEffect(() => {
-    switch (props.network.layout) {
+    switch (props.uiState.layout) {
       case 'Preset':
         setLayout(PRESET_LAYOUT)
         break
@@ -296,7 +347,7 @@ const CytoscapeViewer = props => {
         setLayout(CONCENTRIC_LAYOUT)
         break
     }
-  }, [props.network.layout])
+  }, [props.uiState.layout])
 
   // Check network size and show warning if it's too big for this renderer
   const numObjects = props.network.nodeCount + props.network.edgeCount
@@ -365,13 +416,11 @@ const CytoscapeViewer = props => {
 const MemoCytoscapeViewer = React.memo(
   CytoscapeViewer,
   (oldProps, newProps) => {
-    if (newProps.network.annotations) {
-      newProps.networkActions.setAnnotations(false)
+    if (newProps.uiState.fit) {
       return false
     }
     return (
-      oldProps.network.fit === newProps.network.fit &&
-      oldProps.network.layout === newProps.network.layout &&
+      oldProps.uiState.layout === newProps.uiState.layout &&
       oldProps.uiState.highlights === newProps.uiState.highlights &&
       isEqual(oldProps.search.selectedGenes, newProps.search.selectedGenes)
     )

@@ -176,7 +176,11 @@ class GeneDetails extends React.Component {
 
             if (!Array.isArray(pathways)) {
               return (
-                <ListItem button className={classes.nested}>
+                <ListItem
+                  button
+                  className={classes.nested}
+                  key={Math.random().toString()}
+                >
                   <ListItemIcon>
                     <InfoIcon />
                   </ListItemIcon>
@@ -186,9 +190,13 @@ class GeneDetails extends React.Component {
             }
 
             return (
-              <React.Fragment>
+              <React.Fragment key={Math.random().toString()}>
                 {pathways.map(pwEntry => (
-                  <ListItem button className={classes.nested}>
+                  <ListItem
+                    button
+                    className={classes.nested}
+                    key={Math.random().toString()}
+                  >
                     <ListItemIcon>
                       <InfoIcon />
                     </ListItemIcon>

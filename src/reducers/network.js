@@ -15,10 +15,7 @@ import {
   deselectAll,
   changeTab,
   changeListIndex,
-  fitNetworkView,
-  setAnnotations,
-  setLayout,
-  setLayouts
+  fitNetworkView
 } from '../actions/network'
 
 const defaultState = {
@@ -38,10 +35,7 @@ const defaultState = {
   selectedEdges: [],
   tableDisplayTab: 0,
   listIndex: 0,
-  fit: false,
-  annotations: false,
-  layout: 'Preset',
-  layouts: []
+  fit: false
 }
 
 const utils = new CyNetworkUtils()
@@ -215,30 +209,6 @@ const network = handleActions(
       return {
         ...state,
         listIndex: payload.payload
-      }
-    },
-    [fitNetworkView]: (state, payload) => {
-      return {
-        ...state,
-        fit: payload.payload
-      }
-    },
-    [setAnnotations]: (state, payload) => {
-      return {
-        ...state,
-        annotations: payload.payload
-      }
-    },
-    [setLayout]: (state, payload) => {
-      return {
-        ...state,
-        layout: payload.payload
-      }
-    },
-    [setLayouts]: (state, payload) => {
-      return {
-        ...state,
-        layouts: payload.payload
       }
     }
   },

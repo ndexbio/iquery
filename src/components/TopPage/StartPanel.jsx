@@ -75,7 +75,7 @@ const StartPanel = props => {
             different sources and new networks will be continuously added. Do
             you have a pathway or an interaction network that you would like to
             include in these queries? Click{' '}
-            <a href={feedbackURL} target="_blank">
+            <a href={feedbackURL} target="_blank" rel="noopener noreferrer">
               here
             </a>{' '}
             to find out how.

@@ -5,7 +5,11 @@ import {
   setHighlights,
   setSelectedSource,
   setSortBy,
-  setSortOptions
+  setSortOptions,
+  setLayout,
+  setLayouts,
+  fitNetworkView,
+  update
 } from '../actions/uiState'
 
 const DEF_STATE = {
@@ -14,7 +18,10 @@ const DEF_STATE = {
   highlights: false,
   selectedSource: 'enrichment',
   sortOptions: ['Overlap', 'p-Value', 'Similarity'],
-  sortBy: 'Similarity'
+  sortBy: 'Similarity',
+  layout: 'Preset',
+  layouts: [],
+  fit: false
 }
 
 const uiState = handleActions(
@@ -42,6 +49,33 @@ const uiState = handleActions(
       return {
         ...state,
         sortBy: payload.payload
+      }
+    },
+    [setLayout]: (state, payload) => {
+      return {
+        ...state,
+        layout: payload.payload
+      }
+    },
+    [setLayouts]: (state, payload) => {
+      return {
+        ...state,
+        layouts: payload.payload
+      }
+    },
+    [fitNetworkView]: (state, payload) => {
+      return {
+        ...state,
+        fit: payload.payload
+      }
+    },
+    [update]: (state, payload) => {
+      return {
+        ...state,
+        fit: payload.payload.fit,
+        highlights: payload.payload.highlights,
+        layouts: payload.payload.layouts,
+        layout: payload.payload.layout
       }
     }
   },
