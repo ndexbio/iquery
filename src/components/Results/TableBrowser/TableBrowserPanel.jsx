@@ -1,13 +1,15 @@
 import React from 'react'
 import Tabs from '@material-ui/core/Tabs'
 import HoverTab from '../HoverTab'
-import { makeStyles, withStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 
 import { findAttributes } from './attribute-util'
 
 import NetworkProperties from './NetworkProperties'
 import MemoNodeProperties from './NodeProperties'
 import MemoEdgeProperties from './EdgeProperties'
+
+import { mapKeys } from 'lodash'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -43,6 +45,10 @@ const TabContent = props => {
       }
     }
   }
+  //Uppercase all keys in context
+  context = mapKeys(context, function(v, k) {
+    return k.toUpperCase()
+  })
 
   //Find nodelist and nodeAttributes
   let nodeList

@@ -110,36 +110,33 @@ const CytoscapeViewer = props => {
   */
 
   const renderAnnotations = () => {
-    if (originalCX && layout.name === 'preset') {
+    if (layout.name === 'preset' && originalCX) {
       const networkAttr = originalCX.filter(
         entry => entry.networkAttributes !== undefined
       )
       if (networkAttr !== undefined) {
         const firstEntry = networkAttr[0]
         if (
-          firstEntry === undefined ||
-          firstEntry.networkAttributes === undefined
+          firstEntry !== undefined &&
+          firstEntry.networkAttributes != undefined
         ) {
-          return false
-        }
-
-        const netAttrArray = firstEntry.networkAttributes
-        const annotationEntry = netAttrArray.filter(
-          attr => attr.n === ANNOTATION_TAG
-        )
-        if (annotationEntry.length !== 0 && cyInstance) {
-          const nice = utils.rawCXtoNiceCX(originalCX)
-          console.log(
-            '* Registering annotation renderer for this niceCX:',
-            annotationEntry
+          const netAttrArray = firstEntry.networkAttributes
+          const annotationEntry = netAttrArray.filter(
+            attr => attr.n === ANNOTATION_TAG
           )
-          annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
-          annotationRenderer.drawBackground(cyInstance, backgroundColor)
-          return true
+          if (annotationEntry.length !== 0 && cyInstance) {
+            const nice = utils.rawCXtoNiceCX(originalCX)
+            console.log(
+              '* Registering annotation renderer for this niceCX:',
+              annotationEntry
+            )
+            annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
+            annotationRenderer.drawBackground(cyInstance, backgroundColor)
+          }
         }
       }
     }
-    return false
+    return
   }
 
   /*
@@ -249,24 +246,15 @@ const CytoscapeViewer = props => {
     }
 
     new Promise(function(resolve, reject) {
-      resolve(renderAnnotations())
-    }).then(bool => {
-      if (bool) {
-        props.uiStateActions.update({
-          annotations: true,
-          fit: true,
-          highlights: true,
-          layouts: propLayouts,
-          layout: propLayout
-        })
-      } else {
-        props.uiStateActions.update({
-          fit: true,
-          highlights: true,
-          layouts: propLayouts,
-          layout: propLayout
-        })
-      }
+      renderAnnotations()
+      resolve()
+    }).then(() => {
+      props.uiStateActions.update({
+        //fit: true,
+        highlights: true,
+        layouts: propLayouts,
+        layout: propLayout
+      })
     })
 
     return () => {
@@ -372,19 +360,19 @@ const CytoscapeViewer = props => {
 
     if (layout === COSE_LAYOUT || layout === CONCENTRIC_LAYOUT) {
       layout.stop = () => {
-        //setTimeout(() => {
-        cyInstance.animate(
-          {
-            fit: {
-              eles: cyInstance.elements(),
-              padding: 6
+        setTimeout(() => {
+          cyInstance.animate(
+            {
+              fit: {
+                eles: cyInstance.elements(),
+                padding: 6
+              }
+            },
+            {
+              duration: 0
             }
-          },
-          {
-            duration: 0
-          }
-        )
-        //}, 0)
+          )
+        }, 0)
       }
     }
 
@@ -416,10 +404,8 @@ const CytoscapeViewer = props => {
 const MemoCytoscapeViewer = React.memo(
   CytoscapeViewer,
   (oldProps, newProps) => {
-    if (newProps.uiState.fit) {
-      return false
-    }
     return (
+      oldProps.uiState.fit === newProps.uiState.fit &&
       oldProps.uiState.layout === newProps.uiState.layout &&
       oldProps.uiState.highlights === newProps.uiState.highlights &&
       isEqual(oldProps.search.selectedGenes, newProps.search.selectedGenes)

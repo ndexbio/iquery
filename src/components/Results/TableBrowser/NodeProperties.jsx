@@ -130,12 +130,12 @@ const NodeProperties = props => {
     if (node.name in props.represents) {
       const [prefix, id] = props.represents[node.name].split(':')
       if (id != undefined) {
-        if (prefix in context) {
+        if (prefix.toUpperCase() in context) {
           attributes.push({
             title: 'ID',
             content:
               '<a href="' +
-              context[prefix] +
+              context[prefix.toUpperCase()] +
               id +
               '">' +
               props.represents[node.name] +
@@ -182,12 +182,12 @@ const NodeProperties = props => {
             content: content,
             displayed: false
           })
-        } else if (title in context) {
+        } else if (title.toUpperCase() in context) {
           attributes.push({
             title: camelCaseToTitleCase(title),
             content:
               '<a href="' +
-              context[title] +
+              context[title.toUpperCase()] +
               '/' +
               content +
               '">' +
@@ -197,11 +197,16 @@ const NodeProperties = props => {
           })
         } else if (title !== 'query') {
           const [prefix, id] = content.split(':')
-          if (prefix in context && id != undefined) {
+          if (prefix.toUpperCase() in context && id != undefined) {
             attributes.push({
               title: camelCaseToTitleCase(title),
               content:
-                '<a href="' + context[prefix] + id + '">' + content + '</a>',
+                '<a href="' +
+                context[prefix.toUpperCase()] +
+                id +
+                '">' +
+                content +
+                '</a>',
               displayed: false
             })
           } else if (prefix === 'hgnc.symbol') {
@@ -230,9 +235,14 @@ const NodeProperties = props => {
     let aliasLinks = ''
     aliases.forEach(alias => {
       const [prefix, id] = alias.split(':')
-      if (prefix in context) {
+      if (prefix.toUpperCase() in context) {
         aliasLinks +=
-          '<a href="' + context[prefix] + id + '">\t' + alias + '</a><br/>'
+          '<a href="' +
+          context[prefix.toUpperCase()] +
+          id +
+          '">\t' +
+          alias +
+          '</a><br/>'
       } else {
         aliasLinks +=
           '<a href="http://identifiers.org/' +
@@ -294,7 +304,9 @@ const NodeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2">{primaryString}</Typography>
+                        <Typography variant="body2" component="div">
+                          {primaryString}
+                        </Typography>
                       </div>
                     </React.Fragment>
                   }

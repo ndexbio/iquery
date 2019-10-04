@@ -72,7 +72,7 @@ const uiState = handleActions(
     [update]: (state, payload) => {
       return {
         ...state,
-        fit: payload.payload.fit,
+        //fit: payload.payload.fit,
         highlights: payload.payload.highlights,
         layouts: payload.payload.layouts,
         layout: payload.payload.layout

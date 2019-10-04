@@ -119,8 +119,8 @@ const NetworkList = props => {
 
   //Sort hits
   useEffect(() => {
+    const firstHit = cloneDeep(hits[0])
     if (props.uiState.selectedSource === 'enrichment') {
-      const firstHit = cloneDeep(hits[0])
       const sortFunction = findSort(props.uiState.sortBy)
 
       //Allow stable sorting
@@ -129,30 +129,25 @@ const NetworkList = props => {
       }
 
       hits = hits.sort(sortFunction)
+    }
+    //Check if you need to rerender first hit
+    let opened = false
+    if (props.search.actualResults.length === 0) {
+      opened = true
+      props.searchActions.setActualResults(hits)
+      openFirst(hits[0])
+      props.networkActions.changeListIndex(1)
+    } else {
+      props.searchActions.setActualResults(hits)
+    }
 
-      //Check if you need to rerender first hit
-      if (props.search.actualResults[0]) {
-        console.log(props.search.actualResults[0].description)
-        console.log(firstHit.description)
-      }
-      let opened = false
-      if (props.search.actualResults.length === 0) {
-        opened = true
-        props.searchActions.setActualResults(hits)
-        openFirst(hits[0])
-        props.networkActions.changeListIndex(1)
-      } else {
-        props.searchActions.setActualResults(hits)
-      }
-
-      if (
-        !opened &&
-        (props.network.listIndex !== 1 ||
-          firstHit.description !== hits[0].description)
-      ) {
-        openFirst(hits[0])
-        props.networkActions.changeListIndex(1)
-      }
+    if (
+      !opened &&
+      (props.network.listIndex !== 1 ||
+        firstHit.description !== hits[0].description)
+    ) {
+      openFirst(hits[0])
+      props.networkActions.changeListIndex(1)
     }
   }, [props.uiState.sortBy, props.uiState.selectedSource])
 
