@@ -3,7 +3,6 @@ import { METHOD_GET, METHOD_POST, BASE_URL } from './apiConstants'
 /**
  * Check the status of the services.
  *
- * @returns {Promise<Response | never | {error: any}>}
  */
 const getSource = () => {
   const searchUrl = BASE_URL + 'source'

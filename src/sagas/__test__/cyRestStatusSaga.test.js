@@ -1,17 +1,15 @@
-import { call, put, all, take, race } from 'redux-saga/effects'
+import { call, all, take, race } from 'redux-saga/effects'
 import { runSaga } from 'redux-saga'
-import * as cyRestStatusSaga from './cyRestStatusSaga'
-import rootSaga from './cyRestStatusSaga'
-import { _cyRestStatusSaga, _fetchCyRESTAvailable } from './cyRestStatusSaga'
-import * as cyrest from '../api/cyrest'
+import rootSaga from '../cyRestStatusSaga'
+import { _cyRestStatusSaga, _fetchCyRESTAvailable } from '../cyRestStatusSaga'
+import * as cyrest from '../../api/cyrest'
 import sinon from 'sinon'
+
 import {
   SET_AVAILABLE,
   startCyRestPolling,
-  stopCyRestPolling,
-  START_CYREST_POLLING,
   STOP_CYREST_POLLING
-} from '../actions/cyrest'
+} from '../../actions/cyrest'
 
 beforeEach(() => {
   sinon.stub(cyrest, 'status') //add stub
@@ -50,7 +48,7 @@ test('_fetchCyRESTAvailable success', async done => {
   }))
 
   cyrest.status.onCall(1).callsFake(() => {
-    expect(dispatched).toEqual([{ type: 'SET_AVAILABLE', payload: true }])
+    expect(dispatched).toEqual([{ type: SET_AVAILABLE, payload: true }])
     done()
   })
 

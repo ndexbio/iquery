@@ -6,7 +6,9 @@ import {
   setCurrentSource
 } from '../actions/source'
 
-const defaultState = {
+import { SourceState } from './types'
+
+const defaultState: SourceState = {
   isFetchingSource: false,
   sources: [],
   error: null,
@@ -15,7 +17,7 @@ const defaultState = {
 
 const source = handleActions(
   {
-    [findSourceStarted]: (state, payload) => {
+    [findSourceStarted]: (state: SourceState, action) => {
       return {
         ...state,
         isFetchingSource: true,
@@ -23,27 +25,27 @@ const source = handleActions(
         sources: []
       }
     },
-    [findSourceSucceeded]: (state, payload) => {
+    [findSourceSucceeded]: (state: SourceState, action) => {
       return {
         ...state,
-        sources: payload.sources,
+        sources: action.sources,
         isFetchingSource: false,
         error: null
       }
     },
-    [findSourceFailed]: (state, payload) => {
-      console.warn('Error:', payload.error)
+    [findSourceFailed]: (state: SourceState, action) => {
+      console.warn('Error:', action.error)
       return {
         ...state,
         isFetchingSource: false,
-        error: payload.error,
+        error: action.error,
         sources: []
       }
     },
-    [setCurrentSource]: (state, payload) => {
+    [setCurrentSource]: (state: SourceState, action) => {
       return {
         ...state,
-        currentSource: payload.payload
+        currentSource: action.payload
       }
     }
   },
