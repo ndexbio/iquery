@@ -2,10 +2,13 @@ root: true
 plugins:
   - react
   - prettier
+  - '@typescript-eslint'
 extends:
   - plugin:react/recommended
   - plugin:prettier/recommended
-parser: babel-eslint
+  - plugin:@typescript-eslint/recommended
+  - prettier/@typescript-eslint
+parser: '@typescript-eslint/parser'
 env: {}
 rules:
   prettier/prettier:
@@ -14,3 +17,5 @@ rules:
       trailingComma: none
       singleQuote: true
       semi: false
+  '@typescript-eslint/no-explicit-any': off
+  '@typescript-eslint/explicit-function-return-type': off

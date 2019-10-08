@@ -7,21 +7,33 @@ import AppShell from '../AppShell'
 import LoadingPanel from '../LoadingPanel'
 
 const HomePanel = props => {
+  const historyListener = (location, action) => {
+    if (action === 'POP' && location.pathname !== '/') {
+      console.log('Back button::', location, action)
+      props.searchActions.clearAll()
+      props.history.push('/')
+    }
+  }
+
   useEffect(() => {
     if (props.search.results !== null) {
       const jobId = props.search.results.jobId
       props.searchActions.fetchResultStarted({ jobId })
     }
 
-    window.onpopstate = onBackButtonEvent
+    const { queryList } = props.search
+
+    if (queryList.length === 0) {
+      console.log('* No query genes. Reload called:', props, queryList)
+      props.searchActions.clearAll()
+      props.history.push('/')
+      return
+    }
+
+    props.history.listen(historyListener)
+
     return () => {}
   }, [])
-
-  const onBackButtonEvent = e => {
-    e.preventDefault()
-    props.searchActions.clearAll()
-    props.history.push('/')
-  }
 
   const isFetching = props.search.isFetching
   const searchResults = props.search.searchResults

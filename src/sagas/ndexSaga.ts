@@ -1,7 +1,9 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects'
 import * as api from '../api/ndex'
 import * as myGeneApi from '../api/mygene'
-import * as cySearchApi from '../api/search'
+import { getResult, checkStatus, getSource, postQuery } from '../api/search'
+
+import { FilteredGenes, filterGenes } from './ndexSaga-util'
 
 import {
   SEARCH_STARTED,
@@ -27,49 +29,39 @@ import {
 
 const API_CALL_INTERVAL = 500
 
-export default function* rootSaga() {
-  yield takeLatest(SEARCH_STARTED, watchSearch)
-  yield takeLatest(FETCH_RESULT_STARTED, watchSearchResult)
-  yield takeLatest(NETWORK_FETCH_STARTED, fetchNetwork)
-  yield takeLatest(FIND_SOURCE_STARTED, fetchSource)
-}
-
 /**
- * Calls Cytoscape Search service and set state
+ * Call IQ service and set state
  *
  * @param action
  * @returns {IterableIterator<*>}
  */
 function* watchSearch(action) {
-  const geneList = action.payload.geneList
-  let sourceNames = action.payload.sourceNames
+  const geneList: string[] = action.payload.geneList
+  let sourceNames: string[] = action.payload.sourceNames
 
   // If source names are missing, find them:
-  if (
-    sourceNames === undefined ||
-    sourceNames === null ||
-    sourceNames.length === 0
-  ) {
-    const sources = yield call(cySearchApi.getSource, null)
+  if (!sourceNames || sourceNames.length === 0) {
+    const sources = yield call(getSource)
     const sourceJson = yield call([sources, 'json'])
-    const sourceList = sourceJson.results
+    const sourceList: any[] = sourceJson.results
     sourceNames = sourceList.map(source => source.name)
     sourceNames = sourceNames.filter(name => name !== 'keyword')
   }
-  const geneListString = geneList.join()
+
+  const geneListString: string = geneList.join()
 
   try {
     // Call 1: Send query and get JobID w/ gene props from MyGene
     const [geneRes, searchRes] = yield all([
       call(myGeneApi.searchGenes, geneListString),
-      call(cySearchApi.postQuery, geneList, sourceNames)
+      call(postQuery, geneList, sourceNames)
     ])
 
     const geneJson = yield call([geneRes, 'json'])
     const resultLocation = searchRes.headers.get('Location')
-    const parts = resultLocation.split('/')
-    const jobId = parts[parts.length - 1]
-    const filtered = filterGenes(geneJson)
+    const parts: string[] = resultLocation.split('/')
+    const jobId: string = parts[parts.length - 1]
+    const filtered: FilteredGenes = filterGenes(geneJson)
 
     yield put({
       type: SEARCH_SUCCEEDED,
@@ -97,28 +89,28 @@ function* watchSearch(action) {
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 function* watchSearchResult(action) {
-  const jobId = action.payload.jobId
+  const jobId: string = action.payload.jobId
 
-  const resultList = []
-  const finishedSourceNames = new Set()
+  const resultList: any[] = []
+  const finishedSourceNames: Set<string> = new Set()
 
   try {
     while (true) {
       // Check overall status
-      const statusRes = yield call(cySearchApi.checkStatus, jobId)
+      const statusRes = yield call(checkStatus, jobId)
       const statusJson = yield call([statusRes, 'json'])
 
-      const status = statusJson.sources
-      let idx = status.length
+      const status: any[] = statusJson.sources
+      let idx: number = status.length
 
       while (idx--) {
-        const src = status[idx]
+        const src: Record<string, any> = status[idx]
         const { progress, sourceName } = src
         if (progress === 100) {
-          const resultRes = yield call(cySearchApi.getResult, jobId, sourceName)
-          const json = yield call([resultRes, 'json'])
+          const resultRes = yield call(getResult, jobId, sourceName)
+          const json: Record<string, any> = yield call([resultRes, 'json'])
 
-          if (finishedSourceNames.has(sourceName) === false) {
+          if (!finishedSourceNames.has(sourceName)) {
             // Need to add this new result.
             resultList.push(json.sources[0])
             finishedSourceNames.add(sourceName)
@@ -131,7 +123,6 @@ function* watchSearchResult(action) {
               singleResult: json
             }
           })
-          // console.log(idx + ': Individual check finished:', src, json)
         }
       }
 
@@ -170,10 +161,10 @@ function* watchSearchResult(action) {
 
 function* fetchNetwork(action) {
   try {
-    const params = action.payload
-    const id = params.id
-    const sourceUUID = params.sourceUUID
-    const networkUUID = params.networkUUID
+    const params: Record<string, any> = action.payload
+    const id: string = params.id
+    const sourceUUID: string = params.sourceUUID
+    const networkUUID: string = params.networkUUID
 
     const cx = yield call(api.fetchNetwork, id, sourceUUID, networkUUID)
     const json = yield call([cx, 'json'])
@@ -184,9 +175,9 @@ function* fetchNetwork(action) {
   }
 }
 
-function* fetchSource(action) {
+export function* fetchSource(action) {
   try {
-    const sources = yield call(cySearchApi.getSource, null)
+    const sources = yield call(getSource)
     const json = yield call([sources, 'json'])
     const orderedSources = json.results
     yield put({ type: FIND_SOURCE_SUCCEEDED, sources: orderedSources })
@@ -195,22 +186,9 @@ function* fetchSource(action) {
   }
 }
 
-const filterGenes = resultList => {
-  const uniqueGeneMap = new Map()
-  const notFound = []
-
-  let len = resultList.length
-  while (len--) {
-    const entry = resultList[len]
-    if (entry.notfound) {
-      notFound.push(entry.query)
-    } else {
-      uniqueGeneMap.set(entry.query, entry)
-    }
-  }
-
-  return {
-    uniqueGeneMap,
-    notFound
-  }
+export default function* rootSaga() {
+  yield takeLatest(SEARCH_STARTED, watchSearch)
+  yield takeLatest(FETCH_RESULT_STARTED, watchSearchResult)
+  yield takeLatest(NETWORK_FETCH_STARTED, fetchNetwork)
+  yield takeLatest(FIND_SOURCE_STARTED, fetchSource)
 }
