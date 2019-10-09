@@ -136,7 +136,7 @@ const EdgeProperties = props => {
     let title
     let source
     let target
-    for (let key in edge) {
+    for (const key in edge) {
       content = extractContent(edge[key])
       title = extractTitle(key)
       if (

@@ -137,13 +137,6 @@ const SearchTextBox = props => {
               >
                 Hypoxia
               </Button>
-              {/*<Typography
-              className={'example-text'}
-              variant={'button'}
-              onClick={() => handleExample(0)}
-            >
-              Hypoxia
-            </Typography>*/}
             </Tooltip>
           </div>
           <div>
@@ -155,13 +148,6 @@ const SearchTextBox = props => {
               >
                 Adenyl Cyclase
               </Button>
-              {/*<Typography
-              className={'example-text'}
-              variant={'button'}
-              onClick={() => handleExample(1)}
-            >
-              Adenyl Cyclase
-            </Typography>*/}
             </Tooltip>
           </div>
           <div>
@@ -173,13 +159,6 @@ const SearchTextBox = props => {
               >
                 D4DGI
               </Button>
-              {/*<Typography
-              className={'example-text'}
-              variant={'button'}
-              onClick={() => handleExample(2)}
-            >
-              D4DGI
-            </Typography>*/}
             </Tooltip>
           </div>
           <div>
@@ -191,31 +170,6 @@ const SearchTextBox = props => {
               >
                 Angiotensin
               </Button>
-              {/*<Typography
-              className={'example-text'}
-              variant={'button'}
-              onClick={() => handleExample(3)}
-            >
-              Angiotensin
-            </Typography>*/}
-            </Tooltip>
-          </div>
-          <div>
-            <Tooltip title="Estrogen description" placement={'bottom'}>
-              <Button
-                className="example-text"
-                color="inherit"
-                onClick={() => handleExample(4)}
-              >
-                Estrogen
-              </Button>
-              {/*<Typography
-              className={'example-text'}
-              variant={'button'}
-              onClick={() => handleExample(4)}
-            >
-              Estrogen
-            </Typography>*/}
             </Tooltip>
           </div>
         </div>

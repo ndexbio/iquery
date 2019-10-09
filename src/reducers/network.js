@@ -237,7 +237,7 @@ const convertCx2cyjs = (cx, queryGenes) => {
 
 const VS_TAG = 'cyVisualProperties'
 const getBackGround = cx => {
-  let color = '#FFFFFF'
+  const color = '#FFFFFF'
 
   const vps = cx.filter(entry => entry[VS_TAG])
   if (vps !== undefined && vps !== null && vps.length !== 0) {

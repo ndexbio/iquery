@@ -34,7 +34,7 @@ const TabContent = props => {
 
   //Find @context
   let context = {}
-  let networkAttr = findAttributes(
+  const networkAttr = findAttributes(
     props.network.originalCX,
     'networkAttributes'
   )
@@ -126,7 +126,7 @@ const DISABLED_STYLE = {
 const TableBrowserPanel = props => {
   //const network = props.network
   const classes = useStyles()
-  let value = props.network.tableDisplayTab
+  const value = props.network.tableDisplayTab
   const originalCX = props.network.originalCX
   if (originalCX === null) {
     return <div style={DISABLED_STYLE} />

@@ -65,7 +65,7 @@ const GeneList = props => {
   const matched = []
   const unmatched = []
 
-  for (let value of geneList.values()) {
+  for (const value of geneList.values()) {
     if (hitSets.has(value.symbol)) {
       matched.push(value)
     } else {
@@ -118,7 +118,18 @@ const getChip = (value, isValid, props, hitSets) => {
   if (isValid) {
     return (
       <Chip
-        avatar={<Avatar>{found ? <CheckIcon /> : '-'}</Avatar>}
+        avatar={
+          <Avatar
+            style={{
+              height: '32px',
+              width: '32px',
+              position: 'relative',
+              left: '-4px'
+            }}
+          >
+            {found ? <CheckIcon style={{ height: '18px' }} /> : '-'}
+          </Avatar>
+        }
         label={value.symbol}
         variant="outlined"
         color={color}

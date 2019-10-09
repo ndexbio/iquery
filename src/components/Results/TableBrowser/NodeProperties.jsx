@@ -72,7 +72,15 @@ const NodeProperties = props => {
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
-  const entityProperties = ['Name', 'Type', 'ID', 'HGNC', 'Ensembl', 'Alias']
+  const entityProperties = [
+    'Name',
+    'Type',
+    'Location',
+    'ID',
+    'HGNC',
+    'Ensembl',
+    'Alias'
+  ]
 
   const nodeProperties = [
     'Height',
@@ -107,7 +115,7 @@ const NodeProperties = props => {
     let title
     let geneAnnotation = null
     let inset = false
-    let aliases = new Set(aliasList[node.name])
+    const aliases = new Set(aliasList[node.name])
 
     //Add gene annotation
     if (
@@ -165,7 +173,7 @@ const NodeProperties = props => {
       })
     }
 
-    for (let key in node) {
+    for (const key in node) {
       content = extractContent(node[key])
       title = extractTitle(key)
       if (

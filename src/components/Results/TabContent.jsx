@@ -15,7 +15,12 @@ const TabContent = props => {
     )
   } else {
     return (
-      <Ndex hits={results.results} sourceUUID={results.sourceUUID} {...props} />
+      <Ndex
+        hits={results.results}
+        totalNetworks={results.numberOfNetworks}
+        sourceUUID={results.sourceUUID}
+        {...props}
+      />
     )
   }
 }

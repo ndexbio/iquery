@@ -122,33 +122,31 @@ const Ndex = props => {
     } = networkEntry
 
     const genes = (
-      <Tooltip title="Gene overlap" placement="left">
-        <span style={infoStyle}>
-          <Typography
-            display="inline"
-            color={
-              props.uiState.selectedSource === 'enrichment' &&
-              props.uiState.sortBy !== 'Overlap'
-                ? 'textSecondary'
-                : 'textPrimary'
-            }
-          >
-            <strong>{hitGenes.length}</strong>{' '}
-          </Typography>
-          <Typography
-            variant="caption"
-            display="inline"
-            color={
-              props.uiState.selectedSource === 'enrichment' &&
-              props.uiState.sortBy === 'Overlap'
-                ? 'textPrimary'
-                : 'textSecondary'
-            }
-          >
-            genes
-          </Typography>
-        </span>
-      </Tooltip>
+      <span style={infoStyle}>
+        <Typography
+          display="inline"
+          color={
+            props.uiState.selectedSource === 'enrichment' &&
+            props.uiState.sortBy !== 'Overlap'
+              ? 'textSecondary'
+              : 'textPrimary'
+          }
+        >
+          <strong>{hitGenes.length}</strong>{' '}
+        </Typography>
+        <Typography
+          variant="caption"
+          display="inline"
+          color={
+            props.uiState.selectedSource === 'enrichment' &&
+            props.uiState.sortBy === 'Overlap'
+              ? 'textPrimary'
+              : 'textSecondary'
+          }
+        >
+          genes
+        </Typography>
+      </span>
     )
 
     const icon = (
@@ -162,39 +160,37 @@ const Ndex = props => {
     if (props.uiState.selectedSource === 'enrichment') {
       let pVal = details.PValue
       if (pVal !== undefined) {
-        if (pVal < 1e-15) {
-          pVal = '< 1e-15'
+        if (pVal < 1e-12) {
+          pVal = '< 1e-12'
         } else {
           pVal = pVal.toExponential(2)
         }
       }
 
       const pv = (
-        <Tooltip title="Hypergeometric p-value" placement="left">
-          <span style={infoStyle}>
-            <Typography
-              display="inline"
-              color={
-                props.uiState.sortBy === 'p-Value'
-                  ? 'textPrimary'
-                  : 'textSecondary'
-              }
-            >
-              <strong>{pVal} </strong>
-            </Typography>
-            <Typography
-              variant="caption"
-              display="inline"
-              color={
-                props.uiState.sortBy === 'p-Value'
-                  ? 'textPrimary'
-                  : 'textSecondary'
-              }
-            >
-              pv
-            </Typography>
-          </span>
-        </Tooltip>
+        <span style={infoStyle}>
+          <Typography
+            display="inline"
+            color={
+              props.uiState.sortBy === 'p-Value'
+                ? 'textPrimary'
+                : 'textSecondary'
+            }
+          >
+            <strong>{pVal} </strong>
+          </Typography>
+          <Typography
+            variant="caption"
+            display="inline"
+            color={
+              props.uiState.sortBy === 'p-Value'
+                ? 'textPrimary'
+                : 'textSecondary'
+            }
+          >
+            pv
+          </Typography>
+        </span>
       )
 
       let similarity
@@ -202,31 +198,29 @@ const Ndex = props => {
       if (sim !== undefined) {
         sim = sim.toFixed(2)
         similarity = (
-          <Tooltip title="Tf-idf based cosine similarity" placement="left">
-            <span style={infoStyle}>
-              <Typography
-                display="inline"
-                color={
-                  props.uiState.sortBy === 'Similarity'
-                    ? 'textPrimary'
-                    : 'textSecondary'
-                }
-              >
-                <strong>{sim} </strong>
-              </Typography>
-              <Typography
-                variant="caption"
-                display="inline"
-                color={
-                  props.uiState.sortBy === 'Similarity'
-                    ? 'textPrimary'
-                    : 'textSecondary'
-                }
-              >
-                similarity
-              </Typography>
-            </span>
-          </Tooltip>
+          <span style={infoStyle}>
+            <Typography
+              display="inline"
+              color={
+                props.uiState.sortBy === 'Similarity'
+                  ? 'textPrimary'
+                  : 'textSecondary'
+              }
+            >
+              <strong>{sim} </strong>
+            </Typography>
+            <Typography
+              variant="caption"
+              display="inline"
+              color={
+                props.uiState.sortBy === 'Similarity'
+                  ? 'textPrimary'
+                  : 'textSecondary'
+              }
+            >
+              similarity
+            </Typography>
+          </span>
         )
       } else {
         similarity = null
@@ -384,6 +378,7 @@ const Ndex = props => {
         renderNetworkListItem={renderNetworkListItem}
         handleFetch={handleFetch}
         hits={props.hits}
+        totalNetworks={props.totalNetworks}
         {...props}
       />
       <NetworkView handleImportNetwork={handleImportNetwork} {...props} />

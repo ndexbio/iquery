@@ -17,7 +17,7 @@ function delay(duration) {
 
 export function* _fetchCyRESTAvailable(action) {
   // This is for avoiding too many unnecessary state updates.
-  let currentConnectionState = false
+  const currentConnectionState = false
 
   while (true) {
     try {

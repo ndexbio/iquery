@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import InfoModal from './InfoModal'
+
 import { withStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import FormControl from '@material-ui/core/FormControl'
@@ -36,12 +38,14 @@ const formStyle = {
 
 const divStyle = {
   paddingLeft: '16px',
-  borderBottom: '1px solid rgba(239, 239, 239, 1)'
+  borderBottom: '1px solid rgba(239, 239, 239, 1)',
+  display: 'inline-block',
+  width: '100%'
 }
 
-const typeStyle = {
+const textStyle = {
   position: 'relative',
-  top: '14.5px'
+  top: '8px'
 }
 
 const selectStyle = {
@@ -59,34 +63,37 @@ const SortPanel = props => {
 
   if (props.uiState.selectedSource === 'enrichment') {
     return (
-      <div style={divStyle}>
-        <Typography
-          variant="body2"
-          display="inline"
-          style={typeStyle}
-          color="textSecondary"
-        >
-          Sort by
-        </Typography>
-        <FormControl style={formStyle}>
-          <Select
-            value={sortBy}
-            onChange={handleChange}
-            displayEmpty
-            name="Sort by"
-            style={selectStyle}
-            input={<BootstrapInput name="sort" id="sort-customized-select" />}
+      <React.Fragment>
+        <div style={divStyle}>
+          <Typography
+            variant="body2"
+            display="inline"
+            color="textSecondary"
+            style={textStyle}
           >
-            {menuItems.map(item => (
-              <MenuItem value={item} key={item}>
-                <Typography variant="body2" color="textSecondary">
-                  {item}
-                </Typography>
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </div>
+            Sort by
+          </Typography>
+          <FormControl style={formStyle}>
+            <Select
+              value={sortBy}
+              onChange={handleChange}
+              displayEmpty
+              name="Sort by"
+              style={selectStyle}
+              input={<BootstrapInput name="sort" id="sort-customized-select" />}
+            >
+              {menuItems.map(item => (
+                <MenuItem value={item} key={item}>
+                  <Typography variant="body2" color="textSecondary">
+                    {item}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <InfoModal />
+        </div>
+      </React.Fragment>
     )
   } else {
     return null

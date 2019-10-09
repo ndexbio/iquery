@@ -165,11 +165,15 @@ const GeneTextBox = props => {
               onClose={handleClose}
             >
               {EXAMPLES.map((example, idx) => {
-                return (
-                  <MenuItem key={idx} onClick={() => handleExample(idx)}>
-                    {example.name}
-                  </MenuItem>
-                )
+                if (example.name !== 'Estrogen') {
+                  return (
+                    <MenuItem key={idx} onClick={() => handleExample(idx)}>
+                      {example.name}
+                    </MenuItem>
+                  )
+                } else {
+                  return null
+                }
               })}
             </Menu>
           </div>

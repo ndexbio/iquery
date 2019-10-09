@@ -45,7 +45,7 @@ const NetworkProperties = props => {
   const classes = useStyles()
 
   //Find network props
-  let networkAttr = findAttributes(originalCX, 'networkAttributes')
+  const networkAttr = findAttributes(originalCX, 'networkAttributes')
   if (networkAttr === null) {
     return
   }

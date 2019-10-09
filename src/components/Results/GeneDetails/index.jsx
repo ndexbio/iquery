@@ -87,7 +87,7 @@ class GeneDetails extends React.Component {
     }
 
     const values = []
-    for (let value of geneList.values()) {
+    for (const value of geneList.values()) {
       values.push(value)
     }
     return (

@@ -80,7 +80,7 @@ const Warning = props => {
       setOpen(true)
     }
     if (state === 'openResult' && open) {
-      let currentId = cycleId
+      const currentId = cycleId
       setTimeout(() => {
         if (state === 'openResult' && currentId === cycleId) {
           setState('dormant')

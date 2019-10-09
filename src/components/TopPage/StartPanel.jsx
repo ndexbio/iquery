@@ -24,7 +24,6 @@ const StartPanel = props => {
     }
     props.sourceActions.findSourceStarted()
 
-
     return () => {}
   }, [])
 

@@ -83,7 +83,7 @@ class GeneAnnotationList extends React.Component {
       return null
     }
 
-    let description = geneEntry.summary
+    const description = geneEntry.summary
     return (
       <ListItem
         alignItems="flex-start"
