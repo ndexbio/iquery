@@ -18,12 +18,12 @@ const StartPanel = props => {
     const genes = params.genes
 
     if (genes !== undefined) {
-      const geneList = genes.split(',')
+      const geneList = genes.split(/\s|,/)
       props.searchActions.setQuery(genes)
       props.searchActions.searchStarted({ geneList })
     }
-
     props.sourceActions.findSourceStarted()
+
 
     return () => {}
   }, [])
