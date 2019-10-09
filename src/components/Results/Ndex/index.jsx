@@ -162,6 +162,8 @@ const Ndex = props => {
       if (pVal !== undefined) {
         if (pVal < 1e-12) {
           pVal = '< 1e-12'
+        } else if (pVal > 1) {
+          pVal = '~ 1'
         } else {
           pVal = pVal.toExponential(2)
         }

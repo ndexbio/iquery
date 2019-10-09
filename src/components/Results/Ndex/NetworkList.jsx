@@ -119,9 +119,11 @@ const NetworkList = props => {
 
   //Adjust p-values
   useEffect(() => {
-    hits.sort(findSort('p-Value'))
-    for (let i = 0; i < hits.length; i++) {
-      hits[i].details.PValue = (hits[i].details.PValue * 3297) / (i + 1)
+    if (props.uiState.selectedSource === 'enrichment') {
+      hits.sort(findSort('p-Value'))
+      for (let i = 0; i < hits.length; i++) {
+        hits[i].details.PValue = (hits[i].details.PValue * 3297) / (i + 1)
+      }
     }
   }, [hits])
 
