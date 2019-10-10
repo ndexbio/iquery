@@ -25,14 +25,34 @@ export default function ExpandPanel(props) {
 
   return (
     <React.Fragment>
-      <ListItem button onClick={handleClick} key={Math.random()} style={style}>
-        <ListItemText primary={props.summary} />
+      <ListItem
+        button
+        onClick={handleClick}
+        key={'expandListItem' + props.panelKey}
+        style={style}
+      >
+        <ListItemText
+          primary={props.summary}
+          key={'expandListItemText' + props.panelKey}
+        />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem>
-            <ListItemText primary={props.details} />
+      <Collapse
+        in={open}
+        timeout="auto"
+        unmountOnExit
+        key={'collapse' + props.panelKey}
+      >
+        <List
+          component="div"
+          disablePadding
+          key={'collapseList' + props.panelKey}
+        >
+          <ListItem key={'collapseListItem' + props.panelKey}>
+            <ListItemText
+              primary={props.details}
+              key={'collapseListItemText' + props.panelKey}
+            />
           </ListItem>
         </List>
       </Collapse>

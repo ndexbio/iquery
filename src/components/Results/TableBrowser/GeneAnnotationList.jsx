@@ -60,35 +60,25 @@ class GeneAnnotationList extends React.Component {
 
   render() {
     const { classes } = this.props
+    const gene = this.props.gene
 
-    const results = this.props.search_results
-
-    if (!results) {
+    if (!gene) {
       return <div className="gene-list-wrapper" />
     }
 
-    const geneList = results.genes
-
-    if (!geneList) {
-      return <div className="gene-list-wrapper" />
-    }
-
-    const symbol = this.props.geneSymbol.toUpperCase()
-
-    return this.getListItem(geneList.get(symbol), classes)
+    return this.getListItem(gene, classes)
   }
 
-  getListItem = (geneEntry, classes) => {
-    if (geneEntry === null || geneEntry === undefined) {
+  getListItem = (gene, classes) => {
+    if (gene === null || gene === undefined) {
       return null
     }
 
-    const description = geneEntry.summary
     return (
       <ListItem
         alignItems="flex-start"
-        key={geneEntry._id}
-        onClick={e => this.handleClick(geneEntry._id)}
+        key={gene._id}
+        onClick={e => this.handleClick(gene._id)}
         disableGutters={true}
         style={{ padding: '0' }}
       >
@@ -106,7 +96,7 @@ class GeneAnnotationList extends React.Component {
                   <td style={{ padding: '0' }}>
                     <div>
                       <Typography component="span" variant="body2">
-                        {geneEntry.symbol}
+                        {gene.symbol}
                       </Typography>
                     </div>
                     <div>
@@ -116,12 +106,12 @@ class GeneAnnotationList extends React.Component {
                         variant="caption"
                         color="textSecondary"
                       >
-                        {camelCaseToTitleCase(geneEntry.name)}
+                        {camelCaseToTitleCase(gene.name)}
                       </Typography>
                     </div>
                     <div>
                       <Typography variant="body2" color="textPrimary">
-                        {description}
+                        {gene.summary}
                       </Typography>
                     </div>
                   </td>
@@ -129,7 +119,7 @@ class GeneAnnotationList extends React.Component {
                     <Tooltip title="Open in GeneCards" placement="bottom">
                       <IconButton
                         aria-label="Link to GeneCards"
-                        href={GENE_CARDS_URL + geneEntry.symbol}
+                        href={GENE_CARDS_URL + gene.symbol}
                         target="_blank"
                       >
                         <LinkIcon />

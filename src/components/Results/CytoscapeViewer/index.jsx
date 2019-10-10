@@ -5,10 +5,7 @@ import Cytoscape from 'cytoscape'
 import CyCanvas from 'cytoscape-canvas'
 import { CxToCyCanvas } from 'cyannotation-cx2js'
 import Warning from './Warning'
-import {
-  CONCENTRIC_LAYOUT,
-  COSE_LAYOUT /*PRESET_LAYOUT*/
-} from './LayoutSettings'
+import { CONCENTRIC_LAYOUT, COSE_LAYOUT } from './LayoutSettings'
 import { isEqual, cloneDeep } from 'lodash'
 
 import './style.css'
@@ -39,6 +36,7 @@ const DEF_BG_COLOR = '#FFFFFF'
  * @returns {*}
  * @constructor
  */
+
 const CytoscapeViewer = props => {
   const { highlights, fit } = props.uiState
   const { originalCX } = props.network
@@ -61,15 +59,16 @@ const CytoscapeViewer = props => {
     }
   }
   const [layout, setLayout] = useState(PRESET_LAYOUT)
+  let propLayouts
+  let propLayout
 
   // Use default color if this property is not available.
   let backgroundColor = props.network.backgroundColor
   if (backgroundColor === null || backgroundColor === undefined) {
     backgroundColor = DEF_BG_COLOR
   }
-
   /*
-  let niceCX = useMemo(() => {
+  const niceCX = useMemo(() => {
     if (originalCX && layout.name === 'preset') {
       const networkAttr = originalCX.filter(
         entry => entry.networkAttributes !== undefined
@@ -106,9 +105,8 @@ const CytoscapeViewer = props => {
       }
     }
     return null
-  }, [originalCX, cyInstance, layout])
-  */
-
+  }, [originalCX, cyInstance])
+*/
   const renderAnnotations = () => {
     if (layout.name === 'preset' && originalCX) {
       const networkAttr = originalCX.filter(
@@ -142,6 +140,7 @@ const CytoscapeViewer = props => {
   /*
     Node/Edge Selections
    */
+
   useEffect(() => {
     // Event handler can be set only when Cytoscape.js instance is available.
     if (cyInstance === undefined || cyInstance === null) {
@@ -225,8 +224,7 @@ const CytoscapeViewer = props => {
     query.addClass('highlight')
 
     //Layout
-    let propLayouts
-    let propLayout
+
     if (cyjs != null) {
       const isLayoutAvailable = cyjs.isLayout
       if (isLayoutAvailable) {
@@ -250,17 +248,38 @@ const CytoscapeViewer = props => {
       resolve()
     }).then(() => {
       props.uiStateActions.update({
-        //fit: true,
         highlights: true,
         layouts: propLayouts,
         layout: propLayout
       })
     })
+    /*
+    props.uiStateActions.update({
+      //highlights: true,
+      layouts: propLayouts,
+      layout: propLayout
+    })
+*/
 
     return () => {
       console.log('Network viewer unmounted')
     }
   }, [])
+
+  //After render?
+  useEffect(() => {
+    /*
+    new Promise(function(resolve, reject) {
+      renderAnnotations()
+      resolve()
+    }).then(() => {
+      props.uiStateActions.update({
+        highlights: true,
+        layouts: propLayouts,
+        layout: propLayout
+      })
+    })*/
+  })
 
   useEffect(() => {
     if (cyInstance === undefined || cyInstance === null) {
@@ -400,7 +419,7 @@ const CytoscapeViewer = props => {
     />
   )
 }
-
+/*
 const MemoCytoscapeViewer = React.memo(
   CytoscapeViewer,
   (oldProps, newProps) => {
@@ -412,5 +431,5 @@ const MemoCytoscapeViewer = React.memo(
     )
   }
 )
-
-export default MemoCytoscapeViewer
+*/
+export default CytoscapeViewer
