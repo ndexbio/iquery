@@ -18,7 +18,7 @@
     {
       "name": "Coxsackie Virus-Human",
       "genes": "YTHD3 XRN2 TM225 SETD3 RTRAF RING1 REL RAVR1 RAE1L PURB PTBP1 PRC2B PAN2 NUP98 NCBP3 MYCB2 LAR4B IMA5 IF4G1 FBSP1 FA98A F120A EIF3M EIF3L EIF3K EIF3I EIF3H EIF3G EIF3F EIF3E EIF3D EIF3C EIF3B EIF3A DPYL2 DDX1 CSK21 CPSF6 CISY CBX1 CARF C2AIL",
-      "description": "42 human host proteins that were shown to interact with the 2A protein of the Coxsackie virus in Diep et al. Nature Microbiology (2019). The larger network from the paper is, not surprisingly, the top enrichment result, but interestingly, the second result is a network of HIV-Human interactors that shares a set of proteins related to translation initiation."
+      "description": "42 human host proteins that were shown to interact with the 2A protein of the Coxsackie virus in Diep et al. Nature Microbiology (2019). The larger network from the paper is, not surprisingly, the top enrichment result, but interestingly, one of the top results is a network of HIV-Human interactors that shares a set of proteins related to translation initiation."
     }
   ],
   "other examples": [

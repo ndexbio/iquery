@@ -9,19 +9,21 @@ import {
   setLayout,
   setLayouts,
   fitNetworkView,
-  update
+  update,
+  setAnnotations
 } from '../actions/uiState'
 
 const DEF_STATE = {
   isSettingsOpen: false,
   servicesListOpen: false,
-  highlights: false,
+  highlights: true,
   selectedSource: 'enrichment',
   sortOptions: ['Overlap', 'p-Value', 'Similarity'],
   sortBy: 'Similarity',
   layout: 'Preset',
   layouts: [],
-  fit: false
+  fit: true,
+  annotations: false
 }
 
 const uiState = handleActions(
@@ -66,16 +68,22 @@ const uiState = handleActions(
     [fitNetworkView]: (state, payload) => {
       return {
         ...state,
-        fit: payload.payload
+        fit: !state.fit
       }
     },
     [update]: (state, payload) => {
       return {
         ...state,
         //fit: payload.payload.fit,
-        highlights: payload.payload.highlights,
+        //highlights: payload.payload.highlights,
         layouts: payload.payload.layouts,
         layout: payload.payload.layout
+      }
+    },
+    [setAnnotations]: (state, payload) => {
+      return {
+        ...state,
+        annotations: payload.payload
       }
     }
   },
