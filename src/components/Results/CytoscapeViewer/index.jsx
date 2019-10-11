@@ -14,6 +14,7 @@ import { CONCENTRIC_LAYOUT, COSE_LAYOUT } from './LayoutSettings'
 import { isEqual, cloneDeep } from 'lodash'
 
 import './style.css'
+import { setAnnotations } from '../../../actions/uiState'
 
 // For supporting visual annotation
 Cytoscape.use(CyCanvas)
@@ -21,7 +22,7 @@ Cytoscape.use(CyCanvas)
 // This is the global instance of Cytoscape.js
 let cyInstance = null
 
-let first = true
+//let first = true
 
 // For annotation rendering
 const annotationRenderer = new CxToCyCanvas(CxToJs)
@@ -44,6 +45,7 @@ const DEF_BG_COLOR = '#FFFFFF'
 
 const CytoscapeViewer = props => {
   const [startTime, setStartTime] = useState(new Date().getTime())
+  const [layout, setLayout] = useState(null)
   const [ignored, forceUpdate] = useReducer(x => x + 1, 0)
   //Props
   const { originalCX } = props.network
@@ -54,7 +56,7 @@ const CytoscapeViewer = props => {
   let propLayout
   let originalElements
   let presetLayout
-  let layout
+
   const networkAreaStyle = {
     width: '100%',
     height: '100%',
@@ -62,7 +64,7 @@ const CytoscapeViewer = props => {
   }
 
   const [uuid, setUuid] = useState(null)
-  //const [first, setFirst] = useState(true)
+  //const [annotations, setAnnotations] = useState(false)
 
   useEffect(() => {
     console.log('start event listeners ' + (new Date().getTime() - startTime))
@@ -126,178 +128,7 @@ const CytoscapeViewer = props => {
     })
 
     console.log('stop event listeners' + (new Date().getTime() - startTime))
-  }, [])
 
-  //Layout
-  useEffect(() => {
-    console.log('start layout effect' + (new Date().getTime() - startTime))
-    if (!first) {
-      if (layout && props.uiState.layout.toLowerCase() !== layout.name) {
-        console.log('enter layout effect' + (new Date().getTime() - startTime))
-        switch (props.uiState.layout) {
-          case 'Preset':
-            layout = presetLayout
-            break
-          case 'Cose':
-            layout = COSE_LAYOUT
-            break
-          case 'Concentric':
-            layout = CONCENTRIC_LAYOUT
-            break
-        }
-      }
-    }
-    console.log('stop layout effect' + (new Date().getTime() - startTime))
-  }, [props.uiState.layout, first])
-
-  //Highlights
-  useEffect(() => {
-    console.log('start highlights effect' + (new Date().getTime() - startTime))
-    if (!first) {
-      console.log(
-        'enter highlights effect' + (new Date().getTime() - startTime)
-      )
-      const query = cyInstance.filter('node[querynode = "true"]')
-
-      if (props.uiState.highlights) {
-        //cyInstance.elements().addClass('faded')
-        query.addClass('highlight')
-      } else {
-        query
-          //cyInstance
-          //.elements()
-          //.removeClass('faded')
-          .removeClass('highlight')
-      }
-    }
-    console.log('stop highlights effect' + (new Date().getTime() - startTime))
-  }, [props.uiState.highlights, first])
-
-  //Selected genes
-  useEffect(() => {
-    console.log(
-      'start selected genes effect' + (new Date().getTime() - startTime)
-    )
-    if (!first) {
-      if (props.search.selectedGenes != null) {
-        console.log(
-          'enter selected genes effect' + (new Date().getTime() - startTime)
-        )
-        const targets = props.search.selectedGenes
-        const selected = cyInstance.elements(
-          'node[name = "' + targets[0] + '"]'
-        )
-        if (selected.length !== 0) {
-          cyInstance.animate(
-            {
-              zoom: 2,
-              center: {
-                eles: selected[0]
-              }
-            },
-            {
-              duration: 500
-            }
-          )
-        }
-        if (targets.length === 0) {
-          cyInstance.animate(
-            {
-              fit: {
-                eles: cyInstance.elements(),
-                padding: 6
-              }
-            },
-            {
-              duration: 500
-            }
-          )
-        }
-      }
-    }
-    console.log(
-      'stop selected genes effect' + (new Date().getTime() - startTime)
-    )
-  }, [props.search.selectedGenes, first])
-
-  //Fit
-  useEffect(() => {
-    console.log('start fit effect' + (new Date().getTime() - startTime))
-    if (!first) {
-      console.log('enter fit effect' + (new Date().getTime() - startTime))
-
-      //if (props.uiState.fit) {
-      cyInstance.fit({
-        eles: cyInstance.elements(),
-        padding: 6
-      })
-      /*
-      cyInstance.animate(
-        {
-          fit: {
-            eles: cyInstance.elements(),
-            padding: 6
-          }
-        },
-        {
-          duration: 500
-        }
-      )*/
-    }
-    //props.uiStateActions.fitNetworkView(false)
-    //}
-    console.log('stop fit effect' + (new Date().getTime() - startTime))
-  }, [props.uiState.fit, first])
-
-  useEffect(() => {
-    if (first) {
-      console.log('enter first' + (new Date().getTime() - startTime))
-      first = false
-      forceUpdate()
-    }
-  }, [first])
-  /*
-  useEffect(() => {
-    //if (!first) {
-      console.log('start highlights' + (new Date().getTime() - startTime))
-      //Highlights
-      const query = cyInstance.filter('node[querynode = "true"]')
-      query.addClass('highlight')
-      /*
-      setTimeout(() => {
-        cyInstance.animate(
-          {
-            fit: {
-              eles: cyInstance.elements(),
-              padding: 6
-            }
-          },
-          {
-            duration: 500
-          }
-        )
-      }, 1)
-      console.log('stop highlights' + (new Date().getTime() - startTime))
-    //}
-  }, [first])
-*/
-  if (props.network.network == null || cyInstance == null) {
-    console.log('null' + (new Date().getTime() - startTime))
-
-    return (
-      <CytoscapeComponent
-        cy={cy => {
-          cyInstance = cy
-        }}
-      />
-    )
-  }
-
-  console.log('not null' + (new Date().getTime() - startTime))
-
-  console.log(uuid)
-  console.log(props.network.uuid)
-  if (uuid !== props.network.uuid) {
     console.log('enter' + (new Date().getTime() - startTime))
 
     setUuid(props.network.uuid)
@@ -307,9 +138,6 @@ const CytoscapeViewer = props => {
     //Layout
     if (cyjs.isLayout) {
       console.log('enter layout' + (new Date().getTime() - startTime))
-
-      propLayouts = ['Preset', 'Cose', 'Concentric']
-      propLayout = 'Preset'
       originalElements = cloneDeep(cyjs.elements)
       presetLayout = {
         name: 'preset',
@@ -324,7 +152,7 @@ const CytoscapeViewer = props => {
           return position
         }
       }
-      layout = presetLayout
+      setLayout(presetLayout)
 
       //Annotation
       console.log('start annotation' + (new Date().getTime() - startTime))
@@ -349,12 +177,23 @@ const CytoscapeViewer = props => {
               '* Registering annotation renderer for this niceCX:',
               annotationEntry
             )
-
-            annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
-            annotationRenderer.drawBackground(
-              cyInstance,
-              props.network.backgroundColor
-            )
+            new Promise((resolve, reject) => {
+              annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
+              annotationRenderer.drawBackground(
+                cyInstance,
+                props.network.backgroundColor
+              )
+              resolve()
+            }).then(() => {
+              console.log('start update' + (new Date().getTime() - startTime))
+              props.uiStateActions.update({
+                layouts: ['Preset', 'Cose', 'Concentric'],
+                layout: 'Preset',
+                annotations: true
+              })
+              console.log('stop update' + (new Date().getTime() - startTime))
+              console.log('stop layout' + (new Date().getTime() - startTime))
+            })
             console.log('stop annotation' + (new Date().getTime() - startTime))
           }
         }
@@ -363,22 +202,123 @@ const CytoscapeViewer = props => {
       propLayouts = ['Cose', 'Concentric']
       if (cyjs.elements.length < 500) {
         propLayout = 'Cose'
-        layout = COSE_LAYOUT
+        setLayout(COSE_LAYOUT)
       } else {
         propLayout = 'Concentric'
-        layout = CONCENTRIC_LAYOUT
+        setLayout(CONCENTRIC_LAYOUT)
+      }
+      console.log('start update' + (new Date().getTime() - startTime))
+      props.uiStateActions.update({
+        layouts: propLayouts,
+        layout: propLayout
+      })
+      console.log('stop update' + (new Date().getTime() - startTime))
+      console.log('stop layout' + (new Date().getTime() - startTime))
+    }
+  }, [])
+
+  //Layout
+  useEffect(() => {
+    console.log('start layout effect' + (new Date().getTime() - startTime))
+    if (layout && props.uiState.layout.toLowerCase() !== layout.name) {
+      console.log('enter layout effect' + (new Date().getTime() - startTime))
+      switch (props.uiState.layout) {
+        case 'Preset':
+          setLayout(presetLayout)
+          break
+        case 'Cose':
+          setLayout(COSE_LAYOUT)
+          break
+        case 'Concentric':
+          setLayout(CONCENTRIC_LAYOUT)
+          break
       }
     }
-    console.log('stop layout' + (new Date().getTime() - startTime))
+    console.log('stop layout effect' + (new Date().getTime() - startTime))
+  }, [props.uiState.layout])
 
-    console.log('start update' + (new Date().getTime() - startTime))
+  //Highlights
+  useEffect(() => {
+    console.log('start highlights effect' + (new Date().getTime() - startTime))
+    console.log('enter highlights effect' + (new Date().getTime() - startTime))
+    const query = cyInstance.filter('node[querynode = "true"]')
 
-    props.uiStateActions.update({
-      layouts: propLayouts,
-      layout: propLayout
+    if (props.uiState.highlights) {
+      query.addClass('highlight')
+    } else {
+      query.removeClass('highlight')
+    }
+    console.log('stop highlights effect' + (new Date().getTime() - startTime))
+  }, [props.uiState.highlights]) //, first])
+
+  //Selected genes
+  useEffect(() => {
+    console.log(
+      'start selected genes effect' + (new Date().getTime() - startTime)
+    )
+    if (props.search.selectedGenes != null) {
+      console.log(
+        'enter selected genes effect' + (new Date().getTime() - startTime)
+      )
+      const targets = props.search.selectedGenes
+      const selected = cyInstance.elements('node[name = "' + targets[0] + '"]')
+      if (selected.length !== 0) {
+        cyInstance.animate(
+          {
+            zoom: 2,
+            center: {
+              eles: selected[0]
+            }
+          },
+          {
+            duration: 500
+          }
+        )
+      }
+      if (targets.length === 0) {
+        cyInstance.animate(
+          {
+            fit: {
+              eles: cyInstance.elements(),
+              padding: 6
+            }
+          },
+          {
+            duration: 500
+          }
+        )
+      }
+    }
+    console.log(
+      'stop selected genes effect' + (new Date().getTime() - startTime)
+    )
+  }, [props.search.selectedGenes])
+
+  //Fit
+  useEffect(() => {
+    console.log('start fit effect' + (new Date().getTime() - startTime))
+    console.log('enter fit effect' + (new Date().getTime() - startTime))
+
+    cyInstance.fit({
+      eles: cyInstance.elements(),
+      padding: 6
     })
-    console.log('stop update' + (new Date().getTime() - startTime))
+    console.log('stop fit effect' + (new Date().getTime() - startTime))
+  }, [props.uiState.fit])
+
+  if (props.network.network == null || cyInstance == null) {
+    console.log('null' + (new Date().getTime() - startTime))
+
+    return (
+      <CytoscapeComponent
+        cy={cy => {
+          cyInstance = cy
+        }}
+      />
+    )
   }
+
+  console.log('not null' + (new Date().getTime() - startTime))
 
   console.log('return' + (new Date().getTime() - startTime))
 

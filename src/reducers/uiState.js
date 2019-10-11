@@ -77,7 +77,10 @@ const uiState = handleActions(
         //fit: payload.payload.fit,
         //highlights: payload.payload.highlights,
         layouts: payload.payload.layouts,
-        layout: payload.payload.layout
+        layout: payload.payload.layout,
+        annotations: payload.payload.annotations
+          ? !state.annotations
+          : state.annotations
       }
     },
     [setAnnotations]: (state, payload) => {
