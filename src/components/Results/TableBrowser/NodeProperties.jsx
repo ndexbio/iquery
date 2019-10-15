@@ -118,11 +118,18 @@ const NodeProperties = props => {
     const aliases = new Set(aliasList[node.name])
 
     //Add gene annotation
-    if (props.network != null && props.network.hitGenes.includes(node.name)) {
+    if (
+      props.search.results != null &&
+      props.search.results.genes.get(node.name) != null
+    ) {
       inset = true
       geneAnnotation = (
         <List className={classes.noPadding}>
-          <GeneAnnotationList {...props} gene={props.geneInfo[node.name]} />
+          <GeneAnnotationList
+            {...props}
+            search_results={props.search.results}
+            geneSymbol={node.name}
+          />
         </List>
       )
     }
@@ -293,7 +300,7 @@ const NodeProperties = props => {
             secondaryString = 'Entity Properties'
             displayCol1.push(
               <ListItem
-                key={secondaryString + node.id}
+                key={index++}
                 className={classes.noPadding}
                 disableGutters={true}
               >
@@ -319,7 +326,7 @@ const NodeProperties = props => {
             secondaryString = 'Node Properties'
             displayCol2.push(
               <ListItem
-                key={secondaryString + node.id}
+                key={index++}
                 className={classes.noPadding}
                 disableGutters={true}
               >
@@ -355,7 +362,7 @@ const NodeProperties = props => {
     if (primaryString !== '') {
       displayCol1.push(
         <ListItem
-          key={secondaryString + node.id}
+          key={index++}
           className={classes.noPadding}
           disableGutters={true}
         >
@@ -414,9 +421,8 @@ const NodeProperties = props => {
         summary={summary}
         details={details}
         defaultExpanded={defaultExpanded}
-        panelKey={node.id}
+        key={node.id + index++}
         divider={true}
-        key={node.id}
       />
     )
   })

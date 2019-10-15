@@ -42,7 +42,6 @@ const DEF_BG_COLOR = '#FFFFFF'
  * @returns {*}
  * @constructor
  */
-
 const CytoscapeViewer = props => {
   const [startTime, setStartTime] = useState(new Date().getTime())
   const [layout, setLayout] = useState(null)
@@ -51,21 +50,101 @@ const CytoscapeViewer = props => {
   const { originalCX } = props.network
   const cyjs = props.network.network
 
-  //Variables
-  let propLayouts
-  let propLayout
-  let originalElements
-  let presetLayout
+  const PRESET_LAYOUT = {
+    name: 'preset',
+    padding: 6,
+    animate: false,
+    positions: function(node) {
+      const id = node[0]._private.data.id
+      const analog = originalElements.filter(elem => {
+        return elem.data.id.toString() === id.toString()
+      })
+      const position = analog[0].position
+      return position
+    }
+  }
+  const [layout, setLayout] = useState(PRESET_LAYOUT)
 
-  const networkAreaStyle = {
-    width: '100%',
-    height: '100%',
-    background: 'rgba(0,0,0,0)'
+  // Use default color if this property is not available.
+  let backgroundColor = props.network.backgroundColor
+  if (backgroundColor === null || backgroundColor === undefined) {
+    backgroundColor = DEF_BG_COLOR
   }
 
-  const [uuid, setUuid] = useState(null)
-  //const [annotations, setAnnotations] = useState(false)
+  /*
+  let niceCX = useMemo(() => {
+    if (originalCX && layout.name === 'preset') {
+      const networkAttr = originalCX.filter(
+        entry => entry.networkAttributes !== undefined
+      )
 
+      if (networkAttr !== undefined) {
+        const firstEntry = networkAttr[0]
+        if (
+          firstEntry === undefined ||
+          firstEntry.networkAttributes === undefined
+        ) {
+          return
+        }
+
+        const netAttrArray = firstEntry.networkAttributes
+        const annotationEntry = netAttrArray.filter(
+          attr => attr.n === ANNOTATION_TAG
+        )
+        if (annotationEntry.length !== 0 && cyInstance) {
+          const nice = utils.rawCXtoNiceCX(originalCX)
+          console.log(
+            '* Registering annotation renderer for this niceCX:',
+            annotationEntry
+          )
+          new Promise(function(resolve, reject) {
+            annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
+            annotationRenderer.drawBackground(cyInstance, backgroundColor)
+            resolve()
+          }).then(() => {
+            props.networkActions.setAnnotations(true)
+          })
+          return nice
+        }
+      }
+    }
+    return null
+  }, [originalCX, cyInstance, layout])
+  */
+
+  const renderAnnotations = () => {
+    if (layout.name === 'preset' && originalCX) {
+      const networkAttr = originalCX.filter(
+        entry => entry.networkAttributes !== undefined
+      )
+      if (networkAttr !== undefined) {
+        const firstEntry = networkAttr[0]
+        if (
+          firstEntry !== undefined &&
+          firstEntry.networkAttributes != undefined
+        ) {
+          const netAttrArray = firstEntry.networkAttributes
+          const annotationEntry = netAttrArray.filter(
+            attr => attr.n === ANNOTATION_TAG
+          )
+          if (annotationEntry.length !== 0 && cyInstance) {
+            const nice = utils.rawCXtoNiceCX(originalCX)
+            console.log(
+              '* Registering annotation renderer for this niceCX:',
+              annotationEntry
+            )
+            annotationRenderer.drawAnnotationsFromNiceCX(cyInstance, nice)
+            annotationRenderer.drawBackground(cyInstance, backgroundColor)
+          }
+        }
+      }
+    }
+    return
+  }
+
+  /*
+    Node/Edge Selections
+   */
   useEffect(() => {
     console.log('start event listeners ' + (new Date().getTime() - startTime))
 
@@ -129,6 +208,7 @@ const CytoscapeViewer = props => {
 
     console.log('stop event listeners' + (new Date().getTime() - startTime))
 
+<<<<<<< HEAD
     console.log('enter' + (new Date().getTime() - startTime))
 
     setUuid(props.network.uuid)
@@ -150,6 +230,25 @@ const CytoscapeViewer = props => {
           })
           const position = analog[0].position
           return position
+=======
+    //Layout
+    let propLayouts
+    let propLayout
+    if (cyjs != null) {
+      const isLayoutAvailable = cyjs.isLayout
+      if (isLayoutAvailable) {
+        propLayouts = ['Preset', 'Cose', 'Concentric']
+        propLayout = 'Preset'
+        setLayout(PRESET_LAYOUT)
+      } else {
+        propLayouts = ['Cose', 'Concentric']
+        if (cyjs.elements.length < 500) {
+          propLayout = 'Cose'
+          setLayout(COSE_LAYOUT)
+        } else {
+          propLayout = 'Concentric'
+          setLayout(CONCENTRIC_LAYOUT)
+>>>>>>> parent of d28d422... New examples
         }
       }
       setLayout(presetLayout)
@@ -209,6 +308,7 @@ const CytoscapeViewer = props => {
       }
       console.log('start update' + (new Date().getTime() - startTime))
       props.uiStateActions.update({
+<<<<<<< HEAD
         layouts: propLayouts,
         layout: propLayout
       })
@@ -238,6 +338,20 @@ const CytoscapeViewer = props => {
   }, [props.uiState.layout])
 
   //Highlights
+=======
+        //fit: true,
+        highlights: true,
+        layouts: propLayouts,
+        layout: propLayout
+      })
+    })
+
+    return () => {
+      console.log('Network viewer unmounted')
+    }
+  }, [])
+
+>>>>>>> parent of d28d422... New examples
   useEffect(() => {
     console.log('start highlights effect' + (new Date().getTime() - startTime))
     console.log('enter highlights effect' + (new Date().getTime() - startTime))

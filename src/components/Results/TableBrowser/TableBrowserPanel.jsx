@@ -32,12 +32,6 @@ const backgroundcolor = 'rgb(220, 220, 220)'
 const TabContent = props => {
   const { value } = props
 
-  //Find gene annotation information
-  const geneInfo = {}
-  for (const geneObject of props.search.results.genes) {
-    geneInfo[geneObject[0].toUpperCase()] = geneObject[1]
-  }
-
   //Find @context
   let context = {}
   const networkAttr = findAttributes(
@@ -115,7 +109,6 @@ const TabContent = props => {
         context={context}
         represents={represents}
         aliasList={aliasList}
-        geneInfo={geneInfo}
         {...props}
       />
     )

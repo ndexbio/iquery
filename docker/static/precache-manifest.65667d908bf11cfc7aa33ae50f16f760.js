@@ -1,5 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
+<<<<<<< HEAD:docker/static/precache-manifest.65667d908bf11cfc7aa33ae50f16f760.js
     "revision": "f51ce76049d8383dfe33a065a816ff9a",
     "url": "/index.html"
   },
@@ -18,6 +19,26 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "6ca382c1de5042262972",
     "url": "/static/js/main.5f4d76a5.chunk.js"
+=======
+    "revision": "7274e5394702e48c0586052f2fff470e",
+    "url": "/index.html"
+  },
+  {
+    "revision": "441257d91c1275b254b7",
+    "url": "/static/css/2.8271af8e.chunk.css"
+  },
+  {
+    "revision": "7807954f7bef997d1cb2",
+    "url": "/static/css/main.1bad612c.chunk.css"
+  },
+  {
+    "revision": "441257d91c1275b254b7",
+    "url": "/static/js/2.124455d2.chunk.js"
+  },
+  {
+    "revision": "7807954f7bef997d1cb2",
+    "url": "/static/js/main.801fb550.chunk.js"
+>>>>>>> parent of d28d422... New examples:docker/static/precache-manifest.53bb448ed61749c77b23be1bf2c14b04.js
   },
   {
     "revision": "d768df4e793a66812aae",
