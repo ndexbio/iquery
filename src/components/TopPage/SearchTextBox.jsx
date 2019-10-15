@@ -128,50 +128,28 @@ const SearchTextBox = props => {
         </Typography>
 
         <div className={'query-examples'}>
-          <div>
-            <Tooltip title="Known Hypoxia genes" placement={'bottom'}>
-              <Button
-                className="example-text"
-                color="inherit"
-                onClick={() => handleExample(0)}
-              >
-                Hypoxia
-              </Button>
-            </Tooltip>
-          </div>
-          <div>
-            <Tooltip title="Known Adenyl Cyclase genes" placement={'bottom'}>
-              <Button
-                className="example-text"
-                color="inherit"
-                onClick={() => handleExample(1)}
-              >
-                Adenyl Cyclase
-              </Button>
-            </Tooltip>
-          </div>
-          <div>
-            <Tooltip title="D4DGI description" placement={'bottom'}>
-              <Button
-                className="example-text"
-                color="inherit"
-                onClick={() => handleExample(2)}
-              >
-                D4DGI
-              </Button>
-            </Tooltip>
-          </div>
-          <div>
-            <Tooltip title="Angiotensin description" placement={'bottom'}>
-              <Button
-                className="example-text"
-                color="inherit"
-                onClick={() => handleExample(3)}
-              >
-                Angiotensin
-              </Button>
-            </Tooltip>
-          </div>
+          {EXAMPLES.map((example, index) => {
+            return (
+              <div key={example.name}>
+                <Tooltip
+                  title={
+                    <div style={{ textAlign: 'center' }}>
+                      {example.description}
+                    </div>
+                  }
+                  placement="bottom"
+                >
+                  <Button
+                    className="example-text"
+                    color="inherit"
+                    onClick={() => handleExample(index)}
+                  >
+                    {example.name}
+                  </Button>
+                </Tooltip>
+              </div>
+            )
+          })}
         </div>
       </div>
 
