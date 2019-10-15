@@ -14,8 +14,7 @@ import {
   unselectEdges,
   deselectAll,
   changeTab,
-  changeListIndex,
-  fitNetworkView
+  changeListIndex
 } from '../actions/network'
 
 const defaultState = {
@@ -34,8 +33,7 @@ const defaultState = {
   selectedNodes: [],
   selectedEdges: [],
   tableDisplayTab: 0,
-  listIndex: 0,
-  fit: false
+  listIndex: 0
 }
 
 const utils = new CyNetworkUtils()
