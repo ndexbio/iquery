@@ -14,7 +14,10 @@ const InputPanel = props => (
   <div className="input-container">
     <div className="input-wrapper">
       <div className={'gene-list-title'}>
-        Query Genes ({props.search.queryList.length})
+        Query Genes{' '}
+        {props.search.results
+          ? '(' + props.search.results.genes.size + ')'
+          : null}
       </div>
       <GeneList {...props} />
     </div>

@@ -84,7 +84,16 @@ const SearchTextBox = props => {
     }
 
     const sourceNames = sources.map(source => source.name)
-    const geneList = genes.toString().split(/\s*,\s*|\s+/)
+    let geneList = genes
+      .toString()
+      .replace(',', ' ')
+      .split(/\s*,\s*|\s+/)
+    const regex = RegExp('^[a-zA-Z][a-zA-Z0-9-]*$')
+
+    geneList = geneList.filter(gene => {
+      return regex.test(gene)
+    })
+
     props.searchActions.setQuery(genes)
     props.searchActions.searchStarted({ geneList, sourceNames })
   }

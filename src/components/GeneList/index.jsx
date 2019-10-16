@@ -58,6 +58,7 @@ const GeneList = props => {
   }
 
   const geneList = results.genes
+  console.log(geneList)
   if (!geneList) {
     return <div className="gene-list-wrapper" />
   }

@@ -14,6 +14,7 @@ import {
   setSearchResult,
   setActualResults
 } from '../actions/search'
+import { regExpLiteral } from '@babel/types'
 
 const EMPTY_STATE = {
   isSearching: false,
@@ -40,11 +41,16 @@ const search = handleActions(
       return EMPTY_STATE
     },
     [searchStarted]: (state, payload) => {
+      let newQueryList = state.queryGenes.split(' ')
+      const regex = RegExp('^[a-zA-Z][a-zA-Z0-9-]*$')
+      newQueryList = newQueryList.filter(gene => {
+        return regex.test(gene)
+      })
       return {
         ...state,
         isSearching: true,
         resultList: [],
-        queryList: state.queryGenes.split(' ')
+        queryList: newQueryList
       }
     },
     [searchSucceeded]: (state, payload) => {

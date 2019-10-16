@@ -89,7 +89,12 @@ const GeneTextBox = props => {
     const sourceNames = sources.map(source => source.name)
 
     const geneListString = genes.replace(',', ' ')
-    const geneList = geneListString.split(/\s*,\s*|\s+/)
+    let geneList = geneListString.split(/\s*,\s*|\s+/)
+
+    const regex = RegExp('^[a-zA-Z][a-zA-Z0-9-]*$')
+    geneList = geneList.filter(gene => {
+      return regex.test(gene)
+    })
 
     props.searchActions.clearAll()
     props.uiStateActions.setSelectedSource('enrichment')
