@@ -10,7 +10,6 @@ import { camelCaseToTitleCase } from '../TableBrowser/camel-case-util'
 
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Typography from '@material-ui/core/Typography'
-import Tooltip from '@material-ui/core/Tooltip'
 import { ListItem } from '@material-ui/core'
 
 const titleStyle = {
@@ -120,7 +119,6 @@ const Ndex = props => {
       hitGenes,
       details
     } = networkEntry
-
     const genes = (
       <span style={infoStyle}>
         <Typography
@@ -198,7 +196,11 @@ const Ndex = props => {
       let similarity
       let sim = details.similarity
       if (sim !== undefined) {
-        sim = sim.toFixed(2)
+        if (isNaN(sim)) {
+          sim = 'NaN'
+        } else {
+          sim = sim.toFixed(2)
+        }
         similarity = (
           <span style={infoStyle}>
             <Typography
@@ -237,17 +239,11 @@ const Ndex = props => {
       const subtitle = (
         <span style={subtitleStyle}>
           <Typography variant="caption" color="textSecondary">
-            <Tooltip title="Number of nodes" placement="bottom">
-              <span>Nodes: {nodes}, </span>
-            </Tooltip>
-            <Tooltip title="Number of edges" placement="bottom">
-              <span>Edges: {edges}, </span>
-            </Tooltip>
-            <Tooltip title="Network source" placement="bottom">
-              <span>
-                Source: {camelCaseToTitleCase(description.split(':')[0])}
-              </span>
-            </Tooltip>
+            <span>Nodes: {nodes}, </span>
+            <span>Edges: {edges}, </span>
+            <span>
+              Source: {camelCaseToTitleCase(description.split(':')[0])}
+            </span>
           </Typography>
         </span>
       )
@@ -289,37 +285,25 @@ const Ndex = props => {
       )
     } else {
       const node = (
-        <Tooltip title="Number of nodes in network" placement="bottom">
-          <span style={infoStyle}>
-            <Typography display="inline">
-              <strong>{nodes}</strong>{' '}
-            </Typography>
-            <Typography
-              variant="caption"
-              display="inline"
-              color="textSecondary"
-            >
-              {'nodes '}
-            </Typography>
-          </span>
-        </Tooltip>
+        <span style={infoStyle}>
+          <Typography display="inline">
+            <strong>{nodes}</strong>{' '}
+          </Typography>
+          <Typography variant="caption" display="inline" color="textSecondary">
+            {'nodes '}
+          </Typography>
+        </span>
       )
 
       const edge = (
-        <Tooltip title="Number of edges in network" placement="bottom">
-          <span style={edgeStyle}>
-            <Typography display="inline">
-              <strong>{edges}</strong>{' '}
-            </Typography>
-            <Typography
-              variant="caption"
-              display="inline"
-              color="textSecondary"
-            >
-              {'edges'}
-            </Typography>
-          </span>
-        </Tooltip>
+        <span style={edgeStyle}>
+          <Typography display="inline">
+            <strong>{edges}</strong>{' '}
+          </Typography>
+          <Typography variant="caption" display="inline" color="textSecondary">
+            {'edges'}
+          </Typography>
+        </span>
       )
 
       const title = (

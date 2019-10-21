@@ -69,6 +69,7 @@ const NodeProperties = props => {
 
   const context = props.context
   const aliasList = props.aliasList
+  const memberList = props.memberList
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
@@ -79,7 +80,8 @@ const NodeProperties = props => {
     'ID',
     'HGNC',
     'Ensembl',
-    'Alias'
+    'Alias',
+    'Members'
   ]
 
   const nodeProperties = [
@@ -94,7 +96,8 @@ const NodeProperties = props => {
     'Border Style',
     'Label Size',
     'Label Font',
-    'Node Id'
+    'Node Id',
+    'Query Node'
   ]
 
   const displayItems = [entityProperties, nodeProperties]
@@ -115,24 +118,9 @@ const NodeProperties = props => {
     let title
     let geneAnnotation = null
     let inset = false
+    let querynode = false
     const aliases = new Set(aliasList[node.name])
-
-    //Add gene annotation
-    if (
-      props.search.results != null &&
-      props.search.results.genes.get(node.name) != null
-    ) {
-      inset = true
-      geneAnnotation = (
-        <List className={classes.noPadding}>
-          <GeneAnnotationList
-            {...props}
-            search_results={props.search.results}
-            geneSymbol={node.name}
-          />
-        </List>
-      )
-    }
+    const members = new Set(memberList[node.name])
 
     //Add represents
     if (node.name in props.represents) {
@@ -176,6 +164,9 @@ const NodeProperties = props => {
     for (const key in node) {
       content = extractContent(node[key])
       title = extractTitle(key)
+      if (title === 'querynode') {
+        querynode = true
+      }
       if (
         !title.startsWith('__') &&
         content != null &&
@@ -184,6 +175,8 @@ const NodeProperties = props => {
       ) {
         if (title === 'aliases' || title === 'alias') {
           aliases.add(content)
+        } else if (title === 'member') {
+          members.add(content)
         } else if (title === 'id') {
           attributes.push({
             title: 'Node Id',
@@ -274,6 +267,60 @@ const NodeProperties = props => {
         content: aliasLinks,
         displayed: false
       })
+    }
+
+    //Handle members
+    let memberLinks = ''
+    members.forEach(member => {
+      const [prefix, id] = member.split(':')
+      if (prefix.toUpperCase() in context) {
+        memberLinks +=
+          '<a href="' +
+          context[prefix.toUpperCase()] +
+          id +
+          '">\t' +
+          member +
+          '</a><br/>'
+      } else {
+        memberLinks +=
+          '<a href="http://identifiers.org/' +
+          prefix +
+          '/' +
+          id +
+          '">\t' +
+          member +
+          '</a><br/>'
+      }
+    })
+    if (members.size > 1) {
+      attributes.push({
+        title: 'Members',
+        content: '<div style="padding-left:1em;">' + memberLinks + '</div>',
+        displayed: false
+      })
+    } else if (members.size === 1) {
+      attributes.push({
+        title: 'Members',
+        content: memberLinks,
+        displayed: false
+      })
+    }
+
+    //Add gene annotation
+    if (
+      props.search.results != null &&
+      props.search.results.genes.get(node.name) != null
+    ) {
+      inset = true
+      geneAnnotation = (
+        <List className={classes.noPadding}>
+          <GeneAnnotationList
+            {...props}
+            search_results={props.search.results}
+            geneSymbol={node.name}
+          />
+        </List>
+      )
     }
 
     const displayCol1 = []
@@ -390,7 +437,7 @@ const NodeProperties = props => {
             <td>
               <Typography variant="body2">{node.name}</Typography>
             </td>
-            {inset ? (
+            {querynode ? (
               <td>
                 <Avatar className={classes.matched}>
                   <CheckIcon className={classes.icon} />

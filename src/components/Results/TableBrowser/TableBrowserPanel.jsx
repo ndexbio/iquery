@@ -70,6 +70,7 @@ const TabContent = props => {
 
   const represents = {}
   const aliasList = {}
+  const memberList = {}
   if (nodeList != null) {
     //Find represents
     for (let i = 0; i < nodeList.length; i++) {
@@ -77,12 +78,12 @@ const TabContent = props => {
         represents[nodeList[i].n] = nodeList[i].r
       }
     }
-    //Find aliasList
     if (nodeAttributes != null) {
       for (let i = 0; i < nodeAttributes.length; i++) {
+        //Find aliases
         if (
-          (nodeAttributes[i].n =
-            'alias' && nodeAttributes[i].d === 'list_of_string')
+          nodeAttributes[i].n === 'alias' &&
+          nodeAttributes[i].d === 'list_of_string'
         ) {
           const geneName = nodeList.filter(
             node => node['@id'] === nodeAttributes[i].po
@@ -92,6 +93,22 @@ const TabContent = props => {
               aliasList[geneName] = nodeAttributes[i].v
             } else {
               aliasList[geneName] = aliasList[geneName].concat(
+                nodeAttributes[i].v
+              )
+            }
+          }
+        } else if (
+          nodeAttributes[i].n === 'member' &&
+          nodeAttributes[i].d === 'list_of_string'
+        ) {
+          const geneName = nodeList.filter(
+            node => node['@id'] === nodeAttributes[i].po
+          )[0].n
+          if (geneName != null) {
+            if (memberList[geneName] == null) {
+              memberList[geneName] = nodeAttributes[i].v
+            } else {
+              memberList[geneName] = memberList[geneName].concat(
                 nodeAttributes[i].v
               )
             }
@@ -109,6 +126,7 @@ const TabContent = props => {
         context={context}
         represents={represents}
         aliasList={aliasList}
+        memberList={memberList}
         {...props}
       />
     )
