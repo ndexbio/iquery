@@ -18,6 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import MessageSnackbar from './MessageSnackbar'
 
 import * as examples from '../TopPage/example-genes'
+import { HGNC_REGEX } from '../../reducers/search'
 
 const EXAMPLES = examples.default.examples
 
@@ -91,9 +92,8 @@ const GeneTextBox = props => {
     const geneListString = genes.replace(',', ' ')
     let geneList = geneListString.split(/\s*,\s*|\s+/)
 
-    const regex = RegExp('^[a-zA-Z][a-zA-Z0-9-]*$')
     geneList = geneList.filter(gene => {
-      return regex.test(gene)
+      return HGNC_REGEX.test(gene)
     })
 
     props.searchActions.clearAll()

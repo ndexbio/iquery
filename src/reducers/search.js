@@ -14,7 +14,6 @@ import {
   setSearchResult,
   setActualResults
 } from '../actions/search'
-import { regExpLiteral } from '@babel/types'
 
 const EMPTY_STATE = {
   isSearching: false,
@@ -29,6 +28,8 @@ const EMPTY_STATE = {
   actualResults: []
 }
 
+export const HGNC_REGEX = RegExp('(^[A-Z][A-Z0-9-]*$)|(^C[0-9]+orf[0-9]+$)')
+
 const search = handleActions(
   {
     [setQuery]: (state, payload) => {
@@ -42,9 +43,8 @@ const search = handleActions(
     },
     [searchStarted]: (state, payload) => {
       let newQueryList = state.queryGenes.split(' ')
-      const regex = RegExp('^[a-zA-Z][a-zA-Z0-9-]*$')
       newQueryList = newQueryList.filter(gene => {
-        return regex.test(gene)
+        return HGNC_REGEX.test(gene)
       })
       return {
         ...state,

@@ -80,7 +80,9 @@ const Results = props => {
           {sources.map(source => (
             <HoverTab
               key={source.uuid}
-              label={TAB_LABELS[source.name].label}
+              label={
+                TAB_LABELS[source.name] ? TAB_LABELS[source.name].label : null
+              }
               backgroundcolor={backgroundcolor}
             />
           ))}

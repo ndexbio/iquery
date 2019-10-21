@@ -11,6 +11,7 @@ import { Tooltip, Button } from '@material-ui/core'
 import searchLogo from '../../assets/images/search-logo.svg'
 
 import * as examples from './example-genes'
+import { HGNC_REGEX } from '../../reducers/search'
 
 const EXAMPLES = examples.default.examples
 const feedbackURL = 'https://home.ndexbio.org/contact-us/'
@@ -88,10 +89,9 @@ const SearchTextBox = props => {
       .toString()
       .replace(',', ' ')
       .split(/\s*,\s*|\s+/)
-    const regex = RegExp('^[a-zA-Z][a-zA-Z0-9-]*$')
 
     geneList = geneList.filter(gene => {
-      return regex.test(gene)
+      return HGNC_REGEX.test(gene)
     })
 
     props.searchActions.setQuery(genes)
