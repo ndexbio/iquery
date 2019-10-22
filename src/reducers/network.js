@@ -14,7 +14,8 @@ import {
   unselectEdges,
   deselectAll,
   changeTab,
-  changeListIndex
+  changeListIndex,
+  setNetworkUrl
 } from '../actions/network'
 
 const defaultState = {
@@ -23,6 +24,7 @@ const defaultState = {
   jobId: '',
   sourceId: '',
   networkName: '',
+  url: '',
   queryGenes: [],
   hitGenes: [],
   originalCX: null,
@@ -207,6 +209,12 @@ const network = handleActions(
       return {
         ...state,
         listIndex: payload.payload
+      }
+    },
+    [setNetworkUrl]: (state, payload) => {
+      return {
+        ...state,
+        url: payload.payload
       }
     }
   },

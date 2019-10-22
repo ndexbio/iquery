@@ -117,7 +117,8 @@ const Ndex = props => {
       edges,
       imageURL,
       hitGenes,
-      details
+      details,
+      url
     } = networkEntry
     const genes = (
       <span style={infoStyle}>
@@ -157,9 +158,14 @@ const Ndex = props => {
 
     if (props.uiState.selectedSource === 'enrichment') {
       let pVal = details.PValue
-      if (pVal !== undefined) {
-        if (pVal < 1e-12) {
-          pVal = '< 1e-12'
+      if (pVal != null) {
+        const networkCount = details.totalNetworkCount
+        const threshold = Math.pow(
+          10,
+          Math.ceil(Math.log(1e-16 * networkCount) / Math.LN10)
+        )
+        if (pVal < threshold) {
+          pVal = '< ' + threshold
         } else if (pVal > 1) {
           pVal = '~ 1'
         } else {
@@ -256,6 +262,7 @@ const Ndex = props => {
             if (selectedIndex !== index) {
               handleFetch(networkUUID, description, nodes, edges, hitGenes)
               handleListItemClick(event, index)
+              props.networkActions.setNetworkUrl(url)
             }
           }}
           selected={selectedIndex === index}

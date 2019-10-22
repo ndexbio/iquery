@@ -55,7 +55,7 @@ const OpenOriginalNetworkButton = props => {
           className={classes.button}
           variant="outlined"
           disabled={disabled}
-          onClick={() => handleOpen(props.network.uuid)}
+          onClick={() => handleOpen(props.network.url)}
         >
           <OpenInBrowserIcon
             color={disabled ? 'disabled' : 'inherit'}
@@ -68,11 +68,7 @@ const OpenOriginalNetworkButton = props => {
   )
 }
 
-const handleOpen = uuid => {
-  const url = SERVICE_SERVER_URL + '#/network/' + uuid
-  console.log(SERVICE_SERVER_URL)
-  console.log(url)
-
+const handleOpen = url => {
   console.log('Opening original network entry:', url)
   window.open(url, '_blank')
 }
