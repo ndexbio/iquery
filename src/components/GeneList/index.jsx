@@ -46,10 +46,19 @@ const GeneList = props => {
   const hitSets = new Set(hits)
 
   const handleChange = (event, newAlignment) => {
-    if (newAlignment === props.search.selectedGenes[0]) {
-      props.searchActions.clearSelectedGenes()
+    if (newAlignment in props.geneToNodeMap) {
+      const alignment = props.geneToNodeMap[newAlignment]
+      if (alignment === props.search.selectedGenes[0]) {
+        props.searchActions.clearSelectedGenes()
+      } else {
+        props.searchActions.setSelectedGenes(alignment)
+      }
     } else {
-      props.searchActions.setSelectedGenes(newAlignment)
+      if (newAlignment === props.search.selectedGenes[0]) {
+        props.searchActions.clearSelectedGenes()
+      } else {
+        props.searchActions.setSelectedGenes(newAlignment)
+      }
     }
   }
 
