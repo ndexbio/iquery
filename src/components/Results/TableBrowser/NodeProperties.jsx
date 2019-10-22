@@ -309,7 +309,8 @@ const NodeProperties = props => {
     //Add gene annotation
     if (
       props.search.results != null &&
-      props.search.results.genes.get(node.name) != null
+      (props.search.results.genes.get(node.name) != null ||
+        props.search.results.genes.get(node.name.toLowerCase()) != null)
     ) {
       inset = true
       geneAnnotation = (

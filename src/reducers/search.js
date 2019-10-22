@@ -28,7 +28,9 @@ const EMPTY_STATE = {
   actualResults: []
 }
 
-export const HGNC_REGEX = RegExp('(^[A-Z][A-Z0-9-]*$)|(^C[0-9]+orf[0-9]+$)')
+export const HGNC_REGEX = RegExp(
+  '(^[a-zA-Z][a-zA-Z0-9-]*$)|(^C[0-9]+orf[0-9]+$)'
+)
 
 const search = handleActions(
   {
