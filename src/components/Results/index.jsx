@@ -70,6 +70,10 @@ const Results = props => {
   const searchResults = props.search.searchResults
   const selectedSourceName = getSourceName(sources, idx)
 
+  if (selectedSourceName == null) {
+    return <Empty />
+  }
+
   const results = findResult(selectedSourceName, searchResults)
 
   // Get current tab selection
@@ -94,6 +98,9 @@ const Results = props => {
 }
 
 const getSourceName = (sources, idx) => {
+  if (sources[idx] == null) {
+    return 'enrichment'
+  }
   return sources[idx].name
 }
 
