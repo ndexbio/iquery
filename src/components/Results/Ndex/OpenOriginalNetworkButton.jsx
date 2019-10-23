@@ -30,6 +30,17 @@ const styles = theme => ({
 const OpenOriginalNetworkButton = props => {
   const { classes } = props
 
+  const handleOpen = () => {
+    let url
+    if (props.network.url != null) {
+      url = props.network.url
+    } else {
+      url = SERVICE_SERVER_URL + '#/network/' + props.network.uuid
+    }
+    console.log('Opening original network entry:', url)
+    window.open(url, '_blank')
+  }
+
   const disabled = !(props.network.uuid && props.network.uuid.length > 0)
 
   const BootstrapButton = withStyles({
@@ -55,7 +66,7 @@ const OpenOriginalNetworkButton = props => {
           className={classes.button}
           variant="outlined"
           disabled={disabled}
-          onClick={() => handleOpen(props.network.url)}
+          onClick={() => handleOpen()}
         >
           <OpenInBrowserIcon
             color={disabled ? 'disabled' : 'inherit'}
@@ -66,11 +77,6 @@ const OpenOriginalNetworkButton = props => {
       </div>
     </Tooltip>
   )
-}
-
-const handleOpen = url => {
-  console.log('Opening original network entry:', url)
-  window.open(url, '_blank')
 }
 
 export default withStyles(styles)(OpenOriginalNetworkButton)
