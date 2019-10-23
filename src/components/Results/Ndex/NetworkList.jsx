@@ -120,7 +120,7 @@ const NetworkList = props => {
 
   //Adjust p-values
   useEffect(() => {
-    if (props.uiState.selectedSource === 'enrichment') {
+    if (props.uiState.selectedSource === 'enrichment' && hits[0] != undefined) {
       hits.sort(findSort('p-Value'))
       const networkCount = hits[0].details.totalNetworkCount
       for (let i = 0; i < hits.length; i++) {
