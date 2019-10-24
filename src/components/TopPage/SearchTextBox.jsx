@@ -168,11 +168,14 @@ const SearchTextBox = props => {
         align={'center'}
         className={'search-text-caption'}
       >
-        Try this pre-release version, send us
-        <a href={feedbackURL} target="_blank" rel="noopener noreferrer">
-          {' '}
-          feedback
-        </a>
+        <em>
+          Send us
+          <a href={feedbackURL} target="_blank" rel="noopener noreferrer">
+            {' '}
+            feedback
+          </a>
+          .
+        </em>
       </Typography>
     </div>
   )
