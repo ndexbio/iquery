@@ -114,7 +114,7 @@ const NetworkList = props => {
         first.edges,
         first.hitGenes
       )
-      props.networkActions.setOriginalNetworkUrl('http://' + first.url)
+      props.networkActions.setOriginalNetworkUrl(first.url)
     }
   }
 
