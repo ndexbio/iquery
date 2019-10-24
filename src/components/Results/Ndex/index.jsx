@@ -262,7 +262,7 @@ const Ndex = props => {
             if (selectedIndex !== index) {
               handleFetch(networkUUID, description, nodes, edges, hitGenes)
               handleListItemClick(event, index)
-              props.networkActions.setNetworkUrl(url)
+              props.networkActions.setOriginalNetworkUrl('http://' + url)
             }
           }}
           selected={selectedIndex === index}

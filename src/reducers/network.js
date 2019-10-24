@@ -15,7 +15,7 @@ import {
   deselectAll,
   changeTab,
   changeListIndex,
-  setNetworkUrl
+  setOriginalNetworkUrl
 } from '../actions/network'
 
 const defaultState = {
@@ -211,7 +211,7 @@ const network = handleActions(
         listIndex: payload.payload
       }
     },
-    [setNetworkUrl]: (state, payload) => {
+    [setOriginalNetworkUrl]: (state, payload) => {
       return {
         ...state,
         url: payload.payload

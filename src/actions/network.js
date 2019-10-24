@@ -14,7 +14,7 @@ export const DESELECT_ALL = 'DESELECT_ALL'
 export const CHANGE_TAB = 'CHANGE_TAB'
 export const CHANGE_LIST_INDEX = 'CHANGE_LIST_INDEX'
 
-export const SET_NETWORK_URL = 'SET_NETWORK_URL'
+export const SET_ORIGINAL_NETWORK_URL = 'SET_ORIGINAL_NETWORK_URL'
 
 export const networkFetchStarted = createAction(NETWORK_FETCH_STARTED)
 export const networkFetchSucceeded = createAction(NETWORK_FETCH_SUCCEEDED)
@@ -31,4 +31,4 @@ export const deselectAll = createAction(DESELECT_ALL)
 export const changeTab = createAction(CHANGE_TAB)
 export const changeListIndex = createAction(CHANGE_LIST_INDEX)
 
-export const setNetworkUrl = createAction(SET_NETWORK_URL)
+export const setOriginalNetworkUrl = createAction(SET_ORIGINAL_NETWORK_URL)
