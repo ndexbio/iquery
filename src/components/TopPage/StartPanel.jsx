@@ -58,7 +58,7 @@ const StartPanel = props => {
             <div className={'app-title'}>NDEx Integrated Query</div>
             <Typography
               align="left"
-              style={{ position: 'relative', left: '0.25em', top: '-1em' }}
+              style={{ position: 'relative', left: '0.25em', top: '-0.5em' }}
             >
               {APP_VERSION}
             </Typography>
