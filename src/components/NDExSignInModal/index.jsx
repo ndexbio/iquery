@@ -1,4 +1,5 @@
 import React from 'react'
+import Draggable from 'react-draggable'
 
 import {
   DialogContent,
@@ -12,8 +13,8 @@ import {
   Typography,
   Avatar
 } from '@material-ui/core'
-import GoogleLogin from 'react-google-login'
 
+import GoogleLogin from 'react-google-login'
 import GoogleLogo from './assets/images/google-logo.svg'
 import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 
@@ -22,6 +23,14 @@ import NDExSave from '../NDExSave'
 import './style.css'
 
 import config from './assets/config'
+
+const PaperComponent = props => {
+  return (
+    <Draggable cancel={'[class*="MuiDialogContent-root"]'}>
+      <Paper {...props} />
+    </Draggable>
+  )
+}
 
 class GoogleSignOn extends React.Component {
   onFailure = err => {
@@ -136,6 +145,7 @@ class CredentialsSignOn extends React.Component {
               variant="contained"
               onClick={this.props.handleClose}
               type="button"
+              style={{ margin: '1em' }}
             >
               Cancel
             </Button>
@@ -268,6 +278,7 @@ class NDExSignInModal extends React.Component {
           open={this.props.ndexSave.ndexModal}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
+          PaperComponent={PaperComponent}
         >
           {this.props.ndexSave.profile ? (
             <div className="sign-in-header">
