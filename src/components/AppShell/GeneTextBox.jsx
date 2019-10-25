@@ -78,8 +78,13 @@ const GeneTextBox = props => {
     setOpen(true)
   }
 
-  const handleSearch = evt => {
-    const genes = state.query
+  const handleSearch = query => {
+    let genes
+    if (query == null) {
+      genes = state.query
+    } else {
+      genes = query
+    }
     const sources = props.source.sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
@@ -96,8 +101,8 @@ const GeneTextBox = props => {
       return HGNC_REGEX.test(gene)
     })
 
-    props.searchActions.clearAll()
     props.uiStateActions.setSelectedSource('enrichment')
+    props.searchActions.clearAll()
     props.history.push('/')
     props.searchActions.setQuery(genes)
     props.searchActions.searchStarted({ geneList, sourceNames })
@@ -134,6 +139,7 @@ const GeneTextBox = props => {
       query: EXAMPLES[exampleIdx].genes,
       anchorEl: null
     })
+    handleSearch(EXAMPLES[exampleIdx].genes)
   }
 
   return (

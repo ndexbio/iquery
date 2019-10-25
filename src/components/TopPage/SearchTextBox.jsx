@@ -55,6 +55,7 @@ const SearchTextBox = props => {
       query: EXAMPLES[exampleIdx].genes,
       anchorEl: null
     })
+    handleSearch(EXAMPLES[exampleIdx].genes)
   }
 
   const handleChange = name => event => {
@@ -75,8 +76,13 @@ const SearchTextBox = props => {
     setState({ ...state, query: '' })
   }
 
-  const handleSearch = event => {
-    const genes = state.query
+  const handleSearch = query => {
+    let genes
+    if (query == null) {
+      genes = state.query
+    } else {
+      genes = query
+    }
     const sources = props.source.sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
