@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
 import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js'
 import { MAX_NETWORK_SIZE } from '../components/Results/Ndex/NetworkViewer'
+import { SERVICE_SERVER_URL } from '../api/apiConstants'
 import * as vs from '../assets/data/styles.json'
 
 import {
@@ -102,6 +103,7 @@ const network = handleActions(
         jobId: payload.payload.id,
         sourceId: payload.payload.sourceUUID,
         uuid: payload.payload.networkUUID,
+        url: SERVICE_SERVER_URL + '#/network/' + payload.payload.networkUUID,
         networkName: payload.payload.networkName,
         queryGenes: payload.payload.geneList,
         hitGenes: payload.payload.hitGenes,

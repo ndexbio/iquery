@@ -11,7 +11,6 @@ import { Tooltip, Button } from '@material-ui/core'
 import searchLogo from '../../assets/images/search-logo.svg'
 
 import * as examples from './example-genes'
-import { HGNC_REGEX } from '../../reducers/search'
 
 const EXAMPLES = examples.default.examples
 const feedbackURL = 'https://home.ndexbio.org/contact-us/'
@@ -55,7 +54,7 @@ const SearchTextBox = props => {
       query: EXAMPLES[exampleIdx].genes,
       anchorEl: null
     })
-    handleSearch(EXAMPLES[exampleIdx].genes)
+    handleSearch(null, EXAMPLES[exampleIdx].genes)
   }
 
   const handleChange = name => event => {
@@ -76,7 +75,7 @@ const SearchTextBox = props => {
     setState({ ...state, query: '' })
   }
 
-  const handleSearch = query => {
+  const handleSearch = (event, query) => {
     let genes
     if (query == null) {
       genes = state.query
@@ -91,14 +90,10 @@ const SearchTextBox = props => {
     }
 
     const sourceNames = sources.map(source => source.name)
-    let geneList = genes
+    const geneList = genes
       .toString()
       .replace(',', ' ')
       .split(/\s*,\s*|\s+/)
-
-    geneList = geneList.filter(gene => {
-      return HGNC_REGEX.test(gene)
-    })
 
     props.searchActions.setQuery(genes)
     props.searchActions.searchStarted({ geneList, sourceNames })

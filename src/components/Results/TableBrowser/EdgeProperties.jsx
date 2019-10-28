@@ -180,11 +180,16 @@ const EdgeProperties = props => {
           })
         } else {
           const [prefix, id] = content.split(':')
-          if (prefix in context && id != undefined) {
+          if (prefix.toUpperCase() in context && id != undefined) {
             attributes.push({
               title: camelCaseToTitleCase(title),
               content:
-                '<a href="' + context[prefix] + id + '">' + content + '</a>',
+                '<a href="' +
+                context[prefix.toUpperCase()] +
+                id +
+                '">' +
+                content +
+                '</a>',
               displayed: false
             })
           } else {

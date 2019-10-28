@@ -2,41 +2,37 @@ import React from 'react'
 import './style.css'
 
 import Button from '@material-ui/core/Button'
-import logo from '../../../assets/images/ndex-logo.svg'
-import logoDisabled from '../../../assets/images/ndex-logo-mono-light.svg'
+import SaveIcon from '@material-ui/icons/Save'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
-import { fade } from '@material-ui/core/styles/colorManipulator'
 
 const styles = theme => ({
   buttonIcon: {
-    height: '2em'
+    padding: 0,
+    margin: 0,
+    paddingBottom: '0.1em'
   },
   button: {
     height: '3em',
     width: '4.3em',
     minWidth: '4.3em',
-    marginLeft: '0.5em',
-    color: '#4DA1DE'
+    marginLeft: '0.5em'
   }
 })
 
 const BootstrapButton = withStyles({
   root: {
     width: '4.3em',
-    borderColor: '#4DA1DE',
-    color: '#4DA1DE',
+    borderColor: '#212121',
+    color: '#212121',
     '&:active': {
-      borderColor: '#4DA1DE',
-      color: '#4DA1DE'
-    },
-    '&:hover': {
-      backgroundColor: fade('#4DA1DE', 0.08)
+      borderColor: '#212121',
+      color: '#212121'
     }
   }
 })(Button)
 
-const OpenInNDExButton = props => {
+const SaveToNDExButton = props => {
   const { classes } = props
 
   const handleImportNetwork = () => {
@@ -54,9 +50,9 @@ const OpenInNDExButton = props => {
           disabled={disabled}
           onClick={handleImportNetwork}
         >
-          <img
-            alt="NDEx logo"
-            src={disabled ? logoDisabled : logo}
+          <SaveIcon
+            color={disabled ? 'disabled' : 'inherit'}
+            fontSize="large"
             className={classes.buttonIcon}
           />
         </BootstrapButton>
@@ -65,4 +61,9 @@ const OpenInNDExButton = props => {
   )
 }
 
-export default withStyles(styles)(OpenInNDExButton)
+export default withStyles(styles)(SaveToNDExButton)
+
+/*
+            color={disabled ? 'disabled' : 'inherit'}
+            className={classes.buttonIcon}
+            */

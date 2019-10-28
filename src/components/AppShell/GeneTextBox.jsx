@@ -18,7 +18,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import MessageSnackbar from './MessageSnackbar'
 
 import * as examples from '../TopPage/example-genes'
-import { HGNC_REGEX } from '../../reducers/search'
 
 const EXAMPLES = examples.default.examples
 
@@ -78,7 +77,7 @@ const GeneTextBox = props => {
     setOpen(true)
   }
 
-  const handleSearch = query => {
+  const handleSearch = (event, query) => {
     let genes
     if (query == null) {
       genes = state.query
@@ -95,11 +94,7 @@ const GeneTextBox = props => {
     const sourceNames = sources.map(source => source.name)
 
     const geneListString = genes.replace(',', ' ')
-    let geneList = geneListString.split(/\s*,\s*|\s+/)
-
-    geneList = geneList.filter(gene => {
-      return HGNC_REGEX.test(gene)
-    })
+    const geneList = geneListString.split(/\s*,\s*|\s+/)
 
     props.uiStateActions.setSelectedSource('enrichment')
     props.searchActions.clearAll()
@@ -139,7 +134,7 @@ const GeneTextBox = props => {
       query: EXAMPLES[exampleIdx].genes,
       anchorEl: null
     })
-    handleSearch(EXAMPLES[exampleIdx].genes)
+    handleSearch(null, EXAMPLES[exampleIdx].genes)
   }
 
   return (
@@ -215,7 +210,7 @@ const GeneTextBox = props => {
         <InputBase
           id={ORIGINAL_GENE_TEXT}
           className={classes.input}
-          placeholder="Genes entered"
+          placeholder="Enter gene list (or click menu for examples)"
           value={state.query}
           onChange={handleChange('query')}
           onKeyDown={handleKeyPress}

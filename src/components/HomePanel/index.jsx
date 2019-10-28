@@ -31,6 +31,7 @@ const HomePanel = props => {
     }
 
     props.history.listen(historyListener)
+    window.addEventListener('beforeunload', historyListener)
 
     return () => {}
   }, [])

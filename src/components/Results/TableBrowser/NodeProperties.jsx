@@ -141,24 +141,17 @@ const NodeProperties = props => {
         } else {
           attributes.push({
             title: 'ID',
-            content:
-              '<a href="http://identifiers.org/' +
-              prefix +
-              '/' +
-              id +
-              '">' +
-              props.represents[node.name] +
-              '</a>',
+            content: props.represents[node.name],
             displayed: false
           })
         }
+      } else {
+        attributes.push({
+          title: 'ID',
+          content: props.represents[node.name],
+          displayed: false
+        })
       }
-    } else if (props.represents[node.name] != undefined) {
-      attributes.push({
-        title: 'ID',
-        content: props.represents[node.name],
-        displayed: false
-      })
     }
 
     for (const key in node) {

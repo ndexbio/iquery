@@ -7,6 +7,8 @@
     "@material-ui/icons": "^4.4.3",
     "@material-ui/lab": "^4.0.0-alpha.28",
     "@material-ui/styles": "^4.5.0",
+    "@mdi/js": "^4.5.95",
+    "@mdi/react": "^1.2.1",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.9",
     "@types/react": "^16.9.4",

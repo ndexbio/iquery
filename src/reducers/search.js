@@ -44,10 +44,7 @@ const search = handleActions(
       return EMPTY_STATE
     },
     [searchStarted]: (state, payload) => {
-      let newQueryList = state.queryGenes.split(' ')
-      newQueryList = newQueryList.filter(gene => {
-        return HGNC_REGEX.test(gene)
-      })
+      const newQueryList = state.queryGenes.split(' ')
       return {
         ...state,
         isSearching: true,
