@@ -406,27 +406,6 @@ const formatContext = context => {
       <tbody>{returnArray}</tbody>
     </table>
   )
-  /*
-  const elements = entry.split(',')
-  return (
-    <table>
-      <tbody>
-        {elements.map(item => {
-          const splitResults = item.split('"')
-          return (
-            <tr key={Math.random().toString()}>
-              <td valign="top">
-                <Typography variant="body2">{splitResults[1]}</Typography>
-              </td>
-              <td valign="top">
-                <Typography variant="body2">{splitResults[3]}</Typography>
-              </td>
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
-  )*/
 }
 
 export default NetworkProperties

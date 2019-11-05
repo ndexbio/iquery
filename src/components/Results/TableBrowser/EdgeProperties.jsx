@@ -206,7 +206,11 @@ const EdgeProperties = props => {
           })
         } else {
           const [prefix, id] = content.split(':')
-          if (prefix.toUpperCase() in context && id != undefined) {
+          if (
+            prefix.toUpperCase() in context &&
+            id != null &&
+            /[^\s]/.test(id)
+          ) {
             attributes.push({
               title: camelCaseToTitleCase(title),
               content:
@@ -235,12 +239,12 @@ const EdgeProperties = props => {
       let propertyString = ''
       propertyList.forEach(property => {
         const [prefix, id] = property.split(':')
-        if (prefix.toUpperCase() in context && id != null) {
+        if (prefix.toUpperCase() in context && id != null && /[^\s]/.test(id)) {
           propertyString +=
             '<a href="' +
             context[prefix.toUpperCase()] +
             id +
-            '">\t' +
+            '">' +
             property +
             '</a><br/>'
         } else {

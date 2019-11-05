@@ -130,7 +130,7 @@ const NodeProperties = props => {
     //Add represents
     if (node.name in props.represents) {
       const [prefix, id] = props.represents[node.name].split(':')
-      if (id != undefined) {
+      if (id != null && /[^\s]/.test(id)) {
         if (prefix.toUpperCase() in context) {
           attributes.push({
             title: 'ID',
@@ -195,7 +195,11 @@ const NodeProperties = props => {
           })
         } else if (title !== 'query') {
           const [prefix, id] = content.split(':')
-          if (prefix.toUpperCase() in context && id != undefined) {
+          if (
+            prefix.toUpperCase() in context &&
+            id != null &&
+            /[^\s]/.test(id)
+          ) {
             attributes.push({
               title: camelCaseToTitleCase(title),
               content:
@@ -235,7 +239,7 @@ const NodeProperties = props => {
       let propertyString = ''
       propertyList.forEach(property => {
         const [prefix, id] = property.split(':')
-        if (prefix.toUpperCase() in context && id != null) {
+        if (prefix.toUpperCase() in context && id != null && /[^\s]/.test(id)) {
           propertyString +=
             '<a href="' +
             context[prefix.toUpperCase()] +
@@ -243,7 +247,7 @@ const NodeProperties = props => {
             '">\t' +
             property +
             '</a><br/>'
-        } else if (id != null) {
+        } else if (id != null && /[^\s]/.test(id)) {
           propertyString +=
             '<a href="http://identifiers.org/' +
             prefix +
