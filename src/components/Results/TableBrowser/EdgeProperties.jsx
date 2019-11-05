@@ -65,6 +65,7 @@ const EdgeProperties = props => {
 
   const nodes = props.nodeList
   const context = props.context
+  const listProperties = props.listProperties
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
   const entityProperties = [
@@ -73,9 +74,22 @@ const EdgeProperties = props => {
     'Type',
     'SBO Type',
     'Interaction',
+    'Mechanism',
     'Throughput',
     'Location',
-    'Citation'
+    'Score',
+    'Citation',
+    'Sentence',
+    'Publication 1st Author',
+    'Annotator',
+    'Interaction Detection Methods',
+    'Presence In Other Species',
+    'Source Databases',
+    'Experimental System',
+    'Experimental System Type',
+    'Modification',
+    'Phenotypes',
+    'Qualifications'
   ]
 
   const edgeProperties = [
@@ -85,6 +99,7 @@ const EdgeProperties = props => {
     'Line Thickness',
     'Line Style',
     'Color',
+    'Directed',
     'Edge Id'
   ]
 
@@ -130,12 +145,22 @@ const EdgeProperties = props => {
 
   const topDisplay = []
   edges.forEach(edge => {
-    //Filter properties
     const attributes = []
+    const originalId = edge.id.slice(1)
     let content
     let title
     let source
     let target
+
+    //Set up dictionary for complete property lists
+    const completeListProperties = {}
+    for (const property in listProperties) {
+      const listForAllEdges = listProperties[property]
+      const listForThisEdge = listForAllEdges[originalId]
+      completeListProperties[property] = new Set(listForThisEdge)
+    }
+
+    //Filter properties
     for (const key in edge) {
       content = extractContent(edge[key])
       title = extractTitle(key)
@@ -145,7 +170,9 @@ const EdgeProperties = props => {
         content !== 'null' &&
         content !== ''
       ) {
-        if (title === 'source') {
+        if (title in completeListProperties) {
+          completeListProperties[title].add(content)
+        } else if (title === 'source') {
           source = findNode(content, nodes)
           attributes.push({
             title: 'Source',
@@ -162,8 +189,7 @@ const EdgeProperties = props => {
         } else if (title === 'id') {
           attributes.push({
             title: 'Edge Id',
-            content,
-            content,
+            content: originalId,
             displayed: false
           })
         } else if (title === 'sboType') {
@@ -203,6 +229,41 @@ const EdgeProperties = props => {
       }
     }
 
+    //Handle list attributes
+    for (const propertyName in completeListProperties) {
+      const propertyList = completeListProperties[propertyName]
+      let propertyString = ''
+      propertyList.forEach(property => {
+        const [prefix, id] = property.split(':')
+        if (prefix.toUpperCase() in context && id != null) {
+          propertyString +=
+            '<a href="' +
+            context[prefix.toUpperCase()] +
+            id +
+            '">\t' +
+            property +
+            '</a><br/>'
+        } else {
+          propertyString += property + '<br/>'
+        }
+      })
+      if (propertyList.size > 1) {
+        attributes.push({
+          title: camelCaseToTitleCase(propertyName),
+          content:
+            '<div style="padding-left:1em;">' + propertyString + '</div>',
+          displayed: false,
+          noBreak: true
+        })
+      } else if (propertyList.size === 1) {
+        attributes.push({
+          title: camelCaseToTitleCase(propertyName),
+          content: propertyString,
+          displayed: false
+        })
+      }
+    }
+
     const displayCol1 = []
     const displayCol2 = []
     let primaryString
@@ -216,7 +277,10 @@ const EdgeProperties = props => {
         })[0]
         if (currentEntry != null && currentEntry.content != null) {
           primaryString +=
-            currentEntry.title + ': ' + currentEntry.content + '<br>'
+            currentEntry.title +
+            ': ' +
+            currentEntry.content +
+            (currentEntry.noBreak ? '' : '<br>')
           currentEntry.displayed = true
         }
       })
@@ -231,11 +295,17 @@ const EdgeProperties = props => {
                   inset={false}
                   primary={
                     <React.Fragment>
-                      <Typography variant="caption" color="textSecondary">
+                      <Typography
+                        component="span"
+                        variant="caption"
+                        color="textSecondary"
+                      >
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2">{primaryString}</Typography>
+                        <Typography component="span" variant="body2">
+                          {primaryString}
+                        </Typography>
                       </div>
                     </React.Fragment>
                   }
@@ -273,7 +343,8 @@ const EdgeProperties = props => {
     primaryString = ''
     attributes.forEach(entry => {
       if (!entry.displayed) {
-        primaryString += entry.title + ': ' + entry.content + '<br>'
+        primaryString +=
+          entry.title + ': ' + entry.content + (entry.noBreak ? '' : '<br/>')
         entry.displayed = true
       }
     })
@@ -287,11 +358,17 @@ const EdgeProperties = props => {
             inset={false}
             primary={
               <React.Fragment>
-                <Typography variant="caption" color="textSecondary">
+                <Typography
+                  component="span"
+                  variant="caption"
+                  color="textSecondary"
+                >
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography variant="body2">{primaryString}</Typography>
+                  <Typography component="span" variant="body2">
+                    {primaryString}
+                  </Typography>
                 </div>
               </React.Fragment>
             }
@@ -301,38 +378,6 @@ const EdgeProperties = props => {
     }
 
     //Create summary
-    let sourceSymbol = source
-    let targetSymbol = target
-    if (props.search.queryList.includes(source.toUpperCase())) {
-      sourceSymbol = (
-        <React.Fragment>
-          <td>
-            <Typography variant="body2">{source}</Typography>
-          </td>
-          <td>
-            <Avatar className={classes.matched}>
-              <CheckIcon className={classes.icon} />
-            </Avatar>
-          </td>
-        </React.Fragment>
-      )
-    }
-
-    if (props.search.queryList.includes(target.toUpperCase())) {
-      targetSymbol = (
-        <React.Fragment>
-          <td>
-            <Typography variant="body2">{target}</Typography>
-          </td>
-          <td>
-            <Avatar className={classes.matched}>
-              <CheckIcon className={classes.icon} />
-            </Avatar>
-          </td>
-        </React.Fragment>
-      )
-    }
-
     const summary = (
       <table>
         <tbody>

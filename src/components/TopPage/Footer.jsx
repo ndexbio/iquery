@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography'
 const Footer = props => (
   <footer className="footer-container">
     <Typography variant="subtitle1">
-      &copy; 2019 UC, San Diego Ideker Lab
+      &copy; 2019 UC San Diego Ideker Lab
     </Typography>
     <img
       alt="NDEx logo"

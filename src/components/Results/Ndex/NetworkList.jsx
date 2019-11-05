@@ -117,6 +117,8 @@ const NetworkList = props => {
       if (first.url != null) {
         props.networkActions.setOriginalNetworkUrl('http://' + first.url)
       }
+    } else {
+      props.networkActions.networkClear()
     }
   }
 

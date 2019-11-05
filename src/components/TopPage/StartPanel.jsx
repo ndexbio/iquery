@@ -80,8 +80,8 @@ const StartPanel = props => {
             to find out how.
           </Typography>
         </div>
+        <div style={{ height: '4em' }} />
       </div>
-
       <Footer />
     </div>
   )

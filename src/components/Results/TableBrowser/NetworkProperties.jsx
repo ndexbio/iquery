@@ -79,6 +79,7 @@ const NetworkProperties = props => {
   const attributes = []
   let content
   let title
+
   networkAttr.forEach(element => {
     content = extractContent(element)
     title = extractTitle(element)
@@ -139,7 +140,7 @@ const NetworkProperties = props => {
             displayed: false
           })
         }
-      } else {
+      } else if (title !== '@context') {
         attributes.push({
           title: camelCaseToTitleCase(title),
           content: content,
@@ -219,6 +220,36 @@ const NetworkProperties = props => {
       return entry.title === element
     })[0]
     if (currentEntry != null) {
+      primaryString = formatPrimary(currentEntry.content)
+      secondaryString = element
+      currentEntry.displayed = true
+      leftDisplay.push(
+        <ListItem key={index++} className={classes.noPadding}>
+          <ListItemText
+            primary={
+              <React.Fragment>
+                <Typography
+                  component="span"
+                  variant="caption"
+                  color="textSecondary"
+                >
+                  {secondaryString}
+                </Typography>
+                <div>
+                  <Typography component="span" variant="body2">
+                    {primaryString}
+                  </Typography>
+                </div>
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+      )
+    }
+  })
+
+  //Context
+  /*
       if (element === '@context') {
         primaryString = formatContext(currentEntry.content)
         currentEntry.displayed = true
@@ -248,35 +279,31 @@ const NetworkProperties = props => {
             />
           </React.Fragment>
         )
-      } else {
-        primaryString = formatPrimary(currentEntry.content)
-        secondaryString = element
-        currentEntry.displayed = true
-        leftDisplay.push(
-          <ListItem key={index++} className={classes.noPadding}>
-            <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="caption"
-                    color="textSecondary"
-                  >
-                    {secondaryString}
-                  </Typography>
-                  <div>
-                    <Typography component="span" variant="body2">
-                      {primaryString}
-                    </Typography>
-                  </div>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-        )
-      }
-    }
-  })
+        */
+  primaryString = formatContext(context)
+  const summary = (
+    <Typography component="span" variant="body2">
+      Click to view the namespaces associated with this network
+    </Typography>
+  )
+  const details = primaryString
+  leftDisplay.push(
+    <React.Fragment key={index}>
+      <div className={classes.padding}>
+        <Typography component="span" variant="caption" color="textSecondary">
+          @context
+        </Typography>
+      </div>
+      <ExpandPanel
+        summary={summary}
+        details={details}
+        defaultExpanded={false}
+        keyId={index++}
+        divider={false}
+      />
+    </React.Fragment>
+  )
+
   attributes.forEach(entry => {
     if (!entry.displayed) {
       primaryString = formatPrimary(entry.content)
@@ -359,7 +386,27 @@ const formatPrimary = entry => {
   return <Linkify key={Math.random().toString()}>{modifiedText}</Linkify>
 }
 
-const formatContext = entry => {
+const formatContext = context => {
+  const returnArray = []
+  for (const key in context) {
+    returnArray.push(
+      <tr key={Math.random().toString()}>
+        <td valign="top">
+          <Typography variant="body2">{key}</Typography>
+        </td>
+        <td valign="top">
+          <Typography variant="body2">{context[key]}</Typography>
+        </td>
+      </tr>
+    )
+  }
+
+  return (
+    <table>
+      <tbody>{returnArray}</tbody>
+    </table>
+  )
+  /*
   const elements = entry.split(',')
   return (
     <table>
@@ -379,7 +426,7 @@ const formatContext = entry => {
         })}
       </tbody>
     </table>
-  )
+  )*/
 }
 
 export default NetworkProperties

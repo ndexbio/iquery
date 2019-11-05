@@ -354,12 +354,6 @@ const CytoscapeViewer = props => {
     }
   }, [props.uiState.layout])
 
-  // Check network size and show warning if it's too big for this renderer
-  const numObjects = props.network.nodeCount + props.network.edgeCount
-  if (numObjects > MAX_NETWORK_SIZE) {
-    return <Warning {...props} />
-  }
-
   // Render actual network
   if (cyjs === null || cyjs === undefined) {
     return null

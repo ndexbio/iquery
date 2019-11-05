@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.css'
 
 import InputPanel from '../InputPanel'
@@ -7,6 +7,8 @@ import AppShell from '../AppShell'
 import LoadingPanel from '../LoadingPanel'
 
 const HomePanel = props => {
+  const [baseUrl, setBaseUrl] = useState(window.location.origin)
+
   const historyListener = (location, action) => {
     if (action === 'POP' && location.pathname !== '/') {
       console.log('Back button::', location, action)
@@ -31,7 +33,6 @@ const HomePanel = props => {
     }
 
     props.history.listen(historyListener)
-    window.addEventListener('beforeunload', historyListener)
 
     return () => {}
   }, [])
