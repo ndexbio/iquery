@@ -6,22 +6,29 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
 
+NDEX_URL = 'https://www.ndexbio.org'
 BASE_URL = 'http://iquery.ndexbio.org'
 
 if 'BASE_URL' in os.environ:
     BASE_URL = os.environ['BASE_URL']
 
+if 'NDEX_URL' in os.environ:
+    NDEX_URL = os.environ['NDEX_URL']
+
 
 class IQueryTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.browser = webdriver.Chrome()
-        self.addCleanup(self.browser.quit)
+        self.driver = webdriver.Chrome()
+        self.driver.implicitly_wait(30)
+        self.addCleanup(self.driver.quit)
 
     def test_page_title(self):
-        self.browser.get(BASE_URL)
-        self.assertIn('NDEx', self.browser.title)
+        self.driver.get(BASE_URL)
+        self.assertIn('NDEx', self.driver.title)
 
     def test_click_ndexicon_top_right(self):
         """
@@ -34,40 +41,32 @@ class IQueryTestCase(unittest.TestCase):
         </button>
         :return: 
         """
-        self.browser.get(BASE_URL)
-        thebutton = None
-        for element in self.browser.find_elements_by_class_name('MuiButtonBase-root'):
-            try:
-                imgele = element.find_element_by_class_name('jss9')
-                if imgele is None:
-                    continue
-            except NoSuchElementException:
-                continue
-            if imgele.get_attribute('alt') == 'NDEx logo':
-                thebutton = element
-                break
-        curwindow_name = self.browser.window_handles[0]
-        self.assertEqual(1, len(self.browser.window_handles),
+        self.driver.get(BASE_URL)
+
+        thebutton = self.driver.find_element(By.CSS_SELECTOR, "div:nth-child(4) > .MuiIconButton-root")
+
+        curwindow_name = self.driver.window_handles[0]
+        self.assertEqual(1, len(self.driver.window_handles),
                          'There should only be 1 tab open. wtf : ' +
-                         str(self.browser.window_handles))
+                         str(self.driver.window_handles))
         self.assertTrue(thebutton is not None,
                         'Could not find the button in upper right corner')
 
         res = thebutton.click()
 
         self.assertEqual(None, res, 'Expected None cause the click opens a new page')
-        self.assertEqual(2, len(self.browser.window_handles),
+        self.assertEqual(2, len(self.driver.window_handles),
                          'There should be 2 tabs open. wtf')
 
-        for wname in self.browser.window_handles:
+        for wname in self.driver.window_handles:
             if wname != curwindow_name:
                 newtab = wname
                 break
 
         # browser.switch_to.window_handles
-        self.browser.switch_to.window(newtab)
-        self.assertTrue(self.browser.title.startswith('NDEx WebApp v'))
-        self.assertTrue(self.browser.current_url.startswith('https://www.ndexbio.org'))
+        self.driver.switch_to.window(newtab)
+        self.assertTrue(self.driver.title.startswith('NDEx WebApp v'))
+        self.assertTrue(self.driver.current_url.startswith(NDEX_URL))
 
     def test_click_hypoxia_query(self):
         """
@@ -76,31 +75,139 @@ class IQueryTestCase(unittest.TestCase):
         <span class="MuiButton-label">Hypoxia</span>
         <span class="MuiTouchRipple-root"></span></button>
         """
-        self.browser.get(BASE_URL)
+        self.driver.get(BASE_URL)
         thebutton = None
-        for element in self.browser.find_elements_by_class_name('MuiButtonBase-root'):
+        for element in self.driver.find_elements_by_class_name('MuiButtonBase-root'):
             if element.tag_name != 'button':
                 continue
             if element.text != 'HYPOXIA':
                 continue
             thebutton = element
 
-        curwindow_name = self.browser.window_handles[0]
-        self.assertEqual(1, len(self.browser.window_handles),
+        self.assertEqual(1, len(self.driver.window_handles),
                          'There should only be 1 tab open. wtf : ' +
-                         str(self.browser.window_handles))
+                         str(self.driver.window_handles))
         self.assertTrue(thebutton is not None,
                         'Could not find the hypoxia button/link')
 
-        hover = ActionChains(self.browser).move_to_element(thebutton).click(thebutton).perform()
+        # hover over the Hypoxia button and then click it, seems to be the only way
+        # to get the button to work
+        ActionChains(self.driver).move_to_element(thebutton).click(thebutton).perform()
 
-        self.assertEqual(1, len(self.browser.window_handles),
+        wait = WebDriverWait(self.driver, 30)
+
+        first_entry = wait.until(ec.visibility_of_element_located((By.CSS_SELECTOR,
+                                                                   ".Mui-selected td > .MuiTypography-root:nth-child(1)")))
+
+        self.assertEqual(1, len(self.driver.window_handles),
                          'There should be 1 only tab open. wtf')
-        self.assertIn('NDEx', self.browser.title)
-        import time
-        time.sleep(10)
-        self.fail('Need to add logic to wait for query page to load '
-                  'and verify the correct genes were queried')
+        self.assertIn('NDEx', self.driver.title)
+
+    def test_click_deathreceptors_query(self):
+        """
+        <button class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-text example-text MuiButton-colorInherit"
+        tabindex="0" type="button">
+        <span class="MuiButton-label">Hypoxia</span>
+        <span class="MuiTouchRipple-root"></span></button>
+        """
+        self.driver.get(BASE_URL)
+        thebutton = None
+        for element in self.driver.find_elements_by_class_name('MuiButtonBase-root'):
+            if element.tag_name != 'button':
+                continue
+            if element.text != 'DEATH RECEPTORS':
+                continue
+            thebutton = element
+
+        self.assertEqual(1, len(self.driver.window_handles),
+                         'There should only be 1 tab open. wtf : ' +
+                         str(self.driver.window_handles))
+        self.assertTrue(thebutton is not None,
+                        'Could not find the death receptors button/link')
+
+        # hover over the death receptors button and then click it, seems to be the only way
+        # to get the button to work
+        ActionChains(self.driver).move_to_element(thebutton).click(thebutton).perform()
+
+        wait = WebDriverWait(self.driver, 30)
+
+        first_entry = wait.until(ec.visibility_of_element_located((By.CSS_SELECTOR,
+                                                                   ".Mui-selected td > .MuiTypography-root:nth-child(1)")))
+
+        self.assertEqual(1, len(self.driver.window_handles),
+                         'There should be 1 only tab open. wtf')
+        self.assertIn('NDEx', self.driver.title)
+
+    def test_click_reactiveoxygen_query(self):
+        """
+        <button class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-text example-text MuiButton-colorInherit"
+        tabindex="0" type="button">
+        <span class="MuiButton-label">Hypoxia</span>
+        <span class="MuiTouchRipple-root"></span></button>
+        """
+        self.driver.get(BASE_URL)
+        thebutton = None
+        for element in self.driver.find_elements_by_class_name('MuiButtonBase-root'):
+            if element.tag_name != 'button':
+                continue
+            if element.text != 'REACTIVE OXYGEN SPECIES':
+                continue
+            thebutton = element
+
+        self.assertEqual(1, len(self.driver.window_handles),
+                         'There should only be 1 tab open. wtf : ' +
+                         str(self.driver.window_handles))
+        self.assertTrue(thebutton is not None,
+                        'Could not find the reactive oxygen button/link')
+
+        # hover over the reactive oxygen button and then click it, seems to be the only way
+        # to get the button to work
+        ActionChains(self.driver).move_to_element(thebutton).click(thebutton).perform()
+
+        wait = WebDriverWait(self.driver, 30)
+
+        first_entry = wait.until(ec.visibility_of_element_located((By.CSS_SELECTOR,
+                                                                   ".Mui-selected td > .MuiTypography-root:nth-child(1)")))
+
+        self.assertEqual(1, len(self.driver.window_handles),
+                         'There should be 1 only tab open. wtf')
+        self.assertIn('NDEx', self.driver.title)
+
+    def test_click_coxsackievirus_query(self):
+        """
+        <button class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-text example-text MuiButton-colorInherit"
+        tabindex="0" type="button">
+        <span class="MuiButton-label">Hypoxia</span>
+        <span class="MuiTouchRipple-root"></span></button>
+        """
+        self.driver.get(BASE_URL)
+        thebutton = None
+        for element in self.driver.find_elements_by_class_name('MuiButtonBase-root'):
+            if element.tag_name != 'button':
+                continue
+            if element.text != 'COXSACKIE VIRUS-HUMAN':
+                continue
+            thebutton = element
+
+        self.assertEqual(1, len(self.driver.window_handles),
+                         'There should only be 1 tab open. wtf : ' +
+                         str(self.driver.window_handles))
+        self.assertTrue(thebutton is not None,
+                        'Could not find the coxsackie virus button/link')
+
+        # hover over the coxsackie virus button and then click it, seems to be the only way
+        # to get the button to work
+        ActionChains(self.driver).move_to_element(thebutton).click(thebutton).perform()
+
+        wait = WebDriverWait(self.driver, 30)
+
+        first_entry = wait.until(ec.visibility_of_element_located((By.CSS_SELECTOR,
+                                                                   ".Mui-selected td > .MuiTypography-root:nth-child(1)")))
+
+        self.assertEqual(1, len(self.driver.window_handles),
+                         'There should be 1 only tab open. wtf')
+        self.assertIn('NDEx', self.driver.title)
+
 
 
 if __name__ == '__main__':
