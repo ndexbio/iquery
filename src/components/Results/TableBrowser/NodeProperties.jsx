@@ -81,7 +81,8 @@ const NodeProperties = props => {
     'HGNC',
     'Ensembl',
     'Alias',
-    'Members'
+    'Members',
+    'Member'
   ]
 
   const nodeProperties = [
