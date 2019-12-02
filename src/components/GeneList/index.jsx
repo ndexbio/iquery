@@ -75,23 +75,28 @@ const GeneList = props => {
   const matched = []
   const unmatched = []
 
-  for (const value of geneList.values()) {
-    if (hitSets.has(value.symbol)) {
+  const unique = new Set()
+  for (const gene of geneList.values()) {
+    unique.add(gene.symbol)
+  }
+
+  for (const value of unique) {
+    if (hitSets.has(value)) {
       matched.push(value)
     } else {
       unmatched.push(value)
     }
   }
 
-  const matchedSorted = matched.sort().reverse()
-  const unmatchedSorted = unmatched.sort().reverse()
+  const matchedSorted = matched.sort()
+  const unmatchedSorted = unmatched.sort()
   const sorted = [...matchedSorted, ...unmatchedSorted]
 
   return (
     <div className="gene-list-wrapper">
       <List>
         {sorted.map(geneValue => (
-          <ListItem key={geneValue.symbol}>
+          <ListItem key={geneValue}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
               exclusive
@@ -99,10 +104,10 @@ const GeneList = props => {
               style={toggleButtonGroupStyle}
             >
               <ToggleButton
-                value={geneValue.symbol}
+                value={geneValue}
                 style={
-                  hitSets.has(geneValue.symbol) &&
-                  props.search.selectedGenes[0] === geneValue.symbol
+                  hitSets.has(geneValue) &&
+                  props.search.selectedGenes[0] === geneValue
                     ? selectedButtonStyle
                     : buttonStyle
                 }
@@ -120,7 +125,7 @@ const GeneList = props => {
 const getChip = (value, isValid, props, hitSets) => {
   let color = 'default'
   let found = false
-  if (hitSets.has(value.symbol)) {
+  if (hitSets.has(value)) {
     color = 'secondary'
     found = true
   }
@@ -140,10 +145,10 @@ const getChip = (value, isValid, props, hitSets) => {
             {found ? <CheckIcon style={{ height: '18px' }} /> : '-'}
           </Avatar>
         }
-        label={value.symbol}
+        label={value}
         variant="outlined"
         color={color}
-        key={value.symbol}
+        key={value}
         selected
         style={selectedChipStyle}
         clickable={true}
