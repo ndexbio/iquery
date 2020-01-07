@@ -81,7 +81,7 @@ const GeneList = props => {
   }
 
   for (const value of unique) {
-    if (hitSets.has(value)) {
+    if (hitSets.has(value.toUpperCase())) {
       matched.push(value)
     } else {
       unmatched.push(value)
@@ -112,7 +112,7 @@ const GeneList = props => {
                     : buttonStyle
                 }
               >
-                {getChip(geneValue, true, props, hitSets)}
+                {getChip(geneValue, hitSets)}
               </ToggleButton>
             </ToggleButtonGroup>
           </ListItem>
@@ -122,15 +122,8 @@ const GeneList = props => {
   )
 }
 
-const getChip = (value, isValid, props, hitSets) => {
-  let color = 'default'
-  let found = false
-  if (hitSets.has(value)) {
-    color = 'secondary'
-    found = true
-  }
-
-  if (isValid) {
+const getChip = (value, hitSets) => {
+  if (hitSets.has(value.toUpperCase())) {
     return (
       <Chip
         avatar={
@@ -142,12 +135,12 @@ const getChip = (value, isValid, props, hitSets) => {
               left: '-4px'
             }}
           >
-            {found ? <CheckIcon style={{ height: '18px' }} /> : '-'}
+            <CheckIcon style={{ height: '18px' }} />
           </Avatar>
         }
         label={value}
         variant="outlined"
-        color={color}
+        color={'secondary'}
         key={value}
         selected
         style={selectedChipStyle}
@@ -157,10 +150,25 @@ const getChip = (value, isValid, props, hitSets) => {
   } else {
     return (
       <Chip
-        avatar={<Avatar>G</Avatar>}
-        label={'INVALID: ' + value}
+        avatar={
+          <Avatar
+            style={{
+              height: '32px',
+              width: '32px',
+              position: 'relative',
+              left: '-4px'
+            }}
+          >
+            -
+          </Avatar>
+        }
+        label={value}
+        variant="outlined"
+        color={'default'}
         key={value}
-        clickable={true}
+        selected
+        style={selectedChipStyle}
+        clickable={false}
       />
     )
   }
