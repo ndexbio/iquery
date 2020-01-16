@@ -73,13 +73,15 @@ const LayoutSelector = props => {
             />
           }
         >
-          {menuItems.map(item => (
-            <MenuItem value={item} key={item}>
-              <Typography variant="body2" color="textSecondary">
-                {item}
-              </Typography>
-            </MenuItem>
-          ))}
+          {menuItems
+            ? menuItems.map(item => (
+                <MenuItem value={item} key={item}>
+                  <Typography variant="body2" color="textSecondary">
+                    {item}
+                  </Typography>
+                </MenuItem>
+              ))
+            : null}
         </Select>
       </FormControl>
     </div>

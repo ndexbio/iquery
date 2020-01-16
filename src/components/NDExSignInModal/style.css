@@ -58,15 +58,8 @@
 }
 
 .credentials-button-container {
-    text-align: right;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
-
-.credentials-button-container .btn {
-    margin: 5px;
-    padding: 5px 10px;
+    position: relative;
+    top: 2em;
 }
 
 .sign-in-container {

@@ -114,15 +114,22 @@ const NetworkList = props => {
         first.edges,
         first.hitGenes
       )
+      if (first.url != null) {
+        props.networkActions.setOriginalNetworkUrl('http://' + first.url)
+      }
+    } else {
+      props.networkActions.networkClear()
     }
   }
 
   //Adjust p-values
   useEffect(() => {
-    if (props.uiState.selectedSource === 'enrichment') {
+    if (props.uiState.selectedSource === 'enrichment' && hits[0] != undefined) {
       hits.sort(findSort('p-Value'))
+      const networkCount = hits[0].details.totalNetworkCount
       for (let i = 0; i < hits.length; i++) {
-        hits[i].details.PValue = (hits[i].details.PValue * 3297) / (i + 1)
+        hits[i].details.PValue =
+          (hits[i].details.PValue * networkCount) / (i + 1)
       }
     }
   }, [hits])

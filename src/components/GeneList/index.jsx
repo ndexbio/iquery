@@ -46,10 +46,19 @@ const GeneList = props => {
   const hitSets = new Set(hits)
 
   const handleChange = (event, newAlignment) => {
-    if (newAlignment === props.search.selectedGenes[0]) {
-      props.searchActions.clearSelectedGenes()
+    if (newAlignment in props.geneToNodeMap) {
+      const alignment = props.geneToNodeMap[newAlignment]
+      if (alignment === props.search.selectedGenes[0]) {
+        props.searchActions.clearSelectedGenes()
+      } else {
+        props.searchActions.setSelectedGenes(alignment)
+      }
     } else {
-      props.searchActions.setSelectedGenes(newAlignment)
+      if (newAlignment === props.search.selectedGenes[0]) {
+        props.searchActions.clearSelectedGenes()
+      } else {
+        props.searchActions.setSelectedGenes(newAlignment)
+      }
     }
   }
 
@@ -58,6 +67,7 @@ const GeneList = props => {
   }
 
   const geneList = results.genes
+
   if (!geneList) {
     return <div className="gene-list-wrapper" />
   }
@@ -65,23 +75,28 @@ const GeneList = props => {
   const matched = []
   const unmatched = []
 
-  for (const value of geneList.values()) {
-    if (hitSets.has(value.symbol)) {
+  const unique = new Set()
+  for (const gene of geneList.values()) {
+    unique.add(gene.symbol)
+  }
+
+  for (const value of unique) {
+    if (hitSets.has(value.toUpperCase())) {
       matched.push(value)
     } else {
       unmatched.push(value)
     }
   }
 
-  const matchedSorted = matched.sort().reverse()
-  const unmatchedSorted = unmatched.sort().reverse()
+  const matchedSorted = matched.sort()
+  const unmatchedSorted = unmatched.sort()
   const sorted = [...matchedSorted, ...unmatchedSorted]
 
   return (
     <div className="gene-list-wrapper">
       <List>
         {sorted.map(geneValue => (
-          <ListItem key={geneValue.symbol}>
+          <ListItem key={geneValue}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
               exclusive
@@ -89,15 +104,15 @@ const GeneList = props => {
               style={toggleButtonGroupStyle}
             >
               <ToggleButton
-                value={geneValue.symbol}
+                value={geneValue}
                 style={
-                  hitSets.has(geneValue.symbol) &&
-                  props.search.selectedGenes[0] === geneValue.symbol
+                  hitSets.has(geneValue) &&
+                  props.search.selectedGenes[0] === geneValue
                     ? selectedButtonStyle
                     : buttonStyle
                 }
               >
-                {getChip(geneValue, true, props, hitSets)}
+                {getChip(geneValue, hitSets)}
               </ToggleButton>
             </ToggleButtonGroup>
           </ListItem>
@@ -107,15 +122,8 @@ const GeneList = props => {
   )
 }
 
-const getChip = (value, isValid, props, hitSets) => {
-  let color = 'default'
-  let found = false
-  if (hitSets.has(value.symbol)) {
-    color = 'secondary'
-    found = true
-  }
-
-  if (isValid) {
+const getChip = (value, hitSets) => {
+  if (hitSets.has(value.toUpperCase())) {
     return (
       <Chip
         avatar={
@@ -127,13 +135,13 @@ const getChip = (value, isValid, props, hitSets) => {
               left: '-4px'
             }}
           >
-            {found ? <CheckIcon style={{ height: '18px' }} /> : '-'}
+            <CheckIcon style={{ height: '18px' }} />
           </Avatar>
         }
-        label={value.symbol}
+        label={value}
         variant="outlined"
-        color={color}
-        key={value.symbol}
+        color={'secondary'}
+        key={value}
         selected
         style={selectedChipStyle}
         clickable={true}
@@ -142,10 +150,25 @@ const getChip = (value, isValid, props, hitSets) => {
   } else {
     return (
       <Chip
-        avatar={<Avatar>G</Avatar>}
-        label={'INVALID: ' + value}
+        avatar={
+          <Avatar
+            style={{
+              height: '32px',
+              width: '32px',
+              position: 'relative',
+              left: '-4px'
+            }}
+          >
+            -
+          </Avatar>
+        }
+        label={value}
+        variant="outlined"
+        color={'default'}
         key={value}
-        clickable={true}
+        selected
+        style={selectedChipStyle}
+        clickable={false}
       />
     )
   }

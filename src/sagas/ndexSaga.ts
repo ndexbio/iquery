@@ -106,23 +106,24 @@ function* watchSearchResult(action) {
       while (idx--) {
         const src: Record<string, any> = status[idx]
         const { progress, sourceName } = src
-        if (progress === 100) {
-          const resultRes = yield call(getResult, jobId, sourceName)
-          const json: Record<string, any> = yield call([resultRes, 'json'])
-
+        if (progress === 100) {         
           if (!finishedSourceNames.has(sourceName)) {
+            const resultRes = yield call(getResult, jobId, sourceName)
+            const json: Record<string, any> = yield call([resultRes, 'json'])
+
             // Need to add this new result.
             resultList.push(json.sources[0])
             finishedSourceNames.add(sourceName)
-          }
-          json.sources = resultList
 
-          yield put({
-            type: SET_SEARCH_RESULT,
-            payload: {
-              singleResult: json
-            }
-          })
+            json.sources = resultList
+
+            yield put({
+              type: SET_SEARCH_RESULT,
+              payload: {
+                singleResult: json
+              }
+            })
+          }
         }
       }
 

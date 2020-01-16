@@ -73,9 +73,12 @@ class GeneAnnotationList extends React.Component {
       return <div className="gene-list-wrapper" />
     }
 
-    const symbol = this.props.geneSymbol.toUpperCase()
-
-    return this.getListItem(geneList.get(symbol), classes)
+    const symbol = this.props.geneSymbol
+    const upperListItem = this.getListItem(geneList.get(symbol), classes)
+    if (upperListItem == null) {
+      return this.getListItem(geneList.get(symbol.toLowerCase()), classes)
+    }
+    return upperListItem
   }
 
   getListItem = (geneEntry, classes) => {

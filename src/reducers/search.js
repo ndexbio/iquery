@@ -28,6 +28,10 @@ const EMPTY_STATE = {
   actualResults: []
 }
 
+export const HGNC_REGEX = RegExp(
+  '(^[a-zA-Z][a-zA-Z0-9-]*$)|(^C[0-9]+orf[0-9]+$)'
+)
+
 const search = handleActions(
   {
     [setQuery]: (state, payload) => {
@@ -40,11 +44,12 @@ const search = handleActions(
       return EMPTY_STATE
     },
     [searchStarted]: (state, payload) => {
+      const newQueryList = state.queryGenes.split(' ')
       return {
         ...state,
         isSearching: true,
         resultList: [],
-        queryList: state.queryGenes.split(' ')
+        queryList: newQueryList
       }
     },
     [searchSucceeded]: (state, payload) => {

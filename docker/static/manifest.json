@@ -1,6 +1,6 @@
 {
-  "short_name": "NDEx Network Search Portal",
-  "name": "NDEx network search portal web app",
+  "short_name": "NDEx Integrated Query",
+  "name": "NDEx integrated query web app",
   "icons": [
     {
       "src": "favicon.ico",

@@ -33,43 +33,56 @@ const TabContent = props => {
   const { value } = props
 
   //Find @context
-  let context = {}
-  const networkAttr = findAttributes(
-    props.network.originalCX,
-    'networkAttributes'
-  )
-  if (networkAttr != null) {
-    for (let i = 0; i < networkAttr.length; i++) {
-      if (networkAttr[i].n === '@context') {
-        context = JSON.parse(networkAttr[i].v)
+  let context
+  context = findAttributes(props.network.originalCX, '@context')
+  if (context != null) {
+    context = context[0]
+  } else {
+    const networkAttr = findAttributes(
+      props.network.originalCX,
+      'networkAttributes'
+    )
+    if (networkAttr != null) {
+      for (let i = 0; i < networkAttr.length; i++) {
+        if (networkAttr[i].n === '@context') {
+          context = JSON.parse(networkAttr[i].v)
+        }
       }
     }
   }
   //Uppercase all keys in context
-  context = mapKeys(context, function(v, k) {
+  const contextUpper = mapKeys(context, function(v, k) {
     return k.toUpperCase()
   })
 
-  //Find nodelist and nodeAttributes
+  //Find lists and attributes
   let nodeList
   let nodeAttributes
+  let edgeAttributes
   for (let i = 0; i < props.network.originalCX.length; i++) {
     if (props.network.originalCX[i].nodes != null) {
       nodeList = props.network.originalCX[i].nodes
-      if (nodeAttributes != undefined) {
+      if (nodeAttributes != undefined && edgeAttributes != undefined) {
         break
       }
     }
     if (props.network.originalCX[i].nodeAttributes != null) {
       nodeAttributes = props.network.originalCX[i].nodeAttributes
-      if (nodeList != undefined) {
+      if (nodeList != undefined && edgeAttributes != undefined) {
+        break
+      }
+    }
+    if (props.network.originalCX[i].edgeAttributes != null) {
+      edgeAttributes = props.network.originalCX[i].edgeAttributes
+      if (nodeList != undefined && nodeAttributes != undefined) {
         break
       }
     }
   }
 
+  // Find node related properties
   const represents = {}
-  const aliasList = {}
+  const nodeListProperties = {} //Dictionary { property name : dictionary { gene name : list of properties }}
   if (nodeList != null) {
     //Find represents
     for (let i = 0; i < nodeList.length; i++) {
@@ -77,26 +90,48 @@ const TabContent = props => {
         represents[nodeList[i].n] = nodeList[i].r
       }
     }
-    //Find aliasList
+    //Find node properties that are lists
     if (nodeAttributes != null) {
       for (let i = 0; i < nodeAttributes.length; i++) {
-        if (
-          (nodeAttributes[i].n =
-            'alias' && nodeAttributes[i].d === 'list_of_string')
-        ) {
+        if (nodeAttributes[i].d === 'list_of_string') {
+          let propDict = {}
+          if (nodeListProperties[nodeAttributes[i].n] != null) {
+            propDict = nodeListProperties[nodeAttributes[i].n]
+          }
           const geneName = nodeList.filter(
             node => node['@id'] === nodeAttributes[i].po
           )[0].n
           if (geneName != null) {
-            if (aliasList[geneName] == null) {
-              aliasList[geneName] = nodeAttributes[i].v
+            if (propDict[geneName] == null) {
+              propDict[geneName] = nodeAttributes[i].v
             } else {
-              aliasList[geneName] = aliasList[geneName].concat(
+              propDict[geneName] = propDict[geneName].concat(
                 nodeAttributes[i].v
               )
             }
           }
+          nodeListProperties[nodeAttributes[i].n] = propDict
         }
+      }
+    }
+  }
+
+  //Find edge properties that are lists
+  const edgeListProperties = {}
+  if (edgeAttributes != null) {
+    for (let i = 0; i < edgeAttributes.length; i++) {
+      if (edgeAttributes[i].d === 'list_of_string') {
+        let propDict = {}
+        if (edgeListProperties[edgeAttributes[i].n] != null) {
+          propDict = edgeListProperties[edgeAttributes[i].n]
+        }
+        const edgeId = edgeAttributes[i].po
+        if (propDict[edgeId] == null) {
+          propDict[edgeId] = edgeAttributes[i].v
+        } else {
+          propDict[edgeId] = propDict[edgeId].concat(edgeAttributes[i].v)
+        }
+        edgeListProperties[edgeAttributes[i].n] = propDict
       }
     }
   }
@@ -106,15 +141,20 @@ const TabContent = props => {
   } else if (value === 1) {
     return (
       <MemoNodeProperties
-        context={context}
+        context={contextUpper}
         represents={represents}
-        aliasList={aliasList}
+        listProperties={nodeListProperties}
         {...props}
       />
     )
   } else {
     return (
-      <MemoEdgeProperties context={context} nodeList={nodeList} {...props} />
+      <MemoEdgeProperties
+        context={contextUpper}
+        nodeList={nodeList}
+        listProperties={edgeListProperties}
+        {...props}
+      />
     )
   }
 }

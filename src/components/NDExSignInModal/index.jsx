@@ -1,4 +1,6 @@
 import React from 'react'
+import Draggable from 'react-draggable'
+import DialogContentText from '@material-ui/core/DialogContentText'
 
 import {
   DialogContent,
@@ -12,8 +14,8 @@ import {
   Typography,
   Avatar
 } from '@material-ui/core'
-import GoogleLogin from 'react-google-login'
 
+import GoogleLogin from 'react-google-login'
 import GoogleLogo from './assets/images/google-logo.svg'
 import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 
@@ -22,6 +24,14 @@ import NDExSave from '../NDExSave'
 import './style.css'
 
 import config from './assets/config'
+
+const PaperComponent = props => {
+  return (
+    <Draggable cancel={'[class*="MuiDialogContent-root"]'}>
+      <Paper {...props} />
+    </Draggable>
+  )
+}
 
 class GoogleSignOn extends React.Component {
   onFailure = err => {
@@ -112,7 +122,13 @@ class CredentialsSignOn extends React.Component {
                     </div> */}
           <div>
             <span>Need an account? </span>
-            <a href="http://ndexbio.org">Click here to sign up!</a>
+            <a
+              href="http://ndexbio.org"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Click here to sign up!
+            </a>
           </div>
         </div>
 
@@ -136,6 +152,7 @@ class CredentialsSignOn extends React.Component {
               variant="contained"
               onClick={this.props.handleClose}
               type="button"
+              style={{ margin: '1em' }}
             >
               Cancel
             </Button>
@@ -186,35 +203,37 @@ export class NDExSignIn extends React.Component {
           Sign in to your NDEx Account
         </DialogTitle>
         <DialogContent>
-          <div className="NDExSignInContainer">
-            <Grid container spacing={8}>
-              <Grid item xs={6} className="grid">
-                <Paper className="grid-paper">
-                  <div className="grid-content">
-                    <GoogleSignOn
-                      onError={this.onError}
-                      googleSSO={googleSSO}
-                      onLoginSuccess={onLoginSuccess}
-                      onSuccess={onSuccess}
-                    />
-                  </div>
-                </Paper>
+          <DialogContentText>
+            <div className="NDExSignInContainer">
+              <Grid container spacing={8}>
+                <Grid item xs={6} className="grid">
+                  <Paper className="grid-paper">
+                    <div className="grid-content">
+                      <GoogleSignOn
+                        onError={this.onError}
+                        googleSSO={googleSSO}
+                        onLoginSuccess={onLoginSuccess}
+                        onSuccess={onSuccess}
+                      />
+                    </div>
+                  </Paper>
+                </Grid>
+                <Grid item xs={6} className="grid">
+                  <Paper className="grid-paper">
+                    <div className="grid-content">
+                      <CredentialsSignOn
+                        onLoginSuccess={onLoginSuccess}
+                        handleClose={handleClose}
+                        handleCredentialsSignOn={handleCredentialsSignOn}
+                        handleError={handleError}
+                        error={error}
+                      />
+                    </div>
+                  </Paper>
+                </Grid>
               </Grid>
-              <Grid item xs={6} className="grid">
-                <Paper className="grid-paper">
-                  <div className="grid-content">
-                    <CredentialsSignOn
-                      onLoginSuccess={onLoginSuccess}
-                      handleClose={handleClose}
-                      handleCredentialsSignOn={handleCredentialsSignOn}
-                      handleError={handleError}
-                      error={error}
-                    />
-                  </div>
-                </Paper>
-              </Grid>
-            </Grid>
-          </div>
+            </div>
+          </DialogContentText>
 
           {/*error && (
             <div className="sign-in-error">
@@ -268,6 +287,8 @@ class NDExSignInModal extends React.Component {
           open={this.props.ndexSave.ndexModal}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
+          PaperComponent={PaperComponent}
+          scroll="body"
         >
           {this.props.ndexSave.profile ? (
             <div className="sign-in-header">

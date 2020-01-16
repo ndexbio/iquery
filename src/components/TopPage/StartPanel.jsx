@@ -10,7 +10,7 @@ import './style.css'
 const feedbackURL = 'https://home.ndexbio.org/contact-us/'
 
 // TODO: move this to a global property
-const APP_VERSION = 'v0.2'
+const APP_VERSION = 'v1.0'
 
 const StartPanel = props => {
   useEffect(() => {
@@ -58,9 +58,9 @@ const StartPanel = props => {
             <div className={'app-title'}>NDEx Integrated Query</div>
             <Typography
               align="left"
-              style={{ position: 'relative', left: '0.25em', top: '-0.1em' }}
+              style={{ position: 'relative', left: '0.25em', top: '-0.5em' }}
             >
-              {APP_VERSION + ' Pre-Release'}
+              {APP_VERSION}
             </Typography>
           </div>
         </div>
@@ -80,8 +80,8 @@ const StartPanel = props => {
             to find out how.
           </Typography>
         </div>
+        <div style={{ height: '4em' }} />
       </div>
-
       <Footer />
     </div>
   )

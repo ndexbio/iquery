@@ -15,17 +15,19 @@ const NetworkViewer = props => {
     )
   } else if (props.search.actualResults.length === 0) {
     return <div className="network-view" />
+  } else if (
+    props.network.nodeCount + props.network.edgeCount >
+    MAX_NETWORK_SIZE
+  ) {
+    return (
+      <div className="network-view">
+        <Warning {...props} />
+      </div>
+    )
   } else {
     return (
       <div className="network-view">
-        {props.network.isFetching ? (
-          <LoadingPanel title="Loading Network..." color="#FFFFFF" />
-        ) : props.network.nodeCount + props.network.edgeCount <=
-          MAX_NETWORK_SIZE ? (
-          <MemoCytoscapeViewer resized={props.resized} {...props} />
-        ) : (
-          <Warning {...props} />
-        )}
+        <MemoCytoscapeViewer resized={props.resized} {...props} />
       </div>
     )
   }

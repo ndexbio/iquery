@@ -70,6 +70,10 @@ const Results = props => {
   const searchResults = props.search.searchResults
   const selectedSourceName = getSourceName(sources, idx)
 
+  if (selectedSourceName == null) {
+    return <Empty />
+  }
+
   const results = findResult(selectedSourceName, searchResults)
 
   // Get current tab selection
@@ -80,7 +84,9 @@ const Results = props => {
           {sources.map(source => (
             <HoverTab
               key={source.uuid}
-              label={TAB_LABELS[source.name].label}
+              label={
+                TAB_LABELS[source.name] ? TAB_LABELS[source.name].label : null
+              }
               backgroundcolor={backgroundcolor}
             />
           ))}
@@ -92,6 +98,9 @@ const Results = props => {
 }
 
 const getSourceName = (sources, idx) => {
+  if (sources[idx] == null) {
+    return 'enrichment'
+  }
   return sources[idx].name
 }
 

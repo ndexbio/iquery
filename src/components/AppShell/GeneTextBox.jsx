@@ -77,8 +77,13 @@ const GeneTextBox = props => {
     setOpen(true)
   }
 
-  const handleSearch = evt => {
-    const genes = state.query
+  const handleSearch = (event, query) => {
+    let genes
+    if (query == null) {
+      genes = state.query
+    } else {
+      genes = query
+    }
     const sources = props.source.sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
@@ -91,8 +96,8 @@ const GeneTextBox = props => {
     const geneListString = genes.replace(',', ' ')
     const geneList = geneListString.split(/\s*,\s*|\s+/)
 
-    props.searchActions.clearAll()
     props.uiStateActions.setSelectedSource('enrichment')
+    props.searchActions.clearAll()
     props.history.push('/')
     props.searchActions.setQuery(genes)
     props.searchActions.searchStarted({ geneList, sourceNames })
@@ -129,6 +134,7 @@ const GeneTextBox = props => {
       query: EXAMPLES[exampleIdx].genes,
       anchorEl: null
     })
+    handleSearch(null, EXAMPLES[exampleIdx].genes)
   }
 
   return (
@@ -204,7 +210,7 @@ const GeneTextBox = props => {
         <InputBase
           id={ORIGINAL_GENE_TEXT}
           className={classes.input}
-          placeholder="Genes entered"
+          placeholder="Enter gene list (or click menu for examples)"
           value={state.query}
           onChange={handleChange('query')}
           onKeyDown={handleKeyPress}

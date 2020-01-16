@@ -54,6 +54,7 @@ const SearchTextBox = props => {
       query: EXAMPLES[exampleIdx].genes,
       anchorEl: null
     })
+    handleSearch(null, EXAMPLES[exampleIdx].genes)
   }
 
   const handleChange = name => event => {
@@ -74,8 +75,13 @@ const SearchTextBox = props => {
     setState({ ...state, query: '' })
   }
 
-  const handleSearch = event => {
-    const genes = state.query
+  const handleSearch = (event, query) => {
+    let genes
+    if (query == null) {
+      genes = state.query
+    } else {
+      genes = query
+    }
     const sources = props.source.sources
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
@@ -84,7 +90,11 @@ const SearchTextBox = props => {
     }
 
     const sourceNames = sources.map(source => source.name)
-    const geneList = genes.toString().split(/\s*,\s*|\s+/)
+    const geneList = genes
+      .toString()
+      .replace(',', ' ')
+      .split(/\s*,\s*|\s+/)
+
     props.searchActions.setQuery(genes)
     props.searchActions.searchStarted({ geneList, sourceNames })
   }
@@ -159,11 +169,14 @@ const SearchTextBox = props => {
         align={'center'}
         className={'search-text-caption'}
       >
-        Try this pre-release version, send us
-        <a href={feedbackURL} target="_blank" rel="noopener noreferrer">
-          {' '}
-          feedback
-        </a>
+        <em>
+          Send us
+          <a href={feedbackURL} target="_blank" rel="noopener noreferrer">
+            {' '}
+            feedback
+          </a>
+          .
+        </em>
       </Typography>
     </div>
   )

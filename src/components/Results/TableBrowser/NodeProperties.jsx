@@ -51,6 +51,7 @@ let index = 0
 const NodeProperties = props => {
   const classes = useStyles()
 
+  //Display all nodes if no nodes are selected
   let nodes
   if (props.network.selectedNodes.length === 0) {
     nodes = props.network.network.elements
@@ -68,7 +69,7 @@ const NodeProperties = props => {
   }
 
   const context = props.context
-  const aliasList = props.aliasList
+  const listProperties = props.listProperties
 
   const [defaultExpanded, setDefaultExpanded] = useState(true)
 
@@ -79,7 +80,9 @@ const NodeProperties = props => {
     'ID',
     'HGNC',
     'Ensembl',
-    'Alias'
+    'Alias',
+    'Members',
+    'Member'
   ]
 
   const nodeProperties = [
@@ -94,7 +97,8 @@ const NodeProperties = props => {
     'Border Style',
     'Label Size',
     'Label Font',
-    'Node Id'
+    'Node Id',
+    'Query Node'
   ]
 
   const displayItems = [entityProperties, nodeProperties]
@@ -109,35 +113,25 @@ const NodeProperties = props => {
 
   const topDisplay = []
   nodes.forEach(node => {
-    //Filter properties
     const attributes = []
     let content
     let title
     let geneAnnotation = null
     let inset = false
-    const aliases = new Set(aliasList[node.name])
+    let querynode = false
 
-    //Add gene annotation
-    if (
-      props.search.results != null &&
-      props.search.results.genes.get(node.name) != null
-    ) {
-      inset = true
-      geneAnnotation = (
-        <List className={classes.noPadding}>
-          <GeneAnnotationList
-            {...props}
-            search_results={props.search.results}
-            geneSymbol={node.name}
-          />
-        </List>
-      )
+    //Set up dictionary for complete property lists
+    const completeListProperties = {}
+    for (const property in listProperties) {
+      const listForAllNodes = listProperties[property]
+      const listForThisNode = listForAllNodes[node.name]
+      completeListProperties[property] = new Set(listForThisNode)
     }
 
     //Add represents
     if (node.name in props.represents) {
       const [prefix, id] = props.represents[node.name].split(':')
-      if (id != undefined) {
+      if (id != null && /[^\s]/.test(id)) {
         if (prefix.toUpperCase() in context) {
           attributes.push({
             title: 'ID',
@@ -153,37 +147,34 @@ const NodeProperties = props => {
         } else {
           attributes.push({
             title: 'ID',
-            content:
-              '<a href="http://identifiers.org/' +
-              prefix +
-              '/' +
-              id +
-              '">' +
-              props.represents[node.name] +
-              '</a>',
+            content: props.represents[node.name],
             displayed: false
           })
         }
+      } else {
+        attributes.push({
+          title: 'ID',
+          content: props.represents[node.name],
+          displayed: false
+        })
       }
-    } else if (props.represents[node.name] != undefined) {
-      attributes.push({
-        title: 'ID',
-        content: props.represents[node.name],
-        displayed: false
-      })
     }
 
+    //Filter properties
     for (const key in node) {
       content = extractContent(node[key])
       title = extractTitle(key)
+      if (title === 'querynode') {
+        querynode = true
+      }
       if (
         !title.startsWith('__') &&
         content != null &&
         content !== 'null' &&
         content !== ''
       ) {
-        if (title === 'aliases' || title === 'alias') {
-          aliases.add(content)
+        if (title in completeListProperties) {
+          completeListProperties[title].add(content)
         } else if (title === 'id') {
           attributes.push({
             title: 'Node Id',
@@ -205,7 +196,11 @@ const NodeProperties = props => {
           })
         } else if (title !== 'query') {
           const [prefix, id] = content.split(':')
-          if (prefix.toUpperCase() in context && id != undefined) {
+          if (
+            prefix.toUpperCase() in context &&
+            id != null &&
+            /[^\s]/.test(id)
+          ) {
             attributes.push({
               title: camelCaseToTitleCase(title),
               content:
@@ -239,41 +234,64 @@ const NodeProperties = props => {
       }
     }
 
-    //Handle aliases
-    let aliasLinks = ''
-    aliases.forEach(alias => {
-      const [prefix, id] = alias.split(':')
-      if (prefix.toUpperCase() in context) {
-        aliasLinks +=
-          '<a href="' +
-          context[prefix.toUpperCase()] +
-          id +
-          '">\t' +
-          alias +
-          '</a><br/>'
-      } else {
-        aliasLinks +=
-          '<a href="http://identifiers.org/' +
-          prefix +
-          '/' +
-          id +
-          '">\t' +
-          alias +
-          '</a><br/>'
+    //Handle list attributes
+    for (const propertyName in completeListProperties) {
+      const propertyList = completeListProperties[propertyName]
+      let propertyString = ''
+      propertyList.forEach(property => {
+        const [prefix, id] = property.split(':')
+        if (prefix.toUpperCase() in context && id != null && /[^\s]/.test(id)) {
+          propertyString +=
+            '<a href="' +
+            context[prefix.toUpperCase()] +
+            id +
+            '">\t' +
+            property +
+            '</a><br/>'
+        } else if (id != null && /[^\s]/.test(id)) {
+          propertyString +=
+            '<a href="http://identifiers.org/' +
+            prefix +
+            '/' +
+            id +
+            '">\t' +
+            '</a><br/>'
+        } else {
+          propertyString += property + '<br/>'
+        }
+      })
+      if (propertyList.size > 1) {
+        attributes.push({
+          title: camelCaseToTitleCase(propertyName),
+          content:
+            '<div style="padding-left:1em;">' + propertyString + '</div>',
+          displayed: false
+        })
+      } else if (propertyList.size === 1) {
+        attributes.push({
+          title: camelCaseToTitleCase(propertyName),
+          content: propertyString,
+          displayed: false
+        })
       }
-    })
-    if (aliases.size > 1) {
-      attributes.push({
-        title: 'Alias',
-        content: '<div style="padding-left:1em;">' + aliasLinks + '</div>',
-        displayed: false
-      })
-    } else if (aliases.size === 1) {
-      attributes.push({
-        title: 'Alias',
-        content: aliasLinks,
-        displayed: false
-      })
+    }
+
+    //Add gene annotation
+    if (
+      props.search.results != null &&
+      (props.search.results.genes.get(node.name) != null ||
+        props.search.results.genes.get(node.name.toLowerCase()) != null)
+    ) {
+      inset = true
+      geneAnnotation = (
+        <List className={classes.noPadding}>
+          <GeneAnnotationList
+            {...props}
+            search_results={props.search.results}
+            geneSymbol={node.name}
+          />
+        </List>
+      )
     }
 
     const displayCol1 = []
@@ -390,7 +408,7 @@ const NodeProperties = props => {
             <td>
               <Typography variant="body2">{node.name}</Typography>
             </td>
-            {inset ? (
+            {querynode ? (
               <td>
                 <Avatar className={classes.matched}>
                   <CheckIcon className={classes.icon} />
