@@ -101,7 +101,7 @@ Selecting a node or nodes in the network, or clicking the Nodes tab, will open t
 
 Selecting an edge or edges, or clicking the Edges tab, will open the Edges tab. If there are edges selected, then only the information for the selected edges will be shown. If there are no edges selected, then information for all edges will be shown. Edge names take the form: source node name → target node name. If the source or target node represents a gene which is a part of the query, then there will be a pink checkmark next to the name.
 
-## Quick start for developers
+## Quick start guide for developers
 
 IQuery is implemented using [React](https://reactjs.org/).
 
@@ -110,4 +110,56 @@ git clone https://github.com/cytoscape/search-portal.git
 cd search-portal
 yarn install
 yarn start
+```
+
+### Configuration
+
+The host name of the web server and endpoint of REST services are hard coded in the file `apiConstants.js`.
+
+```
+search-portal
+|-- src
+    |-- api
+        |-- apiConstants.js
+```
+
+The variable `SERVICE_SERVER_URL` should point to the NDEx server where the desired networks are stored, and the variable `BASE_URL` should point to the base url for the endpoints of REST services.
+
+#### Example configuration
+```
+export const METHOD_POST = 'POST
+export const METHOD_GET = 'GET'
+
+export const SERVICE_SERVER_URL = 'http://ndexbio.org/'
+export const BASE_URL = SERVICE_SERVER_URL + 'integratedsearch/v1/'
+```
+
+### Building and deploying with Docker
+
+**Step 1**: Build IQuery
+
+```
+cd search-portal
+yarn build
+```
+
+**Step 2**: Copy build file to Docker directory
+
+```
+search-portal
+|-- build    <-- copy everything in here . . .
+|-- docker
+    |-- static    <-- . . . to in here
+```
+
+```
+cd search-portal
+cp -rn build/* docker/static
+```
+
+**Step 3**: Build and run Docker image
+```
+cd search-portal/docker
+docker build -t portal .
+docker run --name search-portal -d -p 80:80 portal
 ```
