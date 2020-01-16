@@ -134,7 +134,7 @@ export const SERVICE_SERVER_URL = 'http://ndexbio.org/'
 export const BASE_URL = SERVICE_SERVER_URL + 'integratedsearch/v1/'
 ```
 
-### Building and deploying with Docker
+### Building and deploying with [Docker](https://docs.docker.com/get-started/part2/)
 
 **Step 1**: Build IQuery
 
