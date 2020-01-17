@@ -142,6 +142,8 @@ export const BASE_URL = SERVICE_SERVER_URL + 'integratedsearch/v1/'
 cd search-portal
 yarn build
 ```
+The web app is built in the build directory. If you are using Apache web server, you can just copy 
+thing under this directory to your DocumentRoot directory.
 
 **Step 2**: Copy build file to Docker directory
 
