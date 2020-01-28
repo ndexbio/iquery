@@ -127,7 +127,7 @@ The variable `SERVICE_SERVER_URL` should point to the NDEx server where the desi
 
 #### Example configuration
 ```
-export const METHOD_POST = 'POST
+export const METHOD_POST = 'POST'
 export const METHOD_GET = 'GET'
 
 export const SERVICE_SERVER_URL = 'http://ndexbio.org/'
@@ -142,10 +142,9 @@ export const BASE_URL = SERVICE_SERVER_URL + 'integratedsearch/v1/'
 cd search-portal
 yarn build
 ```
-The web app is built in the build directory. If you are using Apache web server, you can just copy 
-thing under this directory to your DocumentRoot directory.
 
-**Step 2**: Copy build file to Docker directory
+
+**Step 2**: Copy build directory contents to Docker directory
 
 ```
 search-portal
@@ -164,4 +163,21 @@ cp -rn build/* docker/static
 cd search-portal/docker
 docker build -t portal .
 docker run --name search-portal -d -p 80:80 portal
+```
+
+### Building and deploying with Apache web server
+
+**Step 1**: Build IQuery
+
+```
+cd search-portal
+yarn build
+```
+The web app is built in the `build` directory.
+
+**Step 2**: Copy build directory to DocumentRoot directory
+
+```
+search-portal
+|-- build   <-- copy this to your DocumentRoot directory
 ```
