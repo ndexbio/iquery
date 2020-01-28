@@ -140,9 +140,10 @@ export const BASE_URL = SERVICE_SERVER_URL + 'integratedsearch/v1/'
 
 ```
 cd search-portal
+yarn install
 yarn build
 ```
-
+The web app is built in the `build` directory.
 
 **Step 2**: Copy build directory contents to Docker directory
 
@@ -171,6 +172,7 @@ docker run --name search-portal -d -p 80:80 portal
 
 ```
 cd search-portal
+yarn install
 yarn build
 ```
 The web app is built in the `build` directory.
