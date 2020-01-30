@@ -7,7 +7,10 @@
     * [Quick start](#quick-start)
     * [Detailed overview](#detailed-overview)
 * [Integrating IQuery into your application](#integrating-iquery-into-your-application)
-* [Configuring, building, and deploying IQuery for local development](configuring-building-and-deploying-iquery-for-local-development)
+* [Configuring, building, and deploying IQuery locally for development](#configuring-building-and-deploying-iquery-locally-for-development)
+    * [Configuration](#configuration)
+    * [Building and deploying with Docker](#building-and-deploying-with-docker)
+    * [Building and deploying with Apache](#building-and-deploying-with-apache)
 
 ## What is IQuery?
 
@@ -219,7 +222,7 @@ docker build -t portal .
 docker run --name search-portal -d -p 80:80 portal
 ```
 
-### Building and deploying with Apache web server
+### Building and deploying with Apache
 
 **Step 1**: Build IQuery
 
