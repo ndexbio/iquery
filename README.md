@@ -1,21 +1,50 @@
 # NDEx Integrated Query (IQuery)
 
-![](docs/iquery_home_page.png)
+## Table of Contents
+
+* [What is IQuery?](#what-is-iquery)
+* [Using the IQuery interface](#using-the-iquery-interface)
+    * [Quick start](#quick-start)
+    * [Detailed overview](#detailed-overview)
+* [Integrating IQuery into your application](#integrating-iquery-into-your-application)
+* [Configuring, building, and deploying IQuery for local development](configuring-building-and-deploying-iquery-for-local-development)
 
 ## What is IQuery?
+
 IQuery is a web application for querying a curated subset of the online biological network repository [NDEx](https://ndexbio.org). Given a set of query genes, IQuery will return NDEx pathways enriched for the query genes, networks representing the interactions between those genes and other proteins, and networks representing the associations between those genes and other biological or chemical entities. IQuery is designed such that new types of searches and analyses may be added in the future.
 
 Users can request to have their networks included in the search by uploading their networks to [NDEx](https://ndexbio.org) and [contacting us](https://home.ndexbio.org/contact-us/).
 
-## Quick start guide for users
+## Using the IQuery Interface
 
-Go to [iquery.ndexbio.org](http://iquery.ndexbio.org) and click one of the query gene set examples to launch a query with an example set of genes.
+### Quick start
+
+Go to [iquery.ndexbio.org](http://iquery.ndexbio.org) and either:
+
+* Enter a set of query genes into the search box and click the search icon, or
+* Click one of the query gene set examples.
+
+This will launch a query and take you to a results page where you will be able to:
+
+* Browse networks from pathway enrichment, protein association, or gene association searches
+* View query genes that are present in each network
+* Zoom, pan, and inspect networks, and get more information about their nodes and edges by clicking on them
+* Save networks to [NDEx](http://ndexbio.org), or open them in [Cytoscape](https://cytoscape.org)
+* Perform new searches with new gene sets
+
+### Detailed overview
+
+Going to [iquery.ndexbio.org](http://iquery.ndexbio.org) will bring you to a landing page with a toolbar at the top and a search box in the middle. 
+
+![](docs/iquery_home_page.png)
+
+Typing a list of genes (seperated by spaces or by commas) into the search box and pressing the enter key or the search button (which looks like a magnifying glass) will take you to the results page, which displays networks containing genes from the search query. Clicking one of the query gene set example buttons underneath the search bar will perform a search with an example query gene set.
 
 ![](docs/iquery_hypoxia_example.png)
 
 The query results page has a toolbar at the top, and three panels. The panels can be resized by dragging the gray boundaries between them.
 
-### Toolbar
+#### Toolbar
 
 ![](docs/iquery_toolbar.png)
 
@@ -28,35 +57,35 @@ The query results page has a toolbar at the top, and three panels. The panels ca
 
 All external links will be opened in new tabs.
 
-### Left panel
+#### Left panel
 
 ![](docs/iquery_left_panel.png)
 
 The left panel lists the genes in the query. Genes and gene groups that are found in the currently selected network are shown in pink, and genes that are not found are shown in gray. Clicking on a pink gene in the left panel will cause the network view in the right panel to zoom into that gene. Clicking the gene in the left panel again will cause the network view to zoom back out.
 
-### Middle panel
+#### Middle panel
 
 ![](docs/iquery_middle_panel.png)
 
 The middle panel lists the networks that have been returned from the search. Currently, IQuery performs three kinds of searches for each query: [pathway enrichment](#pathway-enrichment), [protein interactions](#protein-interactions), and [gene association](#gene-association). Clicking on the tab for a search type will display the results of that search.
 
-#### Pathway Enrichment
+##### Pathway Enrichment
 
 This search returns biological pathways that are enriched for the genes in the query. Results can be sorted by number of overlapping genes, p-value, or cosine similarity. For more information about sorting, click the information icon beside the "Sort by" drop-down menu.
 
-#### Protein Interactions
+##### Protein Interactions
 
 This search returns the neighborhood of the query genes in a large network where edges represent interactions between proteins. Results are sorted by the number of query genes found in the network
 
-#### Gene Association
+##### Gene Association
 
 This search returns the neighborhood of the query genes in a large network where edges represent interactions between a protein and a non-protein entity, such as a chemical, or a location in the cell. Results are sorted by the number of query genes found in the network.
 
-### Right panel
+#### Right panel
 
 The right panel displays information about the currently selected network. The top half of the right panel contains the [network view](#network-view), which displays the network and some options for manipulating the network. The bottom half of the right panel contains other [network information](#network-information). 
 
-#### Network view
+##### Network view
 
 ![](docs/iquery_network_view.png)
 
@@ -83,25 +112,49 @@ The view of the network itself supports zooming, panning, selecting nodes and ed
 
 If a network has a preset layout, the original layout can be restored by switching to a different layout and then switching back.
 
-#### Network information
+##### Network information
 
 ![](docs/iquery_network_information.png)
 
 Beneath the network view, there is an area for network information, with three tabs: [Network](#network), [Nodes](#nodes), and [Edges](#edges). All links open in new tabs.
 
-##### Network
+###### Network
 
 By default, the Network tab is open. This tab displays network information such as the network's name, description, properties, contributors, and namespaces. 
 
-##### Nodes
+###### Nodes
 
 Selecting a node or nodes in the network, or clicking the Nodes tab, will open the Nodes tab. If there are nodes selected, then only the information for the selected nodes will be shown. If nodes are not selected, information for all nodes will be shown. Nodes corresponding to genes which are in the query will have pink checkmarks next to their names. Clicking on a node name will hide or show that node's information. The information for query nodes contains a [GeneCards](https://www.genecards.org/) summary of the gene's function.
 
-##### Edges
+###### Edges
 
 Selecting an edge or edges, or clicking the Edges tab, will open the Edges tab. If there are edges selected, then only the information for the selected edges will be shown. If there are no edges selected, then information for all edges will be shown. Edge names take the form: source node name → target node name. If the source or target node represents a gene which is a part of the query, then there will be a pink checkmark next to the name.
 
-## Quick start guide for developers
+## Integrating IQuery into your application
+
+To launch an IQuery search from your own application, take the following base url:
+
+```
+http://iquery.ndexbio.org?genes=
+```
+
+And append the [URI encoded](https://en.wikipedia.org/wiki/Percent-encoding) list of space-delimited or comma-delimited genes. This will take you to the IQuery results page for that gene set.
+
+### Example
+
+To conduct a query with the following genes:
+
+```
+BRCA1 BRCA2 PALB2 CHEK2 CDH1
+```
+
+Go to the following url:
+
+```
+http://iquery.ndexbio.org?genes=BRCA1%20BRCA2%20PALB2%20CHEK2%20CDH1
+```
+
+## Configuring, building, and deploying IQuery locally for development
 
 IQuery is implemented using [React](https://reactjs.org/).
 
