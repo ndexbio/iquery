@@ -123,7 +123,7 @@ search-portal
         |-- apiConstants.js
 ```
 
-The variable `SERVICE_SERVER_URL` should point to the NDEx server where the desired networks are stored, and the variable `BASE_URL` should point to the base url for the endpoints of REST services.
+The variable `SERVICE_SERVER_URL` should point to the NDEx server where the desired networks are stored, and the variable `BASE_URL` should point to the base url for the endpoints of REST services. The variable `GOOGLE_CLIENT_ID` should be the client ID for Google Single Sign On for the particular NDEx server being used. If this is not supplied, then Google SSO won't work.
 
 #### Example configuration
 ```
@@ -132,6 +132,8 @@ export const METHOD_GET = 'GET'
 
 export const SERVICE_SERVER_URL = 'http://ndexbio.org/'
 export const BASE_URL = SERVICE_SERVER_URL + 'integratedsearch/v1/'
+
+export const GOOGLE_CLIENT_ID = '802839698598-8rsr8va0bd0e6lmi0ghemtrvldk9rnla.apps.googleusercontent.com'
 ```
 
 ### Building and deploying with [Docker](https://docs.docker.com/get-started/part2/)
