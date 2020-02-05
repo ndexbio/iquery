@@ -22,6 +22,8 @@ import HomeIcon from '@material-ui/icons/Home'
 
 import GeneTextBox from './GeneTextBox'
 
+import { SERVICE_SERVER_URL } from '../../api/apiConstants'
+
 const drawerWidth = 240
 
 const styles = theme => ({
@@ -202,7 +204,7 @@ class TitleBar extends React.Component {
 
 // TODO: replace this to the actual help page
 const HELP_URL = 'https://github.com/idekerlab/search-portal/wiki'
-const NDEX_URL = 'https://www.ndexbio.org/'
+const NDEX_URL = SERVICE_SERVER_URL
 const CYTOSCAPE_URL = 'https://cytoscape.org/'
 const NRNB_URL = 'https://nrnb.org/'
 const WP_URL = 'https://www.wikipathways.org/'

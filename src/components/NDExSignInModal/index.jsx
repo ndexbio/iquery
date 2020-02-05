@@ -22,8 +22,7 @@ import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 import NDExSave from '../NDExSave'
 
 import './style.css'
-
-import config from './assets/config'
+import { SERVICE_SERVER_URL, GOOGLE_CLIENT_ID } from '../../api/apiConstants'
 
 const PaperComponent = props => {
   return (
@@ -62,7 +61,7 @@ class GoogleSignOn extends React.Component {
     return (
       <div className="google-button">
         <GoogleLogin
-          clientId={config.googleClientId}
+          clientId={GOOGLE_CLIENT_ID}
           render={renderProps => (
             <Button
               id="googleSignInButtonId"
@@ -123,7 +122,7 @@ class CredentialsSignOn extends React.Component {
           <div>
             <span>Need an account? </span>
             <a
-              href="http://ndexbio.org"
+              href={SERVICE_SERVER_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -203,7 +202,7 @@ export class NDExSignIn extends React.Component {
           Sign in to your NDEx Account
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText component="div">
             <div className="NDExSignInContainer">
               <Grid container spacing={8}>
                 <Grid item xs={6} className="grid">
