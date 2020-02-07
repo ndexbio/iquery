@@ -9,7 +9,6 @@ import IconButton from '@material-ui/core/IconButton'
 import HelpIcon from '@material-ui/icons/Help'
 import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button'
-import SaveToNDExButton from '../Results/Ndex/SaveToNDExButton'
 
 import classNames from 'classnames'
 
@@ -202,9 +201,8 @@ class TitleBar extends React.Component {
   }
 }
 
-// TODO: replace this to the actual help page
-const HELP_URL = 'https://github.com/idekerlab/search-portal/wiki'
-const NDEX_URL = SERVICE_SERVER_URL
+const HELP_URL = 'https://github.com/cytoscape/search-portal/blob/master/README.md'
+const NDEX_URL = 'https://www.ndexbio.org/'
 const CYTOSCAPE_URL = 'https://cytoscape.org/'
 const NRNB_URL = 'https://nrnb.org/'
 const WP_URL = 'https://www.wikipathways.org/'
