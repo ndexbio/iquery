@@ -11,6 +11,9 @@ import GeneList from '../GeneList'
  * @constructor
  */
 const InputPanel = props => {
+  if (props.search.results) {
+    console.log(props.search.results.genes)
+  }
   const stripGene = geneName => {
     if (geneName == null) {
       return null

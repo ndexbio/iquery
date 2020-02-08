@@ -90,10 +90,7 @@ const SearchTextBox = props => {
     }
 
     const sourceNames = sources.map(source => source.name)
-    const geneList = genes
-      .toString()
-      .replace(',', ' ')
-      .split(/\s*,\s*|\s+/)
+    const geneList = genes.toString().split(/\s*,\s*|\s*;\s*|\s+/)
 
     props.searchActions.setQuery(genes)
     props.searchActions.searchStarted({ geneList, sourceNames })
