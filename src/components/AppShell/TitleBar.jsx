@@ -201,8 +201,9 @@ class TitleBar extends React.Component {
   }
 }
 
-const HELP_URL = 'https://github.com/cytoscape/search-portal/blob/master/README.md'
-const NDEX_URL = 'https://www.ndexbio.org/'
+const HELP_URL =
+  'https://github.com/cytoscape/search-portal/blob/master/README.md'
+const NDEX_URL = SERVICE_SERVER_URL
 const CYTOSCAPE_URL = 'https://cytoscape.org/'
 const NRNB_URL = 'https://nrnb.org/'
 const WP_URL = 'https://www.wikipathways.org/'
