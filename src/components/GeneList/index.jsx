@@ -82,9 +82,9 @@ const GeneList = props => {
 
   for (const value of unique) {
     if (hitSets.has(value.toUpperCase())) {
-      matched.push(value)
+      matched.push(value.toUpperCase())
     } else {
-      unmatched.push(value)
+      unmatched.push(value.toUpperCase())
     }
   }
 
@@ -92,6 +92,10 @@ const GeneList = props => {
   const unmatchedSorted = unmatched.sort()
   const sorted = [...matchedSorted, ...unmatchedSorted]
 
+  console.log('matchedSorted')
+  console.log(matchedSorted)
+  console.log('unmatchedSorted')
+  console.log(unmatchedSorted)
   return (
     <div className="gene-list-wrapper">
       <List>

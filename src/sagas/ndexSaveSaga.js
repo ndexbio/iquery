@@ -52,61 +52,9 @@ function* watchGoogleSignOn(action) {
       message.startsWith('User with email') &&
       message.endsWith("doesn't exist.")
     ) {
-      /*
-      const comp = (
-        <span>
-          {message} Go to{' '}
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="http://ndexbio.org"
-          >
-            http://ndexbio.org
-          </a>{' '}
-          to create an account
-        </span>
-      )
-      */
-      //this.props.onError(comp, true)
       return
     }
-    //this.props.onError(message, true)
   }
-  /*
-  axios
-    .get(config.NDEX_USER_VALIDATION, {
-      headers: {
-        Authorization: profile.authorization.token
-      }
-    })
-    .then(_ => {
-      this.props.onLoginSuccess(profile)
-    })
-    .catch(error => {
-      const message =
-        error.response.data.message || 'Failed to verify account. ' + error
-      if (
-        message.startsWith('User with email') &&
-        message.endsWith("doesn't exist.")
-      ) {
-        const comp = (
-          <span>
-            {message} Go to{' '}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="http://ndexbio.org"
-            >
-              http://ndexbio.org
-            </a>{' '}
-            to create an account
-          </span>
-        )
-        this.props.onError(comp, true)
-        return
-      }
-      this.props.onError(message, true)
-    })*/
 }
 
 /**
@@ -126,15 +74,7 @@ function* watchCredentialsSignOn(action) {
 
   try {
     const resp = yield call(ndexSave.ndexValidation, headers)
-    //console.log('resp', resp)
-
     const responseJson = yield call([resp, 'json'])
-
-    /*
-    console.log('responseJson', responseJson)
-    for (const key of resp.headers.keys()) {
-      console.log('header ', key)
-    }*/
 
     if (resp.status != 200) {
       yield put({
@@ -155,38 +95,13 @@ function* watchCredentialsSignOn(action) {
         payload: profile
       })
     }
-    //this.props.onLoginSuccess(profile)
   } catch (err) {
     console.log(err)
     yield put({
       type: SET_ERROR_MESSAGE,
       payload: 'Unknown error'
     })
-    //this.setState({ error: 'Unknown error' })
   }
-
-  /*
-    axios
-      .get(config.NDEX_USER_VALIDATION, headers)
-      .then(resp => {
-        const profile = {
-          name: resp.data.firstName,
-          image: resp.data.image,
-          authorization: {
-            type: 'ndex',
-            token: resp.config.headers['Authorization']
-          }
-        }
-        this.props.onLoginSuccess(profile)
-      })
-      .catch(err => {
-        console.log(err)
-        if ('response' in err) {
-          this.setState({ error: err.response.data.message })
-        } else {
-          this.setState({ error: 'Unknown error' })
-        }
-      })*/
 }
 
 /**
@@ -218,20 +133,4 @@ function* watchSaveToNDEx(action) {
     type: SET_NETWORK_URL,
     payload: networkURL
   })
-  /*
-  axios
-    .post(config.save_to_ndex, cx, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: token
-      }
-    })
-    .then(resp => {
-      const networkUrl = resp.data.replace('/v2/', '/#/')
-      this.setState({ networkUrl })
-    })
-    .catch(err => {
-      alert('Failed to save network to NDEx: ' + err)
-    })
-    */
 }
