@@ -1,7 +1,7 @@
 .ndex-base {
   background-color: #ffffff;
   display: flex;
-  height: 100vmin;
+  height: calc(100% - 48px);
   position: relative;
   right: 0;
 }
