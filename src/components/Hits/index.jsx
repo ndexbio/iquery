@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography'
 const dummyServices = [
   {
     name: 'Enrichment',
-    title: 'Pathway Enrichment',
+    title: 'Relevant Pathways',
     hits: 10
   },
   {

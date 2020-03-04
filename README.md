@@ -29,7 +29,7 @@ Go to [iquery.ndexbio.org](http://iquery.ndexbio.org) and either:
 
 This will launch a query and take you to a results page where you will be able to:
 
-* Browse networks from pathway enrichment, protein association, or gene association searches
+* Browse networks from relevant pathways, protein association, or gene association searches
 * View query genes that are present in each network
 * Zoom, pan, and inspect networks, and get more information about their nodes and edges by clicking on them
 * Save networks to [NDEx](http://ndexbio.org), or open them in [Cytoscape](https://cytoscape.org)
@@ -70,9 +70,9 @@ The left panel lists the genes in the query. Genes and gene groups that are foun
 
 ![](docs/iquery_middle_panel.png)
 
-The middle panel lists the networks that have been returned from the search. Currently, IQuery performs three kinds of searches for each query: [pathway enrichment](#pathway-enrichment), [protein interactions](#protein-interactions), and [gene association](#gene-association). Clicking on the tab for a search type will display the results of that search.
+The middle panel lists the networks that have been returned from the search. Currently, IQuery performs three kinds of searches for each query: [relevant pathways](#relevant-pathways), [protein interactions](#protein-interactions), and [gene association](#gene-association). Clicking on the tab for a search type will display the results of that search.
 
-##### Pathway Enrichment
+##### Relevant Pathways
 
 This search returns biological pathways that are enriched for the genes in the query. Results can be sorted by number of overlapping genes, p-value, or cosine similarity. For more information about sorting, click the information icon beside the "Sort by" drop-down menu.
 

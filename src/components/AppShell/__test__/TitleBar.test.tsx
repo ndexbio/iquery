@@ -34,7 +34,7 @@ it('Test title bar component', () => {
             onMouseOver={[Function]}
             onTouchEnd={[Function]}
             onTouchStart={[Function]}
-            title="Search by Pathway Enrichment / Protein-Protein Interactions / Gene Association"
+            title="Search by Relevant Pathways / Protein-Protein Interactions / Gene Association"
           >
             <button
               className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-text"
