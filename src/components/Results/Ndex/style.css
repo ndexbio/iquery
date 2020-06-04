@@ -7,7 +7,7 @@
 }
 
 .table-browser {
-  background-color: #EFEFEF;
+  background-color: #efefef;
 }
 
 .table-browser-panel {
@@ -19,7 +19,7 @@
   display: inline-flex;
   box-sizing: initial;
   width: 100%;
-  height: calc(100% - 28px);
+  height: calc(100% - 36px);
 }
 
 .node-info {
@@ -38,17 +38,17 @@
 
 .edge-info-panel {
   padding: 0.2em;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   overflow-y: auto;
   overflow-x: visible;
   width: 100%;
-  margin-left: 0; 
+  margin-left: 0;
 }
 
 .node-info-panel {
   padding: 0.2em;
   box-sizing: content-box;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   overflow-y: auto;
   overflow-x: visible;
   width: 100%;
@@ -56,7 +56,7 @@
 
 .network-info-panel {
   box-sizing: content-box;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   overflow-y: auto;
   overflow-x: visible;
 }
@@ -94,7 +94,6 @@
   margin: 0;
 }
 
-
 .network-list-wrapper {
   box-sizing: content-box;
   width: 100%;
@@ -113,7 +112,6 @@
   height: 3.5em;
   padding: 0;
   margin: 0;
-
 }
 
 .listTitle {
@@ -125,14 +123,14 @@
 .gutter {
   margin: 0;
   padding: 0;
-  background-color: #EFEFEF;
+  background-color: #efefef;
   background-repeat: no-repeat;
 }
 
 .gutter-horizontal {
   margin: 0;
   padding: 0;
-  background-color: #EFEFEF;
+  background-color: #efefef;
   background-repeat: no-repeat;
   /*height: calc(100% + 56px);
   position: relative;
@@ -155,15 +153,14 @@
 
 .inner-rectangle {
   box-sizing: initial;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   overflow-y: auto;
   overflow-x: visible;
   width: 100%;
-  margin-bottom: 8px; 
+  margin-bottom: 8px;
 }
 
 .wide-list {
   width: 100%;
   padding: 0 0 0 0;
 }
-
