@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import Paper from '@material-ui/core/Paper'
-import InputBase from '@material-ui/core/InputBase'
-import Divider from '@material-ui/core/Divider'
+import React, { useState, useEffect, useRef } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import Divider from '@material-ui/core/Divider';
 
-import { loadCSS } from 'fg-loadcss/src/loadCSS'
-import Icon from '@material-ui/core/Icon'
-import Tooltip from '@material-ui/core/Tooltip'
-import classNames from 'classnames'
-import IconButton from '@material-ui/core/IconButton'
-import SearchIcon from '@material-ui/icons/Search'
-import DeleteIcon from '@material-ui/icons/Delete'
-import MenuIcon from '@material-ui/icons/Menu'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+import { loadCSS } from 'fg-loadcss/src/loadCSS';
+import Icon from '@material-ui/core/Icon';
+import Tooltip from '@material-ui/core/Tooltip';
+import classNames from 'classnames';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
+import DeleteIcon from '@material-ui/icons/Delete';
+import MenuIcon from '@material-ui/icons/Menu';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
-import MessageSnackbar from './MessageSnackbar'
+import MessageSnackbar from './MessageSnackbar';
 
-import * as examples from '../TopPage/example-genes'
+import * as examples from '../TopPage/example-genes';
 
-const EXAMPLES = examples.default.examples
+const EXAMPLES = examples.default.examples;
 
 const styles = {
   root: {
@@ -29,111 +29,111 @@ const styles = {
     width: '60vmin',
     padding: '0.3em',
     background: '#f1f1f1',
-    marginLeft: '1em'
+    marginLeft: '1em',
   },
   input: {
     marginLeft: 8,
-    flex: 1
+    flex: 1,
   },
   iconButton: {
-    padding: 10
+    padding: 10,
   },
   divider: {
     width: 1,
     height: 28,
-    margin: 4
-  }
-}
+    margin: 4,
+  },
+};
 
-const ORIGINAL_GENE_TEXT = 'original-gene-text'
+const ORIGINAL_GENE_TEXT = 'original-gene-text';
 
-const GeneTextBox = props => {
-  const { classes } = props
-  const geneTextRef = useRef()
+const GeneTextBox = (props) => {
+  const { classes } = props;
+  const geneTextRef = useRef();
 
   const [state, setState] = useState({
     anchorEl: null,
-    query: props.search.queryGenes
-  })
-  const [open, setOpen] = useState(false)
+    query: props.search.queryGenes,
+  });
+  const [open, setOpen] = useState(false);
 
-  const menuOpen = Boolean(state.anchorEl)
+  const menuOpen = Boolean(state.anchorEl);
 
   useEffect(() => {
     loadCSS(
       'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
       document.querySelector('#insertion-point-jss')
-    )
-    return () => {}
-  }, [])
+    );
+    return () => {};
+  }, []);
 
   const handleCopy = () => {
     // This is a hack...
-    const copyText = document.getElementById(ORIGINAL_GENE_TEXT)
-    copyText.select()
-    document.execCommand('copy')
+    const copyText = document.getElementById(ORIGINAL_GENE_TEXT);
+    copyText.select();
+    document.execCommand('copy');
 
     // Show message
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const handleSearch = (event, query) => {
-    let genes
+    let genes;
     if (query == null) {
-      genes = state.query
+      genes = state.query;
     } else {
-      genes = query
+      genes = query;
     }
-    const sources = props.source.sources
+    const sources = props.source.sources;
 
     if (genes.length === 0 || sources === null || sources.length === 0) {
       // TODO: add better error message
-      return
+      return;
     }
 
-    const sourceNames = sources.map(source => source.name)
-    const geneList = genes.split(/\s*,\s*|\s*;\s*|\s+/)
+    const sourceNames = sources.map((source) => source.name);
+    const geneList = genes.split(/\s*,\s*|\s*;\s*|\s+/);
 
-    props.uiStateActions.setSelectedSource('enrichment')
-    props.searchActions.clearAll()
-    props.history.push('/')
-    props.searchActions.setQuery(genes)
-    props.searchActions.searchStarted({ geneList, sourceNames })
-  }
+    props.uiStateActions.setSelectedSource('enrichment');
+    props.searchActions.clearAll();
+    props.history.push('/');
+    props.searchActions.setQuery(genes);
+    props.searchActions.searchStarted({ geneList, sourceNames });
+  };
 
-  const handleChange = name => event => {
+  const handleChange = (name) => (event) => {
     setState({
       ...props,
-      [name]: event.target.value
-    })
-  }
+      [name]: event.target.value,
+    });
+  };
 
   const handleClear = () => {
-    setState({ ...state, query: '' })
-  }
+    setState({ ...state, query: '' });
+  };
 
-  const handleKeyPress = event => {
+  const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      handleSearch()
+      handleSearch();
     }
-  }
+  };
 
-  const handleMenu = event => {
-    setState({ ...state, anchorEl: event.currentTarget })
-  }
+  const handleMenu = (event) => {
+    setState({ ...state, anchorEl: event.currentTarget });
+  };
 
   const handleClose = () => {
-    setState({ ...state, anchorEl: null })
-  }
+    setState({ ...state, anchorEl: null });
+  };
 
-  const handleExample = exampleIdx => {
+  const handleExample = (exampleIdx) => {
     setState({
       ...props,
       query: EXAMPLES[exampleIdx].genes,
-      anchorEl: null
-    })
-    handleSearch(null, EXAMPLES[exampleIdx].genes)
-  }
+      anchorEl: null,
+    });
+    handleSearch(null, EXAMPLES[exampleIdx].genes);
+  };
 
   return (
     <div>
@@ -146,11 +146,11 @@ const GeneTextBox = props => {
         vertical={'bottom'}
       />
       <Paper className={classes.root} elevation={0}>
-        <Tooltip title="Query gene set examples" placement="bottom">
+        <Tooltip title='Query gene set examples' placement='bottom'>
           <div>
             <IconButton
               className={classes.iconButton}
-              aria-label="Menu"
+              aria-label='Menu'
               onClick={handleMenu}
             >
               <MenuIcon />
@@ -159,11 +159,11 @@ const GeneTextBox = props => {
               anchorEl={state.anchorEl}
               anchorOrigin={{
                 vertical: 'top',
-                horizontal: 'right'
+                horizontal: 'right',
               }}
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'right'
+                horizontal: 'right',
               }}
               open={menuOpen}
               onClose={handleClose}
@@ -174,31 +174,31 @@ const GeneTextBox = props => {
                     <MenuItem key={idx} onClick={() => handleExample(idx)}>
                       {example.name}
                     </MenuItem>
-                  )
+                  );
                 } else {
-                  return null
+                  return null;
                 }
               })}
             </Menu>
           </div>
         </Tooltip>
         <Divider className={classes.divider} />
-        <Tooltip title="Copy" placement="bottom">
+        <Tooltip title='Copy' placement='bottom'>
           <IconButton
-            color="default"
+            color='default'
             className={classes.iconButton}
-            aria-label="Copy"
+            aria-label='Copy'
             onClick={handleCopy}
           >
             <Icon className={classNames(classes.icon, 'far fa-clipboard')} />
           </IconButton>
         </Tooltip>
         <Divider className={classes.divider} />
-        <Tooltip title="Clear gene list" placement="bottom">
+        <Tooltip title='Clear gene list' placement='bottom'>
           <IconButton
-            color="default"
+            color='default'
             className={classes.iconButton}
-            aria-label="Clear"
+            aria-label='Clear'
             onClick={handleClear}
           >
             <DeleteIcon />
@@ -208,18 +208,18 @@ const GeneTextBox = props => {
         <InputBase
           id={ORIGINAL_GENE_TEXT}
           className={classes.input}
-          placeholder="Enter gene list (or click menu for examples)"
+          placeholder='Enter gene list (or click menu for examples)'
           value={state.query}
           onChange={handleChange('query')}
           onKeyDown={handleKeyPress}
           ref={geneTextRef}
         />
 
-        <Tooltip title="Start new search" placement="bottom">
+        <Tooltip title='Start new search' placement='bottom'>
           <IconButton
-            color="primary"
+            color='primary'
             className={classes.iconButton}
-            aria-label="Directions"
+            aria-label='Directions'
             onClick={handleSearch}
           >
             <SearchIcon />
@@ -227,7 +227,7 @@ const GeneTextBox = props => {
         </Tooltip>
       </Paper>
     </div>
-  )
-}
+  );
+};
 
-export default withStyles(styles)(GeneTextBox)
+export default withStyles(styles)(GeneTextBox);

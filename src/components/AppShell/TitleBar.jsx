@@ -1,119 +1,119 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { withStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import HelpIcon from '@material-ui/icons/Help'
-import Tooltip from '@material-ui/core/Tooltip'
-import Button from '@material-ui/core/Button'
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import HelpIcon from '@material-ui/icons/Help';
+import Tooltip from '@material-ui/core/Tooltip';
+import Button from '@material-ui/core/Button';
 
-import classNames from 'classnames'
+import classNames from 'classnames';
 
-import logo from '../../assets/images/ndex-logo.svg'
-import cytoLogo from '../../assets/images/cytoscape-logo-mono-dark.svg'
-import nrnbLogo from '../../assets/images/nrnb-logo-mono-dark.svg'
-import wpLogo from '../../assets/images/wp-logo-mono-dark.svg'
-import idekerLogo from '../../assets/images/ideker-logo-mono-dark.svg'
-import HomeIcon from '@material-ui/icons/Home'
+import logo from '../../assets/images/ndex-logo.svg';
+//import cytoLogo from '../../assets/images/cytoscape-logo-mono-dark.svg'
+//import nrnbLogo from '../../assets/images/nrnb-logo-mono-dark.svg'
+//import wpLogo from '../../assets/images/wp-logo-mono-dark.svg'
+//import idekerLogo from '../../assets/images/ideker-logo-mono-dark.svg'
+import HomeIcon from '@material-ui/icons/Home';
 
-import GeneTextBox from './GeneTextBox'
+import GeneTextBox from './GeneTextBox';
 
-import { SERVICE_SERVER_URL } from '../../api/apiConstants'
+import { SERVICE_SERVER_URL } from '../../api/apiConstants';
 
-const drawerWidth = 240
+const drawerWidth = 240;
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   hide: {
-    display: 'none'
+    display: 'none',
   },
   menuButton: {
     marginLeft: 12,
-    marginRight: 10
+    marginRight: 10,
   },
   logo: {
     height: '1em',
-    width: '1.5em'
+    width: '1.5em',
   },
   homeLogo: {
     height: '1em',
     width: '1em',
-    marginRight: '0.5em'
+    marginRight: '0.5em',
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   textBox: {
     paddingLeft: '1em',
-    paddingRight: '1em'
+    paddingRight: '1em',
   },
   noWrap: {
     display: 'inline-block',
-    whiteSpace: 'nowrap'
-  }
-})
+    whiteSpace: 'nowrap',
+  },
+});
 
 const titleStyle = {
   position: 'relative',
   left: '1em',
-  textTransform: 'none'
-}
+  textTransform: 'none',
+};
 
 class TitleBar extends React.Component {
   handleMenu = () => {
     this.props.uiStateActions.setSettingsOpen(
       !this.props.uiState.isSettingsOpen
-    )
-  }
+    );
+  };
 
   handleHomeButton = () => {
-    this.props.searchActions.clearAll()
-    this.props.uiStateActions.setSelectedSource('enrichment')
-    this.props.networkActions.networkClear()
-    this.props.history.push('/')
-  }
+    this.props.searchActions.clearAll();
+    this.props.uiStateActions.setSelectedSource('enrichment');
+    this.props.networkActions.networkClear();
+    this.props.history.push('/');
+  };
 
   render() {
-    const { classes, ...others } = this.props
-    const open = this.props.uiState.isSettingsOpen
+    const { classes, ...others } = this.props;
+    const open = this.props.uiState.isSettingsOpen;
 
     return (
       <AppBar
-        position="fixed"
-        color="inherit"
+        position='fixed'
+        color='inherit'
         className={classNames(classes.appBar, {
-          [classes.appBarShift]: open
+          [classes.appBarShift]: open,
         })}
       >
         <div className={classes.noWrap}>
           <Toolbar disableGutters={!open}>
             <Tooltip
-              title="Search by Relevant Pathways / Protein-Protein Interactions / Gene Association"
-              aria-label="NDEx_tooltip"
+              title='Search by Relevant Pathways / Protein-Protein Interactions / Gene Association'
+              aria-label='NDEx_tooltip'
             >
               <div>
                 <Button style={titleStyle} onClick={this.handleHomeButton}>
-                  <HomeIcon fontSize="default" className={classes.homeLogo} />
-                  <Typography variant="h6" color="inherit" noWrap={true}>
+                  <HomeIcon fontSize='default' className={classes.homeLogo} />
+                  <Typography variant='h6' color='inherit' noWrap={true}>
                     NDEx Integrated Query
                   </Typography>
                 </Button>
@@ -131,26 +131,26 @@ class TitleBar extends React.Component {
             <div className={classes.grow} />
 
             <div>
-              <Tooltip title="NDEx" placement="bottom">
+              <Tooltip title='NDEx' placement='bottom'>
                 <IconButton
-                  color="default"
-                  aria-label="Home"
+                  color='default'
+                  aria-label='Home'
                   onClick={() => openLink(NDEX_URL)}
                 >
-                  <img alt="NDEx logo" src={logo} className={classes.logo} />
+                  <img alt='NDEx logo' src={logo} className={classes.logo} />
                 </IconButton>
               </Tooltip>
 
               <Tooltip
-                title="Help"
-                placement="bottom"
+                title='Help'
+                placement='bottom'
                 style={{ marginRight: '1em' }}
               >
-                <Typography color="textPrimary" noWrap={true} display="inline">
+                <Typography color='textPrimary' noWrap={true} display='inline'>
                   <IconButton
-                    aria-haspopup="true"
+                    aria-haspopup='true'
                     onClick={() => openLink(HELP_URL)}
-                    color="inherit"
+                    color='inherit'
                   >
                     <HelpIcon className={classes.logo} />
                   </IconButton>
@@ -197,24 +197,24 @@ class TitleBar extends React.Component {
           </Toolbar>
         </div>
       </AppBar>
-    )
+    );
   }
 }
 
 const HELP_URL =
-  'https://github.com/cytoscape/search-portal/blob/master/README.md'
-const NDEX_URL = SERVICE_SERVER_URL
-const CYTOSCAPE_URL = 'https://cytoscape.org/'
-const NRNB_URL = 'https://nrnb.org/'
-const WP_URL = 'https://www.wikipathways.org/'
-const IL_URL = 'http://idekerlab.ucsd.edu/'
+  'https://github.com/cytoscape/search-portal/blob/master/README.md';
+const NDEX_URL = SERVICE_SERVER_URL;
+//const CYTOSCAPE_URL = 'https://cytoscape.org/';
+//const NRNB_URL = 'https://nrnb.org/';
+//const WP_URL = 'https://www.wikipathways.org/';
+//const IL_URL = 'http://idekerlab.ucsd.edu/';
 
-const openLink = url => {
-  window.open(url, '_blank')
-}
+const openLink = (url) => {
+  window.open(url, '_blank');
+};
 
 TitleBar.propTypes = {
-  classes: PropTypes.object.isRequired
-}
+  classes: PropTypes.object.isRequired,
+};
 
-export default withStyles(styles, { withTheme: true })(TitleBar)
+export default withStyles(styles, { withTheme: true })(TitleBar);

@@ -1,41 +1,42 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import { DialogContentText, DialogActions, Button } from '@material-ui/core'
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { DialogContentText, DialogActions, Button } from '@material-ui/core';
 
-import './style.css'
+import './style.css';
 
-const styles = theme => ({
+const styles = (theme) => ({
   button: {
-    'text-transform': 'none'
-  }
-})
+    'text-transform': 'none',
+  },
+});
 
 class NDExSave extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      networkUrl: ''
-    }
+      networkUrl: '',
+    };
   }
 
   saveToNDEx = (cx, token) => {
-    this.props.ndexSaveActions.saveToNDEx({ cx: cx, token: token })
-  }
+    this.props.ndexSaveActions.saveToNDEx({ cx: cx, token: token });
+  };
 
   handleClose = () => {
-    this.props.ndexSaveActions.setNDExModalOpen(false)
-  }
+    this.props.ndexSaveActions.setNDExModalOpen(false);
+  };
 
   render() {
-    const { classes, ndexSave, network } = this.props
-    console.log(ndexSave)
-    const token = ndexSave.profile ? ndexSave.profile.authorization.token : null
-    const cx = network.originalCX
+    const { classes, ndexSave, network } = this.props;
+    const token = ndexSave.profile
+      ? ndexSave.profile.authorization.token
+      : null;
+    const cx = network.originalCX;
 
-    const networkUrl = ndexSave.networkUrl
+    const networkUrl = ndexSave.networkUrl;
 
     return ndexSave && ndexSave.profile ? (
-      <div className="ndex-save">
+      <div className='ndex-save'>
         <DialogContentText>
           Now that you're logged in, you can save the network to your NDEx
           account
@@ -45,14 +46,14 @@ class NDExSave extends React.Component {
             <Button
               href={networkUrl}
               className={classes.button}
-              target="_blank"
+              target='_blank'
             >
               OPEN IN NDEx
             </Button>
           ) : (
             <Button
               onClick={() => {
-                this.saveToNDEx(cx, token)
+                this.saveToNDEx(cx, token);
               }}
             >
               Save to my account
@@ -60,8 +61,8 @@ class NDExSave extends React.Component {
           )}
         </DialogActions>
       </div>
-    ) : null
+    ) : null;
   }
 }
 
-export default withStyles(styles)(NDExSave)
+export default withStyles(styles)(NDExSave);
