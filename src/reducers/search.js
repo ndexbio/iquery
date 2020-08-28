@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 import {
   setQuery,
   clearQuery,
@@ -12,8 +12,8 @@ import {
   fetchResultSucceeded,
   fetchResultFailed,
   setSearchResult,
-  setActualResults
-} from '../actions/search'
+  setActualResults,
+} from '../actions/search';
 
 const EMPTY_STATE = {
   isSearching: false,
@@ -25,80 +25,80 @@ const EMPTY_STATE = {
   searchResults: null,
   selectedGenes: [],
   resultList: [],
-  actualResults: []
-}
+  actualResults: [],
+};
 
 export const HGNC_REGEX = RegExp(
   '(^[a-zA-Z][a-zA-Z0-9-]*$)|(^C[0-9]+orf[0-9]+$)'
-)
+);
 
 const search = handleActions(
   {
     [setQuery]: (state, payload) => {
-      return { ...state, queryGenes: payload.payload }
+      return { ...state, queryGenes: payload.payload };
     },
     [clearQuery]: (state, payload) => {
-      return { ...state, queryGenes: '', queryList: [] }
+      return { ...state, queryGenes: '', queryList: [] };
     },
     [clearAll]: (state, payload) => {
-      return EMPTY_STATE
+      return EMPTY_STATE;
     },
     [searchStarted]: (state, payload) => {
-      const newQueryList = state.queryGenes.split(' ')
+      const newQueryList = state.queryGenes.split(' ');
       return {
         ...state,
         isSearching: true,
         resultList: [],
-        queryList: newQueryList
-      }
+        queryList: newQueryList,
+      };
     },
     [searchSucceeded]: (state, payload) => {
-      return { ...state, results: payload.payload, isSearching: false }
+      return { ...state, results: payload.payload, isSearching: false };
     },
     [searchFailed]: (state, payload) => {
-      return { ...state, isSearching: false }
+      return { ...state, isSearching: false };
     },
     [setSelectedGenes]: (state, payload) => {
-      return { ...state, selectedGenes: [payload.payload] }
+      return { ...state, selectedGenes: [payload.payload] };
     },
     [clearSelectedGenes]: (state, payload) => {
       return {
         ...state,
-        selectedGenes: []
-      }
+        selectedGenes: [],
+      };
     },
     [fetchResultStarted]: (state, payload) => {
       return {
         ...state,
         isFetching: true,
         searchStatus: null,
-        searchResults: null
-      }
+        searchResults: null,
+      };
     },
     [fetchResultSucceeded]: (state, payload) => {
       return {
         ...state,
-        isFetching: false
-      }
+        isFetching: false,
+      };
     },
     [fetchResultFailed]: (state, payload) => {
-      return { ...state, isFetching: false }
+      return { ...state, isFetching: false };
     },
     [setSearchResult]: (state, payload) => {
-      const singleResult = payload.payload.singleResult
+      const singleResult = payload.payload.singleResult;
       return {
         ...state,
-        searchResults: singleResult
-      }
+        searchResults: singleResult,
+      };
     },
     [setActualResults]: (state, payload) => {
       return {
         ...state,
-        actualResults: payload.payload
-      }
-    }
+        actualResults: payload.payload,
+      };
+    },
   },
   EMPTY_STATE
-)
+);
 
-export default search
+export default search;

@@ -1,9 +1,9 @@
-export const camelCaseToTitleCase = camelCaseString => {
+export const camelCaseToTitleCase = (camelCaseString) => {
   if (
     camelCaseString.slice(0, 4) === 'http' ||
     camelCaseString.slice(0, 5) === 'Prov:'
   ) {
-    return camelCaseString
+    return camelCaseString;
   }
   let result = camelCaseString
     .replace(/([a-z])([A-Z][a-z])/g, '$1 $2')
@@ -14,8 +14,8 @@ export const camelCaseToTitleCase = camelCaseString => {
     .replace(/([A-Z]+)([A-Z][a-rt-z][a-z]*)/g, '$1 $2')
     .replace(/([0-9])([A-Z][a-z]+)/g, '$1 $2')
     .replace(/([0-9]{2,})([A-Z]{2,})/g, '$1 $2')
-    .trim()
-  result = result.charAt(0).toUpperCase() + result.slice(1)
+    .trim();
+  result = result.charAt(0).toUpperCase() + result.slice(1);
   result = result
     .replace('Wiki Pathways', 'WikiPathways')
     .replace('Wikipathways', 'WikiPathways')
@@ -25,6 +25,6 @@ export const camelCaseToTitleCase = camelCaseString => {
     .replace('Hpmi', 'HPMI')
     .replace('Ccmi', 'CCMI')
     .replace('Tcga', 'TCGA')
-    .replace('Querynode', 'Query Node')
-  return result
-}
+    .replace('Querynode', 'Query Node');
+  return result;
+};

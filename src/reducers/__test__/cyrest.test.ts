@@ -1,11 +1,11 @@
-import cyrest from '../cyrest'
-import { SET_PORT } from '../../actions/cyrest'
-import { CyRestState } from '../types'
+import cyrest from '../cyrest';
+import { SET_PORT } from '../../actions/cyrest';
+import { CyRestState } from '../types';
 
 describe('Test for CyRest reducer', () => {
   it('Check initial state', () => {
-    const state = undefined
-    const action = { type: 'dummy_action' }
+    const state = undefined;
+    const action = { type: 'dummy_action' };
     const defaultState: CyRestState = {
       isFetchingAvailable: false,
       available: false,
@@ -13,18 +13,17 @@ describe('Test for CyRest reducer', () => {
       port: 1234,
       error: null,
       lastResponse: null,
-      isLoadingNetwork: false
-    }
+      isLoadingNetwork: false,
+    };
 
-    const result = cyrest(state, action)
+    const result = cyrest(state, action);
 
-    console.log(result)
-    expect(result).toEqual(defaultState)
-  })
+    expect(result).toEqual(defaultState);
+  });
 
   it('Set port number', () => {
-    const portNumber = 1235
-    const action = { type: SET_PORT, payload: portNumber }
+    const portNumber = 1235;
+    const action = { type: SET_PORT, payload: portNumber };
     const newPortState: CyRestState = {
       isFetchingAvailable: false,
       available: false,
@@ -32,9 +31,9 @@ describe('Test for CyRest reducer', () => {
       port: portNumber,
       error: null,
       lastResponse: null,
-      isLoadingNetwork: false
-    }
+      isLoadingNetwork: false,
+    };
 
-    expect(cyrest(undefined, action)).toEqual(newPortState)
-  })
-})
+    expect(cyrest(undefined, action)).toEqual(newPortState);
+  });
+});

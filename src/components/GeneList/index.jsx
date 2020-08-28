@@ -1,105 +1,100 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/styles'
-import Avatar from '@material-ui/core/Avatar'
-import Chip from '@material-ui/core/Chip'
-import CheckIcon from '@material-ui/icons/Check'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import MuiToggleButton from '@material-ui/lab/ToggleButton'
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+import React from 'react';
+import { withStyles } from '@material-ui/styles';
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
+import CheckIcon from '@material-ui/icons/Check';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import MuiToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 const buttonStyle = {
   padding: '0',
   borderRadius: '20px',
   height: '32px',
   borderWidth: '0',
-  backgroundColor: '#FFFFFF'
-}
+  backgroundColor: '#FFFFFF',
+};
 
 const selectedButtonStyle = {
   padding: '0',
   borderRadius: '20px',
   height: '32px',
   borderWidth: '0',
-  backgroundColor: 'rgb(252, 235, 242)'
-}
+  backgroundColor: 'rgb(252, 235, 242)',
+};
 
 const selectedChipStyle = {
   margin: '0',
-  borderRadius: '20px'
-}
+  borderRadius: '20px',
+};
 
 const toggleButtonGroupStyle = {
-  backgroundColor: 'transparent'
-}
+  backgroundColor: 'transparent',
+};
 
 const ToggleButton = withStyles({
   label: {
-    backgroundColor: 'transparent'
-  }
-})(MuiToggleButton)
+    backgroundColor: 'transparent',
+  },
+})(MuiToggleButton);
 
-const GeneList = props => {
-  const results = props.search.results
-  const hits = props.network.hitGenes
-  const hitSets = new Set(hits)
+const GeneList = (props) => {
+  const results = props.search.results;
+  const hits = props.network.hitGenes;
+  const hitSets = new Set(hits);
 
   const handleChange = (event, newAlignment) => {
     if (newAlignment in props.geneToNodeMap) {
-      const alignment = props.geneToNodeMap[newAlignment]
+      const alignment = props.geneToNodeMap[newAlignment];
       if (alignment === props.search.selectedGenes[0]) {
-        props.searchActions.clearSelectedGenes()
+        props.searchActions.clearSelectedGenes();
       } else {
-        props.searchActions.setSelectedGenes(alignment)
+        props.searchActions.setSelectedGenes(alignment);
       }
     } else {
       if (newAlignment === props.search.selectedGenes[0]) {
-        props.searchActions.clearSelectedGenes()
+        props.searchActions.clearSelectedGenes();
       } else {
-        props.searchActions.setSelectedGenes(newAlignment)
+        props.searchActions.setSelectedGenes(newAlignment);
       }
     }
-  }
+  };
 
   if (!results) {
-    return <div className="gene-list-wrapper" />
+    return <div className='gene-list-wrapper' />;
   }
 
-  const geneList = results.genes
+  const geneList = results.genes;
 
   if (!geneList) {
-    return <div className="gene-list-wrapper" />
+    return <div className='gene-list-wrapper' />;
   }
 
-  const matched = []
-  const unmatched = []
+  const matched = [];
+  const unmatched = [];
 
-  const unique = new Set()
+  const unique = new Set();
   for (const gene of geneList.values()) {
-    unique.add(gene.symbol)
+    unique.add(gene.symbol);
   }
 
   for (const value of unique) {
     if (hitSets.has(value.toUpperCase())) {
-      matched.push(value.toUpperCase())
+      matched.push(value.toUpperCase());
     } else {
-      unmatched.push(value.toUpperCase())
+      unmatched.push(value.toUpperCase());
     }
   }
 
-  const matchedSorted = matched.sort()
-  const unmatchedSorted = unmatched.sort()
-  const sorted = [...matchedSorted, ...unmatchedSorted]
+  const matchedSorted = matched.sort();
+  const unmatchedSorted = unmatched.sort();
+  const sorted = [...matchedSorted, ...unmatchedSorted];
 
-  console.log('matchedSorted')
-  console.log(matchedSorted)
-  console.log('unmatchedSorted')
-  console.log(unmatchedSorted)
   return (
-    <div className="gene-list-wrapper">
+    <div className='gene-list-wrapper'>
       <List>
-        {sorted.map(geneValue => (
+        {sorted.map((geneValue) => (
           <ListItem key={geneValue}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
@@ -123,8 +118,8 @@ const GeneList = props => {
         ))}
       </List>
     </div>
-  )
-}
+  );
+};
 
 const getChip = (value, hitSets) => {
   if (hitSets.has(value.toUpperCase())) {
@@ -136,21 +131,21 @@ const getChip = (value, hitSets) => {
               height: '32px',
               width: '32px',
               position: 'relative',
-              left: '-4px'
+              left: '-4px',
             }}
           >
             <CheckIcon style={{ height: '18px' }} />
           </Avatar>
         }
         label={value}
-        variant="outlined"
+        variant='outlined'
         color={'secondary'}
         key={value}
         selected
         style={selectedChipStyle}
         clickable={true}
       />
-    )
+    );
   } else {
     return (
       <Chip
@@ -160,22 +155,22 @@ const getChip = (value, hitSets) => {
               height: '32px',
               width: '32px',
               position: 'relative',
-              left: '-4px'
+              left: '-4px',
             }}
           >
             -
           </Avatar>
         }
         label={value}
-        variant="outlined"
+        variant='outlined'
         color={'default'}
         key={value}
         selected
         style={selectedChipStyle}
         clickable={false}
       />
-    )
+    );
   }
-}
+};
 
-export default GeneList
+export default GeneList;
