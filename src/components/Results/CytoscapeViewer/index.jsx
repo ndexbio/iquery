@@ -244,7 +244,7 @@ const CytoscapeViewer = (props) => {
         );
       }
       catch (err) {
-        console.log('kaboom!', err)
+        console.log('Caught cyInstance animate error ', err)
       }
     }
 
@@ -263,7 +263,7 @@ const CytoscapeViewer = (props) => {
         );
       }
       catch (err) {
-        console.log('kaboom!', err)
+        console.log('Caught cyInstance animate error', err)
       }
     }
   }, [props.search.selectedGenes]);
@@ -337,7 +337,7 @@ const CytoscapeViewer = (props) => {
             }
           );
           } catch (err) {
-            console.log('kaboom!', err);
+            console.log('Caught cyInstance animate error ', err);
           }
         }, 0);
       };
