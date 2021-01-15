@@ -58,7 +58,29 @@ const CytoscapeViewer = (props) => {
       return position;
     },
   };
-  const [layout, setLayout] = useState(PRESET_LAYOUT);
+
+    //Layout
+   const getLayout = () => {
+    if (cyjs != null) {
+      const isLayoutAvailable = cyjs.isLayout;
+      if (isLayoutAvailable) {
+        propLayouts = ['Preset', 'Cose', 'Concentric'];
+        propLayout = 'Preset';
+        return PRESET_LAYOUT;
+      } else {
+        propLayouts = ['Cose', 'Concentric'];
+        if (cyjs.elements.length < 500) {
+          propLayout = 'Cose';
+          return COSE_LAYOUT;
+        } else {
+          propLayout = 'Concentric'; 
+          return CONCENTRIC_LAYOUT;
+        }
+      }
+    }
+  }
+
+  const [layout, setLayout] = useState(getLayout());
   let propLayouts;
   let propLayout;
 
@@ -181,30 +203,11 @@ const CytoscapeViewer = (props) => {
     const query = cyInstance.filter('node[querynode = "true"]');
     query.addClass('highlight');
 
-    //Layout
-
-    if (cyjs != null) {
-      const isLayoutAvailable = cyjs.isLayout;
-      if (isLayoutAvailable) {
-        propLayouts = ['Preset', 'Cose', 'Concentric'];
-        propLayout = 'Preset';
-        setLayout(PRESET_LAYOUT);
-      } else {
-        propLayouts = ['Cose', 'Concentric'];
-        if (cyjs.elements.length < 500) {
-          propLayout = 'Cose';
-          setLayout(COSE_LAYOUT);
-        } else {
-          propLayout = 'Concentric';
-          setLayout(CONCENTRIC_LAYOUT);
-        }
-      }
-    }
-
-    new Promise(function(resolve, reject) {
+    new Promise(function (resolve, reject) {
       renderAnnotations();
       resolve();
     }).then(() => {
+      console.log("sending props update: " + propLayout);
       props.uiStateActions.update({
         highlights: true,
         layouts: propLayouts,
@@ -281,12 +284,15 @@ const CytoscapeViewer = (props) => {
   useEffect(() => {
     switch (props.uiState.layout) {
       case 'Preset':
+        console.log('pos2: preset');
         setLayout(PRESET_LAYOUT);
         break;
       case 'Cose':
+        console.log('pos2: cose');
         setLayout(COSE_LAYOUT);
         break;
       case 'Concentric':
+        console.log('pos2: con');
         setLayout(CONCENTRIC_LAYOUT);
         break;
     }
