@@ -14,6 +14,7 @@ const Empty = props => (
   <div className="results-container">
     <div className="message">
       <Typography variant="h3">{props.message}</Typography>
+      { props.details && <Typography variant="h4">{props.details}</Typography>}
     </div>
   </div>
 )

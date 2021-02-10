@@ -73,7 +73,7 @@ const Results = props => {
   if (selectedSourceName == null) {
     return <Empty />
   }
-
+  
   const results = findResult(selectedSourceName, searchResults)
 
   // Get current tab selection
@@ -91,7 +91,10 @@ const Results = props => {
             />
           ))}
         </Tabs>
-        <TabContent results={results} {...others} />
+
+        { props.search.results.genes.size ? <TabContent results={results} {...others} /> 
+          : <Empty message='No valid query genes.' details='Your query did not contain any valid gene names.' />  
+      }
       </div>
     </div>
   )
@@ -109,7 +112,9 @@ const findResult = (sourceName, results) => {
     return null
   }
 
-  const resultArray = results.sources
+  const resultArray = results.sources.filter(entry => 
+    entry !== undefined
+  );
   let idx = resultArray.length
 
   while (idx--) {
