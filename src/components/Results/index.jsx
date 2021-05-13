@@ -1,87 +1,90 @@
-import React, { useState, useEffect } from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import Tabs from '@material-ui/core/Tabs'
-import HoverTab from './HoverTab'
-import Empty from './Empty'
-import TabContent from './TabContent'
+import React, { useState, useEffect } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Tabs from '@material-ui/core/Tabs';
+import HoverTab from './HoverTab';
+import Empty from './Empty';
+import TabContent from './TabContent';
 
 // Conversion table from tab ID to human-readable labels
 const TAB_LABELS = {
-  enrichment: {
-    label: 'Relevant Pathways'
+  'enrichment': {
+    label: 'Relevant Pathways',
   },
   'interactome-ppi': {
-    label: 'Protein Interactions'
+    label: 'Protein Interactions',
   },
   'interactome-association': {
-    label: 'Gene Association'
-  }
-}
+    label: 'Gene Association',
+  },
+  'pathwayfigures': {
+    label: 'Pathway Figures',
+  },
+};
 
-const backgroundcolor = 'rgb(235, 235, 235)'
+const backgroundcolor = 'rgb(235, 235, 235)';
 
-const styles = theme => ({
+const styles = (theme) => ({
   tabs: {},
   grow: {
-    flexGrow: 1
-  }
-})
+    flexGrow: 1,
+  },
+});
 
-const Results = props => {
-  const { classes, ...others } = props
+const Results = (props) => {
+  const { classes, ...others } = props;
 
   // For tab selection
-  const [idx, setSelectedTabIndex] = useState(0)
+  const [idx, setSelectedTabIndex] = useState(0);
 
   useEffect(() => {
-    updateHistory(0)
-  }, [])
+    updateHistory(0);
+  }, []);
 
   const handleChange = (event, idx) => {
-    setSelectedTabIndex(idx)
-    updateHistory(idx)
-    props.networkActions.networkClear()
-    props.networkActions.changeListIndex(0)
-  }
+    setSelectedTabIndex(idx);
+    updateHistory(idx);
+    props.networkActions.networkClear();
+    props.networkActions.changeListIndex(0);
+  };
 
-  const updateHistory = newValue => {
+  const updateHistory = (newValue) => {
     // Update URL
-    const results = props.search.results
+    const results = props.search.results;
     if (results === null || results === undefined) {
-      return
+      return;
     }
 
-    const jobId = results.jobId
-    const searchResults = props.search.searchResults
+    const jobId = results.jobId;
+    const searchResults = props.search.searchResults;
     if (searchResults !== undefined && searchResults !== null) {
-      const sourceName = getSourceName(sources, newValue)
-      console.log('* Tab change:', jobId, sourceName)
-      props.uiStateActions.setSelectedSource(sourceName)
-      props.history.push(`/${jobId}/${sourceName}`)
+      const sourceName = getSourceName(sources, newValue);
+      console.log('* Tab change:', jobId, sourceName);
+      props.uiStateActions.setSelectedSource(sourceName);
+      props.history.push(`/${jobId}/${sourceName}`);
     }
-  }
+  };
 
   // Source list is not available.  Just return empty result
-  const { sources } = props.source
+  const { sources } = props.source;
   if (sources === null || sources === undefined || sources.length === 0) {
-    return <Empty />
+    return <Empty />;
   }
 
-  const searchResults = props.search.searchResults
-  const selectedSourceName = getSourceName(sources, idx)
+  const searchResults = props.search.searchResults;
+  const selectedSourceName = getSourceName(sources, idx);
 
   if (selectedSourceName == null) {
-    return <Empty />
+    return <Empty />;
   }
-  
-  const results = findResult(selectedSourceName, searchResults)
+
+  const results = findResult(selectedSourceName, searchResults);
 
   // Get current tab selection
   return (
-    <div className="results-container">
-      <div className="results-wrapper">
+    <div className='results-container'>
+      <div className='results-wrapper'>
         <Tabs value={idx} onChange={handleChange} className={classes.tabs}>
-          {sources.map(source => (
+          {sources.map((source) => (
             <HoverTab
               key={source.uuid}
               label={
@@ -92,38 +95,41 @@ const Results = props => {
           ))}
         </Tabs>
 
-        { props.search.results.genes.size ? <TabContent results={results} {...others} /> 
-          : <Empty message='No valid query genes.' details='Your query did not contain any valid gene names.' />  
-      }
+        {props.search.results.genes.size ? (
+          <TabContent results={results} {...others} />
+        ) : (
+          <Empty
+            message='No valid query genes.'
+            details='Your query did not contain any valid gene names.'
+          />
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 const getSourceName = (sources, idx) => {
   if (sources[idx] == null) {
-    return 'enrichment'
+    return 'enrichment';
   }
-  return sources[idx].name
-}
+  return sources[idx].name;
+};
 
 const findResult = (sourceName, results) => {
   if (results === null || results === undefined) {
-    return null
+    return null;
   }
 
-  const resultArray = results.sources.filter(entry => 
-    entry !== undefined
-  );
-  let idx = resultArray.length
+  const resultArray = results.sources.filter((entry) => entry !== undefined);
+  let idx = resultArray.length;
 
   while (idx--) {
-    const currentResult = resultArray[idx]
+    const currentResult = resultArray[idx];
     if (currentResult.sourceName === sourceName) {
-      return currentResult
+      return currentResult;
     }
   }
-  return null
-}
+  return null;
+};
 
-export default withStyles(styles)(Results)
+export default withStyles(styles)(Results);
