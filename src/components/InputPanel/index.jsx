@@ -53,13 +53,18 @@ const InputPanel = (props) => {
       }
     }
   }
+
   return (
     <div className='input-container'>
       <div className='input-wrapper'>
         <div className={'gene-list-title'}>
           Query Genes{' '}
           {props.search.results && props.search.results.genes
-            ? '(' + props.search.results.genes.size + ')'
+            ? '(' +
+              props.network.hitGenes.length +
+              '/' +
+              props.search.results.genes.size +
+              ')'
             : null}
         </div>
         <GeneList geneToNodeMap={geneToNodeMap} {...props} />
