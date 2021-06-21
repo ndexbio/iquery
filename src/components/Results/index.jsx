@@ -80,6 +80,9 @@ const Results = (props) => {
     updateHistory(idx);
     props.networkActions.networkClear();
     props.networkActions.changeListIndex(0);
+    if (idx === 3) {
+      props.uiStateActions.setPathwayFigure(true);
+    }
   };
 
   const updateHistory = (newValue) => {
@@ -113,7 +116,7 @@ const Results = (props) => {
   }
 
   const results = findResult(selectedSourceName, searchResults);
-  console.log(sources);
+
   // Get current tab selection
   return (
     <div className='results-container'>

@@ -194,6 +194,7 @@ const NetworkList = (props) => {
 
   function handleListItemClick(event, index) {
     props.networkActions.changeListIndex(index);
+    props.uiStateActions.setPathwayFigure(true);
   }
 
   const selectedIndex = props.network.listIndex;

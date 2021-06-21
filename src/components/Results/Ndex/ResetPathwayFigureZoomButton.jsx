@@ -29,17 +29,17 @@ const BootstrapButton = withStyles({
   },
 })(Button);
 
-const ResetZoomButton = (props) => {
+const ResetPathwayFigureZoomButton = (props) => {
   const { classes } = props;
 
   const disabled = !(props.network.uuid && props.network.uuid.length > 0);
 
   const handleClick = () => {
-    props.uiStateActions.fitNetworkView();
+    props.uiStateActions.setFitPathwayFigure(true);
   };
 
   return (
-    <Tooltip title='Fit network to panel' placement='bottom'>
+    <Tooltip title='Fit figure to panel' placement='bottom'>
       <div>
         <BootstrapButton
           variant='outlined'
@@ -57,4 +57,4 @@ const ResetZoomButton = (props) => {
   );
 };
 
-export default withStyles(styles)(ResetZoomButton);
+export default withStyles(styles)(ResetPathwayFigureZoomButton);

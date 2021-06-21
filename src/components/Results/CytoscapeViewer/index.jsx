@@ -49,11 +49,13 @@ const CytoscapeViewer = (props) => {
     name: 'preset',
     padding: 6,
     animate: false,
-    positions: function (node) {
+    positions: function(node) {
       const id = node[0]._private.data.id;
-      const analog = originalElements ? originalElements.filter((elem) => {
-        return elem.data.id.toString() === id.toString();
-      }) : [{position:null}];
+      const analog = originalElements
+        ? originalElements.filter((elem) => {
+            return elem.data.id.toString() === id.toString();
+          })
+        : [{ position: null }];
       const position = analog[0].position;
       return position;
     },
@@ -107,7 +109,7 @@ const CytoscapeViewer = (props) => {
 
     // Background tapped: Remove selection
     // (This is the standard Cytosape UX)
-    cyInstance.on('tap', function (event) {
+    cyInstance.on('tap', function(event) {
       try {
         if (event.target === cyInstance) {
           props.networkActions.unselectEdges();
@@ -150,7 +152,7 @@ const CytoscapeViewer = (props) => {
       }, 1);
     };
 
-    cyInstance.on('tap', 'node', function () {
+    cyInstance.on('tap', 'node', function() {
       try {
         cyInstance.nodes().removeClass('connected');
       } catch (e) {
@@ -159,7 +161,7 @@ const CytoscapeViewer = (props) => {
       selectNode();
     });
 
-    cyInstance.on('tap', 'edge', function () {
+    cyInstance.on('tap', 'edge', function() {
       try {
         cyInstance.nodes().removeClass('connected');
         const selected = this.data();
@@ -171,7 +173,7 @@ const CytoscapeViewer = (props) => {
       selectEdge();
     });
 
-    cyInstance.on('boxend', function (event) {
+    cyInstance.on('boxend', function(event) {
       selectEdge();
       selectNode();
     });
@@ -201,12 +203,11 @@ const CytoscapeViewer = (props) => {
       }
     }
 
-    new Promise(function (resolve, reject) {
+    new Promise(function(resolve, reject) {
       renderAnnotations();
       resolve();
     }).then(() => {
       props.uiStateActions.update({
-        highlights: true,
         layouts: propLayouts,
         layout: propLayout,
       });
@@ -242,9 +243,8 @@ const CytoscapeViewer = (props) => {
             duration: 500,
           }
         );
-      }
-      catch (err) {
-        console.log('Caught cyInstance animate error ', err)
+      } catch (err) {
+        console.log('Caught cyInstance animate error ', err);
       }
     }
 
@@ -261,9 +261,8 @@ const CytoscapeViewer = (props) => {
             duration: 500,
           }
         );
-      }
-      catch (err) {
-        console.log('Caught cyInstance animate error', err)
+      } catch (err) {
+        console.log('Caught cyInstance animate error', err);
       }
     }
   }, [props.search.selectedGenes]);
@@ -325,17 +324,17 @@ const CytoscapeViewer = (props) => {
       layout.stop = () => {
         setTimeout(() => {
           try {
-          cyInstance.animate(
-            {
-              fit: {
-                eles: cyInstance.elements(),
-                padding: 6,
+            cyInstance.animate(
+              {
+                fit: {
+                  eles: cyInstance.elements(),
+                  padding: 6,
+                },
               },
-            },
-            {
-              duration: 0,
-            }
-          );
+              {
+                duration: 0,
+              }
+            );
           } catch (err) {
             console.log('Caught cyInstance animate error ', err);
           }

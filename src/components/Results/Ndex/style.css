@@ -132,9 +132,11 @@
   padding: 0;
   background-color: #efefef;
   background-repeat: no-repeat;
-  /*height: calc(100% + 56px);
-  position: relative;
-  top: -56px;*/
+  cursor: col-resize;
+}
+
+.gutter-vertical {
+  cursor: row-resize;
 }
 
 .sorter-container {
