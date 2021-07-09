@@ -25,7 +25,7 @@ export const GOOGLE_CLIENT_ID =
 /* dev */
 
 //Server URL
-export const SERVICE_SERVER_URL = 'http://dev.ndexbio.org/';
+export const SERVICE_SERVER_URL = 'https://dev.ndexbio.org/';
 //Its endpoint
 export const BASE_URL = SERVICE_SERVER_URL + 'integratedsearch/v1/';
 //Save to NDEx google SSO client ID
