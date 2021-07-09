@@ -1,6 +1,6 @@
 import { METHOD_POST } from './apiConstants'
 
-const MYGENE_BASE_URL = 'http://mygene.info/v3/query'
+const MYGENE_BASE_URL = 'https://mygene.info/v3/query'
 
 /**
  * Client for MyGene.info
