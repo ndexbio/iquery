@@ -1,14 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import { useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
-import { findAttributes } from '../TableBrowser/attribute-util';
 import { makeStyles } from '@material-ui/styles';
 import { Typography } from '@material-ui/core';
 
-/*
-Todo:
-map button to fit
-*/
+import LoadingPanel from '../../LoadingPanel';
 
 const useStyles = makeStyles((theme) => ({
   imageContainer: {
@@ -64,6 +60,7 @@ const PathwayFigureViewer = (props) => {
       setZoomValue({ scale: heightScale, translation: { x: 0, y: yValue } });
     }
   };
+
   const handleLoad = () => {
     const height = imageRef.current.naturalHeight;
     const width = imageRef.current.naturalWidth;
@@ -82,6 +79,10 @@ const PathwayFigureViewer = (props) => {
 
   //Get pathway figure
   const figureSource = props.uiState.pathwayFigureSource;
+  if (figureSource === 'loading') {
+    return <LoadingPanel title={'Loading Figure...'} />;
+  }
+
   if (figureSource !== null) {
     return (
       <div className={classes.imageContainer} ref={imageContainerRef}>

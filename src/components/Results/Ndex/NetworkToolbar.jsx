@@ -117,6 +117,7 @@ const NetworkToolbar = (props) => {
   //Check if pathway figure is valid
   const [tab, setTab] = useState(props.uiState.pathwayFigure ? 0 : 1);
   useEffect(() => {
+    props.uiStateActions.setPathwayFigureSource('loading');
     if (tab === 0) {
       const { originalCX } = props.network;
       if (originalCX !== null) {
@@ -129,7 +130,7 @@ const NetworkToolbar = (props) => {
           }
         }
         if (figureSource == null) {
-          props.uiStateActions.setPathwayFigureSource(null);
+          //props.uiStateActions.setPathwayFigureSource(null);
           handleTabChange(null, 1);
         } else {
           //Check if image is valid
