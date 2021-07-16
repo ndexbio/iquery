@@ -4,7 +4,7 @@ export const METHOD_GET = 'GET';
 /* public */
 /*
 //Server URL
-export const SERVICE_SERVER_URL = 'http://public.ndexbio.org/';
+export const SERVICE_SERVER_URL = 'https://public.ndexbio.org/';
 //Its endpoint
 export const BASE_URL = SERVICE_SERVER_URL + 'integratedsearch/v1/';
 //Save to NDEx google SSO client ID
@@ -14,7 +14,7 @@ export const GOOGLE_CLIENT_ID =
 /* test */
 /*
 //Server URL
-export const SERVICE_SERVER_URL = 'http://test.ndexbio.org/';
+export const SERVICE_SERVER_URL = 'https://test.ndexbio.org/';
 //Its endpoint
 export const BASE_URL = SERVICE_SERVER_URL + 'integratedsearch/v1/';
 //Save to NDEx google SSO client ID

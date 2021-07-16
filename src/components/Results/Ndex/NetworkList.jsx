@@ -115,7 +115,7 @@ const NetworkList = (props) => {
         first.hitGenes
       );
       if (first.url != null) {
-        props.networkActions.setOriginalNetworkUrl('http://' + first.url);
+        props.networkActions.setOriginalNetworkUrl('https://' + first.url);
       }
     } else {
       props.networkActions.networkClear();

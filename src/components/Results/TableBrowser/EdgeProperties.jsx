@@ -198,7 +198,7 @@ const EdgeProperties = props => {
             title: 'SBO Type',
             content:
               '<a href="' +
-              'http://identifiers.org/SBO:' +
+              'https://identifiers.org/SBO:' +
               id +
               '">' +
               content +

@@ -280,7 +280,7 @@ const Ndex = (props) => {
             handleFetch(networkUUID, description, nodes, edges, hitGenes);
             handleListItemClick(event, index);
             if (url != null) {
-              props.networkActions.setOriginalNetworkUrl('http://' + url);
+              props.networkActions.setOriginalNetworkUrl('https://' + url);
             }
           }
         }}
@@ -470,7 +470,7 @@ const Ndex = (props) => {
               handleFetch(networkUUID, description, nodes, edges, hitGenes);
               handleListItemClick(event, index);
               if (url != null) {
-                props.networkActions.setOriginalNetworkUrl('http://' + url);
+                props.networkActions.setOriginalNetworkUrl('https://' + url);
               }
             }
           }}
@@ -685,7 +685,7 @@ const Ndex = (props) => {
             handleFetch(networkUUID, description, nodes, edges, hitGenes);
             handleListItemClick(event, index);
             if (url != null) {
-              props.networkActions.setOriginalNetworkUrl('http://' + url);
+              props.networkActions.setOriginalNetworkUrl('https://' + url);
             }
           }
         }}
