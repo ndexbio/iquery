@@ -24,7 +24,8 @@ const iconStyle = {
   height: '0.7em',
   width: '0.7em',
   position: 'relative',
-  bottom: '2px'
+  bottom: '2px',
+  color: '#3576BE'
 }
 
 const PaperComponent = props => {
