@@ -25,7 +25,7 @@ const DEF_STATE = {
   pathwayFigureSource: null,
   fitPathwayFigure: false,
   sortOptions: ['Overlap', 'p-Value', 'Similarity'],
-  sortBy: 'Similarity',
+  sortBy: 'Overlap',
   layout: 'Preset',
   layouts: [],
   fit: true,
