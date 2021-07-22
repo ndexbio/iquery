@@ -34,9 +34,11 @@
     "react-ga": "^2.5.7",
     "react-google-login": "^5.0.4",
     "react-linkify": "^1.0.0-alpha",
+    "react-map-interaction": "^2.0.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-split": "^2.0.4",
+    "react-zoom-pan-pinch": "^2.0.2",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
     "redux-saga": "^1.1.1",
@@ -68,7 +70,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "devdeploy": "scp -r `pwd`/build/* ec2-user@search-dev.ndexbio.org:/var/www/html/",
+    "stagedeploy": "scp -r `pwd`/build/* ec2-user@search-staging.ndexbio.org:/var/www/search-staging.ndexbio.org/html/"
   },
   "eslintConfig": {
     "extends": "react-app",
@@ -81,5 +85,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "homepage": "./"
 }

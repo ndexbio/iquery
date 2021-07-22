@@ -216,7 +216,7 @@ const NodeProperties = props => {
             attributes.push({
               title: camelCaseToTitleCase(title),
               content:
-                '<a href="http://identifiers.org/hgnc/' +
+                '<a href="https://identifiers.org/hgnc/' +
                 id +
                 '">' +
                 content +
@@ -250,7 +250,7 @@ const NodeProperties = props => {
             '</a><br/>'
         } else if (id != null && /[^\s]/.test(id)) {
           propertyString +=
-            '<a href="http://identifiers.org/' +
+            '<a href="https://identifiers.org/' +
             prefix +
             '/' +
             id +

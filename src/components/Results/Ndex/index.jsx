@@ -110,6 +110,213 @@ const Ndex = (props) => {
     selectedIndex,
     index
   ) => {
+    if (props.uiState.selectedSource === 'enrichment') {
+      return renderNetworkListItemEnrichment(
+        networkEntry,
+        handleListItemClick,
+        selectedIndex,
+        index
+      );
+    } else if (props.uiState.selectedSource.startsWith('interactome')) {
+      return renderNetworkListItemInteractome(
+        networkEntry,
+        handleListItemClick,
+        selectedIndex,
+        index
+      );
+    } else {
+      return renderNetworkListItemDefault(
+        networkEntry,
+        handleListItemClick,
+        selectedIndex,
+        index
+      );
+    }
+  };
+
+  const renderNetworkListItemEnrichment = (
+    networkEntry,
+    handleListItemClick,
+    selectedIndex,
+    index
+  ) => {
+    const {
+      description,
+      networkUUID,
+      nodes,
+      edges,
+      imageURL,
+      hitGenes,
+      details,
+      url,
+    } = networkEntry;
+    const genes = (
+      <span style={infoStyle}>
+        <Typography
+          display='inline'
+          color={
+            props.uiState.sortBy !== 'Overlap' ? 'textSecondary' : 'textPrimary'
+          }
+        >
+          <strong>{hitGenes.length}</strong>{' '}
+        </Typography>
+        <Typography
+          variant='caption'
+          display='inline'
+          color={
+            props.uiState.sortBy === 'Overlap' ? 'textPrimary' : 'textSecondary'
+          }
+        >
+          genes
+        </Typography>
+      </span>
+    );
+
+    const icon = (
+      <ListItemIcon style={{ width: '20px' }}>
+        <img className='list-icon' src={imageURL} alt='list icon' />
+      </ListItemIcon>
+    );
+
+    const newline = <Typography>{'\n'}</Typography>;
+
+    let pVal = details.PValue;
+    if (pVal != null) {
+      const networkCount = details.totalNetworkCount;
+      const threshold = Math.pow(
+        10,
+        Math.ceil(Math.log(1e-16 * networkCount) / Math.LN10)
+      );
+      if (pVal < threshold) {
+        pVal = '< ' + threshold;
+      } else if (pVal > 1) {
+        pVal = '~ 1';
+      } else {
+        pVal = pVal.toExponential(2);
+      }
+    }
+
+    const pv = (
+      <span style={infoStyle}>
+        <Typography
+          display='inline'
+          color={
+            props.uiState.sortBy === 'p-Value' ? 'textPrimary' : 'textSecondary'
+          }
+        >
+          <strong>{pVal} </strong>
+        </Typography>
+        <Typography
+          variant='caption'
+          display='inline'
+          color={
+            props.uiState.sortBy === 'p-Value' ? 'textPrimary' : 'textSecondary'
+          }
+        >
+          pv
+        </Typography>
+      </span>
+    );
+
+    let similarity;
+    let sim = details.similarity;
+    if (sim !== undefined) {
+      if (isNaN(sim)) {
+        sim = 'NaN';
+      } else {
+        sim = sim.toFixed(2);
+      }
+      similarity = (
+        <span style={infoStyle}>
+          <Typography
+            display='inline'
+            color={
+              props.uiState.sortBy === 'Similarity'
+                ? 'textPrimary'
+                : 'textSecondary'
+            }
+          >
+            <strong>{sim} </strong>
+          </Typography>
+          <Typography
+            variant='caption'
+            display='inline'
+            color={
+              props.uiState.sortBy === 'Similarity'
+                ? 'textPrimary'
+                : 'textSecondary'
+            }
+          >
+            similarity
+          </Typography>
+        </span>
+      );
+    } else {
+      similarity = null;
+    }
+
+    const title = (
+      <Typography style={titleStyle}>
+        {description.split(':').slice(1)}
+      </Typography>
+    );
+
+    const subtitle = (
+      <span style={subtitleStyle}>
+        <Typography variant='caption' color='textSecondary'>
+          <span>Nodes: {nodes}, </span>
+          <span>Edges: {edges}, </span>
+          <span>Source: {camelCaseToTitleCase(description.split(':')[0])}</span>
+        </Typography>
+      </span>
+    );
+
+    return (
+      <ListItem
+        button
+        key={networkUUID}
+        onClick={(event) => {
+          if (selectedIndex !== index) {
+            handleFetch(networkUUID, description, nodes, edges, hitGenes);
+            handleListItemClick(event, index);
+            if (url != null) {
+              props.networkActions.setOriginalNetworkUrl('https://' + url);
+            }
+          }
+        }}
+        selected={selectedIndex === index}
+      >
+        <table style={tableStyle}>
+          <tbody>
+            <tr padding='0'>
+              <td align='center' valign='middle' rowSpan='2' padding='0'>
+                {icon}
+              </td>
+              <td align='left' valign='baseline' width='100px' padding='0'>
+                {genes}
+                {newline}
+                {pv}
+                {newline}
+                {similarity}
+              </td>
+              <td align='left' valign='baseline' padding='0'>
+                {title}
+                {newline}
+                {subtitle}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ListItem>
+    );
+  };
+
+  const renderNetworkListItemInteractome = (
+    networkEntry,
+    handleListItemClick,
+    selectedIndex,
+    index
+  ) => {
     const {
       description,
       networkUUID,
@@ -263,7 +470,7 @@ const Ndex = (props) => {
               handleFetch(networkUUID, description, nodes, edges, hitGenes);
               handleListItemClick(event, index);
               if (url != null) {
-                props.networkActions.setOriginalNetworkUrl('http://' + url);
+                props.networkActions.setOriginalNetworkUrl('https://' + url);
               }
             }
           }}
@@ -365,6 +572,145 @@ const Ndex = (props) => {
         </ListItem>
       );
     }
+  };
+
+  const renderNetworkListItemDefault = (
+    networkEntry,
+    handleListItemClick,
+    selectedIndex,
+    index
+  ) => {
+    const {
+      description,
+      networkUUID,
+      nodes,
+      edges,
+      imageURL,
+      hitGenes,
+      details,
+      url,
+    } = networkEntry;
+    const genes = (
+      <span style={infoStyle}>
+        <Typography display='inline' color={'textSecondary'}>
+          <strong>{hitGenes.length}</strong>{' '}
+        </Typography>
+        <Typography variant='caption' display='inline' color={'textSecondary'}>
+          genes
+        </Typography>
+      </span>
+    );
+
+    const newline = <Typography>{'\n'}</Typography>;
+
+    let pVal = details.PValue;
+    if (pVal != null) {
+      const networkCount = details.totalNetworkCount;
+      const threshold = Math.pow(
+        10,
+        Math.ceil(Math.log(1e-16 * networkCount) / Math.LN10)
+      );
+      if (pVal < threshold) {
+        pVal = '< ' + threshold;
+      } else if (pVal > 1) {
+        pVal = '~ 1';
+      } else {
+        pVal = pVal.toExponential(2);
+      }
+    }
+
+    const pv = (
+      <span style={infoStyle}>
+        <Typography display='inline' color={'textPrimary'}>
+          <strong>{pVal} </strong>
+        </Typography>
+        <Typography variant='caption' display='inline' color={'textPrimary'}>
+          pv
+        </Typography>
+      </span>
+    );
+
+    let similarity;
+    let sim = details.similarity;
+    if (sim !== undefined) {
+      if (isNaN(sim)) {
+        sim = 'NaN';
+      } else {
+        sim = sim.toFixed(2);
+      }
+      similarity = (
+        <span style={infoStyle}>
+          <Typography display='inline' color={'textSecondary'}>
+            <strong>{sim} </strong>
+          </Typography>
+          <Typography
+            variant='caption'
+            display='inline'
+            color={'textSecondary'}
+          >
+            similarity
+          </Typography>
+        </span>
+      );
+    } else {
+      similarity = null;
+    }
+
+    const title = (
+      <Typography style={titleStyle}>
+        {description.split(':').slice(1)}
+      </Typography>
+    );
+
+    const subtitle = (
+      <span style={subtitleStyle}>
+        <Typography variant='caption' color='textSecondary'>
+          <span>
+            Nodes: {nodes}
+            {props.uiState.selectedSource !== 'pathwayfigures' ? ', ' : null}
+          </span>
+          {props.uiState.selectedSource !== 'pathwayfigures' ? (
+            <span>Edges: {edges}</span>
+          ) : null}
+        </Typography>
+      </span>
+    );
+
+    return (
+      <ListItem
+        button
+        key={networkUUID}
+        onClick={(event) => {
+          if (selectedIndex !== index) {
+            handleFetch(networkUUID, description, nodes, edges, hitGenes);
+            handleListItemClick(event, index);
+            if (url != null) {
+              props.networkActions.setOriginalNetworkUrl('https://' + url);
+            }
+          }
+        }}
+        selected={selectedIndex === index}
+      >
+        <table style={tableStyle}>
+          <tbody>
+            <tr padding='0'>
+              <td align='left' valign='baseline' width='100px' padding='0'>
+                {genes}
+                {newline}
+                {pv}
+                {newline}
+                {similarity}
+              </td>
+              <td align='left' valign='baseline' padding='0'>
+                {title}
+                {newline}
+                {subtitle}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ListItem>
+    );
   };
 
   return (

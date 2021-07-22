@@ -51,9 +51,11 @@ const CytoscapeViewer = (props) => {
     animate: false,
     positions: function(node) {
       const id = node[0]._private.data.id;
-      const analog = originalElements.filter((elem) => {
-        return elem.data.id.toString() === id.toString();
-      });
+      const analog = originalElements
+        ? originalElements.filter((elem) => {
+            return elem.data.id.toString() === id.toString();
+          })
+        : [{ position: null }];
       const position = analog[0].position;
       return position;
     },
@@ -206,7 +208,6 @@ const CytoscapeViewer = (props) => {
       resolve();
     }).then(() => {
       props.uiStateActions.update({
-        highlights: true,
         layouts: propLayouts,
         layout: propLayout,
       });
@@ -230,31 +231,39 @@ const CytoscapeViewer = (props) => {
     const selected = cyInstance.elements('node[name = "' + targets[0] + '"]');
 
     if (selected.length !== 0) {
-      cyInstance.animate(
-        {
-          zoom: 2,
-          center: {
-            eles: selected[0],
+      try {
+        cyInstance.animate(
+          {
+            zoom: 2,
+            center: {
+              eles: selected[0],
+            },
           },
-        },
-        {
-          duration: 500,
-        }
-      );
+          {
+            duration: 500,
+          }
+        );
+      } catch (err) {
+        console.log('Caught cyInstance animate error ', err);
+      }
     }
 
     if (targets.length === 0) {
-      cyInstance.animate(
-        {
-          fit: {
-            eles: cyInstance.elements(),
-            padding: 6,
+      try {
+        cyInstance.animate(
+          {
+            fit: {
+              eles: cyInstance.elements(),
+              padding: 6,
+            },
           },
-        },
-        {
-          duration: 500,
-        }
-      );
+          {
+            duration: 500,
+          }
+        );
+      } catch (err) {
+        console.log('Caught cyInstance animate error', err);
+      }
     }
   }, [props.search.selectedGenes]);
 
@@ -292,7 +301,7 @@ const CytoscapeViewer = (props) => {
     }
   }, [props.uiState.layout]);
 
-  if (originalElements.length > MAX_NETWORK_SIZE) {
+  if (originalElements && originalElements.length > MAX_NETWORK_SIZE) {
     return <Warning {...props} />;
   }
 
@@ -314,17 +323,21 @@ const CytoscapeViewer = (props) => {
     if (layout === COSE_LAYOUT || layout === CONCENTRIC_LAYOUT) {
       layout.stop = () => {
         setTimeout(() => {
-          cyInstance.animate(
-            {
-              fit: {
-                eles: cyInstance.elements(),
-                padding: 6,
+          try {
+            cyInstance.animate(
+              {
+                fit: {
+                  eles: cyInstance.elements(),
+                  padding: 6,
+                },
               },
-            },
-            {
-              duration: 0,
-            }
-          );
+              {
+                duration: 0,
+              }
+            );
+          } catch (err) {
+            console.log('Caught cyInstance animate error ', err);
+          }
         }, 0);
       };
     }

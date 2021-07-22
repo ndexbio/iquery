@@ -103,7 +103,8 @@ const network = handleActions(
         jobId: payload.payload.id,
         sourceId: payload.payload.sourceUUID,
         uuid: payload.payload.networkUUID,
-        url: SERVICE_SERVER_URL + '#/network/' + payload.payload.networkUUID,
+        url:
+          SERVICE_SERVER_URL + 'viewer/networks/' + payload.payload.networkUUID,
         networkName: payload.payload.networkName,
         queryGenes: payload.payload.geneList,
         hitGenes: payload.payload.hitGenes,

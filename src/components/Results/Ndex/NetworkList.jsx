@@ -115,7 +115,7 @@ const NetworkList = (props) => {
         first.hitGenes
       );
       if (first.url != null) {
-        props.networkActions.setOriginalNetworkUrl('http://' + first.url);
+        props.networkActions.setOriginalNetworkUrl('https://' + first.url);
       }
     } else {
       props.networkActions.networkClear();
@@ -194,6 +194,7 @@ const NetworkList = (props) => {
 
   function handleListItemClick(event, index) {
     props.networkActions.changeListIndex(index);
+    props.uiStateActions.setPathwayFigure(true);
   }
 
   const selectedIndex = props.network.listIndex;

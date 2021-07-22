@@ -143,7 +143,7 @@ class SettingsPanel extends React.Component {
 const LINKS = [
   {
     name: 'Source Code',
-    url: 'https://github.com/idekerlab/search-portal',
+    url: 'https://github.com/cytoscape/search-portal',
     src: github
   }
 ]

@@ -125,7 +125,7 @@ function* watchSaveToNDEx(action) {
 
   const responseText = yield call([resp, 'text'])
 
-  const networkURL = responseText.replace('/v2/', '/#/')
+  const networkURL = responseText.replace('/v2/network/', '/viewer/networks/')
 
   console.log('networkURL', networkURL)
 
