@@ -7,10 +7,8 @@ import ndex from '../../assets/images/ndex-logo.svg'
 import queryString from 'query-string'
 import './style.css'
 
-const feedbackURL = 'https://home.ndexbio.org/contact-us/'
+import { APP_VERSION, NDEX_URL, CYTOSCAPE_URL, FEEDBACK_URL } from '../../api/apiConstants'
 
-// TODO: move this to a global property
-const APP_VERSION = 'v1.2'
 
 const StartPanel = props => {
   useEffect(() => {
@@ -41,9 +39,14 @@ const StartPanel = props => {
       <div className={'start-title'}>
         <div className={'description-panel'}>
           <Typography align={'center'} variant={'subtitle2'}>
-            One search finds pathways, queries protein interaction networks, and
-            discovers disease, drug, and tissue associations. Powered by NDEx
-            and integrated with Cytoscape
+            One search finds pathways, queries protein interaction networks, 
+            and discovers disease, drug, and tissue associations. Powered by
+            {' '}
+            <a href={NDEX_URL} target="_blank" rel="noopener noreferrer">
+              NDEx</a>{' '} 
+            and integrated with{' '} 
+            <a href={CYTOSCAPE_URL} target="_blank" rel="noopener noreferrer">
+              Cytoscape</a>
           </Typography>
         </div>
 
@@ -69,12 +72,13 @@ const StartPanel = props => {
 
         <div className={'search-text-note'}>
           <Typography variant="caption" align="left">
-            NDEx Integrated Query uses selected pathway and interactome networks
+            NDEx Integrated Query uses selected pathway and 
+            interactome networks
             in NDEx to power gene set analysis. The networks come from many
             different sources and new networks will be continuously added. Do
             you have a pathway or an interaction network that you would like to
             include in these queries? Click{' '}
-            <a href={feedbackURL} target="_blank" rel="noopener noreferrer">
+            <a href={FEEDBACK_URL} target="_blank" rel="noopener noreferrer">
               here
             </a>{' '}
             to find out how.
