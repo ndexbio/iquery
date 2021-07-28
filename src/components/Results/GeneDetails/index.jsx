@@ -22,9 +22,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Collapse from '@material-ui/core/Collapse'
 
-const MAX_DESCRIPTION_LENGTH = 150
+import { GENE_CARDS_URL } from '../../api/apiConstants';
 
-const GENE_CARDS_URL = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene='
+const MAX_DESCRIPTION_LENGTH = 150
 
 const styles = theme => ({
   inline: {
