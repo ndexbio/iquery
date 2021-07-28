@@ -21,7 +21,7 @@ import HomeIcon from '@material-ui/icons/Home';
 
 import GeneTextBox from './GeneTextBox';
 
-import { SERVICE_SERVER_URL } from '../../api/apiConstants';
+import { SERVICE_SERVER_URL, HELP_URL } from '../../api/apiConstants';
 
 const drawerWidth = 240;
 
@@ -135,7 +135,7 @@ class TitleBar extends React.Component {
                 <IconButton
                   color='default'
                   aria-label='Home'
-                  onClick={() => openLink(NDEX_URL)}
+                  onClick={() => openLink(SERVICE_SERVER_URL)}
                 >
                   <img alt='NDEx logo' src={logo} className={classes.logo} />
                 </IconButton>
@@ -156,43 +156,6 @@ class TitleBar extends React.Component {
                   </IconButton>
                 </Typography>
               </Tooltip>
-              {/*}
-            <Tooltip title="Ideker Lab" placement="bottom">
-              <IconButton
-                color='default'
-                onClick={() => openLink(IL_URL)}
-              >
-                <img alt="Ideker Lab Logo" src={idekerLogo} className={classes.logo} />
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="Cytoscape" placement="bottom">
-              <IconButton
-                color="default"
-                onClick={() => openLink(CYTOSCAPE_URL)}
-              >
-                <img alt="Cytoscape Logo" src={cytoLogo} className={classes.logo}/>
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="NRNB" placement="bottom">
-              <IconButton
-                color="default"
-                aria-label="Home"
-                onClick={() => openLink(NRNB_URL)}
-              >
-                <img alt="NRNB logo" src={nrnbLogo} className={classes.logo} />
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="WikiPathways" placement="bottom">
-              <IconButton
-                color='default'
-                onClick={()=> openLink(WP_URL)}
-              >
-                <img alt="WikiPathways Logo" src={wpLogo} className={classes.logo}/>
-              </IconButton>
-          </Tooltip>*/}
             </div>
           </Toolbar>
         </div>
@@ -201,13 +164,6 @@ class TitleBar extends React.Component {
   }
 }
 
-const HELP_URL =
-  'https://github.com/cytoscape/search-portal/blob/master/README.md';
-const NDEX_URL = SERVICE_SERVER_URL;
-//const CYTOSCAPE_URL = 'https://cytoscape.org/';
-//const NRNB_URL = 'https://nrnb.org/';
-//const WP_URL = 'https://www.wikipathways.org/';
-//const IL_URL = 'http://idekerlab.ucsd.edu/';
 
 const openLink = (url) => {
   window.open(url, '_blank');
