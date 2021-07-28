@@ -1,6 +1,4 @@
-import { METHOD_GET, METHOD_POST } from './apiConstants'
-
-const CYREST_BASE_URL = 'http://127.0.0.1'
+import { METHOD_GET, METHOD_POST, CYREST_BASE_URL } from './apiConstants'
 
 const status = cyRESTPort => {
   const statusUrl = CYREST_BASE_URL + ':' + cyRESTPort + '/v1'
