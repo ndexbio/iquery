@@ -87,6 +87,8 @@ const Root = ({ store }) => (
     <Router basename={process.env.PUBLIC_URL}>
       <Switch>
         <Route exact path="/" component={Top} />
+        <Route exact path="/iquery" component={Top} />
+        <Route exact path={process.env.PUBLIC_URL}  component={Top} />
         <Route path="/:jobid/:sourceId/:networkId" component={App} />
         <Route path="/:jobid/:sourceId" component={App} />
         <Route path="/:jobid" component={App} />
