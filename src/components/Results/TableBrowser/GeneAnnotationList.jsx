@@ -14,9 +14,10 @@ import CheckIcon from '@material-ui/icons/Check'
 import { camelCaseToTitleCase } from './camel-case-util.js'
 import './style.css'
 
+import { GENE_CARDS_URL } from '../../../api/apiConstants';
+
 // For external link
 
-const GENE_CARDS_URL = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene='
 
 const styles = theme => ({
   inline: {
