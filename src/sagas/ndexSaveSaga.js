@@ -81,6 +81,8 @@ function* watchCredentialsSignOn(action) {
         type: SET_ERROR_MESSAGE,
         payload: responseJson.message
       })
+      // there was an authentication error remove any record in local storage
+      window.localStorage.removeItem('loggedInUser');
     } else {
       const profile = {
         name: responseJson.firstName,
@@ -90,6 +92,14 @@ function* watchCredentialsSignOn(action) {
           token: auth
         }
       }
+      // save credentials to local storage
+      let loggedInUser = {};
+      loggedInUser.userName = user;
+      loggedInUser.firstName = responseJson.firstName;
+      loggedInUser.lastName = responseJson.lastName;
+      loggedInUser.externalId = responseJson.externalId;
+      loggedInUser.token = pwd;
+      window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
       yield put({
         type: SET_PROFILE,
         payload: profile
@@ -101,6 +111,8 @@ function* watchCredentialsSignOn(action) {
       type: SET_ERROR_MESSAGE,
       payload: 'Unknown error'
     })
+    // there was an authentication error remove any record in local storage
+    window.localStorage.removeItem('loggedInUser');
   }
 }
 

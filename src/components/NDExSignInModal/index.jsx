@@ -204,7 +204,7 @@ export class NDExSignIn extends React.Component {
         <DialogContent>
           <DialogContentText component="div">
             <div className="NDExSignInContainer">
-              <Grid container spacing={8}>
+              <Grid container spacing={5}>
                 <Grid item xs={6} className="grid">
                   <Paper className="grid-paper">
                     <div className="grid-content">
@@ -249,7 +249,9 @@ class NDExSignInModal extends React.Component {
   onLoginSuccess = () => {}
 
   onLogout = () => {
-    this.props.ndexSaveActions.setProfile(null)
+    this.props.ndexSaveActions.setProfile(null);
+    // remove credentials from local storage
+    window.localStorage.removeItem('loggedInUser');
     //this.handleClose()
   }
 
@@ -278,7 +280,6 @@ class NDExSignInModal extends React.Component {
     const handleCredentialsSignOn = this.handleCredentialsSignOn
     const handleOnSuccess = this.handleOnSuccess
     const handleError = this.handleError
-
     return (
       <div>
         <Dialog

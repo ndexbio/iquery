@@ -36,6 +36,21 @@ const SaveToNDExButton = props => {
   const { classes } = props
 
   const handleImportNetwork = () => {
+
+  //checking if user has logged in already
+  let loggedInUserRaw = window.localStorage.getItem('loggedInUser');
+  if (loggedInUserRaw){
+    let loggedInUser = JSON.parse(loggedInUserRaw);
+    if (loggedInUser !== null){
+      let lProfile = {};
+      lProfile.name = loggedInUser.firstName;
+      lProfile.image = undefined;
+      lProfile.authorization = {};
+      lProfile.authorization.type = "ndex";
+      lProfile.authorization.token = 'Basic ' + window.btoa(loggedInUser.userName + ':' + loggedInUser.token);
+      props.ndexSaveActions.setProfile(lProfile);
+    }
+  }
     props.ndexSaveActions.setNDExModalOpen(true)
   }
 
