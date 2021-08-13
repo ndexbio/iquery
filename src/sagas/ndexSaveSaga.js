@@ -40,7 +40,13 @@ function* watchGoogleSignOn(action) {
   })
 
   try {
-    yield call(ndexSave.ndexValidation, headers)
+    const resp = yield call(ndexSave.ndexValidation, headers)
+    const responseJson = yield call([resp, 'json'])
+    // get first name of user from NDEx
+    if (resp.status == 200){
+      profile.name = responseJson.firstName;
+      profile.image = responseJson.image;
+    }
     yield put({
       type: SET_PROFILE,
       payload: profile
@@ -75,7 +81,6 @@ function* watchCredentialsSignOn(action) {
   try {
     const resp = yield call(ndexSave.ndexValidation, headers)
     const responseJson = yield call([resp, 'json'])
-
     if (resp.status != 200) {
       yield put({
         type: SET_ERROR_MESSAGE,
@@ -98,6 +103,7 @@ function* watchCredentialsSignOn(action) {
       loggedInUser.firstName = responseJson.firstName;
       loggedInUser.lastName = responseJson.lastName;
       loggedInUser.externalId = responseJson.externalId;
+      loggedInUser.image = responseJson.image;
       loggedInUser.token = pwd;
       window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
       yield put({

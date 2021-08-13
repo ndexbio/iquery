@@ -44,7 +44,7 @@ const SaveToNDExButton = props => {
     if (loggedInUser !== null){
       let lProfile = {};
       lProfile.name = loggedInUser.firstName;
-      lProfile.image = undefined;
+      lProfile.image = loggedInUser.image;
       lProfile.authorization = {};
       lProfile.authorization.type = "ndex";
       lProfile.authorization.token = 'Basic ' + window.btoa(loggedInUser.userName + ':' + loggedInUser.token);
