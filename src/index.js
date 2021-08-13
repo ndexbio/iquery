@@ -24,6 +24,12 @@ import { SET_QUERY } from './actions/search'
 
 import { GA_DEV_ID, GA_STAGING_ID, GA_PRODUCTION } from './analytics'
 
+// Avoid HTTP
+const location = window.location
+if (location.hostname !== 'localhost' && location.protocol !== 'https:') {
+  location.replace(`https:${location.href.substring(location.protocol.length)}`)
+}
+
 ReactGA.initialize(GA_PRODUCTION, {
   gaOptions: {
     siteSpeedSampleRate: 100
