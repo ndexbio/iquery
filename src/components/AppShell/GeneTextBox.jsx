@@ -17,9 +17,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import MessageSnackbar from './MessageSnackbar';
 
-import * as examples from '../TopPage/example-genes';
+import { GENESET_EXAMPLES } from '../../api/apiConstants';
 
-const EXAMPLES = examples.default.examples;
 
 const styles = {
   root: {
@@ -129,10 +128,10 @@ const GeneTextBox = (props) => {
   const handleExample = (exampleIdx) => {
     setState({
       ...props,
-      query: EXAMPLES[exampleIdx].genes,
+      query: GENESET_EXAMPLES[exampleIdx].genes,
       anchorEl: null,
     });
-    handleSearch(null, EXAMPLES[exampleIdx].genes);
+    handleSearch(null, GENESET_EXAMPLES[exampleIdx].genes);
   };
 
   return (
@@ -168,7 +167,7 @@ const GeneTextBox = (props) => {
               open={menuOpen}
               onClose={handleClose}
             >
-              {EXAMPLES.map((example, idx) => {
+              {GENESET_EXAMPLES.map((example, idx) => {
                 if (example.name !== 'Estrogen') {
                   return (
                     <MenuItem key={idx} onClick={() => handleExample(idx)}>

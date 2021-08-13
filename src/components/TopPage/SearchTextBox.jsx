@@ -10,10 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import { Tooltip, Button } from '@material-ui/core';
 import searchLogo from '../../assets/images/search-logo.svg';
 
-import * as examples from './example-genes';
+import { GENESET_EXAMPLES, FEEDBACK_URL } from '../../api/apiConstants';
 
-const EXAMPLES = examples.default.examples;
-const feedbackURL = 'https://home.ndexbio.org/contact-us/';
 
 const styles = {
   root: {
@@ -51,10 +49,10 @@ const SearchTextBox = (props) => {
   const handleExample = (exampleIdx) => {
     setState({
       ...props,
-      query: EXAMPLES[exampleIdx].genes,
+      query: GENESET_EXAMPLES[exampleIdx].genes,
       anchorEl: null,
     });
-    handleSearch(null, EXAMPLES[exampleIdx].genes);
+    handleSearch(null, GENESET_EXAMPLES[exampleIdx].genes);
   };
 
   const handleChange = (name) => (event) => {
@@ -135,7 +133,7 @@ const SearchTextBox = (props) => {
         </Typography>
 
         <div className={'query-examples'}>
-          {EXAMPLES.map((example, index) => {
+          {GENESET_EXAMPLES.map((example, index) => {
             return (
               <div key={example.name}>
                 <Tooltip
@@ -168,7 +166,7 @@ const SearchTextBox = (props) => {
       >
         <em>
           Send us
-          <a href={feedbackURL} target='_blank' rel='noopener noreferrer'>
+          <a href={FEEDBACK_URL} target='_blank' rel='noopener noreferrer'>
             {' '}
             feedback
           </a>
