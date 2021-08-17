@@ -7,7 +7,6 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import logo from '../../../assets/images/ndex-logo.svg';
 import logoDisabled from '../../../assets/images/ndex-logo-mono-light.svg';
 
-import { SERVICE_SERVER_URL } from '../../../api/apiConstants';
 
 const styles = (theme) => ({
   buttonIcon: {
@@ -33,12 +32,7 @@ const OpenOriginalNetworkButton = (props) => {
   const { classes } = props;
 
   const handleOpen = () => {
-    let url;
-    if (props.network.url != null) {
-      url = props.network.url;
-    } else {
-      url = SERVICE_SERVER_URL + 'viewer/networks/' + props.network.uuid;
-    }
+    let url = window.location.origin + '/viewer/networks/' + props.network.uuid;
     console.log('Opening original network entry:', url);
     window.open(url, '_blank');
   };
