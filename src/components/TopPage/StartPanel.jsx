@@ -7,7 +7,7 @@ import ndex from '../../assets/images/ndex-logo.svg'
 import queryString from 'query-string'
 import './style.css'
 
-import { APP_VERSION, NDEX_URL, CYTOSCAPE_URL, FEEDBACK_URL } from '../../api/apiConstants'
+import { APP_VERSION, CYTOSCAPE_URL, FEEDBACK_URL } from '../../api/apiConstants'
 
 
 const StartPanel = props => {
@@ -42,7 +42,7 @@ const StartPanel = props => {
             One search finds pathways, queries protein interaction networks, 
             and discovers disease, drug, and tissue associations. Powered by
             {' '}
-            <a href={NDEX_URL} target="_blank" rel="noopener noreferrer">
+            <a href={window.location.origin} target="_blank" rel="noopener noreferrer">
               NDEx</a>{' '} 
             and integrated with{' '} 
             <a href={CYTOSCAPE_URL} target="_blank" rel="noopener noreferrer">
