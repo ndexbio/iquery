@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.css'
 
-import { SERVICE_SERVER_URL } from '../../api/apiConstants'
+import { CYTOSCAPE_URL, UCSD_URL, COPYRIGHT } from '../../api/apiConstants'
 
 // SVG images for links
 import cyLogo from '../../assets/images/cytoscape-logo.svg'
@@ -13,19 +13,19 @@ import Typography from '@material-ui/core/Typography'
 const Footer = props => (
   <footer className="footer-container">
     <Typography variant="subtitle1">
-      &copy; 2019 UC San Diego Ideker Lab
+      &copy; COPYRIGHT
     </Typography>
     <img
       alt="NDEx logo"
       src={ndexLogo}
       className="footer-logo"
-      onClick={() => openLink(NDEX_URL)}
+      onClick={() => openLink(window.location.origin)}
     />
     <img
       alt="Cytoscape logo"
       src={cyLogo}
       className="footer-logo"
-      onClick={() => openLink(CY_URL)}
+      onClick={() => openLink(CYTOSCAPE_URL)}
     />
     <img
       alt="UCSD logo"
@@ -35,11 +35,6 @@ const Footer = props => (
     />
   </footer>
 )
-
-const CY_URL = 'https://cytoscape.org/'
-const NDEX_URL = SERVICE_SERVER_URL
-const UCSD_URL =
-  'https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx'
 
 const openLink = url => {
   window.open(url, '_blank')
