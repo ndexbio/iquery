@@ -21,7 +21,7 @@ import HomeIcon from '@material-ui/icons/Home';
 
 import GeneTextBox from './GeneTextBox';
 
-import { SERVICE_SERVER_URL, HELP_URL } from '../../api/apiConstants';
+import { HELP_URL } from '../../api/apiConstants';
 
 const drawerWidth = 240;
 
@@ -135,7 +135,7 @@ class TitleBar extends React.Component {
                 <IconButton
                   color='default'
                   aria-label='Home'
-                  onClick={() => openLink(SERVICE_SERVER_URL)}
+                  onClick={() => openLink(window.location.origin)}
                 >
                   <img alt='NDEx logo' src={logo} className={classes.logo} />
                 </IconButton>
