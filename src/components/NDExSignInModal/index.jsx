@@ -22,7 +22,8 @@ import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 import NDExSave from '../NDExSave'
 
 import './style.css'
-import { SERVICE_SERVER_URL, GOOGLE_CLIENT_ID } from '../../api/apiConstants'
+import { GOOGLE_CLIENT_ID } from '../../api/apiConstants'
+import { mdiWindowClose } from '@mdi/js'
 
 const PaperComponent = props => {
   return (
@@ -122,7 +123,7 @@ class CredentialsSignOn extends React.Component {
           <div>
             <span>Need an account? </span>
             <a
-              href={SERVICE_SERVER_URL}
+              href={window.location.origin}
               target="_blank"
               rel="noopener noreferrer"
             >
