@@ -9,13 +9,13 @@ var HELP_URL =
 'https://github.com/cytoscape/search-portal/blob/master/README.md';
 
 var FEEDBACK_URL = 'https://home.ndexbio.org/contact-us/';
-var NDEX_URL = 'https://ndexbio.org';
 var CYTOSCAPE_URL = 'https://cytoscape.org';
 var DEPLOY_ENVIRON = ' on localhost';
-var SERVICE_SERVER_URL = 'https://dev.ndexbio.org/'
+var SERVICE_SERVER_URL = 'https://dev.ndexbio.org/v2'
 var BASE_URL = SERVICE_SERVER_URL  + '/integratedsearch/v1/';
 var GOOGLE_CLIENT_ID = '';
-
+var COPYRIGHT = '2019 UC San Diego Ideker Lab';
+var UCSD_URL = 'https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx';
 var GENESET_EXAMPLES = [
   {
     "name": "Hypoxia",
@@ -35,19 +35,20 @@ if (window.ndexSettings === undefined){
       GENE_CARDS_URL = window.ndexSettings.iQuery.geneCardsUri;
       HELP_URL = window.ndexSettings.iQuery.helpUri;
       FEEDBACK_URL = window.ndexSettings.iQuery.feedBackUri;
-      NDEX_URL = window.ndexSettings.iQuery.ndexUri;
       CYTOSCAPE_URL = window.ndexSettings.iQuery.cytoscapeUri;
       DEPLOY_ENVIRON = window.ndexSettings.iQuery.deployEnvironment;
-      SERVICE_SERVER_URL = window.ndexSettings.iQuery.serviceServerUri;
+      SERVICE_SERVER_URL = window.ndexSettings.ndexServerUri;
       BASE_URL = window.ndexSettings.iQuery.baseUri;
       GOOGLE_CLIENT_ID = window.ndexSettings.googleClientId;
       GENESET_EXAMPLES = window.ndexSettings.iQuery.geneSetExamples;
+      UCSD_URL = window.ndexSettings.iQuery.ucsdUri;
+      COPYRIGHT = window.ndexSettings.iQuery.copyRight;
   }
 }
 
 // Version of IQuery shown on main landing page of App
 var APP_VERSION = 'v1.3 beta' + DEPLOY_ENVIRON
 
-export { MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, NDEX_URL, CYTOSCAPE_URL,
+export { MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, CYTOSCAPE_URL,
          GOOGLE_CLIENT_ID, BASE_URL, SERVICE_SERVER_URL, DEPLOY_ENVIRON, APP_VERSION,
-        GENESET_EXAMPLES };
+        GENESET_EXAMPLES, UCSD_URL, COPYRIGHT };
