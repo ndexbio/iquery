@@ -71,8 +71,6 @@
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build",
-    "devdeploy": "scp -r `pwd`/build/* ec2-user@search-dev.ndexbio.org:/var/www/html/",
-    "stagedeploy": "scp -r `pwd`/build/* ec2-user@search-staging.ndexbio.org:/var/www/search-staging.ndexbio.org/html/"
   },
   "eslintConfig": {
     "extends": "react-app",
