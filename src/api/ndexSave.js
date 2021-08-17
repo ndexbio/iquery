@@ -1,7 +1,7 @@
 import { METHOD_GET, METHOD_POST, SERVICE_SERVER_URL } from './apiConstants'
 
-const NDEX_USER_VALIDATION = SERVICE_SERVER_URL + 'v2/user?valid=true'
-const NDEX_SAVE = SERVICE_SERVER_URL + 'v2/network'
+const NDEX_USER_VALIDATION = SERVICE_SERVER_URL + '/user?valid=true'
+const NDEX_SAVE = SERVICE_SERVER_URL + '/network'
 
 const ndexValidation = headers => {
   //console.log('Calling NDEx validation with headers: ', headers)
