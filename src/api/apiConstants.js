@@ -12,9 +12,9 @@ var FEEDBACK_URL = 'https://home.ndexbio.org/contact-us/';
 var CYTOSCAPE_URL = 'https://cytoscape.org';
 var DEPLOY_ENVIRON = ' on localhost';
 var SERVICE_SERVER_URL = 'https://dev.ndexbio.org/v2'
-var BASE_URL = SERVICE_SERVER_URL  + '/integratedsearch/v1/';
+var BASE_URL = 'https://dev.ndexbio.org/integratedsearch/v1/';
 var GOOGLE_CLIENT_ID = '';
-var COPYRIGHT = '2019 UC San Diego Ideker Lab';
+var COPYRIGHT = '2021 UC San Diego Ideker Lab';
 var UCSD_URL = 'https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx';
 var GENESET_EXAMPLES = [
   {
