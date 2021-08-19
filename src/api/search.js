@@ -1,4 +1,4 @@
-import { METHOD_GET, METHOD_POST, BASE_URL } from './apiConstants'
+import { METHOD_GET, METHOD_POST, BASE_URL } from './config'
 
 /**
  * Check the status of the services.

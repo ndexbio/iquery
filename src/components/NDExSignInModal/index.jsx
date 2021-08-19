@@ -22,7 +22,7 @@ import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 import NDExSave from '../NDExSave'
 
 import './style.css'
-import { GOOGLE_CLIENT_ID } from '../../api/apiConstants'
+import { GOOGLE_CLIENT_ID } from '../../api/config'
 import { mdiWindowClose } from '@mdi/js'
 
 const PaperComponent = props => {

@@ -22,7 +22,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Collapse from '@material-ui/core/Collapse'
 
-import { GENE_CARDS_URL } from '../../api/apiConstants';
+import { GENE_CARDS_URL } from '../../api/config';
 
 const MAX_DESCRIPTION_LENGTH = 150
 

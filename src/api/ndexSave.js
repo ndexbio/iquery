@@ -1,4 +1,4 @@
-import { METHOD_GET, METHOD_POST, SERVICE_SERVER_URL } from './apiConstants'
+import { METHOD_GET, METHOD_POST, SERVICE_SERVER_URL } from './config'
 
 const NDEX_USER_VALIDATION = SERVICE_SERVER_URL + '/user?valid=true'
 const NDEX_SAVE = SERVICE_SERVER_URL + '/network'

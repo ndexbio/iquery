@@ -17,7 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import MessageSnackbar from './MessageSnackbar';
 
-import { GENESET_EXAMPLES } from '../../api/apiConstants';
+import { GENESET_EXAMPLES } from '../../api/config';
 
 
 const styles = {

@@ -21,7 +21,7 @@ import HomeIcon from '@material-ui/icons/Home';
 
 import GeneTextBox from './GeneTextBox';
 
-import { HELP_URL } from '../../api/apiConstants';
+import { HELP_URL } from '../../api/config';
 
 const drawerWidth = 240;
 

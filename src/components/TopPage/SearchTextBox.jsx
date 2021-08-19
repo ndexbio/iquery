@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { Tooltip, Button } from '@material-ui/core';
 import searchLogo from '../../assets/images/search-logo.svg';
 
-import { GENESET_EXAMPLES, FEEDBACK_URL } from '../../api/apiConstants';
+import { GENESET_EXAMPLES, FEEDBACK_URL } from '../../api/config';
 
 
 const styles = {

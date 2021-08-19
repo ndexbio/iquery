@@ -1,4 +1,4 @@
-import { METHOD_GET, BASE_URL } from './apiConstants'
+import { METHOD_GET, BASE_URL } from './config'
 
 const fetchNetwork = (id, sourceUUID, networkUUID) => {
   const headers = {

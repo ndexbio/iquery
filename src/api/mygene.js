@@ -1,4 +1,4 @@
-import { METHOD_POST, MYGENE_BASE_URL } from './apiConstants'
+import { METHOD_POST, MYGENE_BASE_URL } from './config'
 
 
 /**

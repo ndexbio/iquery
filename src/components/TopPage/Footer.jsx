@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.css'
 
-import { CYTOSCAPE_URL, UCSD_URL, COPYRIGHT } from '../../api/apiConstants'
+import { CYTOSCAPE_URL, UCSD_URL, COPYRIGHT } from '../../api/config'
 
 // SVG images for links
 import cyLogo from '../../assets/images/cytoscape-logo.svg'

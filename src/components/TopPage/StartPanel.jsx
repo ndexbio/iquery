@@ -7,7 +7,7 @@ import ndex from '../../assets/images/ndex-logo.svg'
 import queryString from 'query-string'
 import './style.css'
 
-import { APP_VERSION, CYTOSCAPE_URL, FEEDBACK_URL } from '../../api/apiConstants'
+import { APP_VERSION, CYTOSCAPE_URL, FEEDBACK_URL } from '../../api/config'
 
 
 const StartPanel = props => {
