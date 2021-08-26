@@ -7,7 +7,6 @@ import AppShell from '../AppShell';
 import LoadingPanel from '../LoadingPanel';
 
 const HomePanel = (props) => {
-  //const [baseUrl, setBaseUrl] = useState(window.location.origin)
 
   const historyListener = (location, action) => {
     if (action === 'POP' && location.pathname !== '/') {

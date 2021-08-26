@@ -146,13 +146,7 @@ function* watchSaveToNDEx(action) {
   let lastSlash = responseText.lastIndexOf('/');
   let networkUUID = responseText.substring(lastSlash+1);
 
-  let origin_url = window.location.origin;
-  
-  let viewer_network = 'viewer/networks/';
-  if (origin_url.slice(-1) !== '/'){
-    viewer_network = '/' + viewer_network;
-  } 
-  const networkURL = origin_url + viewer_network + networkUUID;
+  const networkURL = 'viewer/networks/' + networkUUID;
 
   console.log('networkURL', networkURL);
   

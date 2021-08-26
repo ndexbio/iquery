@@ -19,7 +19,7 @@ const Footer = props => (
       alt="NDEx logo"
       src={ndexLogo}
       className="footer-logo"
-      onClick={() => openLink(window.location.origin)}
+      onClick={() => openLink("/")}
     />
     <img
       alt="Cytoscape logo"

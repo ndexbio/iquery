@@ -135,7 +135,7 @@ class TitleBar extends React.Component {
                 <IconButton
                   color='default'
                   aria-label='Home'
-                  onClick={() => openLink(window.location.origin)}
+                  onClick={() => openLink("/")}
                 >
                   <img alt='NDEx logo' src={logo} className={classes.logo} />
                 </IconButton>

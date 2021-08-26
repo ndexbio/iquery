@@ -32,7 +32,7 @@ const OpenOriginalNetworkButton = (props) => {
   const { classes } = props;
 
   const handleOpen = () => {
-    let url = window.location.origin + '/viewer/networks/' + props.network.uuid;
+    let url = 'viewer/networks/' + props.network.uuid;
     console.log('Opening original network entry:', url);
     window.open(url, '_blank');
   };

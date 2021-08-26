@@ -42,7 +42,7 @@ const StartPanel = props => {
             One search finds pathways, queries protein interaction networks, 
             and discovers disease, drug, and tissue associations. Powered by
             {' '}
-            <a href={window.location.origin} target="_blank" rel="noopener noreferrer">
+            <a href="/" target="_blank" rel="noopener noreferrer">
               NDEx</a>{' '} 
             and integrated with{' '} 
             <a href={CYTOSCAPE_URL} target="_blank" rel="noopener noreferrer">

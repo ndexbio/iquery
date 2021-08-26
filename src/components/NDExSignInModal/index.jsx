@@ -123,7 +123,7 @@ class CredentialsSignOn extends React.Component {
           <div>
             <span>Need an account? </span>
             <a
-              href={window.location.origin}
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
             >
