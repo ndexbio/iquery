@@ -14,6 +14,8 @@ import { isEqual } from 'lodash'
 import CheckIcon from '@material-ui/icons/Check'
 import Avatar from '@material-ui/core/Avatar'
 
+import { MAX_NETWORK_SIZE } from '../../../api/config'
+
 const useStyles = makeStyles(theme => ({
   noPadding: {
     paddingTop: '0',
@@ -51,8 +53,27 @@ let index = 0
 const NodeProperties = props => {
   const classes = useStyles()
 
+  const context = props.context
+  const listProperties = props.listProperties
+
+  const [defaultExpanded, setDefaultExpanded] = useState(true)
+
+
   //Display all nodes if no nodes are selected
   let nodes
+  
+  if ((props.network.nodeCount + props.network.edgeCount) > MAX_NETWORK_SIZE){
+    return (
+      <div className={'outer-rectangle'}>
+        <div className={classes.center}>
+          <Typography color="textSecondary" variant="subtitle1">
+            Network to big to display nodes
+          </Typography>
+        </div>
+      </div>
+    ) 
+  }
+  
   if (props.network.selectedNodes.length === 0) {
     nodes = props.network.network.elements
       .filter(elem => {
@@ -67,11 +88,6 @@ const NodeProperties = props => {
   } else {
     nodes = props.network.selectedNodes
   }
-
-  const context = props.context
-  const listProperties = props.listProperties
-
-  const [defaultExpanded, setDefaultExpanded] = useState(true)
 
   const entityProperties = [
     'Name',

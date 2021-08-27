@@ -15,6 +15,8 @@ import Avatar from '@material-ui/core/Avatar'
 import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
 
+import { MAX_NETWORK_SIZE } from '../../../api/config'
+
 let index = 0
 
 const useStyles = makeStyles(theme => ({
@@ -48,8 +50,26 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+
 const EdgeProperties = props => {
   const classes = useStyles()
+
+  const context = props.context
+  const listProperties = props.listProperties
+  const [defaultExpanded, setDefaultExpanded] = useState(true)
+  
+  if ((props.network.nodeCount + props.network.edgeCount) > MAX_NETWORK_SIZE){
+    return (
+      <div className={'outer-rectangle'}>
+        <div className={classes.center}>
+          <Typography color="textSecondary" variant="subtitle1">
+            Network to big to display edges
+          </Typography>
+        </div>
+      </div>
+    ) 
+  }
+
   let edges
   if (props.network.selectedEdges.length === 0) {
     edges = props.network.network.elements
@@ -64,9 +84,7 @@ const EdgeProperties = props => {
   }
 
   const nodes = props.nodeList
-  const context = props.context
-  const listProperties = props.listProperties
-  const [defaultExpanded, setDefaultExpanded] = useState(true)
+  
 
   const entityProperties = [
     'Source',
