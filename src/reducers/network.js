@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js';
-import { MAX_NETWORK_SIZE } from '../components/Results/Ndex/NetworkViewer';
+import { MAX_NETWORK_SIZE } from '../api/config';
 import * as vs from '../assets/data/styles.json';
 
 import {
