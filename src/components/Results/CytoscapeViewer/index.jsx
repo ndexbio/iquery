@@ -7,10 +7,9 @@ import { CxToCyCanvas } from 'cyannotation-cx2js';
 import Warning from './Warning';
 import { CONCENTRIC_LAYOUT, COSE_LAYOUT } from './LayoutSettings';
 import { cloneDeep } from 'lodash';
-
+import { MAX_NETWORK_SIZE } from '../../../api/config';
 import './style.css';
 
-export const MAX_NETWORK_SIZE = 5000;
 
 // For supporting visual annotation
 Cytoscape.use(CyCanvas);
