@@ -49,7 +49,7 @@ if (window.ndexSettings === undefined){
 }
 
 // Version of IQuery shown on main landing page of App
-var APP_VERSION = 'v1.3 beta' + DEPLOY_ENVIRON
+var APP_VERSION = 'v1.3' + DEPLOY_ENVIRON
 
 export { MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, CYTOSCAPE_URL,
          GOOGLE_CLIENT_ID, BASE_URL, SERVICE_SERVER_URL, DEPLOY_ENVIRON, APP_VERSION,
