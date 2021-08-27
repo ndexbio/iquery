@@ -4,8 +4,7 @@ import CytoscapeViewer from '../CytoscapeViewer';
 import LoadingPanel from '../../LoadingPanel';
 import Warning from '../CytoscapeViewer/Warning';
 import PathwayFigureViewer from './PathwayFigureViewer';
-
-export const MAX_NETWORK_SIZE = 5000;
+import { MAX_NETWORK_SIZE } from '../../../api/config';
 
 const NetworkViewer = (props) => {
   if (props.network.isFetching) {
