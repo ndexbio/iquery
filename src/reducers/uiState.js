@@ -16,10 +16,12 @@ import {
   setAnnotations,
 } from '../actions/uiState';
 
+import { HIGHLIGHT_GENES } from '../api/config';
+
 const DEF_STATE = {
   isSettingsOpen: false,
   servicesListOpen: false,
-  highlights: false,
+  highlights: HIGHLIGHT_GENES,
   selectedSource: 'enrichment',
   pathwayFigure: true,
   pathwayFigureSource: null,
