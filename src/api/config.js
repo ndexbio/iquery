@@ -3,6 +3,7 @@ export const METHOD_GET = 'GET';
 
 export const CYREST_BASE_URL = 'http://127.0.0.1';
 
+var HIGHLIGHT_GENES = false;
 var MAX_NETWORK_SIZE = 5000;
 var MYGENE_BASE_URL = 'https://mygene.info/v3/query';
 var GENE_CARDS_URL = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene=';
@@ -45,6 +46,7 @@ if (window.ndexSettings === undefined){
       UCSD_URL = window.ndexSettings.iQuery.ucsdUri;
       COPYRIGHT = window.ndexSettings.iQuery.copyRight;
       MAX_NETWORK_SIZE = window.ndexSettings.iQuery.maxNetworkSize;
+      HIGHLIGHT_GENES = window.ndexSettings.iQuery.highlightGenes;
   }
 }
 
@@ -53,4 +55,4 @@ var APP_VERSION = 'v1.4' + DEPLOY_ENVIRON
 
 export { MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, CYTOSCAPE_URL,
          GOOGLE_CLIENT_ID, BASE_URL, SERVICE_SERVER_URL, DEPLOY_ENVIRON, APP_VERSION,
-        GENESET_EXAMPLES, UCSD_URL, COPYRIGHT, MAX_NETWORK_SIZE };
+        GENESET_EXAMPLES, UCSD_URL, COPYRIGHT, MAX_NETWORK_SIZE, HIGHLIGHT_GENES };
