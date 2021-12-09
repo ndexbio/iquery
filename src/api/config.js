@@ -25,6 +25,7 @@ var GENESET_EXAMPLES = [
     "description": "The 200 genes comprising the MSigDB Hallmark Gene Set for Hypoxia"
   },
 ];
+var DEFAULT_SORT = 'Similarity';
 
 if (window.ndexSettings === undefined){
   console.log('ndexSettings is not defined. Using dummy config');
@@ -47,6 +48,7 @@ if (window.ndexSettings === undefined){
       COPYRIGHT = window.ndexSettings.iQuery.copyRight;
       MAX_NETWORK_SIZE = window.ndexSettings.iQuery.maxNetworkSize;
       HIGHLIGHT_GENES = window.ndexSettings.iQuery.highlightGenes;
+      DEFAULT_SORT = window.ndexSettings.iQuery.defaultSort;
   }
 }
 
@@ -55,4 +57,4 @@ var APP_VERSION = 'v1.4' + DEPLOY_ENVIRON
 
 export { MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, CYTOSCAPE_URL,
          GOOGLE_CLIENT_ID, BASE_URL, SERVICE_SERVER_URL, DEPLOY_ENVIRON, APP_VERSION,
-        GENESET_EXAMPLES, UCSD_URL, COPYRIGHT, MAX_NETWORK_SIZE, HIGHLIGHT_GENES };
+        GENESET_EXAMPLES, UCSD_URL, COPYRIGHT, MAX_NETWORK_SIZE, HIGHLIGHT_GENES, DEFAULT_SORT };

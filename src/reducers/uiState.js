@@ -16,7 +16,7 @@ import {
   setAnnotations,
 } from '../actions/uiState';
 
-import { HIGHLIGHT_GENES } from '../api/config';
+import { HIGHLIGHT_GENES, DEFAULT_SORT } from '../api/config';
 
 const DEF_STATE = {
   isSettingsOpen: false,
@@ -27,7 +27,7 @@ const DEF_STATE = {
   pathwayFigureSource: null,
   fitPathwayFigure: false,
   sortOptions: ['Overlap', 'p-Value', 'Similarity'],
-  sortBy: 'Overlap',
+  sortBy: DEFAULT_SORT,
   layout: 'Preset',
   layouts: [],
   fit: true,
