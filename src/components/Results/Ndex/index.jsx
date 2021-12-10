@@ -149,6 +149,7 @@ const Ndex = (props) => {
       hitGenes,
       details,
       url,
+      totalGeneCount = '?'
     } = networkEntry;
     const genes = (
       <span style={infoStyle}>
@@ -266,6 +267,7 @@ const Ndex = (props) => {
         <Typography variant='caption' color='textSecondary'>
           <span>Nodes: {nodes}, </span>
           <span>Edges: {edges}, </span>
+          <span>Total gene count: {totalGeneCount}, </span>
           <span>Source: {camelCaseToTitleCase(description.split(':')[0])}</span>
         </Typography>
       </span>
