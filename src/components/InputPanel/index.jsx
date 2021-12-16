@@ -54,8 +54,10 @@ const InputPanel = (props) => {
     }
   }
 
+  const hideSearchBar = props.uiState.hideSearchBar;
+
   return (
-    <div className='input-container'>
+    <div className={hideSearchBar ? 'headerless-input-container' : 'input-container'}>
       <div className='input-wrapper'>
         <div className={'gene-list-title'}>
           Query Genes{' '}

@@ -14,7 +14,8 @@ var FEEDBACK_URL = 'https://home.ndexbio.org/contact-us/';
 var CYTOSCAPE_URL = 'https://cytoscape.org';
 var DEPLOY_ENVIRON = ' on localhost';
 var SERVICE_SERVER_URL = 'https://dev.ndexbio.org/v2'
-var BASE_URL = 'https://dev.ndexbio.org/integratedsearch/v1/';
+var BASE_URL = 'https://iquery-cbio-dev.ucsd.edu/integratedsearch/v1/';
+// var BASE_URL = 'https://dev.ndexbio.org/integratedsearch/v1/';
 var GOOGLE_CLIENT_ID = '';
 var COPYRIGHT = '2021 UC San Diego Ideker Lab';
 var UCSD_URL = 'https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx';
@@ -26,6 +27,7 @@ var GENESET_EXAMPLES = [
   },
 ];
 var DEFAULT_SORT = 'Similarity';
+var HIDE_SEARCHBAR = false;
 
 if (window.ndexSettings === undefined){
   console.log('ndexSettings is not defined. Using dummy config');
@@ -49,6 +51,7 @@ if (window.ndexSettings === undefined){
       MAX_NETWORK_SIZE = window.ndexSettings.iQuery.maxNetworkSize;
       HIGHLIGHT_GENES = window.ndexSettings.iQuery.highlightGenes;
       DEFAULT_SORT = window.ndexSettings.iQuery.defaultSort;
+      HIDE_SEARCHBAR = window.ndexSettings.iQuery.hideSearchBar;
   }
 }
 
@@ -57,4 +60,5 @@ var APP_VERSION = 'v1.4' + DEPLOY_ENVIRON
 
 export { MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, CYTOSCAPE_URL,
          GOOGLE_CLIENT_ID, BASE_URL, SERVICE_SERVER_URL, DEPLOY_ENVIRON, APP_VERSION,
-        GENESET_EXAMPLES, UCSD_URL, COPYRIGHT, MAX_NETWORK_SIZE, HIGHLIGHT_GENES, DEFAULT_SORT };
+        GENESET_EXAMPLES, UCSD_URL, COPYRIGHT, MAX_NETWORK_SIZE, HIGHLIGHT_GENES, 
+        DEFAULT_SORT, HIDE_SEARCHBAR };
