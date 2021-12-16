@@ -104,6 +104,14 @@
   height: 100vh;
 }
 
+.headerless-input-container {
+  padding-top: 0;
+  grid-column: 1/2;
+  grid-row: 2/3;
+  grid-gap: 0;
+  height: 100vh;
+}
+
 .source-wrapper {
   display: flex;
   align-items: center;
@@ -124,6 +132,15 @@
 
 .results-container {
   padding-top: 4.5em;
+  grid-column: 2/13;
+  grid-row: 2/3;
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.headerless-results-container {
+  padding-top: 0;
   grid-column: 2/13;
   grid-row: 2/3;
   margin: 0;

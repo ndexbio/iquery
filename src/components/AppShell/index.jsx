@@ -52,11 +52,11 @@ const AppShell = props => {
   const { classes, ...others } = props
 
   const open = props.uiState.isSettingsOpen
-
+  const hideSearchBar = props.uiState.hideSearchBar;
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <TitleBar {...others} />
+      {hideSearchBar ? null : <TitleBar {...others} />}
       <SettingsPanel {...others} />
 
       <div

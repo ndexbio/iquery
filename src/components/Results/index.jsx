@@ -116,10 +116,10 @@ const Results = (props) => {
   }
 
   const results = findResult(selectedSourceName, searchResults);
-
+  const hideSearchBar = props.uiState.hideSearchBar;
   // Get current tab selection
   return (
-    <div className='results-container'>
+    <div className={hideSearchBar ? 'headerless-results-container' : 'results-container'}>
       <div className='results-wrapper'>
         <Tabs value={idx} onChange={handleChange} className={classes.tabs}>
           {sources.map((source) => (
