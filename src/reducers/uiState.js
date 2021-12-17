@@ -16,7 +16,7 @@ import {
   setAnnotations,
 } from '../actions/uiState';
 
-import { HIGHLIGHT_GENES, DEFAULT_SORT } from '../api/config';
+import { HIGHLIGHT_GENES, DEFAULT_SORT, HIDE_SEARCHBAR } from '../api/config';
 
 const DEF_STATE = {
   isSettingsOpen: false,
@@ -32,6 +32,7 @@ const DEF_STATE = {
   layouts: [],
   fit: true,
   annotations: false,
+  hideSearchBar: HIDE_SEARCHBAR
 };
 
 const uiState = handleActions(

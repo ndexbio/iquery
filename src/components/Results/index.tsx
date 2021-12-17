@@ -9,6 +9,8 @@ import TabContent from './TabContent'
 const tooltipStyle = {
   textAlign: 'center'
 }
+
+// TODO: use typed constants
 const TAB_LABELS = {
   enrichment: {
     label: 'Relevant Pathways',
@@ -49,8 +51,8 @@ const TAB_LABELS = {
     )
   }
 }
-
-const backgroundcolor = 'rgb(235, 235, 235)'
+// TODO: use theme
+const DEF_BG_COLOR = 'rgb(235, 235, 235)'
 
 const styles = theme => ({
   tabs: {},
@@ -110,7 +112,7 @@ const Results = props => {
     return <Empty />
   }
 
-  const results = findResult(selectedSourceName, searchResults)
+  // const results = findResult(selectedSourceName, searchResults)
   if (sources === null || sources === undefined || sources.length === 0) {
     sources = searchResults.sources
   }
@@ -125,8 +127,12 @@ const Results = props => {
   }
 
   // Get current tab selection
+  const results = findResult(selectedSourceName, searchResults)
+  const hideSearchBar = props.uiState.hideSearchBar
+
+  // Get current tab selection
   return (
-    <div className="results-container">
+    <div className={hideSearchBar ? 'headerless-results-container' : 'results-container'}>
       <div className="results-wrapper">
         <Tabs value={idx} onChange={handleChange} className={classes.tabs}>
           {sources.map(source => (
@@ -134,7 +140,7 @@ const Results = props => {
               key={source.uuid}
               label={TAB_LABELS[source.name] ? TAB_LABELS[source.name].label : null}
               tooltip={TAB_LABELS[source.name] ? TAB_LABELS[source.name].tooltip : null}
-              backgroundcolor={backgroundcolor}
+              backgroundcolor={DEF_BG_COLOR}
             />
           ))}
         </Tabs>
