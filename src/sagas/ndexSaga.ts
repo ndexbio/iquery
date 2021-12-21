@@ -72,7 +72,7 @@ function* watchSearch(action) {
         jobId,
       },
     });
-  } catch (e) {
+  } catch (e: any) {
     console.warn('NDEx search error:', e);
     yield put({
       type: SEARCH_FAILED,
@@ -147,7 +147,7 @@ function* watchSearchResult(action) {
       type: FETCH_RESULT_SUCCEEDED,
       payload: {},
     });
-  } catch (e) {
+  } catch (e: any) {
     console.warn('NDEx search error:', e);
     yield put({
       type: FETCH_RESULT_FAILED,

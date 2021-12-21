@@ -7,6 +7,9 @@ import AppShell from '../AppShell'
 import LoadingPanel from '../LoadingPanel'
 
 const HomePanel = props => {
+
+  const {search, location} = props
+  
   const historyListener = (location, action) => {
     if (action === 'POP' && location.pathname !== '/') {
       console.log('Back button::', location, action)
@@ -17,7 +20,7 @@ const HomePanel = props => {
 
   useEffect(() => {
     // Check pathname to see if we can access the existing job
-    const { pathname } = props.location
+    const { pathname } = location
 
     if (pathname !== '/') {
       const params = pathname.split('/')
@@ -50,8 +53,6 @@ const HomePanel = props => {
     return () => {}
   }, [])
 
-  const { search } = props
-
   // TODO: Display error message
   if (search === undefined || search === null) {
     return (
@@ -64,7 +65,7 @@ const HomePanel = props => {
   const { isFetching, searchResults } = search
 
   // Still searching and no result is available
-  if ((isFetching && searchResults === null) || isFetching) {
+  if (searchResults === null || isFetching) {
     return (
       <AppShell {...props}>
         <LoadingPanel title="Loading Results..." />
@@ -72,6 +73,8 @@ const HomePanel = props => {
     )
   }
 
+  // Display the search results
+  // TODO: define types for props
   return (
     <AppShell {...props}>
       <div className="container">
