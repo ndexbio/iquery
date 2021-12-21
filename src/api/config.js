@@ -16,7 +16,7 @@ var DEPLOY_ENVIRON = ' on localhost';
 var SERVICE_SERVER_URL = 'https://dev.ndexbio.org/v2'
 var BASE_URL = 'https://dev.ndexbio.org/integratedsearch/v1/';
 var GOOGLE_CLIENT_ID = '';
-var COPYRIGHT = '2021 UC San Diego Ideker Lab';
+var COPYRIGHT = 'Copyright © 2013-2021, The Regents of University of California, The Cytoscape Consortium. All rights reserved.';
 var UCSD_URL = 'https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx';
 var GENESET_EXAMPLES = [
   {
