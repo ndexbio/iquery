@@ -407,7 +407,7 @@ const EdgeProperties = props => {
             <td>
               <Typography variant="body2">{source}</Typography>
             </td>
-            {props.search.queryList.includes(source.toUpperCase()) ? (
+            {props.search.queryList.includes(source?.toUpperCase()) ? (
               <td>
                 <Avatar className={classes.matched}>
                   <CheckIcon className={classes.icon} />
@@ -420,7 +420,7 @@ const EdgeProperties = props => {
             <td>
               <Typography variant="body2">{target}</Typography>
             </td>
-            {props.search.queryList.includes(target.toUpperCase()) ? (
+            {props.search.queryList.includes(target?.toUpperCase()) ? (
               <td>
                 <Avatar className={classes.matched}>
                   <CheckIcon className={classes.icon} />
