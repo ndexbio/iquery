@@ -22,7 +22,7 @@ const DEF_STATE = {
   isSettingsOpen: false,
   servicesListOpen: false,
   highlights: HIGHLIGHT_GENES,
-  selectedSource: 'enrichment',
+  selectedSource: '',
   pathwayFigure: true,
   pathwayFigureSource: null,
   fitPathwayFigure: false,

@@ -25,6 +25,10 @@ const TopPageContainer = props => {
       ReactGA.pageview(pathname)
     })
   }, [])
+
+  useEffect(() => {
+    console.log('New location TopPageContainer: useEffect', props.location)
+  }, [props.location])
   return <TopPage {...props} />
 }
 
@@ -51,8 +55,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(TopPageContainer)
+  connect(mapStateToProps, mapDispatchToProps)(TopPageContainer)
 )

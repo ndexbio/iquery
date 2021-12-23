@@ -1,12 +1,12 @@
-import React from 'react';
-import { withStyles } from '@material-ui/styles';
-import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
-import CheckIcon from '@material-ui/icons/Check';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import MuiToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import React from 'react'
+import { withStyles } from '@material-ui/styles'
+import Avatar from '@material-ui/core/Avatar'
+import Chip from '@material-ui/core/Chip'
+import CheckIcon from '@material-ui/icons/Check'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import MuiToggleButton from '@material-ui/lab/ToggleButton'
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 
 const buttonStyle = {
   padding: '0',
@@ -14,7 +14,7 @@ const buttonStyle = {
   height: '32px',
   borderWidth: '0',
   backgroundColor: '#FFFFFF',
-};
+}
 
 const selectedButtonStyle = {
   padding: '0',
@@ -22,79 +22,80 @@ const selectedButtonStyle = {
   height: '32px',
   borderWidth: '0',
   backgroundColor: 'rgb(252, 235, 242)',
-};
+}
 
 const selectedChipStyle = {
   margin: '0',
   borderRadius: '20px',
-};
+}
 
 const toggleButtonGroupStyle = {
   backgroundColor: 'transparent',
-};
+}
 
 const ToggleButton = withStyles({
   label: {
     backgroundColor: 'transparent',
   },
-})(MuiToggleButton);
+})(MuiToggleButton)
 
-const GeneList = (props) => {
-  const results = props.search.results;
-  const hits = props.network.hitGenes;
-  const hitSets = new Set(hits);
+const GeneList = props => {
+  const results = props.search.searchResults
+  const hits = props.network.hitGenes
+  const hitSets = new Set(hits)
 
   const handleChange = (event, newAlignment) => {
     if (newAlignment in props.geneToNodeMap) {
-      const alignment = props.geneToNodeMap[newAlignment];
+      const alignment = props.geneToNodeMap[newAlignment]
       if (alignment === props.search.selectedGenes[0]) {
-        props.searchActions.clearSelectedGenes();
+        props.searchActions.clearSelectedGenes()
       } else {
-        props.searchActions.setSelectedGenes(alignment);
+        props.searchActions.setSelectedGenes(alignment)
       }
     } else {
       if (newAlignment === props.search.selectedGenes[0]) {
-        props.searchActions.clearSelectedGenes();
+        props.searchActions.clearSelectedGenes()
       } else {
-        props.searchActions.setSelectedGenes(newAlignment);
+        props.searchActions.setSelectedGenes(newAlignment)
       }
     }
-  };
+  }
 
   if (!results) {
-    return <div className='gene-list-wrapper' />;
+    return <div className="gene-list-wrapper" />
   }
 
-  const geneList = results.genes;
 
-  if (!geneList) {
-    return <div className='gene-list-wrapper' />;
+  const queryGeneList = results.query
+
+  if (!queryGeneList) {
+    return <div className="gene-list-wrapper" />
   }
 
-  const matched = [];
-  const unmatched = [];
+  const matched = []
+  const unmatched = []
 
-  const unique = new Set();
-  for (const gene of geneList.values()) {
-    unique.add(gene.symbol);
+  const unique = new Set()
+  for (const gene of queryGeneList) {
+    unique.add(gene)
   }
 
   for (const value of unique) {
     if (hitSets.has(value.toUpperCase())) {
-      matched.push(value.toUpperCase());
+      matched.push(value.toUpperCase())
     } else {
-      unmatched.push(value.toUpperCase());
+      unmatched.push(value.toUpperCase())
     }
   }
 
-  const matchedSorted = matched.sort();
-  const unmatchedSorted = unmatched.sort();
-  const sorted = [...matchedSorted, ...unmatchedSorted];
+  const matchedSorted = matched.sort()
+  const unmatchedSorted = unmatched.sort()
+  const sorted = [...matchedSorted, ...unmatchedSorted]
 
   return (
-    <div className='gene-list-wrapper'>
+    <div className="gene-list-wrapper">
       <List>
-        {sorted.map((geneValue) => (
+        {sorted.map(geneValue => (
           <ListItem key={geneValue}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
@@ -105,8 +106,7 @@ const GeneList = (props) => {
               <ToggleButton
                 value={geneValue}
                 style={
-                  hitSets.has(geneValue) &&
-                  props.search.selectedGenes[0] === geneValue
+                  hitSets.has(geneValue) && props.search.selectedGenes[0] === geneValue
                     ? selectedButtonStyle
                     : buttonStyle
                 }
@@ -118,8 +118,8 @@ const GeneList = (props) => {
         ))}
       </List>
     </div>
-  );
-};
+  )
+}
 
 const getChip = (value, hitSets) => {
   if (hitSets.has(value.toUpperCase())) {
@@ -138,14 +138,14 @@ const getChip = (value, hitSets) => {
           </Avatar>
         }
         label={value}
-        variant='outlined'
+        variant="outlined"
         color={'secondary'}
         key={value}
         selected
         style={selectedChipStyle}
         clickable={true}
       />
-    );
+    )
   } else {
     return (
       <Chip
@@ -162,15 +162,15 @@ const getChip = (value, hitSets) => {
           </Avatar>
         }
         label={value}
-        variant='outlined'
+        variant="outlined"
         color={'default'}
         key={value}
         selected
         style={selectedChipStyle}
         clickable={false}
       />
-    );
+    )
   }
-};
+}
 
-export default GeneList;
+export default GeneList
