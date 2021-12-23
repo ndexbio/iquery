@@ -6,25 +6,29 @@ import Empty from './Empty'
 import TabContent from './TabContent'
 import { PresetDataSources } from './PresetDataSources'
 
-
-const styles = theme => ({
+const styles = (theme) => ({
   tabs: {},
   grow: {
     flexGrow: 1,
   },
 })
 
-const Results = props => {
+const Results = (props) => {
   const { classes, ...others } = props
-  const { search, location } = others
+  const { search, location, uiStateActions, uiState } = others
+  const { selectedSource } = uiState
 
-  // Data source tab selection
-  const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0)
-
-  // Current Job ID.  Always taken from path name
   const [jobId, setJobId] = useState<string>('')
+  const [networkId, setNetworkId] = useState<string>('')
   const [sourceList, setSourceList] = useState<any[]>([])
   const [queryGenes, setQueryGenes] = useState<string[]>([])
+
+  useEffect(() => {
+    if(selectedSource === ''){
+      const defaultSource: string = getSourceName(sourceList, 0)
+      uiStateActions.setSelectedSource(defaultSource)
+    }
+  }, [selectedSource])
 
   useEffect(() => {
     const { searchResults } = search
@@ -34,28 +38,52 @@ const Results = props => {
 
     setSourceList(searchResults.sources)
     setQueryGenes(searchResults.query)
+
+    const selectedTabIndex = findIndex(uiState.selectedSource, sourceList)
     updateHistory(selectedTabIndex)
   }, [search])
 
+  const findIndex = (sourceName: string, sourceList: any[]): number => {
+    for (let i = 0; i < sourceList.length; i++) {
+      if (sourceList[i].sourceName === sourceName) {
+        return i
+      }
+    }
+    return -1
+  }
+
   useEffect(() => {
     const parts = location.pathname.split('/')
+
+    // Extract Job ID
     if (parts.length > 1 && jobId !== parts[1]) {
       setJobId(parts[1])
     }
+
+    // Extract tab index if available
+    if (parts.length > 2 && uiState.selectedSource !== parts[2]) {
+      const newSourceName = parts[2]
+      uiStateActions.setSelectedSource(newSourceName)
+    }
+
+    if (parts.length > 3 && networkId !== parts[3]) {
+      setNetworkId(parts[3])
+    }
   }, [location])
 
+
   const handleChange = (event, idx) => {
-    setSelectedTabIndex(idx)
     updateHistory(idx)
     props.networkActions.networkClear()
     props.networkActions.changeListIndex(0)
     if (idx === 3) {
-      props.uiStateActions.setPathwayFigure(true)
+      uiStateActions.setPathwayFigure(true)
     }
   }
 
   const updateHistory = (newSelectedIndex: number): void => {
-    if (selectedTabIndex === newSelectedIndex) {
+    const index: number = findIndex(selectedSource, sourceList)
+    if (index === newSelectedIndex) {
       return
     }
 
@@ -73,18 +101,22 @@ const Results = props => {
 
   // Get current tab selection
   const { searchResults } = search
-  const selectedSourceName = getSourceName(sourceList, selectedTabIndex)
-  const results = findResult(selectedSourceName, searchResults)
+  let index: number = findIndex(selectedSource, sourceList)
+  if(index === -1) {
+    index = 0
+  }
+
+  const results = findResult(selectedSource, searchResults)
   const hideSearchBar = props.uiState.hideSearchBar
 
   // Get current tab selection
   return (
     <div className={hideSearchBar ? 'headerless-results-container' : 'results-container'}>
       <div className="results-wrapper">
-        <Tabs value={selectedTabIndex} onChange={handleChange} className={classes.tabs}>
-          {sourceList.map(entry => (
+        <Tabs value={index} onChange={handleChange} className={classes.tabs}>
+          {sourceList.map((entry) => (
             <HoverTab
-              key={entry.uuid}
+              key={entry.sourceName}
               label={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].label : null}
               tooltip={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].tooltip : null}
             />
@@ -119,7 +151,7 @@ const findResult = (sourceName: string, searchResults) => {
     return null
   }
 
-  const resultArray = sources.filter(entry => entry !== undefined)
+  const resultArray = sources.filter((entry) => entry !== undefined)
   let idx = resultArray.length
 
   while (idx--) {
