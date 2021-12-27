@@ -16,7 +16,7 @@ var DEPLOY_ENVIRON = ' on localhost';
 var SERVICE_SERVER_URL = 'https://dev.ndexbio.org/v2'
 var BASE_URL = 'https://dev.ndexbio.org/integratedsearch/v1/';
 var GOOGLE_CLIENT_ID = '';
-var COPYRIGHT = 'Copyright © 2013-2021, The Regents of University of California, The Cytoscape Consortium. All rights reserved.';
+var COPYRIGHT = 'Copyright © 2013-@@YEAR@@, The Regents of University of California, The Cytoscape Consortium. All rights reserved.';
 var UCSD_URL = 'https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx';
 var GENESET_EXAMPLES = [
   {
@@ -55,7 +55,13 @@ if (window.ndexSettings === undefined){
 }
 
 // Version of IQuery shown on main landing page of App
-var APP_VERSION = 'v1.4' + DEPLOY_ENVIRON
+var APP_VERSION = 'v1.4 beta' + DEPLOY_ENVIRON
+
+// As requested in UD-1954 if @@YEAR@@ is in copyright string replace it with
+// current year
+if (COPYRIGHT !== undefined && COPYRIGHT !== null){
+  COPYRIGHT = COPYRIGHT.replace('@@YEAR@@', new Date().getFullYear().toString());
+}
 
 export { MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, CYTOSCAPE_URL,
          GOOGLE_CLIENT_ID, BASE_URL, SERVICE_SERVER_URL, DEPLOY_ENVIRON, APP_VERSION,
