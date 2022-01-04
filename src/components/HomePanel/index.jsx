@@ -6,6 +6,8 @@ import Results from '../Results'
 import AppShell from '../AppShell'
 import LoadingPanel from '../LoadingPanel'
 
+const UUID_VALIDATION = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+
 const HomePanel = props => {
 
   const {search, location} = props
@@ -24,10 +26,20 @@ const HomePanel = props => {
 
     if (pathname !== '/') {
       const params = pathname.split('/')
+      let jobIdIndex = 0
+
+
       if (params.length > 2) {
-        const jobId = params[1]
+        for(let i = 1; i < params.length; i++) {
+          if (UUID_VALIDATION.test(params[i])) {
+            jobIdIndex = i
+            break
+          }
+        }
+        const jobId = params[jobIdIndex]
+        const path = params.slice(jobIdIndex, params.length).join('/')
         props.history.listen(historyListener)
-        props.history.push(pathname)
+        props.history.push(`/${path}`)
         props.searchActions.fetchResultStarted({ jobId })
 
         return
