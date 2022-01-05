@@ -13,6 +13,8 @@ const styles = (theme) => ({
   },
 })
 
+const SOURCE_IDS: string[] = Object.keys(PresetDataSources)
+
 const Results = (props) => {
   const { classes, ...others } = props
   const { search, location, uiStateActions, uiState } = others
@@ -24,7 +26,7 @@ const Results = (props) => {
   const [queryGenes, setQueryGenes] = useState<string[]>([])
 
   useEffect(() => {
-    if(selectedSource === ''){
+    if (selectedSource === '') {
       const defaultSource: string = getSourceName(sourceList, 0)
       uiStateActions.setSelectedSource(defaultSource)
     }
@@ -36,7 +38,9 @@ const Results = (props) => {
       return
     }
 
-    setSourceList(searchResults.sources)
+    const originalSourceList = searchResults.sources
+    const sorted = getSortedList(originalSourceList)
+    setSourceList(sorted)
     setQueryGenes(searchResults.query)
 
     const selectedTabIndex = findIndex(uiState.selectedSource, sourceList)
@@ -71,7 +75,6 @@ const Results = (props) => {
     }
   }, [location])
 
-
   const handleChange = (event, idx) => {
     updateHistory(idx)
     props.networkActions.networkClear()
@@ -102,7 +105,7 @@ const Results = (props) => {
   // Get current tab selection
   const { searchResults } = search
   let index: number = findIndex(selectedSource, sourceList)
-  if(index === -1) {
+  if (index === -1) {
     index = 0
   }
 
@@ -114,13 +117,15 @@ const Results = (props) => {
     <div className={hideSearchBar ? 'headerless-results-container' : 'results-container'}>
       <div className="results-wrapper">
         <Tabs value={index} onChange={handleChange} className={classes.tabs}>
-          {sourceList.map((entry) => (
-            <HoverTab
-              key={entry.sourceName}
-              label={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].label : null}
-              tooltip={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].tooltip : null}
-            />
-          ))}
+          {sourceList.map((entry) => {
+            return (
+              <HoverTab
+                key={entry.sourceName}
+                label={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].label : null}
+                tooltip={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].tooltip : null}
+              />
+            )
+          })}
         </Tabs>
 
         {queryGenes.length !== 0 ? (
@@ -131,6 +136,23 @@ const Results = (props) => {
       </div>
     </div>
   )
+}
+
+const getSortedList = (sourceList: any[]) => {
+  const sourceMap = {}
+  sourceList.forEach((entry) => {
+    sourceMap[entry.sourceName] = entry
+  })
+
+  const orderedList: any[] = []
+
+  // Re-order the list based on the preset source list (this fixes the order of the tabs)
+  SOURCE_IDS.forEach((sourceId: string) => {
+    const entry = sourceMap[sourceId]
+    orderedList.push(entry)
+  })
+
+  return orderedList
 }
 
 const getSourceName = (sources: any[], idx: number) => {
