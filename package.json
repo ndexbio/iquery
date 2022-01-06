@@ -21,11 +21,11 @@
     "lodash.isequal": "^4.5.0",
     "notistack": "^0.8.8",
     "query-string": "^6.3.0",
-    "react": "^16.8.6",
+    "react": "^17.0.2",
     "react-cytoscapejs": "^1.2.0",
     "react-dnd": "^9.3.4",
     "react-dnd-html5-backend": "^9.3.4",
-    "react-dom": "^16.8.6",
+    "react-dom": "^17.0.2",
     "react-draggable": "^4.0.3",
     "react-ga": "^2.5.7",
     "react-google-login": "^5.0.4",
@@ -41,15 +41,13 @@
     "typeface-roboto": "^0.0.75"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.9",
-    "@types/react": "^16.9.4",
-    "@types/react-dom": "^16.9.1",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.5.1",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.0",
     "react-test-renderer": "^16.10.2",
     "redux-devtools-extension": "^2.13.8",
     "redux-saga-test": "^1.0.1",
@@ -77,12 +75,6 @@
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
-  },
-  "eslintConfig": {
-    "extends": "react-app",
-    "plugins": [
-      "prettier"
-    ]
   },
   "browserslist": [
     ">0.2%",
