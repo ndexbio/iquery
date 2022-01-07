@@ -24,10 +24,9 @@ const HomePanel = props => {
     // Check pathname to see if we can access the existing job
     const { pathname } = location
 
-    if (pathname !== '/') {
+    if (pathname !== '/' && UUID_VALIDATION.test(pathname)) {
       const params = pathname.split('/')
       let jobIdIndex = 0
-
 
       if (params.length > 2) {
         for(let i = 1; i < params.length; i++) {
