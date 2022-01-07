@@ -81,12 +81,6 @@ const InputPanel = props => {
           {
             validateGenesWithMyGene && results && results.genes.size ? `(${network.hitGenes.length} / ${results.genes.size})` : `(${network.hitGenes.length} / ${searchResults.query.length})`
           }
-          {/* {results && results.genes
-            ? '(' + network.hitGenes.length + '/' + results.genes.size + ')'
-            : null} */}
-          {/* {
-            `(${network.hitGenes.length} / ${validateGenesWithMyGene ? results?.genes?.size : searchResults.query.length})`
-          } */}
         </div>
         <GeneList geneToNodeMap={geneToNodeMap} {...props} />
       </div>
