@@ -18,7 +18,7 @@ const StartPanel = props => {
     if (genes !== undefined) {
       const geneList = genes.split(/\s|,/)
       props.searchActions.setQuery(genes)
-      props.searchActions.searchStarted({ geneList })
+      props.searchActions.searchStarted({ geneList, validateGenesWithMyGene: props.search.validateGenesWithMyGene })
     }
     props.sourceActions.findSourceStarted()
 

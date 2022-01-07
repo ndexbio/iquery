@@ -27,7 +27,7 @@ const InputPanel = props => {
   }
 
   const [geneToNodeMap, setGeneToNodeMap] = useState<object>({})
-  const { results } = search
+  const { results, validateGenesWithMyGene, searchResults } = search
 
   useEffect(() => {
     if (network === null || network === undefined || network.originalCX === null) {
@@ -71,14 +71,16 @@ const InputPanel = props => {
     setGeneToNodeMap(geneMap)
   }, [network])
 
+
+
   return (
     <div className={hideSearchBar ? 'headerless-input-container' : 'input-container'}>
       <div className="input-wrapper">
         <div className={'gene-list-title'}>
           Query Genes{' '}
-          {results && results.genes
-            ? '(' + network.hitGenes.length + '/' + results.genes.size + ')'
-            : null}
+          {
+            validateGenesWithMyGene && results && results.genes.size ? `(${network.hitGenes.length} / ${results.genes.size})` : `(${network.hitGenes.length} / ${searchResults.query.length})`
+          }
         </div>
         <GeneList geneToNodeMap={geneToNodeMap} {...props} />
       </div>
