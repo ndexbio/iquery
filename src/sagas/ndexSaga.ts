@@ -37,6 +37,7 @@ const API_CALL_INTERVAL = 500;
  */
 function* watchSearch(action) {
   const geneList: string[] = action.payload.geneList;
+  const validateGenesWithMyGene: boolean = action.payload.validateGenesWithMyGene;
   let sourceNames: string[] = action.payload.sourceNames;
 
   // If source names are missing, find them:
@@ -51,23 +52,31 @@ function* watchSearch(action) {
   const geneListString: string = geneList.join();
 
   try {
-    // Call 1: Send query and get JobID w/ gene props from MyGene
-    const [geneRes, searchRes] = yield all([
-      call(myGeneApi.searchGenes, geneListString),
-      call(postQuery, geneList, sourceNames),
-    ]);
+    // 1. send query to the service mygene.info to get gene information 
+    let genes = new Map<string, Record<string, any>>();
+    let notFound = new Array<string>();
 
-    const geneJson = yield call([geneRes, 'json']);
+    if (validateGenesWithMyGene) {
+      const geneRes = yield call(myGeneApi.searchGenes, geneListString);
+      const geneJson = yield call([geneRes, 'json']);
+      const filtered: FilteredGenes = filterGenes(geneJson);
+
+      genes = filtered.uniqueGeneMap;
+      notFound = filtered.notFound;
+    }
+
+    // 2. send gene list query to the ndex service
+    const searchRes = yield call(postQuery, geneList, sourceNames);
+
     const resultLocation = searchRes.headers.get('Location');
     const parts: string[] = resultLocation.split('/');
     const jobId: string = parts[parts.length - 1];
-    const filtered: FilteredGenes = filterGenes(geneJson);
 
     yield put({
       type: SEARCH_SUCCEEDED,
       payload: {
-        genes: filtered.uniqueGeneMap,
-        notFound: filtered.notFound,
+        genes,
+        notFound,
         resultLocation,
         jobId,
       },
