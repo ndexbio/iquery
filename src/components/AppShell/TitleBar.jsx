@@ -96,6 +96,8 @@ class TitleBar extends React.Component {
     const { classes, ...others } = this.props;
     const open = this.props.uiState.isSettingsOpen;
 
+    const {searchResults} = this.props.search
+
     return (
       <AppBar
         position='fixed'
@@ -120,11 +122,11 @@ class TitleBar extends React.Component {
               </div>
             </Tooltip>
 
-            {this.props.search.results === null ? (
+            {searchResults === null ? (
               <div />
             ) : (
               <div className={classes.textBox}>
-                <GeneTextBox {...others} />
+                <GeneTextBox searchResults={searchResults} {...others} />
               </div>
             )}
 
