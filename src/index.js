@@ -92,14 +92,14 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <Router basename={process.env.PUBLIC_URL}>
       <Switch>
-        <Route path="/:jobid/:sourceId/:networkId" component={App} />
-        <Route path="/:jobid/:sourceId" component={App} />
-        <Route path="/:jobid" component={App} />
         <Route
           exact
           path={['/', '/iquery', '/iquery/', '/iquery//', '/iquery/iquery']}
           component={Top}
         />
+        <Route path="/:jobid/:sourceId/:networkId" component={App} />
+        <Route path="/:jobid/:sourceId" component={App} />
+        <Route path="/:jobid" component={App} />
       </Switch>
     </Router>
   </Provider>
