@@ -11,7 +11,7 @@ import { camelCaseToTitleCase } from './camel-case-util';
 import { stripScripts } from './strip-scripts-util';
 import { findAttributes } from './attribute-util';
 
-import Linkify from 'linkifyjs/react';
+import Linkify from 'linkify-react';
 import parse from 'html-react-parser';
 import ExpandPanel from './ExpandPanel';
 

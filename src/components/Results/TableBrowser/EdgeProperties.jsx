@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Linkify from 'linkifyjs/react'
+import Linkify from 'linkify-react'
 import parse from 'html-react-parser'
 import { isEqual } from 'lodash'
 
