@@ -149,7 +149,10 @@ const getSortedList = (sourceList: any[]) => {
   // Re-order the list based on the preset source list (this fixes the order of the tabs)
   SOURCE_IDS.forEach((sourceId: string) => {
     const entry = sourceMap[sourceId]
-    orderedList.push(entry)
+
+    if(entry != null){
+      orderedList.push(entry);
+    }
   })
 
   return orderedList
