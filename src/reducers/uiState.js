@@ -16,7 +16,7 @@ import {
   setAnnotations,
 } from '../actions/uiState';
 
-import { HIGHLIGHT_GENES, DEFAULT_SORT, HIDE_SEARCHBAR } from '../api/config';
+import { HIGHLIGHT_GENES, DEFAULT_SORT, HIDE_SEARCHBAR, HIDE_VIEW_SOURCE_IN_NDEX_BUTTON, HIDE_SAVE_TO_NDEX_BUTTON } from '../api/config';
 
 const DEF_STATE = {
   isSettingsOpen: false,
@@ -32,7 +32,9 @@ const DEF_STATE = {
   layouts: [],
   fit: true,
   annotations: false,
-  hideSearchBar: HIDE_SEARCHBAR
+  hideSearchBar: HIDE_SEARCHBAR,
+  hideViewSourceInNdexButton: HIDE_VIEW_SOURCE_IN_NDEX_BUTTON,
+  hideSaveToNdexButton: HIDE_SAVE_TO_NDEX_BUTTON
 };
 
 const uiState = handleActions(
