@@ -14,8 +14,10 @@
     "cytoscape-cx2js": "^0.6.6",
     "cytoscape-panzoom": "^2.5.3",
     "html-react-parser": "^1.4.5",
+    "husky": "^7.0.4",
     "linkify-react": "^3.0.4",
     "linkifyjs": "^3.0.5",
+    "lint-staged": "^12.1.7",
     "query-string": "^7.1.0",
     "react": "^17.0.2",
     "react-cytoscapejs": "^1.2.1",
@@ -59,6 +61,34 @@
         "statements": 99
       }
     }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "prettier"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts?(x)"
+        ],
+        "rules": {
+          "@typescript-eslint/no-explicit-any": "off",
+          "@typescript-eslint/explicit-function-return-type": "off"
+        }
+      }
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
   },
   "scripts": {
     "start": "react-scripts start",
