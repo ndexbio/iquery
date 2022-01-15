@@ -54,9 +54,9 @@ if (window.ndexSettings === undefined){
       HIGHLIGHT_GENES = window.ndexSettings.iQuery.highlightGenes;
       DEFAULT_SORT = window.ndexSettings.iQuery.defaultSort;
       HIDE_SEARCHBAR = window.ndexSettings.iQuery.hideSearchBar;
-      VALIDATE_GENES_WITH_MYGENE = window.ndexSettings.validateGenesWithMyGene;
-      HIDE_VIEW_SOURCE_IN_NDEX_BUTTON = window.ndexSettings.hideViewSourceInNdexButton;
-      HIDE_SAVE_TO_NDEX_BUTTON = window.ndexSettings.hideSaveToNdexButton;
+      VALIDATE_GENES_WITH_MYGENE = window.ndexSettings.iQuery.validateGenesWithMyGene;
+      HIDE_VIEW_SOURCE_IN_NDEX_BUTTON = window.ndexSettings.iQuery.hideViewSourceInNdexButton;
+      HIDE_SAVE_TO_NDEX_BUTTON = window.ndexSettings.iQuery.hideSaveToNdexButton;
   }
 }
 
