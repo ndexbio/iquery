@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 
-import { loadCSS } from 'fg-loadcss/src/loadCSS';
-import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
-import classNames from 'classnames';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import ClipboardIcon from '@material-ui/icons/AssignmentOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
@@ -58,13 +56,13 @@ const GeneTextBox = (props) => {
 
   const menuOpen = Boolean(state.anchorEl);
 
-  useEffect(() => {
-    loadCSS(
-      'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
-      document.querySelector('#insertion-point-jss')
-    );
-    return () => {};
-  }, []);
+  // useEffect(() => {
+  //   loadCSS(
+  //     'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+  //     document.querySelector('#insertion-point-jss')
+  //   );
+  //   return () => {};
+  // }, []);
 
   const handleCopy = () => {
     // This is a hack...
@@ -189,7 +187,7 @@ const GeneTextBox = (props) => {
             aria-label='Copy'
             onClick={handleCopy}
           >
-            <Icon className={classNames(classes.icon, 'far fa-clipboard')} />
+            <ClipboardIcon />
           </IconButton>
         </Tooltip>
         <Divider className={classes.divider} />

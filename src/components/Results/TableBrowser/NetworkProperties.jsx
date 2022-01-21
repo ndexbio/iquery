@@ -11,7 +11,7 @@ import { camelCaseToTitleCase } from './camel-case-util';
 import { stripScripts } from './strip-scripts-util';
 import { findAttributes } from './attribute-util';
 
-import Linkify from 'linkifyjs/react';
+import Linkify from 'linkify-react';
 import parse from 'html-react-parser';
 import ExpandPanel from './ExpandPanel';
 
@@ -192,7 +192,7 @@ const NetworkProperties = (props) => {
     primaryString = formatPrimary(primaryString);
     if (primaryString !== '') {
       rightDisplay.push(
-        <ListItem key={index++} className={classes.noPadding}>
+        <ListItem key={`net-${index++}`} className={classes.noPadding}>
           <ListItemText
             primary={
               <React.Fragment>
@@ -224,7 +224,7 @@ const NetworkProperties = (props) => {
       secondaryString = element;
       currentEntry.displayed = true;
       leftDisplay.push(
-        <ListItem key={index++} className={classes.noPadding}>
+        <ListItem key={`net-${index++}`} className={classes.noPadding}>
           <ListItemText
             primary={
               <React.Fragment>
@@ -248,38 +248,6 @@ const NetworkProperties = (props) => {
     }
   });
 
-  //Context
-  /*
-      if (element === '@context') {
-        primaryString = formatContext(currentEntry.content)
-        currentEntry.displayed = true
-        const summary = (
-          <Typography component="span" variant="body2">
-            Click to view the namespaces associated with this network
-          </Typography>
-        )
-        const details = primaryString
-        leftDisplay.push(
-          <React.Fragment key={index}>
-            <div className={classes.padding}>
-              <Typography
-                component="span"
-                variant="caption"
-                color="textSecondary"
-              >
-                @context
-              </Typography>
-            </div>
-            <ExpandPanel
-              summary={summary}
-              details={details}
-              defaultExpanded={false}
-              keyId={index++}
-              divider={false}
-            />
-          </React.Fragment>
-        )
-        */
   primaryString = formatContext(context);
   const summary = (
     <Typography component='span' variant='body2'>
@@ -288,7 +256,7 @@ const NetworkProperties = (props) => {
   );
   const details = primaryString;
   leftDisplay.push(
-    <React.Fragment key={index}>
+    <React.Fragment key={`${primaryString}${index}`}>
       <div className={classes.padding}>
         <Typography component='span' variant='caption' color='textSecondary'>
           @context
@@ -310,7 +278,7 @@ const NetworkProperties = (props) => {
       secondaryString = entry.title;
       entry.displayed = true;
       leftDisplay.push(
-        <ListItem key={index++} className={classes.noPadding}>
+        <ListItem key={'net-' + index++} className={classes.noPadding}>
           <ListItemText
             primary={
               <React.Fragment>

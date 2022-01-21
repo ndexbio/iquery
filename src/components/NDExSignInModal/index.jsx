@@ -23,7 +23,6 @@ import NDExSave from '../NDExSave'
 
 import './style.css'
 import { GOOGLE_CLIENT_ID } from '../../api/config'
-import { mdiWindowClose } from '@mdi/js'
 
 const PaperComponent = props => {
   return (
