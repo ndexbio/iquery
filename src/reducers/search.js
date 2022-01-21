@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions';
+import { VALIDATE_GENES_WITH_MYGENE } from '../api/config';
 import {
   setQuery,
   clearQuery,
@@ -26,6 +27,7 @@ const EMPTY_STATE = {
   selectedGenes: [],
   resultList: [],
   actualResults: [],
+  validateGenesWithMyGene: VALIDATE_GENES_WITH_MYGENE
 };
 
 export const HGNC_REGEX = RegExp(

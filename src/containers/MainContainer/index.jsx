@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router-dom'
 
 import * as searchActions from '../../actions/search'
 import * as uiStateActions from '../../actions/uiState'

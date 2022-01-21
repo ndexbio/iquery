@@ -6,6 +6,8 @@ export const CYREST_BASE_URL = 'http://127.0.0.1';
 var HIGHLIGHT_GENES = false;
 var MAX_NETWORK_SIZE = 5000;
 var MYGENE_BASE_URL = 'https://mygene.info/v3/query';
+var VALIDATE_GENES_WITH_MYGENE = true;
+
 var GENE_CARDS_URL = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene=';
 var HELP_URL =
 'https://github.com/cytoscape/search-portal/blob/master/README.md';
@@ -27,7 +29,8 @@ var GENESET_EXAMPLES = [
 ];
 var DEFAULT_SORT = 'Similarity';
 var HIDE_SEARCHBAR = false;
-
+var HIDE_VIEW_SOURCE_IN_NDEX_BUTTON = false;
+var HIDE_SAVE_TO_NDEX_BUTTON = false;
 if (window.ndexSettings === undefined){
   console.log('ndexSettings is not defined. Using dummy config');
 } else 
@@ -51,6 +54,9 @@ if (window.ndexSettings === undefined){
       HIGHLIGHT_GENES = window.ndexSettings.iQuery.highlightGenes;
       DEFAULT_SORT = window.ndexSettings.iQuery.defaultSort;
       HIDE_SEARCHBAR = window.ndexSettings.iQuery.hideSearchBar;
+      VALIDATE_GENES_WITH_MYGENE = window.ndexSettings.iQuery.validateGenesWithMyGene;
+      HIDE_VIEW_SOURCE_IN_NDEX_BUTTON = window.ndexSettings.iQuery.hideViewSourceInNdexButton;
+      HIDE_SAVE_TO_NDEX_BUTTON = window.ndexSettings.iQuery.hideSaveToNdexButton;
   }
 }
 
@@ -66,4 +72,4 @@ if (COPYRIGHT !== undefined && COPYRIGHT !== null){
 export { MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, CYTOSCAPE_URL,
          GOOGLE_CLIENT_ID, BASE_URL, SERVICE_SERVER_URL, DEPLOY_ENVIRON, APP_VERSION,
         GENESET_EXAMPLES, UCSD_URL, COPYRIGHT, MAX_NETWORK_SIZE, HIGHLIGHT_GENES, 
-        DEFAULT_SORT, HIDE_SEARCHBAR };
+        DEFAULT_SORT, HIDE_SEARCHBAR, VALIDATE_GENES_WITH_MYGENE, HIDE_VIEW_SOURCE_IN_NDEX_BUTTON, HIDE_SAVE_TO_NDEX_BUTTON };

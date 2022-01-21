@@ -50,7 +50,7 @@ const GeneTextBox = (props) => {
 
   const [state, setState] = useState({
     anchorEl: null,
-    query: props.search.queryGenes,
+    query: props.searchResults.query.join(' '),
   });
   const [open, setOpen] = useState(false);
 
@@ -95,7 +95,7 @@ const GeneTextBox = (props) => {
     props.searchActions.clearAll();
     props.history.push('/');
     props.searchActions.setQuery(genes);
-    props.searchActions.searchStarted({ geneList, sourceNames });
+    props.searchActions.searchStarted({ geneList, sourceNames, validateGenesWithMyGene: props.search.validateGenesWithMyGene });
   };
 
   const handleChange = (name) => (event) => {

@@ -223,9 +223,9 @@ const NetworkToolbar = (props) => {
           <NDExSignInModal {...other}>
             <NDExSave {...other} />
           </NDExSignInModal>
-          <OpenOriginalNetworkButton {...other} />
+          { props.uiState.hideViewSourceInNdexButton ? null : <OpenOriginalNetworkButton {...other} /> } 
           <OpenInCytoscapeButton {...other} />
-          <SaveToNDExButton {...other} />
+          { props.uiState.hideSaveToNdexButton ? null :  <SaveToNDExButton {...other} />}
         </div>
         <div>
           {props.uiState.selectedSource === 'pathwayfigures' ? (

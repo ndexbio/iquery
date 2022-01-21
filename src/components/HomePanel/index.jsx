@@ -8,10 +8,9 @@ import LoadingPanel from '../LoadingPanel'
 
 const UUID_VALIDATION = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
-const HomePanel = props => {
+const HomePanel = (props) => {
+  const { search, location } = props
 
-  const {search, location} = props
-  
   const historyListener = (location, action) => {
     if (action === 'POP' && location.pathname !== '/') {
       console.log('Back button::', location, action)
@@ -26,10 +25,26 @@ const HomePanel = props => {
 
     if (pathname !== '/' && UUID_VALIDATION.test(pathname)) {
       const params = pathname.split('/')
+
+      // Check the path has valid UUID
+      let hasUUID = false
+      for (let i = 0; i < params.length; i++) {
+        const p = params[i]
+        hasUUID = UUID_VALIDATION.test(p)
+        if (hasUUID) {
+          break
+        }
+      }
+
+      if (!hasUUID) {
+        // No need to fetch existing result
+        return
+      }
+
       let jobIdIndex = 0
 
       if (params.length > 2) {
-        for(let i = 1; i < params.length; i++) {
+        for (let i = 1; i < params.length; i++) {
           if (UUID_VALIDATION.test(params[i])) {
             jobIdIndex = i
             break
@@ -72,7 +87,7 @@ const HomePanel = props => {
       </AppShell>
     )
   }
-  
+
   const { isFetching, searchResults } = search
 
   // Still searching and no result is available
