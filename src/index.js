@@ -10,6 +10,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import './index.css'
 import { App, Top } from './App'
+import ErrorBoundary from './components/ErrorBoundary';
 import * as serviceWorker from './serviceWorker'
 
 // Import root reducers
@@ -90,18 +91,20 @@ sagaMiddleware.run(ndexSaveSaga)
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <Router basename={process.env.PUBLIC_URL}>
-      <Switch>
-        <Route
-          exact
-          path={['/', '/iquery', '/iquery/', '/iquery//', '/iquery/iquery']}
-          component={Top}
-        />
-        <Route path="/:jobid/:sourceId/:networkId" component={App} />
-        <Route path="/:jobid/:sourceId" component={App} />
-        <Route path="/:jobid" component={App} />
-      </Switch>
-    </Router>
+    <ErrorBoundary message={'Sorry, there was an error loading this page'}>
+      <Router basename={process.env.PUBLIC_URL}>
+        <Switch>
+          <Route
+            exact
+            path={['/', '/iquery', '/iquery/', '/iquery//', '/iquery/iquery']}
+            component={Top}
+          />
+          <Route path="/:jobid/:sourceId/:networkId" component={App} />
+          <Route path="/:jobid/:sourceId" component={App} />
+          <Route path="/:jobid" component={App} />
+        </Switch>
+      </Router>
+    </ErrorBoundary>
   </Provider>
 )
 

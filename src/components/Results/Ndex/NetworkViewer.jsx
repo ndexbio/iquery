@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.css';
 import CytoscapeViewer from '../CytoscapeViewer';
+import ErrorBoundary from '../../ErrorBoundary';
 import LoadingPanel from '../../LoadingPanel';
 import Warning from '../CytoscapeViewer/Warning';
 import PathwayFigureViewer from './PathwayFigureViewer';
@@ -30,14 +31,18 @@ const NetworkViewer = (props) => {
         {props.uiState.pathwayFigure ? (
           <PathwayFigureViewer {...props} />
         ) : (
-          <CytoscapeViewer resized={props.resized} {...props} />
+          <ErrorBoundary message={'Sorry, there was an error loading this network.'}>
+            <CytoscapeViewer resized={props.resized} {...props} />
+          </ErrorBoundary>
         )}
       </div>
     );
   } else {
     return (
       <div className='network-view'>
-        <CytoscapeViewer resized={props.resized} {...props} />
+          <ErrorBoundary message={'Sorry, there was an error loading this network.'}>
+          <CytoscapeViewer resized={props.resized} {...props} />
+        </ErrorBoundary>
       </div>
     );
   }

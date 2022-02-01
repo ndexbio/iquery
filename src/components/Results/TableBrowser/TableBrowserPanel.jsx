@@ -9,6 +9,8 @@ import NetworkProperties from './NetworkProperties';
 import MemoNodeProperties from './NodeProperties';
 import MemoEdgeProperties from './EdgeProperties';
 
+import ErrorBoundary from '../../ErrorBoundary';
+
 import { mapKeys } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
@@ -199,7 +201,9 @@ const TableBrowserPanel = (props) => {
           backgroundcolor={backgroundcolor}
         />
       </Tabs>
-      <TabContent value={value} {...props} />
+      <ErrorBoundary message={'There was an error loading tab content.'}>
+        <TabContent value={value} {...props} />
+      </ErrorBoundary>
     </div>
   );
 };
