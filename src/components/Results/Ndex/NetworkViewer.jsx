@@ -40,7 +40,7 @@ const NetworkViewer = (props) => {
   } else {
     return (
       <div className='network-view'>
-          <ErrorBoundary message={'Sorry, there was an error loading this network.'}>
+        <ErrorBoundary message={'Sorry, there was an error loading this network.'}>
           <CytoscapeViewer resized={props.resized} {...props} />
         </ErrorBoundary>
       </div>

@@ -180,31 +180,31 @@ const TableBrowserPanel = (props) => {
 
   //Get current tab selection
   return (
-    <div className='table-browser-panel'>
-      <Tabs value={value} onChange={handleChange} className={classes.root}>
-        <HoverTab
-          className={classes.root}
-          key={'network-tab'}
-          label={'Network'}
-          backgroundcolor={backgroundcolor}
-        />
-        <HoverTab
-          className={classes.root}
-          key={'nodes-tab'}
-          label={'Nodes'}
-          backgroundcolor={backgroundcolor}
-        />
-        <HoverTab
-          className={classes.root}
-          key={'edges-tab'}
-          label={'Edges'}
-          backgroundcolor={backgroundcolor}
-        />
-      </Tabs>
-      <ErrorBoundary message={'There was an error loading tab content.'}>
-        <TabContent value={value} {...props} />
-      </ErrorBoundary>
-    </div>
+    <ErrorBoundary message={'There was an error loading tab content.'}>
+      <div className='table-browser-panel'>
+        <Tabs value={value} onChange={handleChange} className={classes.root}>
+          <HoverTab
+            className={classes.root}
+            key={'network-tab'}
+            label={'Network'}
+            backgroundcolor={backgroundcolor}
+          />
+          <HoverTab
+            className={classes.root}
+            key={'nodes-tab'}
+            label={'Nodes'}
+            backgroundcolor={backgroundcolor}
+          />
+          <HoverTab
+            className={classes.root}
+            key={'edges-tab'}
+            label={'Edges'}
+            backgroundcolor={backgroundcolor}
+          />
+        </Tabs>
+          <TabContent value={value} {...props} />
+      </div>
+    </ErrorBoundary>
   );
 };
 
