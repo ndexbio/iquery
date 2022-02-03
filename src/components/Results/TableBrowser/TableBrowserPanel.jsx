@@ -180,7 +180,7 @@ const TableBrowserPanel = (props) => {
 
   //Get current tab selection
   return (
-    <ErrorBoundary message={'There was an error loading tab content.'}>
+    <ErrorBoundary message={'Sorry, there was an error loading tab content.'}>
       <div className='table-browser-panel'>
         <Tabs value={value} onChange={handleChange} className={classes.root}>
           <HoverTab
