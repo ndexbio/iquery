@@ -114,7 +114,7 @@ class TitleBar extends React.Component {
             >
               <div>
                 <Button style={titleStyle} onClick={this.handleHomeButton}>
-                  <HomeIcon fontSize='default' className={classes.homeLogo} />
+                  <HomeIcon fontSize='medium' className={classes.homeLogo} />
                   <Typography variant='h6' color='inherit' noWrap={true}>
                     NDEx Integrated Query
                   </Typography>

@@ -7,7 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 
 const formControl = {
   height: '3em',
@@ -25,7 +25,7 @@ const styles = theme => ({
       borderRadius: 4
     },
     '&:hover': {
-      backgroundColor: fade('rgb(65, 84, 178)', 0.08)
+      backgroundColor: alpha('rgb(65, 84, 178)', 0.08)
     }
   },
   root: {
