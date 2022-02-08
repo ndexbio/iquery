@@ -3,6 +3,8 @@ import SearchTextBox from './SearchTextBox'
 import Footer from './Footer'
 import LoadingPanel from '../LoadingPanel'
 import Typography from '@material-ui/core/Typography'
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 import ndex from '../../assets/images/ndex-logo.svg'
 import queryString from 'query-string'
 import './style.css'
@@ -34,10 +36,23 @@ const StartPanel = props => {
     )
   }
 
+  const errorMessage = props.search.searchHasErrored ? (
+    <Snackbar 
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      open={true}
+      autoHideDuration={4000} 
+    >
+      <Alert elevation={6} variant="filled" severity="error">
+        Unable to query NDEx.  Please try again later.
+      </Alert>
+    </Snackbar>
+  ) : null;
+
   return (
     <div className="start-container">
       <div className={'start-title'}>
         <div className={'description-panel'}>
+          {errorMessage}
           <Typography align={'center'} variant={'subtitle2'}>
             One search finds pathways, queries protein interaction networks, 
             and discovers disease, drug, and tissue associations. Powered by

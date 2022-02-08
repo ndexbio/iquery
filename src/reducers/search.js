@@ -24,6 +24,8 @@ const EMPTY_STATE = {
   results: null,
   searchStatus: null,
   searchResults: null,
+  myGeneResponseMissing: false,
+  searchHasErrored: false,
   selectedGenes: [],
   resultList: [],
   actualResults: [],
@@ -55,10 +57,10 @@ const search = handleActions(
       };
     },
     [searchSucceeded]: (state, payload) => {
-      return { ...state, results: payload.payload, isSearching: false };
+      return { ...state, myGeneResponseMissing: payload.payload.myGeneResponseMissing, results: payload.payload, isSearching: false };
     },
     [searchFailed]: (state, payload) => {
-      return { ...state, isSearching: false };
+      return { ...state, searchHasErrored: true, isSearching: false };
     },
     [setSelectedGenes]: (state, payload) => {
       return { ...state, selectedGenes: [payload.payload] };
