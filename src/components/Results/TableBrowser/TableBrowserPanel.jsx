@@ -9,6 +9,8 @@ import NetworkProperties from './NetworkProperties';
 import MemoNodeProperties from './NodeProperties';
 import MemoEdgeProperties from './EdgeProperties';
 
+import ErrorBoundary from '../../ErrorBoundary';
+
 import { mapKeys } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
@@ -178,29 +180,31 @@ const TableBrowserPanel = (props) => {
 
   //Get current tab selection
   return (
-    <div className='table-browser-panel'>
-      <Tabs value={value} onChange={handleChange} className={classes.root}>
-        <HoverTab
-          className={classes.root}
-          key={'network-tab'}
-          label={'Network'}
-          backgroundcolor={backgroundcolor}
-        />
-        <HoverTab
-          className={classes.root}
-          key={'nodes-tab'}
-          label={'Nodes'}
-          backgroundcolor={backgroundcolor}
-        />
-        <HoverTab
-          className={classes.root}
-          key={'edges-tab'}
-          label={'Edges'}
-          backgroundcolor={backgroundcolor}
-        />
-      </Tabs>
-      <TabContent value={value} {...props} />
-    </div>
+    <ErrorBoundary message={'Sorry, there was an error loading tab content.'}>
+      <div className='table-browser-panel'>
+        <Tabs value={value} onChange={handleChange} className={classes.root}>
+          <HoverTab
+            className={classes.root}
+            key={'network-tab'}
+            label={'Network'}
+            backgroundcolor={backgroundcolor}
+          />
+          <HoverTab
+            className={classes.root}
+            key={'nodes-tab'}
+            label={'Nodes'}
+            backgroundcolor={backgroundcolor}
+          />
+          <HoverTab
+            className={classes.root}
+            key={'edges-tab'}
+            label={'Edges'}
+            backgroundcolor={backgroundcolor}
+          />
+        </Tabs>
+          <TabContent value={value} {...props} />
+      </div>
+    </ErrorBoundary>
   );
 };
 
