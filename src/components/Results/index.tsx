@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import Tabs from '@material-ui/core/Tabs'
-import Snackbar from '@material-ui/core/Snackbar'
-import Alert from '@material-ui/lab/Alert'
 import HoverTab from './HoverTab'
 import Empty from './Empty'
 import TabContent from './TabContent'
@@ -104,22 +102,6 @@ const Results = (props) => {
     return <Empty />
   }
 
-  // check if mygene response is missing
-  const { myGeneResponseMissing } = search
-
-  const errorMessage = myGeneResponseMissing ? (
-    <Snackbar 
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      open={true}
-      autoHideDuration={4000} 
-    >
-      <Alert elevation={6} variant="filled" severity="warning">
-        Gene validation failed.  Some gene information may be unavailable.
-      </Alert>
-    </Snackbar>
-  ) : null
-
-
   // Get current tab selection
   const { searchResults } = search
   let index: number = findIndex(selectedSource, sourceList)
@@ -134,7 +116,6 @@ const Results = (props) => {
   return (
     <div className={hideSearchBar ? 'headerless-results-container' : 'results-container'}>
       <div className="results-wrapper">
-      {errorMessage}
         <Tabs value={index} onChange={handleChange} className={classes.tabs}>
           {sourceList.map((entry) => {
             return (
