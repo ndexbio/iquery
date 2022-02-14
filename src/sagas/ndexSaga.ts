@@ -35,10 +35,11 @@ const API_CALL_INTERVAL = 500;
  * @param action
  * @returns {IterableIterator<*>}
  */
-function* watchSearch(action) {
+export function* watchSearch(action) {
   const geneList: string[] = action.payload.geneList;
   const geneListString: string = geneList.join();
   const validateGenesWithMyGene: boolean = action.payload.validateGenesWithMyGene;
+  const serviceTimeout: number = action.payload.serviceTimeout || 5000;
   let sourceNames: string[] = action.payload.sourceNames;
 
 
@@ -59,7 +60,7 @@ function* watchSearch(action) {
     if (validateGenesWithMyGene) {
       const {geneRes, timeout} = yield race({
         geneRes: call(myGeneApi.searchGenes, geneListString),
-        timeout: delay(5000)
+        timeout: delay(serviceTimeout)
       })
     
       // if the mygene service responds in time, get the results and set them
@@ -80,7 +81,7 @@ function* watchSearch(action) {
   try {
     const {searchRes, timeout} = yield race({
       genesearchResRes: call(postQuery, geneList, sourceNames),
-      timeout: delay(5000)
+      timeout: delay(serviceTimeout)
     })
   
     // if the mygene service responds in time, get the results and set them
