@@ -17,6 +17,7 @@ import { stripScripts } from './strip-scripts-util.js'
 
 import { MAX_NETWORK_SIZE } from '../../../api/config'
 
+
 let index = 0
 
 const useStyles = makeStyles(theme => ({
@@ -311,6 +312,7 @@ const EdgeProperties = props => {
         switch (list) {
           case entityProperties:
             secondaryString = 'Entity Properties'
+            // console.log(secondaryString, primaryString.props)
             displayCol1.push(
               <ListItem key={Math.random()} className={classes.noPadding}>
                 <ListItemText
@@ -370,6 +372,8 @@ const EdgeProperties = props => {
         entry.displayed = true
       }
     })
+
+    // this following logic seems to handle 'Additional properties' in the edge properties panel
     primaryString = formatPrimary(primaryString)
     secondaryString = 'Additional properties'
 
@@ -520,7 +524,7 @@ const formatPrimary = entry => {
   if (modifiedText.endsWith('<br>')) {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
-  modifiedText = parse(camelCaseToTitleCase(modifiedText))
+  modifiedText = parse(modifiedText)
   return <Linkify key={'link:' + index++}>{modifiedText}</Linkify>
 }
 
