@@ -39,7 +39,7 @@ export function* watchSearch(action) {
   const geneList: string[] = action.payload.geneList;
   const geneListString: string = geneList.join();
   const validateGenesWithMyGene: boolean = action.payload.validateGenesWithMyGene;
-  const serviceTimeout: number = action.payload.serviceTimeout || 5000;
+  const serviceTimeout: number = action.payload.serviceTimeout || 10000;
   let sourceNames: string[] = action.payload.sourceNames;
 
 
@@ -80,7 +80,7 @@ export function* watchSearch(action) {
   // 3. send genelist query to the ndex service
   try {
     const {searchRes, timeout} = yield race({
-      genesearchResRes: call(postQuery, geneList, sourceNames),
+      searchRes: call(postQuery, geneList, sourceNames),
       timeout: delay(serviceTimeout)
     })
   
