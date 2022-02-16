@@ -105,7 +105,6 @@ const HomePanel = (props) => {
     <AppShell {...props}>
       <div className="container">
         <Results {...props} />
-        <InputPanel {...props} />
       </div>
     </AppShell>
   )

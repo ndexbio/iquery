@@ -6,6 +6,9 @@ import NetworkViewer from './NetworkViewer';
 import MemoTableBrowser from '../TableBrowser';
 import NetworkToolbar from './NetworkToolbar';
 
+import InputPanel from '../../InputPanel';
+
+
 const DEFAULT_RATIO = [50, 50];
 
 /**
@@ -37,7 +40,10 @@ const NetworkView = (props) => {
             : null
         }
       >
-        <NetworkViewer resized={resized} {...props} />
+        <div className={'network-viewer-combo'}>
+          <NetworkViewer resized={resized} {...props} />
+          <InputPanel {...props} />
+        </div>
         <MemoTableBrowser {...props} />
       </Split>
     </div>

@@ -125,18 +125,6 @@ const getChip = (value, hitSets) => {
   if (hitSets.has(value.toUpperCase())) {
     return (
       <Chip
-        avatar={
-          <Avatar
-            style={{
-              height: '32px',
-              width: '32px',
-              position: 'relative',
-              left: '-4px',
-            }}
-          >
-            <CheckIcon style={{ height: '18px' }} />
-          </Avatar>
-        }
         label={value}
         variant="outlined"
         color={'secondary'}
@@ -149,18 +137,6 @@ const getChip = (value, hitSets) => {
   } else {
     return (
       <Chip
-        avatar={
-          <Avatar
-            style={{
-              height: '32px',
-              width: '32px',
-              position: 'relative',
-              left: '-4px',
-            }}
-          >
-            -
-          </Avatar>
-        }
         label={value}
         variant="outlined"
         color={'default'}
