@@ -10,7 +10,7 @@ import GeneList from '../GeneList'
  * @returns {*}
  * @constructor
  */
-const InputPanel = props => {
+const QueryGeneList = props => {
   const { network, uiState, search } = props
   const { hideSearchBar } = uiState
 
@@ -88,4 +88,4 @@ const InputPanel = props => {
   )
 }
 
-export default InputPanel
+export default QueryGeneList

@@ -6,7 +6,7 @@ import NetworkViewer from './NetworkViewer';
 import MemoTableBrowser from '../TableBrowser';
 import NetworkToolbar from './NetworkToolbar';
 
-import InputPanel from '../../InputPanel';
+import QueryGeneList from '../../QueryGeneList';
 
 
 const DEFAULT_RATIO = [50, 50];
@@ -42,7 +42,7 @@ const NetworkView = (props) => {
       >
         <div className={'network-viewer-combo'}>
           <NetworkViewer resized={resized} {...props} />
-          <InputPanel {...props} />
+          <QueryGeneList {...props} />
         </div>
         <MemoTableBrowser {...props} />
       </Split>

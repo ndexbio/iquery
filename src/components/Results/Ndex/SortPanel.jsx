@@ -41,7 +41,7 @@ const formStyle = {
 }
 
 const divStyle = {
-  paddingLeft: '16px',
+  // paddingLeft: '16px',
   borderBottom: '1px solid rgba(239, 239, 239, 1)',
   display: 'flex',
   justifyContent: 'space-around',

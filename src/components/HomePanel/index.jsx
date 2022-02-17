@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import './style.css'
 
-import InputPanel from '../InputPanel'
+import QueryGeneList from '../QueryGeneList'
 import Results from '../Results'
 import AppShell from '../AppShell'
 import LoadingPanel from '../LoadingPanel'
