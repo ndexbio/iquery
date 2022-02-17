@@ -41,6 +41,7 @@
     "@types/node": "^17.0.8",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "dotenv-cli": "^5.0.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.5.1",
     "react-scripts": "^5.0.0",
@@ -95,6 +96,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:dev": "dotenv -e .env.development react-scripts build",
     "test": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject",
     "predeploy": "yarn build",
