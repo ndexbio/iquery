@@ -13,18 +13,18 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 
 const infoStyle = {
-  position: 'relative',
-  left: '0.5em',
-  top: '6px',
-  height: '0.5em',
-  width: '0.5em'
+  // position: 'relative',
+  // left: '0.5em',
+  // top: '6px',
+  // height: '0.5em',
+  // width: '0.5em'
 }
 
 const iconStyle = {
   height: '0.7em',
   width: '0.7em',
-  position: 'relative',
-  bottom: '2px',
+  // position: 'relative',
+  // bottom: '2px',
   color: '#3576BE'
 }
 

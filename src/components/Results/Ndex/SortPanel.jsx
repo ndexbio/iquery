@@ -8,6 +8,10 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputBase from '@material-ui/core/InputBase'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import Radio from '@material-ui/core/Radio'
+
 
 const BootstrapInput = withStyles(theme => ({
   root: {
@@ -39,22 +43,26 @@ const formStyle = {
 const divStyle = {
   paddingLeft: '16px',
   borderBottom: '1px solid rgba(239, 239, 239, 1)',
-  display: 'inline-block',
+  display: 'flex',
   width: '100%'
 }
 
 const textStyle = {
-  position: 'relative',
-  top: '8px'
+  // position: 'relative',
+  // top: '8px'
 }
 
 const selectStyle = {
   color: 'secondary'
 }
 
+const radioStyle = { 
+  marginRight: '20px'
+}
+
 const SortPanel = props => {
   const [sortBy, setSortBy] = useState(props.uiState.sortBy)
-  const menuItems = props.uiState.sortOptions
+  const sortOptions = props.uiState.sortOptions
 
   const handleChange = event => {
     props.uiStateActions.setSortBy(event.target.value)
@@ -65,15 +73,27 @@ const SortPanel = props => {
     return (
       <React.Fragment>
         <div style={divStyle}>
-          <Typography
-            variant="body2"
-            display="inline"
-            color="textSecondary"
-            style={textStyle}
-          >
-            Sort by
-          </Typography>
-          <FormControl style={formStyle}>
+          <div>
+            <Typography
+              variant="body2"
+              display="inline"
+              color="textSecondary"
+              style={textStyle}
+            >
+              Sort by
+            </Typography>
+            <InfoModal />
+          </div>
+          {sortOptions.map(option => (
+            <FormControlLabel
+                style={radioStyle}
+                value="top"
+                control={<Radio checked={sortBy === option} value={option} onChange={handleChange}></Radio>}
+                label={option}
+                labelPlacement="right"
+            />
+          ))}
+          {/* <FormControl style={formStyle}>
             <Select
               value={sortBy}
               onChange={handleChange}
@@ -82,7 +102,7 @@ const SortPanel = props => {
               style={selectStyle}
               input={<BootstrapInput name="sort" id="sort-customized-select" />}
             >
-              {menuItems.map(item => (
+              {sortOptions.map(item => (
                 <MenuItem value={item} key={item}>
                   <Typography variant="body2" color="textSecondary">
                     {item}
@@ -90,8 +110,7 @@ const SortPanel = props => {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
-          <InfoModal />
+          </FormControl> */}
         </div>
       </React.Fragment>
     )

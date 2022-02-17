@@ -74,9 +74,9 @@ const InputPanel = props => {
 
 
   return (
-    <div className={hideSearchBar ? 'headerless-input-container' : 'input-container'}>
-      <div className="input-wrapper">
-        <div className={'gene-list-title'}>
+    <div className={'query-gene-list-container'}>
+      <div className={'query-gene-list-wrapper'}>
+        <div className={'query-gene-list-title'}>
           Query Genes{' '}
           {
             validateGenesWithMyGene && results && results.genes.size ? `(${network.hitGenes.length} / ${results.genes.size})` : `(${network.hitGenes.length} / ${searchResults.query.length})`

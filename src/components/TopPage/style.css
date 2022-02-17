@@ -96,13 +96,13 @@
 
 }
 
-.input-container {
+/* .input-container {
   background-color: #EFEFEF;
 }
 
 .headerless-input-container {
   background-color: #EFEFEF;
-}
+} */
 
 .source-wrapper {
   display: flex;
