@@ -44,6 +44,7 @@ const divStyle = {
   paddingLeft: '16px',
   borderBottom: '1px solid rgba(239, 239, 239, 1)',
   display: 'flex',
+  justifyContent: 'space-around',
   width: '100%'
 }
 
@@ -84,15 +85,17 @@ const SortPanel = props => {
             </Typography>
             <InfoModal />
           </div>
-          {sortOptions.map(option => (
-            <FormControlLabel
-                style={radioStyle}
-                value="top"
-                control={<Radio checked={sortBy === option} value={option} onChange={handleChange}></Radio>}
-                label={option}
-                labelPlacement="right"
-            />
-          ))}
+          <div>
+            {sortOptions.map(option => (
+              <FormControlLabel
+                  style={radioStyle}
+                  value="top"
+                  control={<Radio checked={sortBy === option} value={option} onChange={handleChange}></Radio>}
+                  label={option}
+                  labelPlacement="right"
+              />
+            ))}
+          </div>
           {/* <FormControl style={formStyle}>
             <Select
               value={sortBy}
