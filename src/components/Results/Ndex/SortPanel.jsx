@@ -41,10 +41,11 @@ const formStyle = {
 }
 
 const divStyle = {
-  // paddingLeft: '16px',
+  paddingLeft: '16px',
   borderBottom: '1px solid rgba(239, 239, 239, 1)',
   display: 'flex',
-  justifyContent: 'space-around',
+  minHeight: '56px',
+  height: 'auto',
   width: '100%'
 }
 
@@ -61,6 +62,12 @@ const radioStyle = {
   marginRight: '20px'
 }
 
+const radioButtonsDiv = {
+}
+
+const sortInfoStyle = {
+  flexBasis: '100px',
+}
 const SortPanel = props => {
   const [sortBy, setSortBy] = useState(props.uiState.sortBy)
   const sortOptions = props.uiState.sortOptions
@@ -74,7 +81,8 @@ const SortPanel = props => {
     return (
       <React.Fragment>
         <div style={divStyle}>
-          <div>
+          <div style={sortInfoStyle}>
+            <InfoModal />
             <Typography
               variant="body2"
               display="inline"
@@ -83,9 +91,8 @@ const SortPanel = props => {
             >
               Sort by
             </Typography>
-            <InfoModal />
           </div>
-          <div>
+          <div style={radioButtonsDiv}>
             {sortOptions.map(option => (
               <FormControlLabel
                   style={radioStyle}

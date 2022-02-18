@@ -74,7 +74,9 @@ const QueryGeneList = props => {
 
 
   return (
-    <div className={'query-gene-list-container'}>
+    <div className={hideSearchBar ? 'headerless-query-gene-list-container' : 'query-gene-list-container'}>
+      {/* This padding cell aligns the column with the horizontal tab div */}
+      <div className={'query-gene-list-padding-cell'}></div>
       <div className={'query-gene-list-wrapper'}>
         <div className={'query-gene-list-title'}>
           Query Genes{' '}

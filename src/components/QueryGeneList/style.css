@@ -18,6 +18,25 @@
   width: 144.84px;
 }
 
+.query-gene-list-padding-cell {
+  height: 3.4em;
+  background-color: #fafafa;
+}
+
 .query-gene-list-container {
-  background-color: #EFEFEF;
+  background-color: #efefef;
+  padding-top: 4.5em;
+  grid-column: 12/13;
+  grid-row: 2/3;
+  margin: 0;
+  height: 100vh;
+}
+
+.headerless-query-gene-list-container { 
+  background-color: #efefef;
+  padding-top: 0;
+  grid-column: 12/13;
+  grid-row: 2/3;
+  margin: 0;
+  height: 100vh;
 }

@@ -105,6 +105,7 @@ const HomePanel = (props) => {
     <AppShell {...props}>
       <div className="container">
         <Results {...props} />
+        <QueryGeneList {...props} />
       </div>
     </AppShell>
   )
