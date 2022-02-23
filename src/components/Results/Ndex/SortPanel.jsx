@@ -63,6 +63,7 @@ const radioStyle = {
 }
 
 const radioButtonsDiv = {
+  alignItems: 'center'
 }
 
 const sortInfoStyle = {
