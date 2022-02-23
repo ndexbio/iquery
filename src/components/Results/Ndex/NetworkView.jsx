@@ -40,9 +40,7 @@ const NetworkView = (props) => {
             : null
         }
       >
-        <div className={'network-viewer-combo'}>
-          <NetworkViewer resized={resized} {...props} />
-        </div>
+        <NetworkViewer resized={resized} {...props} />
         <MemoTableBrowser {...props} />
       </Split>
     </div>
