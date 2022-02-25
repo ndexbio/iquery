@@ -11,7 +11,7 @@ import { alpha } from '@material-ui/core/styles/colorManipulator'
 
 const formControl = {
   height: '3em',
-  paddingTop: '0.8em',
+  paddingTop: '0.5em',
   marginLeft: '0.3em'
 }
 

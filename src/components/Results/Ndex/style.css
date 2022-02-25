@@ -6,6 +6,14 @@
   right: 0;
 }
 
+.headerless-ndex-base {
+  background-color: #ffffff;
+  display: flex;
+  height: 100%;
+  position: relative;
+  right: 0;
+}
+
 .table-browser {
   background-color: #efefef;
 }
@@ -108,8 +116,8 @@
 
 .list-icon {
   object-fit: scale-down;
-  width: 3.5em;
-  height: 3.5em;
+  width: 2.5em;
+  height: 2.5em;
   padding: 0;
   margin: 0;
 }

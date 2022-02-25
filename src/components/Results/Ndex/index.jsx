@@ -578,8 +578,10 @@ const Ndex = props => {
     )
   }
 
+  const { hideSearchBar } = props.uiState;
+
   return (
-    <Split sizes={[40, 60]} gutterSize={7} className="ndex-base">
+    <Split sizes={[40, 60]} gutterSize={7} className={ hideSearchBar ? 'headerless-ndex-base' : "ndex-base" } >
       <NetworkList
         renderNetworkListItem={renderNetworkListItem}
         handleFetch={handleFetch}

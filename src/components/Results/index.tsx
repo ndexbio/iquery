@@ -112,21 +112,25 @@ const Results = (props) => {
   const results = findResult(selectedSource, searchResults)
   const hideSearchBar = props.uiState.hideSearchBar
 
+  const tabs = (
+    <Tabs value={index} onChange={handleChange} className={classes.tabs}>
+      {sourceList.map((entry) => {
+        return (
+          <HoverTab
+            key={entry.sourceName}
+            label={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].label : null}
+            tooltip={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].tooltip : null}
+          />
+        )
+      })}
+    </Tabs>
+  );
+
   // Get current tab selection
   return (
     <div className={hideSearchBar ? 'headerless-results-container' : 'results-container'}>
       <div className="results-wrapper">
-        <Tabs value={index} onChange={handleChange} className={classes.tabs}>
-          {sourceList.map((entry) => {
-            return (
-              <HoverTab
-                key={entry.sourceName}
-                label={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].label : null}
-                tooltip={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].tooltip : null}
-              />
-            )
-          })}
-        </Tabs>
+        {!hideSearchBar ? tabs : null}
 
         {queryGenes.length !== 0 ? (
           <TabContent jobId={jobId} results={results} {...others} />

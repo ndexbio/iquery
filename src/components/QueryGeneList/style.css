@@ -25,11 +25,10 @@
 
 .query-gene-list-container {
   background-color: #efefef;
-  padding-top: 4.5em;
   grid-column: 12/13;
+  margin-top: 7.93em;
   grid-row: 2/3;
-  margin: 0;
-  height: 100vh;
+  overflow-y: scroll;
 }
 
 .headerless-query-gene-list-container { 

@@ -13,7 +13,7 @@ const styles = theme => ({
     top: '1px'
   },
   button: {
-    height: '3em',
+    height: '2.5em',
     width: '4.3em',
     marginLeft: '0.5em'
   }

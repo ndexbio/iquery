@@ -46,7 +46,8 @@ const divStyle = {
   display: 'flex',
   minHeight: '56px',
   height: 'auto',
-  width: '100%'
+  width: '100%',
+  alignItems: 'center'
 }
 
 const textStyle = {
