@@ -208,7 +208,7 @@ const Ndex = props => {
               {hitGenes.length}
           </Typography>
           <span>
-            { ` matches`}
+            { ` ${hitGenes.length === 1 ? 'match' : 'matches'}`}
           </span>
           {/* <span>
             { `${hitGenes.length} query ${hitGenes.length === 1 ? 'gene' : 'genes'}`}
