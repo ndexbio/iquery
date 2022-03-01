@@ -7,21 +7,22 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import MuiToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+import { Typography } from '@material-ui/core'
 
 const buttonStyle = {
-  padding: '0',
-  borderRadius: '20px',
+  // padding: '0',
+  // borderRadius: '20px',
   height: '32px',
   borderWidth: '0',
-  backgroundColor: '#FFFFFF',
+  // backgroundColor: '#FFFFFF',
 }
 
 const selectedButtonStyle = {
-  padding: '0',
-  borderRadius: '20px',
+  // padding: '0',
+  // borderRadius: '20px',
   height: '32px',
   borderWidth: '0',
-  backgroundColor: 'rgb(252, 235, 242)',
+  // backgroundColor: 'rgb(252, 235, 242)',
 }
 
 const selectedChipStyle = {
@@ -96,7 +97,7 @@ const GeneList = props => {
     <div className="gene-list-wrapper">
       <List>
         {sorted.map(geneValue => (
-          <ListItem key={geneValue}>
+          <ListItem key={geneValue} style={{paddingTop: 0, paddingBottom: 0}}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
               exclusive
@@ -111,7 +112,11 @@ const GeneList = props => {
                     : buttonStyle
                 }
               >
-                {getChip(geneValue, hitSets)}
+                {
+                  <Typography variant="body2" color={hitSets.has(geneValue.toUpperCase()) ? "secondary" : "default"}>
+                    {geneValue}
+                  </Typography>  
+                }
               </ToggleButton>
             </ToggleButtonGroup>
           </ListItem>
@@ -119,34 +124,6 @@ const GeneList = props => {
       </List>
     </div>
   )
-}
-
-const getChip = (value, hitSets) => {
-  if (hitSets.has(value.toUpperCase())) {
-    return (
-      <Chip
-        label={value}
-        variant="outlined"
-        color={'secondary'}
-        key={value}
-        selected
-        style={selectedChipStyle}
-        clickable={true}
-      />
-    )
-  } else {
-    return (
-      <Chip
-        label={value}
-        variant="outlined"
-        color={'default'}
-        key={value}
-        selected
-        style={selectedChipStyle}
-        clickable={false}
-      />
-    )
-  }
 }
 
 export default GeneList

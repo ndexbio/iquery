@@ -12,6 +12,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Typography from '@material-ui/core/Typography'
 import { ListItem } from '@material-ui/core'
 
+
 const titleStyle = {
   lineHeight: '22px',
   wordBreak: 'break-word'
@@ -20,7 +21,7 @@ const titleStyle = {
 const subtitleStyle = {
   height: '22px',
   lineHeight: '22px',
-  wordBreak: 'break-word'
+  wordBreak: 'break-word',
 }
 
 const infoStyle = {
@@ -123,18 +124,18 @@ const Ndex = props => {
         <Typography display="inline" color={props.uiState.sortBy !== 'Overlap' ? 'textSecondary' : 'textPrimary'}>
           <strong>{hitGenes.length}</strong>{' '}
         </Typography>
-        <Typography
+        {/* <Typography
           variant="caption"
           display="inline"
           color={props.uiState.sortBy === 'Overlap' ? 'textPrimary' : 'textSecondary'}
         >
           genes
-        </Typography>
+        </Typography> */}
       </span>
     )
 
     const icon = (
-      <ListItemIcon style={{ width: '20px' }}>
+      <ListItemIcon style={{ width: '5px' }}>
         <img className="list-icon" src={imageURL} alt="list icon" />
       </ListItemIcon>
     )
@@ -195,18 +196,39 @@ const Ndex = props => {
       similarity = null
     }
 
-    const title = <Typography style={titleStyle}>{description.split(':').slice(1)}</Typography>
+    const title = <Typography variant='p'style={titleStyle}>{description.split(':').slice(1)}</Typography>
 
     const subtitle = (
       <span style={subtitleStyle}>
         <Typography variant="caption" color="textSecondary">
-          <span>Nodes: {nodes}, </span>
-          <span>Edges: {edges}, </span>
-          <span>Total gene count: {totalGeneCount}, </span>
-          <span>Source: {camelCaseToTitleCase(description.split(':')[0])}</span>
+          <Typography 
+            style={{fontWeight: 'bold', fontSize: '1.25em'}} 
+            variant="caption" 
+            color="secondary">
+              {hitGenes.length}
+          </Typography>
+          <span>
+            { ` matches`}
+          </span>
+          {/* <span>
+            { `${hitGenes.length} query ${hitGenes.length === 1 ? 'gene' : 'genes'}`}
+          </span> */}
         </Typography>
       </span>
     )
+    // const title = <Typography style={titleStyle}>{`${hitGenes.length} query ${hitGenes.length === 1 ? 'gene' : 'genes'}`}</Typography>
+
+    // const subtitle = (
+    //   <span style={subtitleStyle}>
+    //     <Typography variant="caption" color="textSecondary">
+    //       <span>{description.split(':').slice(1)}</span>
+    //       {/* <span>Edges: {edges}, </span>
+    //       <span>Total gene count: {totalGeneCount}, </span>
+    //       <span>Source: {camelCaseToTitleCase(description.split(':')[0])}</span> */}
+    //     </Typography>
+    //   </span>
+    // )
+
 
     return (
       <ListItem
@@ -226,17 +248,19 @@ const Ndex = props => {
         <table style={tableStyle}>
           <tbody>
             <tr padding="0">
-              <td align="center" valign="middle" rowSpan="2" padding="0">
+              {/* <td align="center" valign="middle" rowSpan="2" padding="0">
                 {icon}
-              </td>
-              <td align="left" valign="baseline" width="100px" padding="0">
-                {genes}
-                {newline}
-                {pv}
-                {newline}
-                {similarity}
-              </td>
-              <td align="left" valign="baseline" padding="0">
+              </td> */}
+              {/* <td align="left" width="50px" padding="0"> */}
+                {/* {<Typography variant='caption' color='textSecondary'>Query Genes</Typography>} */}
+                {/* {newline} */}
+                {/* {genes} */}
+                {/* {newline} */}
+                {/* {pv} */}
+                {/* {newline} */}
+                {/* {similarity} */}
+              {/* </td> */}
+              <td align="left" padding="0">
                 {title}
                 {newline}
                 {subtitle}

@@ -7,6 +7,14 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import { Tooltip } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
+import Link from '@material-ui/core/Link';
+
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+
 import HoverTab from '../HoverTab';
 
 import OpenInCytoscapeButton from './OpenInCytoscapeButton';
@@ -19,7 +27,9 @@ import NDExSave from '../../NDExSave';
 import OpenOriginalNetworkButton from './OpenOriginalNetworkButton';
 import LayoutSelector from './LayoutSelector';
 import { camelCaseToTitleCase } from '../TableBrowser/camel-case-util';
-import { findAttributes } from '../TableBrowser/attribute-util';
+import { findAttributes, getNetworkAttributes } from '../TableBrowser/attribute-util';
+
+import NetworkProperties from '../TableBrowser/NetworkProperties';
 
 const styles = (theme) => ({
   toolbar: {
@@ -45,6 +55,8 @@ const styles = (theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
+    cursor: 'pointer',
+    overflowX: 'clip'
   },
   search: {
     position: 'relative',
@@ -114,6 +126,8 @@ const NetworkToolbar = (props) => {
 
   const [layout, setLayout] = useState(props.uiState.layout);
 
+  const [showNetworkInfo, setShowNetworkInfo] = useState(false)
+
   //Check if pathway figure is valid
   const [tab, setTab] = useState(props.uiState.pathwayFigure ? 0 : 1);
   useEffect(() => {
@@ -181,6 +195,19 @@ const NetworkToolbar = (props) => {
     setLayout(props.uiState.layout);
   }, [props.uiState.layout]);
 
+  let context = getNetworkAttributes(props.network.originalCX);
+
+  const networkInfoDialog = (
+    <Dialog open={showNetworkInfo} onClose={() => setShowNetworkInfo(false)}>
+      <DialogTitle>
+        <Typography variant='h5'>{props.network.networkName}</Typography>
+      </DialogTitle>
+      <DialogContent>
+        <NetworkProperties context={context} {...props}></NetworkProperties>
+      </DialogContent>
+    </Dialog>
+  )
+
   return (
     <>
       <div>
@@ -192,18 +219,20 @@ const NetworkToolbar = (props) => {
                 : props.network.networkName
             }
           >
-            <Typography
-              className={classes.title}
-              variant='subtitle1'
-              color='inherit'
-              noWrap
-            >
-              {name
-                ? camelCaseToTitleCase(prefix) + ':' + name
-                : props.network.networkName}
-            </Typography>
+            <Link  className={classes.title} component="button" variant="body2" onClick={() => setShowNetworkInfo(true)}>
+              <Typography
+                className={classes.title}
+                variant='subtitle1'
+                color='inherit'
+                noWrap
+              >
+                {name
+                  ? camelCaseToTitleCase(prefix) + ':' + name
+                  : props.network.networkName}
+              </Typography>
+            </Link>
           </Tooltip>
-
+          {networkInfoDialog}
           <div className={classes.grow} />
           {props.uiState.selectedSource !== 'pathwayfigures' ||
           props.uiState.pathwayFigure === false ? (
