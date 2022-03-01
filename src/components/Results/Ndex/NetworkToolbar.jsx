@@ -195,18 +195,22 @@ const NetworkToolbar = (props) => {
     setLayout(props.uiState.layout);
   }, [props.uiState.layout]);
 
-  let context = getNetworkAttributes(props.network.originalCX);
+  let networkInfoDialog = null;
+  
+  if(props.network.originalCX != null) {
+    let context = getNetworkAttributes(props.network.originalCX);
 
-  const networkInfoDialog = (
-    <Dialog open={showNetworkInfo} onClose={() => setShowNetworkInfo(false)}>
-      <DialogTitle>
-        <Typography variant='h5'>{props.network.networkName}</Typography>
-      </DialogTitle>
-      <DialogContent>
-        <NetworkProperties context={context} {...props}></NetworkProperties>
-      </DialogContent>
-    </Dialog>
-  )
+    networkInfoDialog = (
+      <Dialog open={showNetworkInfo} onClose={() => setShowNetworkInfo(false)}>
+        <DialogTitle>
+          <Typography variant='h5'>{props.network.networkName}</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <NetworkProperties context={context} {...props}></NetworkProperties>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <>
