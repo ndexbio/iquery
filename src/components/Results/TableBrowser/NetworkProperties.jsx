@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 
 import { camelCaseToTitleCase } from './camel-case-util';
 import { stripScripts } from './strip-scripts-util';
@@ -213,98 +214,82 @@ const NetworkProperties = (props) => {
 
   //Left side of display
   const leftDisplay = [];
-  let currentEntry;
-  let primaryString;
-  let secondaryString;
-  leftDisplayItems.forEach((element) => {
-    currentEntry = attributes.filter((entry) => {
-      return entry.title === element;
-    })[0];
-    if (currentEntry != null) {
-      primaryString = formatPrimary(currentEntry.content);
-      secondaryString = element;
-      currentEntry.displayed = true;
-      leftDisplay.push(
-        <ListItem key={`net-${index++}`} className={classes.noPadding}>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Typography
-                  component='span'
-                  variant='caption'
-                  color='textSecondary'
-                >
-                  {secondaryString}
-                </Typography>
-                <div>
-                  <Typography component='span' variant='body2'>
-                    {primaryString}
-                  </Typography>
-                </div>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-      );
-    }
-  });
 
-  primaryString = formatContext(context);
-  const summary = (
-    <Typography component='span' variant='body2'>
-      Click to view the namespaces associated with this network
-    </Typography>
+  const uuid = props.network?.uuid;
+  const searchResults = props.search?.actualResults;
+  let similarity = null;
+  let pvalue = null;
+
+  if(searchResults && uuid){
+    const currentNetworkInfo = searchResults.find(entry => entry.networkUUID === uuid);
+    similarity = currentNetworkInfo?.details?.similarity;
+    similarity = similarity?.toFixed(2);
+    pvalue = currentNetworkInfo?.details?.PValue;
+
+    if(pvalue){
+      const networkCount = currentNetworkInfo.totalNetworkCount
+      const threshold = Math.pow(10, Math.ceil(Math.log(1e-16 * networkCount) / Math.LN10))
+      if (pvalue < threshold) {
+        pvalue = '< ' + threshold
+      } else if (pvalue > 1) {
+        pvalue = '~ 1'
+      } else {
+        pvalue = pvalue.toExponential(2)
+      } 
+    }
+  }
+  
+  //Get the network name attribute and display it as a title
+  const nameAttribute = attributes.find(entry => entry.title === 'Name');
+  leftDisplay.push(nameAttribute == null ? null : 
+    <ListItem style={{display: 'flex', flexDirection: 'column'}} key={'net-' + index++}>
+      <ListItemText
+        primary={
+          <React.Fragment>
+              <Typography component='span' variant='h5'>
+                {formatPrimary(nameAttribute.content)}
+              </Typography>
+          </React.Fragment>
+        }
+      />
+      {/* <ListItemText
+        primary={
+          <React.Fragment>
+              <Typography component='span' variant='body2'>
+                {`p-value: ${pvalue}`}
+              </Typography>
+          </React.Fragment>
+        }
+      />
+      <ListItemText
+        primary={
+          <React.Fragment>
+              <Typography component='span' variant='body2'>
+                {`Similarity: ${similarity}`}
+              </Typography>
+          </React.Fragment>
+        }
+      /> */}
+    </ListItem>
   );
-  const details = primaryString;
-  // leftDisplay.push(
-  //   <React.Fragment key={`${primaryString}${index}`}>
-  //     {/* <div className={classes.padding}>
-  //       <Typography component='span' variant='caption' color='textSecondary'>
-  //         @context
-  //       </Typography>
-  //     </div> */}
-  //     {/* <ExpandPanel
-  //       summary={summary}
-  //       details={details}
-  //       defaultExpanded={false}
-  //       keyId={index++}
-  //       divider={false}
-  //     /> */}
-  //   </React.Fragment>
-  // );
 
-  const filteredAttributes = ['Name', 'Description'];
-  attributes.filter(entry => filteredAttributes.includes(entry.title)).forEach((entry) => {
-  // attributes.forEach(entry => {
-    console.log(entry.title)
-    if (!entry.displayed) {
-      primaryString = formatPrimary(entry.content);
-      secondaryString = entry.title;
-      entry.displayed = true;
-      leftDisplay.push(
-        <ListItem key={'net-' + index++} className={classes.noPadding}>
-          <ListItemText
-            primary={
-              <React.Fragment>
-                <Typography
-                  component='span'
-                  variant='caption'
-                  color='textSecondary'
-                >
-                  {secondaryString}
-                </Typography>
-                <div>
-                  <Typography component='span' variant='body2'>
-                    {primaryString}
-                  </Typography>
-                </div>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-      );
-    }
-  });
+  leftDisplay.push(<Divider/>);
+
+  //Get the network description attribute and display it in the body
+  const descriptionAttribute = attributes.find(entry => entry.title === 'Description');
+  leftDisplay.push(descriptionAttribute == null ? null : 
+    <ListItem key={'net-' + index++}>
+      <ListItemText
+        primary={
+          <React.Fragment>
+              <Typography component='span' variant='body2'>
+                {formatPrimary(descriptionAttribute.content)}
+              </Typography>
+          </React.Fragment>
+        }
+      />
+    </ListItem>
+  );
 
   //Display panes
   return (
