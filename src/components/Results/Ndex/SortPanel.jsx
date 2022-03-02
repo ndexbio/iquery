@@ -97,11 +97,12 @@ const SortPanel = props => {
           <div style={radioButtonsDiv}>
             {sortOptions.map(option => (
               <FormControlLabel
+                  key={option}
                   style={radioStyle}
                   value="top"
                   control={<Radio checked={sortBy === option} value={option} onChange={handleChange}></Radio>}
                   label={option}
-                  labelPlacement="right"
+                  labelPlacement="end"
               />
             ))}
           </div>

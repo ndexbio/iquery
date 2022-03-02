@@ -15,6 +15,7 @@ import {
   deselectAll,
   changeTab,
   changeListIndex,
+  setShowTableModal,
   setOriginalNetworkUrl,
 } from '../actions/network';
 
@@ -112,7 +113,8 @@ const network = handleActions(
         backgroundColor: '',
         selectedNodes: [],
         selectedEdges: [],
-        tableDisplayTab: 0,
+        showTableModal: false, // should we display a modal containing the table info
+        tableDisplayTab: 0,  // 0 -> network info, 1 -> node info, 2 -> edge info
         layout: 'Preset',
         layouts: [],
       };
@@ -169,6 +171,7 @@ const network = handleActions(
     [selectNodes]: (state, payload) => {
       return {
         ...state,
+        showTableModal: true,
         tableDisplayTab: 1,
         selectedNodes: payload.payload,
       };
@@ -176,12 +179,14 @@ const network = handleActions(
     [unselectNodes]: (state, payload) => {
       return {
         ...state,
+        showTableModal: false,
         selectedNodes: [],
       };
     },
     [selectEdges]: (state, payload) => {
       return {
         ...state,
+        showTableModal: true,
         tableDisplayTab: 2,
         selectedEdges: payload.payload,
       };
@@ -189,16 +194,24 @@ const network = handleActions(
     [unselectEdges]: (state, payload) => {
       return {
         ...state,
+        showTableModal: false,
         selectedEdges: [],
       };
     },
     [deselectAll]: (state, payload) => {
       return {
         ...state,
+        showTableModal: false,
         tableDisplayTab: 0,
         selectedNodes: [],
         selectedEdges: [],
       };
+    },
+    [setShowTableModal]: (state, payload) => {
+      return {
+        ...state,
+        showTableModal: payload.payload
+      }
     },
     [changeTab]: (state, payload) => {
       return {

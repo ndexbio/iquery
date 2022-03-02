@@ -405,28 +405,24 @@ const EdgeProperties = props => {
         <tbody>
           <tr>
             <td>
-              <Typography variant="body2">{source}</Typography>
+              <Typography 
+                variant="body2" 
+                color={props.search.queryList.includes(source?.toUpperCase()) ? 'secondary' : 'initial'}
+              >
+                  {source}
+              </Typography>
             </td>
-            {props.search.queryList.includes(source?.toUpperCase()) ? (
-              <td>
-                <Avatar className={classes.matched}>
-                  <CheckIcon className={classes.icon} />
-                </Avatar>
-              </td>
-            ) : null}
             <td>
               <Typography variant="body2">{' ➝ '}</Typography>
             </td>
             <td>
-              <Typography variant="body2">{target}</Typography>
+              <Typography 
+                variant="body2"
+                color={props.search.queryList.includes(target?.toUpperCase()) ? 'secondary' : 'initial'}
+              >
+                {target}
+              </Typography>
             </td>
-            {props.search.queryList.includes(target?.toUpperCase()) ? (
-              <td>
-                <Avatar className={classes.matched}>
-                  <CheckIcon className={classes.icon} />
-                </Avatar>
-              </td>
-            ) : null}
           </tr>
         </tbody>
       </table>

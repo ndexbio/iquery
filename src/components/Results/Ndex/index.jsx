@@ -196,7 +196,7 @@ const Ndex = props => {
       similarity = null
     }
 
-    const title = <Typography variant='p'style={titleStyle}>{description.split(':').slice(1)}</Typography>
+    const title = <Typography variant='body2'style={titleStyle}>{description.split(':').slice(1)}</Typography>
 
     const subtitle = (
       <span style={subtitleStyle}>

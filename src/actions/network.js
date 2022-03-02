@@ -13,6 +13,7 @@ export const UNSELECT_EDGES = 'UNSELECT_EDGES'
 export const DESELECT_ALL = 'DESELECT_ALL'
 export const CHANGE_TAB = 'CHANGE_TAB'
 export const CHANGE_LIST_INDEX = 'CHANGE_LIST_INDEX'
+export const SET_SHOW_TABLE_MODAL = 'SHOW_TABLE_MODAL'
 
 export const SET_ORIGINAL_NETWORK_URL = 'SET_ORIGINAL_NETWORK_URL'
 
@@ -30,5 +31,6 @@ export const unselectEdges = createAction(UNSELECT_EDGES)
 export const deselectAll = createAction(DESELECT_ALL)
 export const changeTab = createAction(CHANGE_TAB)
 export const changeListIndex = createAction(CHANGE_LIST_INDEX)
+export const setShowTableModal = createAction(SET_SHOW_TABLE_MODAL)
 
 export const setOriginalNetworkUrl = createAction(SET_ORIGINAL_NETWORK_URL)

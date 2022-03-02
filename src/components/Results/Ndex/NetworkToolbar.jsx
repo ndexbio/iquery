@@ -9,11 +9,9 @@ import { Tooltip } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Link from '@material-ui/core/Link';
 
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import HoverTab from '../HoverTab';
 
@@ -197,20 +195,6 @@ const NetworkToolbar = (props) => {
 
   let networkInfoDialog = null;
   
-  if(props.network.originalCX != null) {
-    let context = getNetworkAttributes(props.network.originalCX);
-
-    networkInfoDialog = (
-      <Dialog open={showNetworkInfo} onClose={() => setShowNetworkInfo(false)}>
-        <DialogTitle>
-          <Typography variant='h5'>{props.network.networkName}</Typography>
-        </DialogTitle>
-        <DialogContent>
-          <NetworkProperties context={context} {...props}></NetworkProperties>
-        </DialogContent>
-      </Dialog>
-    );
-  }
 
   return (
     <>
@@ -223,7 +207,12 @@ const NetworkToolbar = (props) => {
                 : props.network.networkName
             }
           >
-            <Link  className={classes.title} component="button" variant="body2" onClick={() => setShowNetworkInfo(true)}>
+            <Link 
+              className={classes.title} 
+              component="button" 
+              variant="body2" 
+              onClick={() => props.networkActions.setShowTableModal(true)}
+            >
               <Typography
                 className={classes.title}
                 variant='subtitle1'
@@ -236,7 +225,6 @@ const NetworkToolbar = (props) => {
               </Typography>
             </Link>
           </Tooltip>
-          {networkInfoDialog}
           <div className={classes.grow} />
           {props.uiState.selectedSource !== 'pathwayfigures' ||
           props.uiState.pathwayFigure === false ? (
