@@ -38,7 +38,7 @@ const DEF_BG_COLOR = '#FFFFFF';
 
 const CytoscapeViewer = (props) => {
   const { highlights, fit } = props.uiState;
-  const { originalCX } = props.network;
+  const { originalCX, queryGenes } = props.network;
   const cyjs = props.network.network;
   const [originalElements, setOriginalElements] = useState(
     cyjs ? cloneDeep(cyjs.elements) : null
@@ -179,7 +179,7 @@ const CytoscapeViewer = (props) => {
 
     // Reset the UI state (highlight)
     cyInstance.elements().addClass('faded');
-    const query = cyInstance.filter('node[querynode = "true"]');
+    const query = cyInstance.nodes().filter(n => queryGenes.includes(n.data('name')));
     query.addClass('highlight');
 
     //Layout
@@ -343,7 +343,7 @@ const CytoscapeViewer = (props) => {
 
     if (highlights) {
       cyInstance.elements().addClass('faded');
-      const query = cyInstance.filter('node[querynode = "true"]');
+      const query = cyInstance.nodes().filter(n => queryGenes.includes(n.data('name')));
       query.addClass('highlight');
     } else {
       cyInstance
