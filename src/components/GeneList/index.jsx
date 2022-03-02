@@ -1,8 +1,5 @@
 import React from 'react'
 import { withStyles } from '@material-ui/styles'
-import Avatar from '@material-ui/core/Avatar'
-import Chip from '@material-ui/core/Chip'
-import CheckIcon from '@material-ui/icons/Check'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import MuiToggleButton from '@material-ui/lab/ToggleButton'

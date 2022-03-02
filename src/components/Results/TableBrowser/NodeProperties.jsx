@@ -11,8 +11,7 @@ import { stripScripts } from './strip-scripts-util.js'
 import GeneAnnotationList from './GeneAnnotationList'
 import ExpandPanel from './ExpandPanel'
 import { isEqual } from 'lodash'
-import CheckIcon from '@material-ui/icons/Check'
-import Avatar from '@material-ui/core/Avatar'
+
 
 import { MAX_NETWORK_SIZE } from '../../../api/config'
 
@@ -422,15 +421,13 @@ const NodeProperties = props => {
         <tbody>
           <tr>
             <td>
-              <Typography variant="body2">{node.name}</Typography>
+              <Typography 
+                variant="body2" 
+                color={querynode ? 'secondary' : 'initial'}
+              >
+                {node.name}
+              </Typography>
             </td>
-            {querynode ? (
-              <td>
-                <Avatar className={classes.matched}>
-                  <CheckIcon className={classes.icon} />
-                </Avatar>
-              </td>
-            ) : null}
           </tr>
         </tbody>
       </table>

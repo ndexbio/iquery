@@ -9,8 +9,6 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
 import ExpandPanel from './ExpandPanel'
-import CheckIcon from '@material-ui/icons/Check'
-import Avatar from '@material-ui/core/Avatar'
 
 import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
