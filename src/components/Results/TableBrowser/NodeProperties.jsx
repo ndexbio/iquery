@@ -356,27 +356,27 @@ const NodeProperties = props => {
             )
             break
           case nodeProperties:
-            secondaryString = 'Node Properties'
-            displayCol2.push(
-              <ListItem
-                key={index++}
-                className={classes.noPadding}
-                disableGutters={true}
-              >
-                <ListItemText
-                  primary={
-                    <React.Fragment>
-                      <Typography variant="caption" color="textSecondary">
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography variant="body2">{primaryString}</Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
+            // secondaryString = 'Node Properties'
+            // displayCol2.push(
+            //   <ListItem
+            //     key={index++}
+            //     className={classes.noPadding}
+            //     disableGutters={true}
+            //   >
+            //     <ListItemText
+            //       primary={
+            //         <React.Fragment>
+            //           <Typography variant="caption" color="textSecondary">
+            //             {secondaryString}
+            //           </Typography>
+            //           <div>
+            //             <Typography variant="body2">{primaryString}</Typography>
+            //           </div>
+            //         </React.Fragment>
+            //       }
+            //     />
+            //   </ListItem>
+            // )
             break
         }
       }
@@ -392,29 +392,29 @@ const NodeProperties = props => {
     primaryString = formatPrimary(primaryString)
     secondaryString = 'Additional properties'
 
-    if (primaryString !== '') {
-      displayCol1.push(
-        <ListItem
-          key={index++}
-          className={classes.noPadding}
-          disableGutters={true}
-        >
-          <ListItemText
-            inset={inset}
-            primary={
-              <React.Fragment>
-                <Typography variant="caption" color="textSecondary">
-                  {secondaryString}
-                </Typography>
-                <div>
-                  <Typography variant="body2">{primaryString}</Typography>
-                </div>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-      )
-    }
+    // if (primaryString !== '') {
+    //   displayCol1.push(
+    //     <ListItem
+    //       key={index++}
+    //       className={classes.noPadding}
+    //       disableGutters={true}
+    //     >
+    //       <ListItemText
+    //         inset={inset}
+    //         primary={
+    //           <React.Fragment>
+    //             <Typography variant="caption" color="textSecondary">
+    //               {secondaryString}
+    //             </Typography>
+    //             <div>
+    //               <Typography variant="body2">{primaryString}</Typography>
+    //             </div>
+    //           </React.Fragment>
+    //         }
+    //       />
+    //     </ListItem>
+    //   )
+    // }
 
     const summary = (
       <table>

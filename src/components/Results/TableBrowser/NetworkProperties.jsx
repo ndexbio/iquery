@@ -54,8 +54,8 @@ const NetworkProperties = (props) => {
   const leftDisplayItems = [
     'Name',
     'Description',
-    'Methods',
-    'Reference',
+    // 'Methods',
+    // 'Reference',
     '@context',
   ];
   const properties = ['Organism', 'Cell', 'Disease'];
@@ -69,9 +69,9 @@ const NetworkProperties = (props) => {
   const networkInformation = ['Version', 'Network Type', 'Labels'];
   const rightDisplayItems = [
     properties,
-    contributors,
-    wikiPathways,
-    indraGO,
+    // contributors,
+    // wikiPathways,
+    // indraGO,
     networkInformation,
   ];
 
@@ -159,6 +159,7 @@ const NetworkProperties = (props) => {
   //Right side of display
   const rightDisplay = [];
   rightDisplayItems.forEach((list) => {
+    // console.log(list);
     let primaryString = '';
     let currentEntry;
     list.forEach((element) => {
@@ -255,24 +256,27 @@ const NetworkProperties = (props) => {
     </Typography>
   );
   const details = primaryString;
-  leftDisplay.push(
-    <React.Fragment key={`${primaryString}${index}`}>
-      <div className={classes.padding}>
-        <Typography component='span' variant='caption' color='textSecondary'>
-          @context
-        </Typography>
-      </div>
-      <ExpandPanel
-        summary={summary}
-        details={details}
-        defaultExpanded={false}
-        keyId={index++}
-        divider={false}
-      />
-    </React.Fragment>
-  );
+  // leftDisplay.push(
+  //   <React.Fragment key={`${primaryString}${index}`}>
+  //     {/* <div className={classes.padding}>
+  //       <Typography component='span' variant='caption' color='textSecondary'>
+  //         @context
+  //       </Typography>
+  //     </div> */}
+  //     {/* <ExpandPanel
+  //       summary={summary}
+  //       details={details}
+  //       defaultExpanded={false}
+  //       keyId={index++}
+  //       divider={false}
+  //     /> */}
+  //   </React.Fragment>
+  // );
 
-  attributes.forEach((entry) => {
+  const filteredAttributes = ['Name', 'Description'];
+  attributes.filter(entry => filteredAttributes.includes(entry.title)).forEach((entry) => {
+  // attributes.forEach(entry => {
+    console.log(entry.title)
     if (!entry.displayed) {
       primaryString = formatPrimary(entry.content);
       secondaryString = entry.title;

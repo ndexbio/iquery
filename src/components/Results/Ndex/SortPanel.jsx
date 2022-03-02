@@ -100,8 +100,8 @@ const SortPanel = props => {
                   key={option}
                   style={radioStyle}
                   value="top"
-                  control={<Radio checked={sortBy === option} value={option} onChange={handleChange}></Radio>}
-                  label={option}
+                  control={<Radio color='primary' checked={sortBy === option} value={option} onChange={handleChange}></Radio>}
+                  label={<Typography variant="body2">{option}</Typography>}
                   labelPlacement="end"
               />
             ))}
