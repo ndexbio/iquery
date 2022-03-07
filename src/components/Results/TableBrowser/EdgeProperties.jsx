@@ -371,31 +371,31 @@ const EdgeProperties = props => {
     primaryString = formatPrimary(primaryString)
     secondaryString = 'Additional properties'
 
-    // if (primaryString !== '') {
-    //   displayCol1.push(
-    //     <ListItem key={index++} className={classes.noPadding}>
-    //       <ListItemText
-    //         inset={false}
-    //         primary={
-    //           <React.Fragment>
-    //             <Typography
-    //               component="span"
-    //               variant="caption"
-    //               color="textSecondary"
-    //             >
-    //               {secondaryString}
-    //             </Typography>
-    //             <div>
-    //               <Typography component="span" variant="body2">
-    //                 {primaryString}
-    //               </Typography>
-    //             </div>
-    //           </React.Fragment>
-    //         }
-    //       />
-    //     </ListItem>
-    //   )
-    // }
+    if (primaryString !== '') {
+      displayCol1.push(
+        <ListItem key={index++} className={classes.noPadding}>
+          <ListItemText
+            inset={false}
+            primary={
+              <React.Fragment>
+                <Typography
+                  component="span"
+                  variant="caption"
+                  color="textSecondary"
+                >
+                  {secondaryString}
+                </Typography>
+                <div>
+                  <Typography component="span" variant="body2">
+                    {primaryString}
+                  </Typography>
+                </div>
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+      )
+    }
 
     //Create summary
     const summary = (
