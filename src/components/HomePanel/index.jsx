@@ -23,24 +23,8 @@ const HomePanel = (props) => {
     // Check pathname to see if we can access the existing job
     const { pathname } = location
 
-    if (pathname !== '/' && UUID_VALIDATION.test(pathname)) {
+    if (pathname !== '/') {
       const params = pathname.split('/')
-
-      // Check the path has valid UUID
-      let hasUUID = false
-      for (let i = 0; i < params.length; i++) {
-        const p = params[i]
-        hasUUID = UUID_VALIDATION.test(p)
-        if (hasUUID) {
-          break
-        }
-      }
-
-      if (!hasUUID) {
-        // No need to fetch existing result
-        return
-      }
-
       let jobIdIndex = 0
 
       if (params.length > 2) {
