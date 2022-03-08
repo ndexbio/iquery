@@ -1,4 +1,5 @@
-import { createAction } from 'redux-actions'
+import { createAction } from '@reduxjs/toolkit'
+
 
 export const NETWORK_FETCH_STARTED = 'NETWORK_FETCH_STARTED'
 export const NETWORK_FETCH_SUCCEEDED = 'NETWORK_FETCH_SUCCEEDED'
@@ -31,4 +32,4 @@ export const deselectAll = createAction(DESELECT_ALL)
 export const changeTab = createAction(CHANGE_TAB)
 export const changeListIndex = createAction(CHANGE_LIST_INDEX)
 
-export const setOriginalNetworkUrl = createAction(SET_ORIGINAL_NETWORK_URL)
+export const setOriginalNetworkUrl = createAction<string>(SET_ORIGINAL_NETWORK_URL)

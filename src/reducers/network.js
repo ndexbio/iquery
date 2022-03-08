@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js';
+import { CxToJs, CyNetworkUtils } from '@js4cytoscape/cx2js';
 import { MAX_NETWORK_SIZE } from '../api/config';
 import * as vs from '../assets/data/styles.json';
 
@@ -212,7 +212,7 @@ const network = handleActions(
         listIndex: payload.payload,
       };
     },
-    [setOriginalNetworkUrl]: (state, payload) => {
+    [setOriginalNetworkUrl.type]: (state, payload) => {
       return {
         ...state,
         url: payload.payload,

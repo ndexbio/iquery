@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
-import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js';
+import { CxToJs, CyNetworkUtils } from '@js4cytoscape/cx2js';
 import Cytoscape from 'cytoscape';
 import CyCanvas from 'cytoscape-canvas';
-import { CxToCyCanvas } from 'cyannotation-cx2js';
+import { CxToCyCanvas } from '@js4cytoscape/cyannotation-cx2js';
 import Warning from './Warning';
 import { CONCENTRIC_LAYOUT, COSE_LAYOUT } from './LayoutSettings';
 import { cloneDeep } from 'lodash';

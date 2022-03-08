@@ -32,6 +32,7 @@ const TopPageContainer = props => {
   return <TopPage {...props} />
 }
 
+// Essentially, this is the core/global application state
 function mapStateToProps(state) {
   return {
     search: state.search,
