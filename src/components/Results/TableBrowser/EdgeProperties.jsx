@@ -506,7 +506,7 @@ const formatPrimary = entry => {
     .replace(/<\/?p\/?>/gi, '<br>')
     .replace(/(<\/?br\/?>)+/gi, '<br>')
     .replace(/(\n)+/gi, '\n')
-    .replace(/<a\s+href=/gi, '<a target="_blank" href=')
+    .replace(/<a\s+href=/gi, '<a class="table-property-link" target="_blank" href=')
     .trim()
   if (modifiedText.startsWith('<br>')) {
     modifiedText = modifiedText.slice(4, modifiedText.length - 1)
@@ -515,7 +515,7 @@ const formatPrimary = entry => {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
   modifiedText = parse(camelCaseToTitleCase(modifiedText))
-  return <Linkify key={'link:' + index++}>{modifiedText}</Linkify>
+  return <Linkify options={{className: "table-property-link"}} key={'link:' + index++}>{modifiedText}</Linkify>
 }
 
 const findNode = (nodeId, nodeArray) => {
