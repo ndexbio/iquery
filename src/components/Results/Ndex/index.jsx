@@ -208,11 +208,8 @@ const Ndex = props => {
               {hitGenes.length}
           </Typography>
           <span>
-            { ` ${hitGenes.length === 1 ? 'match' : 'matches'}`}
+            { `${props.uiState.sortBy === 'Similarity' ? ` / ${totalGeneCount}` : ' '} ${hitGenes.length === 1 ? 'match' : 'matches'}`}
           </span>
-          {/* <span>
-            { `${hitGenes.length} query ${hitGenes.length === 1 ? 'gene' : 'genes'}`}
-          </span> */}
         </Typography>
       </span>
     )
