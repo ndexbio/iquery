@@ -1284,12 +1284,13 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@js4cytoscape/cx2js@^0.6.5":
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/@js4cytoscape/cx2js/-/cx2js-0.6.5.tgz#31a9b7472ef3f7d48c0bdfa54a89f984fec1d6b3"
-  integrity sha512-0fpluIhYZssoRvCGjclmStNgjgQ/nKtl/dcGp5LIjGjfW4vER+QlKfwiH2imLVQ1QVJsYMW3gmG4S9ClZ6FiGw==
+"@js4cytoscape/cx2js@^0.6.7-alpha.0":
+  version "0.6.7-alpha.0"
+  resolved "https://registry.yarnpkg.com/@js4cytoscape/cx2js/-/cx2js-0.6.7-alpha.0.tgz#6cef756f08651e0ba9154135c708ef0f2b1602b9"
+  integrity sha512-tuJ9JP3kAdp30WbfqFsi+Oa6uW5+Zjc8OgxMMZr9Ubl6o8mcgVr5cWOHC23QI0qBbs8SHCZaApzNTuHz1tkhbQ==
   dependencies:
     cytoscape-canvas "3.0.1"
+    fs "^0.0.1-security"
     lodash "^4.17.10"
 
 "@js4cytoscape/cyannotation-cx2js@^0.8.4":
@@ -4544,6 +4545,11 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
+
+fs@^0.0.1-security:
+  version "0.0.1-security"
+  resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
+  integrity sha1-invTcYa23d84E/I4WLV+yq9eQdQ=
 
 fsevents@^2.3.2, fsevents@~2.3.2:
   version "2.3.2"
