@@ -323,7 +323,7 @@ const EdgeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography component="span" variant="body2">
+                        <Typography component="span" variant="caption">
                           {primaryString}
                         </Typography>
                       </div>
@@ -386,7 +386,7 @@ const EdgeProperties = props => {
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography component="span" variant="body2">
+                  <Typography component="span" variant="caption">
                     {primaryString}
                   </Typography>
                 </div>

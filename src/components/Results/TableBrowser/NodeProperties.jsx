@@ -345,7 +345,7 @@ const NodeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2" component="div">
+                        <Typography variant="caption" component="div">
                           {primaryString}
                         </Typography>
                       </div>
