@@ -179,7 +179,7 @@ const CytoscapeViewer = (props) => {
 
     // Reset the UI state (highlight)
     cyInstance.elements().addClass('faded');
-    const query = cyInstance.nodes().filter(n => queryGenes.includes(n.data('name')));
+    const query = cyInstance.nodes().filter('node[?querynode]');
     query.addClass('highlight');
 
     //Layout
