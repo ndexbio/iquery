@@ -77,7 +77,7 @@ const highlight = {
   css: {
     opacity: 1.0,
     'underlay-color': '#C51162',
-    'inderlay-padding': 16,
+    'underlay-padding': 16,
     'underlay-opacity': 0.4
   },
 };

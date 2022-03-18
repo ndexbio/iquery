@@ -370,7 +370,7 @@ const NodeProperties = props => {
             //             {secondaryString}
             //           </Typography>
             //           <div>
-            //             <Typography variant="body2">{primaryString}</Typography>
+            //             <Typography variant="caption">{primaryString}</Typography>
             //           </div>
             //         </React.Fragment>
             //       }
@@ -382,39 +382,40 @@ const NodeProperties = props => {
       }
     })
 
-    primaryString = ''
+    primaryString = '';
+    const filteredAttributes = ['Iquerypercentaltered']
     attributes.forEach(entry => {
-      if (!entry.displayed) {
-        primaryString += entry.title + ': ' + entry.content + '<br>'
-        entry.displayed = true
+      if(filteredAttributes.includes(entry.title)){
+        const alterationPercentage = entry.content.split('::s')[1];
+        primaryString += `Alteration Frequency: ${alterationPercentage}`;
       }
     })
     primaryString = formatPrimary(primaryString)
     secondaryString = 'Additional properties'
 
-    // if (primaryString !== '') {
-    //   displayCol1.push(
-    //     <ListItem
-    //       key={index++}
-    //       className={classes.noPadding}
-    //       disableGutters={true}
-    //     >
-    //       <ListItemText
-    //         inset={inset}
-    //         primary={
-    //           <React.Fragment>
-    //             <Typography variant="caption" color="textSecondary">
-    //               {secondaryString}
-    //             </Typography>
-    //             <div>
-    //               <Typography variant="body2">{primaryString}</Typography>
-    //             </div>
-    //           </React.Fragment>
-    //         }
-    //       />
-    //     </ListItem>
-    //   )
-    // }
+    if (primaryString !== '') {
+      displayCol1.push(
+        <ListItem
+          key={index++}
+          className={classes.noPadding}
+          disableGutters={true}
+        >
+          <ListItemText
+            inset={inset}
+            primary={
+              <React.Fragment>
+                <Typography variant="caption" color="textSecondary">
+                  {secondaryString}
+                </Typography>
+                <div>
+                  <Typography variant="body2">{primaryString}</Typography>
+                </div>
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+      )
+    }
 
     const summary = (
       <table>
