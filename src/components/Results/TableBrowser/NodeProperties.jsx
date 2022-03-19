@@ -275,7 +275,13 @@ const NodeProperties = props => {
           propertyString += property + '<br/>'
         }
       })
-      if (propertyList.size > 1) {
+
+      if(propertyName === 'iquerypercentaltered'){
+        attributes.push({
+          title: camelCaseToTitleCase(propertyName),
+          content: Array.from(propertyList)
+        });
+      } else if (propertyList.size > 1) {
         attributes.push({
           title: camelCaseToTitleCase(propertyName),
           content:
@@ -382,18 +388,42 @@ const NodeProperties = props => {
       }
     })
 
-    primaryString = '';
-    const filteredAttributes = ['Iquerypercentaltered']
-    attributes.forEach(entry => {
-      if(filteredAttributes.includes(entry.title)){
-        const alterationPercentage = entry.content.split('::s')[1];
-        primaryString += `Alteration Frequency: ${alterationPercentage}`;
-      }
-    })
-    primaryString = formatPrimary(primaryString)
-    secondaryString = 'Additional properties'
+    // primaryString = '';
+    // const filteredAttributes = ['Iquerypercentaltered']
+    // attributes.forEach(entry => {
+    //   if(filteredAttributes.includes(entry.title)){
+    //     const alterationPercentage = entry.content.split('::s')[1];
+    //     primaryString += `Alteration Frequency: ${alterationPercentage}`;
+    //   }
+    // })
+    // primaryString = formatPrimary(primaryString)
+    // secondaryString = 'Additional properties'
 
-    if (primaryString !== '') {
+    const alterationPercentages = completeListProperties['iquerypercentaltered'];
+    let alterationPercentageContent = null;
+    if(alterationPercentages != null) {
+      console.log(alterationPercentages);
+      alterationPercentageContent = (
+        <div>
+          {
+          Array.from(alterationPercentages).map(alterationEntry => {
+            const [geneId, alterationPercentage] = alterationEntry.split('::s');
+
+            return (
+              <Typography variant="caption">
+                <div style={{display: 'flex'}} key={geneId}>
+                  <div style={{width: '75px'}}>{geneId}</div>
+                  <div>{alterationPercentage}</div>
+                </div>
+              </Typography>)
+          })
+          }
+        </div>  
+      );
+    }
+
+
+    // if (primaryString !== '') {
       displayCol1.push(
         <ListItem
           key={index++}
@@ -405,17 +435,17 @@ const NodeProperties = props => {
             primary={
               <React.Fragment>
                 <Typography variant="caption" color="textSecondary">
-                  {secondaryString}
+                  {'Alteration Percentage'}
                 </Typography>
                 <div>
-                  <Typography variant="body2">{primaryString}</Typography>
+                  <Typography variant="body2">{alterationPercentageContent}</Typography>
                 </div>
               </React.Fragment>
             }
           />
         </ListItem>
       )
-    }
+    // }
 
     const summary = (
       <table>
