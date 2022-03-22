@@ -348,7 +348,7 @@ const EdgeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2">{primaryString}</Typography>
+                        <Typography variant="caption">{primaryString}</Typography>
                       </div>
                     </React.Fragment>
                   }
