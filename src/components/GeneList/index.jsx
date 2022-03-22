@@ -9,7 +9,7 @@ import { Typography } from '@material-ui/core'
 const buttonStyle = {
   // padding: '0',
   // borderRadius: '20px',
-  height: '32px',
+  height: '24px',
   borderWidth: '0',
   // backgroundColor: '#FFFFFF',
 }
@@ -17,7 +17,7 @@ const buttonStyle = {
 const selectedButtonStyle = {
   // padding: '0',
   // borderRadius: '20px',
-  height: '32px',
+  height: '24px',
   borderWidth: '0',
   // backgroundColor: 'rgb(252, 235, 242)',
 }
