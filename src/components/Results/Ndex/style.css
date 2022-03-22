@@ -112,6 +112,7 @@
   box-sizing: content-box;
   height: inherit;
   overflow-y: auto;
+  flex-grow: 3;
 }
 
 .list-icon {
