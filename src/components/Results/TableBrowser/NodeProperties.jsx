@@ -276,12 +276,7 @@ const NodeProperties = props => {
         }
       })
 
-      if(propertyName === 'iquerypercentaltered'){
-        attributes.push({
-          title: camelCaseToTitleCase(propertyName),
-          content: Array.from(propertyList)
-        });
-      } else if (propertyList.size > 1) {
+      if (propertyList.size > 1) {
         attributes.push({
           title: camelCaseToTitleCase(propertyName),
           content:
@@ -362,68 +357,44 @@ const NodeProperties = props => {
             )
             break
           case nodeProperties:
-            // secondaryString = 'Node Properties'
-            // displayCol2.push(
-            //   <ListItem
-            //     key={index++}
-            //     className={classes.noPadding}
-            //     disableGutters={true}
-            //   >
-            //     <ListItemText
-            //       primary={
-            //         <React.Fragment>
-            //           <Typography variant="caption" color="textSecondary">
-            //             {secondaryString}
-            //           </Typography>
-            //           <div>
-            //             <Typography variant="caption">{primaryString}</Typography>
-            //           </div>
-            //         </React.Fragment>
-            //       }
-            //     />
-            //   </ListItem>
-            // )
+            secondaryString = 'Node Properties'
+            displayCol2.push(
+              <ListItem
+                key={index++}
+                className={classes.noPadding}
+                disableGutters={true}
+              >
+                <ListItemText
+                  primary={
+                    <React.Fragment>
+                      <Typography variant="caption" color="textSecondary">
+                        {secondaryString}
+                      </Typography>
+                      <div>
+                        <Typography variant="caption">{primaryString}</Typography>
+                      </div>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            )
             break
         }
       }
     })
 
-    // primaryString = '';
-    // const filteredAttributes = ['Iquerypercentaltered']
-    // attributes.forEach(entry => {
-    //   if(filteredAttributes.includes(entry.title)){
-    //     const alterationPercentage = entry.content.split('::s')[1];
-    //     primaryString += `Alteration Frequency: ${alterationPercentage}`;
-    //   }
-    // })
-    // primaryString = formatPrimary(primaryString)
-    // secondaryString = 'Additional properties'
 
-    const alterationPercentages = completeListProperties['iquerypercentaltered'];
-    let alterationPercentageContent = null;
-    if(alterationPercentages != null) {
-      console.log(alterationPercentages);
-      alterationPercentageContent = (
-        <div>
-          {
-          Array.from(alterationPercentages).map(alterationEntry => {
-            const [geneId, alterationPercentage] = alterationEntry.split('::s');
+    primaryString = ''
+    attributes.forEach(entry => {
+      if (!entry.displayed) {
+        primaryString += entry.title + ': ' + entry.content + '<br>'
+        entry.displayed = true
+      }
+    })
+    primaryString = formatPrimary(primaryString)
+    secondaryString = 'Additional properties'
 
-            return (
-              <Typography variant="caption">
-                <div style={{display: 'flex'}} key={geneId}>
-                  <div style={{width: '75px'}}>{geneId}</div>
-                  <div>{alterationPercentage}</div>
-                </div>
-              </Typography>)
-          })
-          }
-        </div>  
-      );
-    }
-
-
-    // if (primaryString !== '') {
+    if (primaryString !== '') {
       displayCol1.push(
         <ListItem
           key={index++}
@@ -435,17 +406,18 @@ const NodeProperties = props => {
             primary={
               <React.Fragment>
                 <Typography variant="caption" color="textSecondary">
-                  {'Alteration Percentage'}
+                  {secondaryString}
                 </Typography>
                 <div>
-                  <Typography variant="body2">{alterationPercentageContent}</Typography>
+                  <Typography variant="body2">{primaryString}
+                  </Typography>
                 </div>
               </React.Fragment>
             }
           />
         </ListItem>
       )
-    // }
+    }
 
     const summary = (
       <table>
