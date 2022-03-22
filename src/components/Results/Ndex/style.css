@@ -105,12 +105,12 @@
 .network-list-wrapper {
   box-sizing: content-box;
   width: 100%;
-  height: 100%;
+  height: inherit;
 }
 
 .network-list {
   box-sizing: content-box;
-  height: 100%;
+  height: inherit;
   overflow-y: auto;
 }
 

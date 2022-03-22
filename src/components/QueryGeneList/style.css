@@ -1,6 +1,5 @@
 .query-gene-list-wrapper {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -25,17 +24,14 @@
 
 .query-gene-list-container {
   background-color: #efefef;
-  grid-column: 12/13;
   margin-top: 7.93em;
-  grid-row: 2/3;
   overflow-y: scroll;
 }
 
 .headerless-query-gene-list-container { 
   background-color: #efefef;
   padding-top: 0;
-  grid-column: 12/13;
-  grid-row: 2/3;
   margin: 0;
-  height: 100vh;
+  height: 100%;
+  overflow-y: scroll;
 }

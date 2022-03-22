@@ -6,6 +6,7 @@ import MenuList from '@material-ui/core/MenuList';
 import Typography from '@material-ui/core/Typography';
 
 import SortPanel from './SortPanel';
+import QueryGeneList from '../../QueryGeneList';
 
 import './style.css';
 
@@ -211,19 +212,24 @@ const NetworkList = (props) => {
   return (
     <div className='network-list-wrapper'>
       <SortPanel {...props} />
-      <div className='network-list' style={enrichmentStyle}>
-        <MenuList className={props.classes.noPadding}>
-          {props.search.actualResults.map((entry) =>
-            props.renderNetworkListItem(
-              props.search.queryList.length,
-              entry,
-              props.classes,
-              handleListItemClick,
-              selectedIndex,
-              index++
-            )
-          )}
-        </MenuList>
+      <div style={{display: 'flex', height: '100%'}}>
+        <div className='network-list' style={enrichmentStyle}>
+          <MenuList className={props.classes.noPadding}>
+            {props.search.actualResults.map((entry) =>
+              props.renderNetworkListItem(
+                props.search.queryList.length,
+                entry,
+                props.classes,
+                handleListItemClick,
+                selectedIndex,
+                index++
+              )
+            )}
+          </MenuList>
+        </div>
+        <div>
+          <QueryGeneList {...props} />
+        </div>
       </div>
     </div>
   );
