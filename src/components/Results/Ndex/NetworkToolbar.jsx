@@ -31,7 +31,7 @@ import NetworkProperties from '../TableBrowser/NetworkProperties';
 
 const styles = (theme) => ({
   toolbar: {
-    background: '#EFEFEF',
+    background: 'rgba(0, 0, 0, 0.08)',
     height: '4em',
     paddingTop: '0',
     paddingBottom: '0',

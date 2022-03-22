@@ -92,9 +92,9 @@ const GeneList = props => {
 
   return (
     <div className="gene-list-wrapper">
-      <List>
+      <div>
         {sorted.map(geneValue => (
-          <ListItem key={geneValue} style={{paddingTop: 0, paddingBottom: 0}}>
+          <div key={geneValue} style={{paddingTop: 0, paddingBottom: 0, paddingLeft: '8px', paddingRight: 0}}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
               exclusive
@@ -116,9 +116,9 @@ const GeneList = props => {
                 }
               </ToggleButton>
             </ToggleButtonGroup>
-          </ListItem>
+          </div>
         ))}
-      </List>
+      </div>
     </div>
   )
 }

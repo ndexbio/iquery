@@ -15,7 +15,7 @@
 }
 
 .table-browser {
-  background-color: #efefef;
+  background-color: rgba(0, 0, 0, 0.08);
 }
 
 .table-browser-panel {
@@ -131,14 +131,14 @@
 .gutter {
   margin: 0;
   padding: 0;
-  background-color: #efefef;
+  background-color: rgba(0, 0, 0, 0.08);
   background-repeat: no-repeat;
 }
 
 .gutter-horizontal {
   margin: 0;
   padding: 0;
-  background-color: #efefef;
+  background-color: rgba(0, 0, 0, 0.08);
   background-repeat: no-repeat;
   cursor: col-resize;
 }

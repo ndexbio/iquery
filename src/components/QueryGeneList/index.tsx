@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './style.css'
 
 import GeneList from '../GeneList'
+import { Typography } from '@material-ui/core'
 
 /**
  * List of query genes displayed on the right side of the window
@@ -71,17 +72,36 @@ const QueryGeneList = props => {
     setGeneToNodeMap(geneMap)
   }, [network])
 
+  const genesValidated = validateGenesWithMyGene && results && results.genes.size;
+  const queryGeneCount = `(${network.hitGenes.length} / ${ genesValidated ? results.genes.size : searchResults.query.length})`;
 
 
   return (
     <div className={hideSearchBar ? 'headerless-query-gene-list-container' : 'query-gene-list-container'}>
       <div className={'query-gene-list-wrapper'}>
-        <div className={'query-gene-list-title'}>
-          Query Genes{' '}
-          {
-            validateGenesWithMyGene && results && results.genes.size ? `(${network.hitGenes.length} / ${results.genes.size})` : `(${network.hitGenes.length} / ${searchResults.query.length})`
-          }
-        </div>
+        <Typography variant="caption" color="textPrimary">
+          <div className={'query-gene-list-title'}>
+            <div>
+            Query Genes
+            </div>
+
+            <div>
+              <span>
+                <Typography variant="caption" color="textSecondary">
+                  <Typography 
+                    style={{fontWeight: 'bold', fontSize: '1.25em'}} 
+                    variant="caption" 
+                    color="secondary">
+                      {network.hitGenes.length}
+                  </Typography>
+                  <span>
+                   {` / ${ genesValidated ? results.genes.size : searchResults.query.length}`}
+                  </span>
+                </Typography>
+              </span>
+            </div>
+          </div>
+        </Typography>
         <GeneList geneToNodeMap={geneToNodeMap} {...props} />
       </div>
     </div>
