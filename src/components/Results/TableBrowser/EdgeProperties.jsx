@@ -334,27 +334,27 @@ const EdgeProperties = props => {
             )
             break
           case edgeProperties:
-            // secondaryString = 'Edge Properties'
-            // displayCol2.push(
-            //   <ListItem
-            //     key={Math.random()}
-            //     className={classes.listPadding}
-            //     disableGutters={true}
-            //   >
-            //     <ListItemText
-            //       primary={
-            //         <React.Fragment>
-            //           <Typography variant="caption" color="textSecondary">
-            //             {secondaryString}
-            //           </Typography>
-            //           <div>
-            //             <Typography variant="body2">{primaryString}</Typography>
-            //           </div>
-            //         </React.Fragment>
-            //       }
-            //     />
-            //   </ListItem>
-            // )
+            secondaryString = 'Edge Properties'
+            displayCol2.push(
+              <ListItem
+                key={Math.random()}
+                className={classes.listPadding}
+                disableGutters={true}
+              >
+                <ListItemText
+                  primary={
+                    <React.Fragment>
+                      <Typography variant="caption" color="textSecondary">
+                        {secondaryString}
+                      </Typography>
+                      <div>
+                        <Typography variant="body2">{primaryString}</Typography>
+                      </div>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            )
             break
         }
       }
