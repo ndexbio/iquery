@@ -1293,14 +1293,6 @@
     fs "^0.0.1-security"
     lodash "^4.17.10"
 
-"@js4cytoscape/cyannotation-cx2js@^0.8.4":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@js4cytoscape/cyannotation-cx2js/-/cyannotation-cx2js-0.8.4.tgz#bf7f1d1ac6ceb77e5921a83d9ff46a17e649e8d4"
-  integrity sha512-3zvzRvOjzeDssicQt0RCidmCG7kbfvrm/rU/uFfAlKknRR+o6S8FP2dAcy8JvXSuq5dgBO/+Qv0t4M5Zz9+sCQ==
-  dependencies:
-    cytoscape-canvas "3.0.1"
-    lodash "^4.17.10"
-
 "@material-ui/core@^4.12.3":
   version "4.12.3"
   resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.12.3.tgz#80d665caf0f1f034e52355c5450c0e38b099d3ca"
@@ -3458,6 +3450,14 @@ csstype@^3.0.2:
   version "3.0.10"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.10.tgz#2ad3a7bed70f35b965707c092e5f30b327c290e5"
   integrity sha512-2u44ZG2OcNUO9HDp/Jl8C07x6pU/eTR3ncV91SiK3dhG9TWvRVsCoJw14Ckx5DgWkzGA3waZWO3d7pgqpUI/XA==
+
+cyannotation-cx2js@^0.8.5:
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/cyannotation-cx2js/-/cyannotation-cx2js-0.8.5.tgz#63c17cc0b49eb704f0630ffbb9e7477a395a003b"
+  integrity sha512-q03TrPe0NCJLo58IMFsUES7qyTVZmTwfXtTti+BzQltS/SOCy0frsgBQprJ0eYQ3yZqi1FWy3kBRjmzFwxUiUg==
+  dependencies:
+    cytoscape-canvas "3.0.1"
+    lodash "^4.17.10"
 
 cytoscape-canvas@3.0.1, cytoscape-canvas@^3.0.1:
   version "3.0.1"
