@@ -38,7 +38,7 @@ const DEF_BG_COLOR = '#FFFFFF';
 
 const CytoscapeViewer = (props) => {
   const { highlights, fit } = props.uiState;
-  const { originalCX, queryGenes } = props.network;
+  const { originalCX } = props.network;
   const cyjs = props.network.network;
   const [originalElements, setOriginalElements] = useState(
     cyjs ? cloneDeep(cyjs.elements) : null
@@ -105,8 +105,6 @@ const CytoscapeViewer = (props) => {
     if (cyInstance === undefined || cyInstance === null) {
       return;
     }
-
-    window.cy = cyInstance;
 
     // Background tapped: Remove selection
     // (This is the standard Cytosape UX)
@@ -345,7 +343,7 @@ const CytoscapeViewer = (props) => {
 
     if (highlights) {
       cyInstance.elements().addClass('faded');
-      const query = cyInstance.nodes().filter(n => queryGenes.includes(n.data('name')));
+      const query = cyInstance.nodes().filter('node[?querynode]');
       query.addClass('highlight');
     } else {
       cyInstance
