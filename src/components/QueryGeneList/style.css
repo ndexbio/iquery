@@ -21,7 +21,9 @@
 
 .query-gene-list-container {
   background-color: rgba(0, 0, 0, 0.08);
-  margin-top: 7.93em;
+  padding-top: 0;
+  margin: 0;
+  height: 100%;
   overflow-y: scroll;
 }
 
