@@ -55,7 +55,6 @@ const SaveToNDExButton = props => {
   }
 
   const disabled = !(props.network.uuid && props.network.uuid.length > 0)
-  console.log(classes.button);
 
   return (
     <Tooltip title="Save this network to your NDEx account" placement="bottom">
