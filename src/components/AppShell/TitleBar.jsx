@@ -70,6 +70,9 @@ const styles = (theme) => ({
     display: 'inline-block',
     whiteSpace: 'nowrap',
   },
+  title: {
+    fontWeight: 500
+  }
 });
 
 const titleStyle = {
@@ -107,7 +110,7 @@ class TitleBar extends React.Component {
         })}
       >
         <div className={classes.noWrap}>
-          <Toolbar disableGutters={!open}>
+          <Toolbar disableGutters={!open} variant='dense'>
             <Tooltip
               title='Search by Relevant Pathways / Protein-Protein Interactions / Gene Association'
               aria-label='NDEx_tooltip'
@@ -115,7 +118,7 @@ class TitleBar extends React.Component {
               <div>
                 <Button style={titleStyle} onClick={this.handleHomeButton}>
                   <HomeIcon fontSize='medium' className={classes.homeLogo} />
-                  <Typography variant='h6' color='inherit' noWrap={true}>
+                  <Typography className={classes.title} variant='body1' color='inherit' noWrap={true}>
                     NDEx Integrated Query
                   </Typography>
                 </Button>
