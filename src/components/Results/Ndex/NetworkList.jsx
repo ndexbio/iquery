@@ -200,20 +200,12 @@ const NetworkList = (props) => {
 
   const selectedIndex = props.network.listIndex;
 
-  let enrichmentStyle;
-  if (props.uiState.selectedSource === 'enrichment') {
-    enrichmentStyle = {
-      height: 'calc(100% - 49px)',
-    };
-  } else {
-    enrichmentStyle = {};
-  }
 
   return (
     <div className='network-list-wrapper'>
       <SortPanel {...props} />
       <div style={{display: 'flex', height: '100%'}}>
-        <div className='network-list' style={enrichmentStyle}>
+        <div className='network-list'>
           <MenuList className={props.classes.noPadding}>
             {props.search.actualResults.map((entry) =>
               props.renderNetworkListItem(
