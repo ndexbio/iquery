@@ -65,6 +65,30 @@ const InfoModal = props => {
         </DialogTitle>
         <DialogContent dividers={true}>
           <DialogContentText component="span">
+          <Typography component="div" variant="h6" color="textPrimary">
+              Similarity:
+            </Typography>
+            <Typography component="div" variant="body2">
+              This is a way of scoring the similarity between the query set and
+              the genes in the network, while taking into account that some
+              genes are much more universal than other genes, and will appear in
+              many more networks without adding much information. This is based
+              on cosine similarity, using values derived from the{' '}
+              <a
+                href="https://ethen8181.github.io/machine-learning/clustering_old/tf_idf/tf_idf.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Term Frequency-Inverse Document Frequency
+              </a>{' '}
+              of each gene in the query set and the network. Rare genes that are
+              shared between the query set and network will contribute more to
+              the similarity score than common genes, resulting in a higher
+              similarity score. When sorting by similarity, networks that have
+              high similarity are at the top of the list, and networks that have
+              low similarity are at the bottom of the list.{' '}
+            </Typography>
+            <br />
             <Typography component="div" variant="h6" color="textPrimary">
               Overlap:
             </Typography>
@@ -85,8 +109,7 @@ const InfoModal = props => {
               in a list where networks are sorted by overlap, and networks that
               are tied for overlap are sorted by <em>p</em>-value.
             </Typography>
-            <br />
-            <Typography component="div" variant="h6" color="textPrimary">
+            {/* <Typography component="div" variant="h6" color="textPrimary">
               <em>P</em>-Value:
             </Typography>
             <Typography component="div" variant="body2">
@@ -146,30 +169,7 @@ const InfoModal = props => {
               </a>
               .
             </Typography>
-            <br />
-            <Typography component="div" variant="h6" color="textPrimary">
-              Similarity:
-            </Typography>
-            <Typography component="div" variant="body2">
-              This is a way of scoring the similarity between the query set and
-              the genes in the network, while taking into account that some
-              genes are much more universal than other genes, and will appear in
-              many more networks without adding much information. This is based
-              on cosine similarity, using values derived from the{' '}
-              <a
-                href="https://ethen8181.github.io/machine-learning/clustering_old/tf_idf/tf_idf.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Term Frequency-Inverse Document Frequency
-              </a>{' '}
-              of each gene in the query set and the network. Rare genes that are
-              shared between the query set and network will contribute more to
-              the similarity score than common genes, resulting in a higher
-              similarity score. When sorting by similarity, networks that have
-              high similarity are at the top of the list, and networks that have
-              low similarity are at the bottom of the list.{' '}
-            </Typography>
+            <br /> */}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
