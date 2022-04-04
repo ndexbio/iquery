@@ -102,11 +102,17 @@ const HomePanel = (props) => {
   // Display the search results
   // TODO: define types for props
   return (
-    <AppShell {...props}>
+    <div style={{display: 'flex'}}>
+      <AppShell {...props} />
       <div className="container">
         <Results {...props} />
       </div>
-    </AppShell>
+    </div>
+    // <AppShell {...props}>
+    //   <div className="container">
+    //     <Results {...props} />
+    //   </div>
+    // </AppShell>
   )
 }
 

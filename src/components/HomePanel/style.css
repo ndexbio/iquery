@@ -74,7 +74,7 @@
   grid-column: 1/13;
   grid-row: 2/3;
   margin: 0;
-  height: 100vh;
+  /* height: 100vh; */
   overflow: hidden;
 }
 
