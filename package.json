@@ -8,7 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.28",
     "@material-ui/styles": "^4.11.4",
     "classnames": "^2.3.1",
-    "@js4cytoscape/cx2js": "^0.6.7-alpha.0",
+    "@js4cytoscape/cx2js": "^0.6.7-alpha.1",
     "cyannotation-cx2js": "^0.8.5",
     "cytoscape": "^3.20.0",
     "cytoscape-canvas": "^3.0.1",
