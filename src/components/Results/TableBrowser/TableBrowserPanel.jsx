@@ -2,6 +2,8 @@ import React from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import HoverTab from '../HoverTab';
 import { makeStyles } from '@material-ui/styles';
+import { IconButton } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { getNetworkAttributes, getNetworkElementAttributes } from './attribute-util';
 
@@ -86,26 +88,32 @@ const TableBrowserPanel = (props) => {
   return (
     <ErrorBoundary message={'Sorry, there was an error loading tab content.'}>
       <div className='table-browser-panel'>
-        <Tabs value={value} onChange={handleChange} className={classes.root}>
-          <HoverTab
-            className={classes.root}
-            key={'network-tab'}
-            label={'Network'}
-            backgroundcolor={backgroundcolor}
-          />
-          <HoverTab
-            className={classes.root}
-            key={'nodes-tab'}
-            label={'Nodes'}
-            backgroundcolor={backgroundcolor}
-          />
-          <HoverTab
-            className={classes.root}
-            key={'edges-tab'}
-            label={'Edges'}
-            backgroundcolor={backgroundcolor}
-          />
-        </Tabs>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+          <Tabs value={value} onChange={handleChange} className={classes.root}>
+            <HoverTab
+              className={classes.root}
+              key={'network-tab'}
+              label={'Network'}
+              backgroundcolor={backgroundcolor}
+            />
+            <HoverTab
+              className={classes.root}
+              key={'nodes-tab'}
+              label={'Nodes'}
+              backgroundcolor={backgroundcolor}
+            />
+            <HoverTab
+              className={classes.root}
+              key={'edges-tab'}
+              label={'Edges'}
+              backgroundcolor={backgroundcolor}
+            />
+          </Tabs>
+          <IconButton onClick={() => props.networkActions.setShowTableModal(false)} aria-label="close">
+           <CloseIcon/>
+          </IconButton>
+
+        </div>
           <TabContent value={value} {...props} />
       </div>
     </ErrorBoundary>
