@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { Tooltip } from '@material-ui/core'
 import InfoIcon from '@material-ui/icons/Info'
 import IconButton from '@material-ui/core/IconButton'
 import Dialog from '@material-ui/core/Dialog'
@@ -46,12 +47,20 @@ const InfoModal = props => {
   const handleClose = () => {
     setOpen(false)
   }
-
+  const infoTooltip = (
+    <div>
+      <div>{`Similarity: rare genes in common between the network and query gene list produce a higher score than common genes`}</div>
+      <br/>
+      <div>{`Overlap: the number of genes in common between the query gene list and the network`}</div>
+    </div>
+  )
   return (
     <React.Fragment>
-      <IconButton aria-haspopup="true" onClick={handleOpen} style={infoStyle}>
-        <InfoIcon style={iconStyle} />
-      </IconButton>
+      <Tooltip title={infoTooltip} placement='bottom'>
+        <IconButton aria-haspopup="true" onClick={handleOpen} style={infoStyle}>
+          <InfoIcon style={iconStyle} />
+        </IconButton>
+      </Tooltip>
       <Dialog
         open={open}
         onClose={handleClose}
