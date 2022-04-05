@@ -33,7 +33,7 @@ const Highlighter = props => {
   }
 
   return (
-    <Tooltip title="Highlight genes" placement="bottom">
+    <Tooltip title="Highlight query genes" placement="bottom">
       <div>
         <Button
           className={classes.button}
