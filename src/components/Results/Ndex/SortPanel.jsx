@@ -128,7 +128,10 @@ const SortPanel = props => {
       </React.Fragment>
     )
   } else {
-    return null
+    return <React.Fragment>
+      <div style={divStyle}>
+      </div>
+    </React.Fragment>
   }
 }
 

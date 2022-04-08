@@ -103,7 +103,7 @@ class TitleBar extends React.Component {
 
     return (
       <AppBar
-        position='fixed'
+        position='static'
         color='inherit'
         className={classNames(classes.appBar, {
           [classes.appBarShift]: open,

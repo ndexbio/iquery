@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import './style.css'
 
-import QueryGeneList from '../QueryGeneList'
 import Results from '../Results'
 import AppShell from '../AppShell'
 import LoadingPanel from '../LoadingPanel'
@@ -82,9 +81,10 @@ const HomePanel = (props) => {
   // TODO: Display error message
   if (search === undefined || search === null) {
     return (
-      <AppShell {...props}>
+      <div style={{height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column'}}>
+        <AppShell {...props} />
         <LoadingPanel title="No data" />
-      </AppShell>
+      </div>
     )
   }
 
@@ -93,26 +93,22 @@ const HomePanel = (props) => {
   // Still searching and no result is available
   if (searchResults === null || isFetching) {
     return (
-      <AppShell {...props}>
-        <LoadingPanel title="Loading Results..." />
-      </AppShell>
+      <div style={{height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column'}}>
+        <AppShell {...props} />
+        <LoadingPanel style={{flexGrow: 1}} title="Loading Results..." />
+      </div>
     )
   }
 
   // Display the search results
   // TODO: define types for props
   return (
-    <div style={{display: 'flex'}}>
+    <div style={{display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw'}}>
       <AppShell {...props} />
       <div className="container">
         <Results {...props} />
       </div>
     </div>
-    // <AppShell {...props}>
-    //   <div className="container">
-    //     <Results {...props} />
-    //   </div>
-    // </AppShell>
   )
 }
 

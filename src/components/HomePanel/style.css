@@ -3,6 +3,7 @@
   grid-gap: 0;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: min-content 1fr;
+  flex-grow: 3;
 }
 
 .start-container {

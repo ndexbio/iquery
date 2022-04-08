@@ -2,8 +2,9 @@
   background-color: #ffffff;
   display: flex;
   /* height: calc(100% - 48px); */
-  position: relative;
+  /* position: relative; */
   right: 0;
+  flex-grow: 1;
 }
 
 .headerless-ndex-base {
@@ -110,7 +111,7 @@
 
 .network-list {
   box-sizing: content-box;
-  height: 80vh;
+  height: 88vh;
   overflow-y: scroll;
   flex-grow: 3;
 }
