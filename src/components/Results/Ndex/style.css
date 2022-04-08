@@ -116,6 +116,13 @@
   flex-grow: 3;
 }
 
+.headerless-network-list {
+  box-sizing: content-box;
+  height: 93vh;
+  overflow-y: scroll;
+  flex-grow: 3;
+}
+
 .list-icon {
   object-fit: scale-down;
   width: 2.5em;

@@ -199,13 +199,14 @@ const NetworkList = (props) => {
   }
 
   const selectedIndex = props.network.listIndex;
+  const hideSearchBar = props.uiState.hideSearchBar;
 
 
   return (
     <div className='network-list-wrapper'>
       <SortPanel {...props} />
       <div style={{display: 'flex', height: '100%'}}>
-        <div className='network-list'>
+        <div className={hideSearchBar ? 'headerless-network-list' : 'network-list'}>
           <MenuList className={props.classes.noPadding}>
             {props.search.actualResults.map((entry) =>
               props.renderNetworkListItem(
