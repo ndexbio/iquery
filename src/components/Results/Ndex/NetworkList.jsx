@@ -229,9 +229,9 @@ const NetworkList = (props) => {
             )}
           </MenuList>
         </div>
-        {/* <div>
+        <div>
           <QueryGeneList {...props} />
-        </div> */}
+        </div>
       </div>
     </div>
   );
