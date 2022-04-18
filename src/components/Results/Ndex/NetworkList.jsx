@@ -131,11 +131,13 @@ const NetworkList = (props) => {
       hits[0] != null
     ) {
       hits.sort(findSort('p-Value'));
-      const networkCount = hits[0].details.totalNetworkCount;
-      for (let i = 0; i < hits.length; i++) {
-        hits[i].details.PValue =
-          (hits[i].details.PValue * networkCount) / (i + 1);
-      }
+
+      // pvalue is now adjusted on the server side
+      // const networkCount = hits[0].details.totalNetworkCount;
+      // for (let i = 0; i < hits.length; i++) {
+      //   hits[i].details.PValue =
+      //     (hits[i].details.PValue * networkCount) / (i + 1);
+      // }
     }
   }, [hits]);
 
@@ -227,9 +229,9 @@ const NetworkList = (props) => {
             )}
           </MenuList>
         </div>
-        <div>
+        {/* <div>
           <QueryGeneList {...props} />
-        </div>
+        </div> */}
       </div>
     </div>
   );
