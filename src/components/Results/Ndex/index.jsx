@@ -11,7 +11,8 @@ import { camelCaseToTitleCase } from '../TableBrowser/camel-case-util'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Typography from '@material-ui/core/Typography'
 import { ListItem } from '@material-ui/core'
-
+import { Tooltip } from '@material-ui/core'
+import { withStyles } from '@material-ui/styles'
 const titleStyle = {
   lineHeight: '22px',
   wordBreak: 'break-word'
@@ -45,6 +46,14 @@ const tableStyle = {
   borderCollapse: 'collapse',
   borderSpacing: '0'
 }
+
+const WhiteTooltip = withStyles({
+  tooltip: {
+    backgroundColor: "white",
+    border: '1px solid rgba(0, 0, 0, 0.08)'
+  }
+})(Tooltip);
+
 
 /**
  * Top page for the application
@@ -207,7 +216,7 @@ const Ndex = props => {
               {hitGenes.length}
           </Typography>
           <span>
-            { `${props.uiState.sortBy === 'Similarity' ? ` / ${totalGeneCount}` : ' '} ${hitGenes.length === 1 ? 'match' : 'matches'}`}
+            { `${props.uiState.sortBy === 'Similarity' ? ` / ${totalGeneCount}` : ' '} ${hitGenes.length === 1 ? 'unique gene' : 'unique genes'}`}
           </span>
         </Typography>
       </span>
@@ -241,29 +250,44 @@ const Ndex = props => {
         }}
         selected={selectedIndex === index}
       >
-        <table style={tableStyle}>
-          <tbody>
-            <tr padding="0">
-              <td align="center" valign="middle" rowSpan="2" padding="0">
-                {icon}
-              </td>
-              {/* <td align="left" width="50px" padding="0"> */}
-                {/* {<Typography variant='caption' color='textSecondary'>Query Genes</Typography>} */}
-                {/* {newline} */}
-                {/* {genes} */}
-                {/* {newline} */}
-                {/* {pv} */}
-                {/* {newline} */}
-                {/* {similarity} */}
-              {/* </td> */}
-              <td align="left" padding="0">
-                {title}
-                {newline}
-                {subtitle}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <table style={tableStyle}>
+            <tbody>
+              <tr padding="0">
+                <td align="center" valign="middle" rowSpan="2" padding="0">
+                  {icon}
+                </td>
+                {/* <td align="left" width="50px" padding="0"> */}
+                  {/* {<Typography variant='caption' color='textSecondary'>Query Genes</Typography>} */}
+                  {/* {newline} */}
+                  {/* {genes} */}
+                  {/* {newline} */}
+                  {/* {pv} */}
+                  {/* {newline} */}
+                  {/* {similarity} */}
+                {/* </td> */}
+                <td align="left" padding="0">
+                  {title}
+                  {newline}
+                  {subtitle}
+                </td>
+              </tr>
+              <tr style={{  textOverflow: 'ellipsis', overflow: 'hidden'}}>
+                <td>
+                  <WhiteTooltip placement='bottom' title={
+                    <React.Fragment>
+                      <Typography variant='body2' color="secondary">
+                        {hitGenes.sort().join('  ')}
+                      </Typography>
+                  </React.Fragment>
+                  }>
+                    <Typography variant="caption" color="secondary" >
+                      { hitGenes.length > 4 ? `${hitGenes.sort().slice(0, 5).join(' ')}...` : hitGenes.sort().slice(0, 5).join(' ') }
+                    </Typography>
+                  </WhiteTooltip>
+                </td>
+              </tr>
+            </tbody>
+          </table>
       </ListItem>
     )
   }
@@ -601,7 +625,7 @@ const Ndex = props => {
   const { hideSearchBar } = props.uiState;
 
   return (
-    <Split sizes={[40, 60]} gutterSize={4} className={ hideSearchBar ? 'headerless-ndex-base' : "ndex-base" } >
+    <Split sizes={[30, 70]} gutterSize={4} className={ hideSearchBar ? 'headerless-ndex-base' : "ndex-base" } >
       <NetworkList
         renderNetworkListItem={renderNetworkListItem}
         handleFetch={handleFetch}
