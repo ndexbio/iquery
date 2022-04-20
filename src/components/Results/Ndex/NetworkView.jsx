@@ -7,7 +7,7 @@ import MemoTableBrowser from '../TableBrowser';
 import NetworkToolbar from './NetworkToolbar';
 
 import Dialog from '@material-ui/core/Dialog'
-
+import QueryGeneList from '../../QueryGeneList';
 const DEFAULT_RATIO = [100, 0];
 
 /**
@@ -52,7 +52,10 @@ const NetworkView = (props) => {
             : null
         }
       >
-        <NetworkViewer resized={resized} {...props} />
+        <div style={{display: 'flex'}}>
+          <QueryGeneList {...props} />
+          <NetworkViewer resized={resized} {...props} />        
+        </div>
       </Split>
     </div>
   );
