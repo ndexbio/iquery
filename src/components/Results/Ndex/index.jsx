@@ -13,6 +13,9 @@ import Typography from '@material-ui/core/Typography'
 import { ListItem } from '@material-ui/core'
 import { Tooltip } from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
+
+import QueryGeneList from '../../QueryGeneList'
+
 const titleStyle = {
   lineHeight: '22px',
   wordBreak: 'break-word'
@@ -20,13 +23,16 @@ const titleStyle = {
 
 const subtitleStyle = {
   height: '22px',
-  lineHeight: '22px',
+  // lineHeight: '22px',
+  fontSize: '1.25em',
+
   wordBreak: 'break-word',
 }
 
 const infoStyle = {
   display: 'block',
-  height: '22px',
+  // height: '22px',
+  // fontSize: '1.25em',
   margin: '0',
   padding: '0'
 }
@@ -108,7 +114,7 @@ const Ndex = props => {
 
   const renderNetworkListItem = (querySize, networkEntry, classes, handleListItemClick, selectedIndex, index) => {
     if (props.uiState.selectedSource === 'enrichment') {
-      return renderNetworkListItemEnrichment(networkEntry, handleListItemClick, selectedIndex, index)
+      return <EnrichmentListItem key={networkEntry?.networkUUID} {...props} networkEntry={networkEntry} handleListItemClick={handleListItemClick} selectedIndex={selectedIndex} index={index} />
     } else if (props.uiState.selectedSource.startsWith('interactome')) {
       return renderNetworkListItemInteractome(networkEntry, handleListItemClick, selectedIndex, index)
     } else {
@@ -116,7 +122,8 @@ const Ndex = props => {
     }
   }
 
-  const renderNetworkListItemEnrichment = (networkEntry, handleListItemClick, selectedIndex, index) => {
+  const EnrichmentListItem = (props) => {
+    const {networkEntry, results, handleListItemClick, selectedIndex, index} = props;
     const {
       description,
       networkUUID,
@@ -153,30 +160,30 @@ const Ndex = props => {
 
     let pVal = details.PValue
     if (pVal != null) {
-      const networkCount = details.totalNetworkCount
-      const threshold = Math.pow(10, Math.ceil(Math.log(1e-16 * networkCount) / Math.LN10))
-      if (pVal < threshold) {
-        pVal = '< ' + threshold
-      } else if (pVal > 1) {
-        pVal = '~ 1'
-      } else {
-        pVal = pVal.toExponential(2)
-      }
+      // const networkCount = details.totalNetworkCount
+      // const threshold = Math.pow(10, Math.ceil(Math.log(1e-16 * networkCount) / Math.LN10))
+      // if (pVal < threshold) {
+      //   pVal = '< ' + threshold
+      // } else if (pVal > 1) {
+      //   pVal = '~ 1'
+      // } else {
+      pVal = pVal.toExponential(2)
+      // }
     }
 
     const pv = (
-      <span style={infoStyle}>
-        <Typography display="inline" color={props.uiState.sortBy === 'p-Value' ? 'textPrimary' : 'textSecondary'}>
-          <strong>{pVal} </strong>
+      <div style={{...subtitleStyle, marginLeft: '10px', minWidth: '150px'}}>
+        <Typography style={{fontWeight: 'bold' }} variant="caption" display="inline" color={'textSecondary'}>
+          {`${pVal}  `}
         </Typography>
         <Typography
           variant="caption"
           display="inline"
-          color={props.uiState.sortBy === 'p-Value' ? 'textPrimary' : 'textSecondary'}
+          color={'textSecondary'}
         >
-          pv
+          p-value
         </Typography>
-      </span>
+      </div>
     )
 
     let similarity
@@ -208,7 +215,7 @@ const Ndex = props => {
     const title = <Typography variant='body2'style={titleStyle}>{description.split(':').slice(1)}</Typography>
 
     const subtitle = (
-      <span style={subtitleStyle}>
+      <span style={{...subtitleStyle, minWidth: '150px'}}>
         <Typography variant="caption" color="textSecondary">
           <Typography 
             style={{fontWeight: 'bold', fontSize: '1.25em'}} 
@@ -269,12 +276,16 @@ const Ndex = props => {
                 <td align="left" padding="0">
                   {title}
                   {newline}
-                  {subtitle}
+                  <div style={{display: 'flex', alignItems: 'center', marginBottom: '10px'}}>
+                    {subtitle}
+                    {pv}
+                  </div>
                 </td>
               </tr>
-              <tr style={{  textOverflow: 'ellipsis', overflow: 'hidden'}}>
-                <td>
-                  <WhiteTooltip placement='bottom' title={
+              <tr style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>
+                <td style={{ display: 'flex', alignItems: 'center' }}>
+                  {selectedIndex !== index ? 
+                    <WhiteTooltip placement='bottom' title={
                     <React.Fragment>
                       <Typography variant='body2' color="secondary">
                         <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -286,8 +297,9 @@ const Ndex = props => {
                     <Typography variant="caption" color="secondary" >
                       { hitGenes.length > 5 ? `${hitGenes.sort().slice(0, 5).join(' ')}...` : hitGenes.sort().slice(0, 5).join(' ') }
                     </Typography>
-                  </WhiteTooltip>
+                  </WhiteTooltip> : null}
                 </td>
+                {selectedIndex === index ? <QueryGeneList {...props} /> : null}
               </tr>
             </tbody>
           </table>
@@ -530,15 +542,15 @@ const Ndex = props => {
 
     let pVal = details.PValue
     if (pVal != null) {
-      const networkCount = details.totalNetworkCount
-      const threshold = Math.pow(10, Math.ceil(Math.log(1e-16 * networkCount) / Math.LN10))
-      if (pVal < threshold) {
-        pVal = '< ' + threshold
-      } else if (pVal > 1) {
-        pVal = '~ 1'
-      } else {
+      // const networkCount = details.totalNetworkCount
+      // const threshold = Math.pow(10, Math.ceil(Math.log(1e-16 * networkCount) / Math.LN10))
+      // if (pVal < threshold) {
+      //   pVal = '< ' + threshold
+      // } else if (pVal > 1) {
+      //   pVal = '~ 1'
+      // } else {
         pVal = pVal.toExponential(2)
-      }
+      // }
     }
 
     const pv = (

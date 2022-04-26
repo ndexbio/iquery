@@ -95,30 +95,12 @@ const InfoModal = props => {
               the similarity score than common genes, resulting in a higher
               similarity score. When sorting by similarity, networks that have
               high similarity are at the top of the list, and networks that have
-              low similarity are at the bottom of the list.{' '}
+              low similarity are at the bottom of the list.  Networks with matching similarity 
+              scores are then sorted by <em>p</em>-values, and if <em>p</em>-value matches, 
+              sorted by overlap and then alphabetically.{' '}
             </Typography>
             <br />
             <Typography component="div" variant="h6" color="textPrimary">
-              Overlap:
-            </Typography>
-            <Typography component="div" variant="body2">
-              This refers to the number of genes that are in both the query set
-              and the network. When sorting by overlap, networks with a high
-              number of overlapping genes are at the top of the list, and
-              networks with a low number of overlapping genes are at the bottom
-              of the list.{' '}
-              <Typography
-                component="span"
-                variant="inherit"
-                color="textPrimary"
-              >
-                <strong>Sorting is stable</strong>
-              </Typography>
-              , so sorting by <em>p</em>-value and then by overlap will result
-              in a list where networks are sorted by overlap, and networks that
-              are tied for overlap are sorted by <em>p</em>-value.
-            </Typography>
-            {/* <Typography component="div" variant="h6" color="textPrimary">
               <em>P</em>-Value:
             </Typography>
             <Typography component="div" variant="body2">
@@ -157,7 +139,7 @@ const InfoModal = props => {
               false discovery rate that is an effect of querying a large
               database of networks. This is done using the{' '}
               <a
-                href="http://www.jstor.org/stable/2346101"
+                href="https://royalsocietypublishing.org/doi/full/10.1098/rsta.2009.0127"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -166,9 +148,12 @@ const InfoModal = props => {
               , where each <em>p</em>-value is multiplied by the number of
               networks queried, and then divided by its rank relative to other{' '}
               <em>p</em>-values (where low <em>p</em>-values have a low rank and
-              vice versa). When sorting by <em>p</em>-value, networks with a low{' '}
-              <em>p</em>-value are at the top of the list, and networks with a
-              high <em>p</em>-value are at the bottom of the list.{' '}
+              vice versa). Lower value <em>p</em>-values are propagated up the list so that 
+              the <em>p</em>-values are always ascending. When sorting by <em>p</em>-value, 
+              networks with a low <em>p</em>-value are at the top of the list, and networks with a 
+              high <em>p</em>-value are at the bottom of the list. 
+              Networks with matching <em>p</em>-values are then sorted by overlap, and if overlap matches, 
+              sorted alphabetically.{' '}
               <a
                 href="https://github.com/ndexbio/ndex-enrichment-rest/wiki/How-Pvalue-is-calculated"
                 target="_blank"
@@ -178,7 +163,19 @@ const InfoModal = props => {
               </a>
               .
             </Typography>
-            <br /> */}
+            <br />
+
+            <br/>
+            <Typography component="div" variant="h6" color="textPrimary">
+              Overlap:
+            </Typography>
+            <Typography component="div" variant="body2">
+              This refers to the number of genes that are in both the query set
+              and the network. When sorting by overlap, networks with a high
+              number of overlapping genes are at the top of the list, and
+              networks with a low number of overlapping genes are at the bottom
+              of the list. Networks with matching overlaps are sorted alphabetically. {' '}
+            </Typography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

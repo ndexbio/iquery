@@ -53,7 +53,6 @@ const NetworkView = (props) => {
         }
       >
         <div style={{display: 'flex'}}>
-          <QueryGeneList {...props} />
           <NetworkViewer resized={resized} {...props} />        
         </div>
       </Split>

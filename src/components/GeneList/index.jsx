@@ -43,6 +43,7 @@ const GeneList = props => {
   const hitSets = new Set(hits)
 
   const handleChange = (event, newAlignment) => {
+    event.stopPropagation();
     if (newAlignment in props.geneToNodeMap) {
       const alignment = props.geneToNodeMap[newAlignment]
       if (alignment === props.search.selectedGenes[0]) {
@@ -91,10 +92,9 @@ const GeneList = props => {
   const sorted = [...matchedSorted, ...unmatchedSorted]
 
   return (
-    <div className="gene-list-wrapper">
-      <div>
+    <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', maxHeight: '500px', overflowX: 'hidden', overflowY: 'scroll'}}>
         {sorted.map(geneValue => (
-          <div key={geneValue} style={{paddingTop: 0, paddingBottom: 0, paddingLeft: '8px', paddingRight: 0}}>
+          <div key={geneValue} style={{ minWidth: 0, width: '80px', paddingTop: 0, paddingBottom: 0, paddingLeft: '8px', paddingRight: 0}}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
               exclusive
@@ -102,11 +102,13 @@ const GeneList = props => {
               style={toggleButtonGroupStyle}
             >
               <ToggleButton
+                disabled={!hitSets.has(geneValue.toUpperCase())}
                 value={geneValue}
                 style={
-                  hitSets.has(geneValue) && props.search.selectedGenes[0] === geneValue
+                  {...(hitSets.has(geneValue) && props.search.selectedGenes[0] === geneValue
                     ? selectedButtonStyle
-                    : buttonStyle
+                    : buttonStyle),
+                    cursor: hitSets.has(geneValue.toUpperCase()) ? 'pointer' : 'default'}
                 }
               >
                 {
@@ -118,7 +120,6 @@ const GeneList = props => {
             </ToggleButtonGroup>
           </div>
         ))}
-      </div>
     </div>
   )
 }
