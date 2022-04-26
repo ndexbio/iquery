@@ -6,7 +6,7 @@ import MenuList from '@material-ui/core/MenuList';
 import Typography from '@material-ui/core/Typography';
 
 import SortPanel from './SortPanel';
-import QueryGeneList from '../../QueryGeneList';
+import { orderBy } from 'lodash';
 
 import './style.css';
 
@@ -57,50 +57,64 @@ const styles = (theme) => ({
   },
 });
 
-const findSort = (sortBy) => {
-  if (sortBy === 'p-Value') {
-    return (a, b) => {
-      if (a.details.PValue > b.details.PValue) {
-        return 1;
-      } else if (a.details.PValue < b.details.PValue) {
-        return -1;
-      } else {
-        if (a.rank > b.rank) {
-          return 1;
-        } else {
-          return -1;
-        }
-      }
-    };
-  } else if (sortBy === 'Similarity') {
-    return (a, b) => {
-      if (a.details.similarity < b.details.similarity) {
-        return 1;
-      } else if (a.details.similarity > b.details.similarity) {
-        return -1;
-      } else {
-        if (a.rank > b.rank) {
-          return 1;
-        } else {
-          return -1;
-        }
-      }
-    };
-  } else {
-    return (a, b) => {
-      if (a.hitGenes.length < b.hitGenes.length) {
-        return 1;
-      } else if (a.hitGenes.length > b.hitGenes.length) {
-        return -1;
-      } else {
-        if (a.rank > b.rank) {
-          return 1;
-        } else {
-          return -1;
-        }
-      }
-    };
-  }
+// const findSort = (sortBy) => {
+//   if (sortBy === 'p-Value') {
+//     return (a, b) => {
+//       if (a.details.PValue > b.details.PValue) {
+//         return 1;
+//       } else if (a.details.PValue < b.details.PValue) {
+//         return -1;
+//       } else {
+//         if (a.rank > b.rank) {
+//           return 1;
+//         } else {
+//           return -1;
+//         }
+//       }
+//     };
+//   } else if (sortBy === 'Similarity') {
+//     return (a, b) => {
+//       if (a.details.similarity < b.details.similarity) {
+//         return 1;
+//       } else if (a.details.similarity > b.details.similarity) {
+//         return -1;
+//       } else {
+//         if (a.rank > b.rank) {
+//           return 1;
+//         } else {
+//           return -1;
+//         }
+//       }
+//     };
+//   } else {
+//     return (a, b) => {
+//       if (a.hitGenes.length < b.hitGenes.length) {
+//         return 1;
+//       } else if (a.hitGenes.length > b.hitGenes.length) {
+//         return -1;
+//       } else {
+//         if (a.rank > b.rank) {
+//           return 1;
+//         } else {
+//           return -1;
+//         }
+//       }
+//     };
+//   }
+// };
+
+const pvalSort = hit => hit.details.Pvalue;
+const similaritySort = hit => hit.details.similarity;
+const overlapSort = hit => hit.hitGenes.length;
+const titleSort = hit => hit.description;
+
+const sortFns = {
+  // sort by pvalue asc, overlap desc, alphabetically asc
+  'p-Value': (hits) => orderBy(hits, [pvalSort, overlapSort, titleSort], ['asc', 'desc', 'asc']),
+  // sort by similarity desc,  pvalue asc, overlap desc, alphabetically asc
+  'Similarity': (hits) => orderBy(hits, [similaritySort, pvalSort, overlapSort, titleSort], ['desc', 'asc', 'desc', 'asc']),
+  // sort by overlap desc, alphabetically asc
+  'Overlap': (hits) => orderBy(hits, [overlapSort, titleSort], ['desc', 'asc'])
 };
 
 const NetworkList = (props) => {
@@ -130,7 +144,7 @@ const NetworkList = (props) => {
       hits != null &&
       hits[0] != null
     ) {
-      hits.sort(findSort('p-Value'));
+      hits = sortFns['p-Value'](hits);
 
       // pvalue is now adjusted on the server side
       // const networkCount = hits[0].details.totalNetworkCount;
@@ -146,14 +160,13 @@ const NetworkList = (props) => {
     if (hits !== null) {
       const firstHit = cloneDeep(hits[0]);
       if (props.uiState.selectedSource === 'enrichment') {
-        const sortFunction = findSort(props.uiState.sortBy);
 
         //Allow stable sorting
         for (let i = 0; i < hits.length; i++) {
           hits[i].rank = i;
         }
 
-        hits = hits.sort(sortFunction);
+        hits = (sortFns[props.uiState.sortBy] || sortFns['Similarity'])(hits);
       }
       //Check if you need to rerender first hit
       let opened = false;
