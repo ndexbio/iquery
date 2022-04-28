@@ -173,15 +173,15 @@ const Ndex = props => {
 
     const pv = (
       <div style={{...subtitleStyle, marginLeft: '10px', minWidth: '150px'}}>
-        <Typography style={{fontWeight: 'bold' }} variant="caption" display="inline" color={'textSecondary'}>
-          {`${pVal}  `}
-        </Typography>
         <Typography
           variant="caption"
           display="inline"
           color={'textSecondary'}
         >
-          p-value
+          {`p-Value: `}
+        </Typography>
+        <Typography style={{fontWeight: 'bold' }} variant="caption" display="inline" color={'textSecondary'}>
+          {`${pVal}`}
         </Typography>
       </div>
     )
@@ -195,18 +195,30 @@ const Ndex = props => {
         sim = sim.toFixed(2)
       }
       similarity = (
-        <span style={infoStyle}>
-          <Typography display="inline" color={props.uiState.sortBy === 'Similarity' ? 'textPrimary' : 'textSecondary'}>
-            <strong>{sim} </strong>
-          </Typography>
-          <Typography
-            variant="caption"
-            display="inline"
-            color={props.uiState.sortBy === 'Similarity' ? 'textPrimary' : 'textSecondary'}
-          >
-            similarity
-          </Typography>
-        </span>
+        // <span style={infoStyle}>
+        //   <Typography display="inline" color={props.uiState.sortBy === 'Similarity' ? 'textPrimary' : 'textSecondary'}>
+        //     <strong>{sim} </strong>
+        //   </Typography>
+        //   <Typography
+        //     variant="caption"
+        //     display="inline"
+        //     color={props.uiState.sortBy === 'Similarity' ? 'textPrimary' : 'textSecondary'}
+        //   >
+        //     similarity
+        //   </Typography>
+        // </span>
+        <div style={{...subtitleStyle, marginLeft: '10px', minWidth: '150px'}}>
+        <Typography
+          variant="caption"
+          display="inline"
+          color={'textSecondary'}
+        >
+          {`Similarity: `}
+        </Typography>
+        <Typography style={{fontWeight: 'bold' }} variant="caption" display="inline" color={'textSecondary'}>
+          {`${sim}`}
+        </Typography>
+      </div>
       )
     } else {
       similarity = null
@@ -241,6 +253,12 @@ const Ndex = props => {
     //     </Typography>
     //   </span>
     // )
+
+    const sortValueDisplay = {
+      'p-Value': pv,
+      'Overlap': null,
+      'Similarity': similarity
+    };
 
 
     return (
@@ -278,7 +296,7 @@ const Ndex = props => {
                   {newline}
                   <div style={{display: 'flex', alignItems: 'center', marginBottom: '10px'}}>
                     {subtitle}
-                    {pv}
+                    {sortValueDisplay[props.uiState.sortBy]}
                   </div>
                 </td>
               </tr>

@@ -103,7 +103,7 @@ const styles = (theme) => ({
 //   }
 // };
 
-const pvalSort = hit => hit.details.Pvalue;
+const pvalSort = hit => hit.details.PValue;
 const similaritySort = hit => hit.details.similarity;
 const overlapSort = hit => hit.hitGenes.length;
 const titleSort = hit => hit.description;
@@ -165,7 +165,7 @@ const NetworkList = (props) => {
         for (let i = 0; i < hits.length; i++) {
           hits[i].rank = i;
         }
-
+        
         hits = (sortFns[props.uiState.sortBy] || sortFns['Similarity'])(hits);
       }
       //Check if you need to rerender first hit
@@ -223,7 +223,8 @@ const NetworkList = (props) => {
   } else {
     enrichmentStyle = {};
   }
-
+  console.log('HITS', hits);
+  console.log(props.search.actualResults);
   return (
     <div className='network-list-wrapper'>
       <SortPanel {...props} />

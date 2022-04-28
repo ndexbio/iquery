@@ -52,6 +52,7 @@ const InfoModal = props => {
       <div>{`Similarity: rare genes in common between the network and query gene list produce a higher score than common genes`}</div>
       <br/>
       <div>{`P-Value: Benjamini-Hochberg adjusted p-values with back propagation `}</div>
+      <br/>
       <div>{`Overlap: the number of genes in common between the query gene list and the network`}</div>
     </div>
   )
