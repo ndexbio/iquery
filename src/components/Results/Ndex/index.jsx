@@ -236,7 +236,7 @@ const Ndex = props => {
               {hitGenes.length}
           </Typography>
           <span>
-            { `${props.uiState.sortBy === 'Similarity' ? ` / ${totalGeneCount}` : ' '} ${hitGenes.length === 1 ? 'unique gene' : 'unique genes'}`}
+            { ` / ${totalGeneCount} unique genes`}
           </span>
         </Typography>
       </span>
