@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper'
 import Draggable from 'react-draggable'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import CloseIcon from '@material-ui/icons/Close';
 
 const infoStyle = {
   // position: 'relative',
@@ -53,7 +54,8 @@ const InfoModal = props => {
       <br/>
       <div>{`P-Value: Hypergeometric test adjusted for false discovery.`}</div>
       <br/>
-      <div>{`Overlap: the number of genes in common between the query gene list and the network`}</div>
+      <div>{`Overlap: the number of genes in common between the query gene list and the network.`}</div>
+      <div>{`Click the info icon to learn more`}</div>
     </div>
   )
   return (
@@ -70,9 +72,15 @@ const InfoModal = props => {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          <Typography component="span" variant="h6">
-            Sorting
-          </Typography>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <Typography component="span" variant="h6">
+              Sorting
+            </Typography>
+
+            <IconButton onClick={handleClose} aria-label="close">
+              <CloseIcon/>
+            </IconButton>
+          </div>
         </DialogTitle>
         <DialogContent dividers={true}>
           <DialogContentText component="span">
@@ -180,9 +188,6 @@ const InfoModal = props => {
             </Typography>
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
       </Dialog>
     </React.Fragment>
   )

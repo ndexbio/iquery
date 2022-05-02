@@ -89,12 +89,12 @@ const GeneList = props => {
 
   const matchedSorted = matched.sort()
   const unmatchedSorted = unmatched.sort()
-  const sorted = [...matchedSorted, ...unmatchedSorted]
+  const sorted = [...matchedSorted]
 
   return (
-    <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', maxHeight: '500px', overflowX: 'hidden', overflowY: 'scroll'}}>
+    <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', maxHeight: '500px', overflowX: 'hidden', overflowY: 'scroll'}}>
         {sorted.map(geneValue => (
-          <div key={geneValue} style={{ minWidth: 0, width: '80px', paddingTop: 0, paddingBottom: 0, paddingLeft: '8px', paddingRight: 0}}>
+          <div key={geneValue} style={{ minWidth: 0, width: '80px', paddingTop: 0, paddingBottom: 0, paddingRight: 0}}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
               exclusive

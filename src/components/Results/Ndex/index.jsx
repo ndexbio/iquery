@@ -55,7 +55,7 @@ const tableStyle = {
 
 const WhiteTooltip = withStyles({
   tooltip: {
-    width: '1000px',
+    // width: '1000px',
     backgroundColor: "white",
     border: '3px solid rgba(0, 0, 0, 0.08)'
   }
@@ -306,8 +306,8 @@ const Ndex = props => {
                     <WhiteTooltip placement='bottom' title={
                     <React.Fragment>
                       <Typography variant='body2' color="secondary">
-                        <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
-                          {hitGenes.sort().map( gene => (<div style={{ textAlign: 'center', minWidth: 0, width: '80px'}}>{gene}</div>))}
+                        <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                          {hitGenes.sort().map( gene => (<div style={{ paddingLeft: '20px', minWidth: 0, width: '80px'}}>{gene}</div>))}
                         </div>
                       </Typography>
                   </React.Fragment>
