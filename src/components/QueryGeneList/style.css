@@ -25,6 +25,7 @@
   margin: 0;
   height: 88vh;
   overflow-y: scroll;
+  min-width: 100px;
 }
 
 .headerless-query-gene-list-container { 
@@ -33,4 +34,5 @@
   margin: 0;
   height: 93vh;
   overflow-y: scroll;
+  min-width: 100px;
 }
