@@ -150,9 +150,13 @@ const Ndex = props => {
       </span>
     )
 
+    const sourceName = description.split(':')[0] || 'NDEx';
+
     const icon = (
       <ListItemIcon style={{ width: '5px' }}>
-        <img className="list-icon" src={imageURL} alt="list icon" />
+        <Tooltip placement="bottom" title={`Pathway source: ${sourceName}`}>
+          <img className="list-icon" src={imageURL} alt="list icon" />
+        </Tooltip>
       </ListItemIcon>
     )
 
@@ -303,19 +307,20 @@ const Ndex = props => {
               <tr style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>
                 <td style={{ display: 'flex', alignItems: 'center' }}>
                   {selectedIndex !== index ? 
-                    <WhiteTooltip placement='bottom' title={
-                    <React.Fragment>
-                      <Typography variant='body2' color="secondary">
-                        <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
-                          {hitGenes.sort().map( gene => (<div style={{ paddingLeft: '20px', minWidth: 0, width: '80px'}}>{gene}</div>))}
-                        </div>
-                      </Typography>
-                  </React.Fragment>
-                  }>
+                    // <WhiteTooltip placement='bottom' title={
+                    // <React.Fragment>
+                    //   <Typography variant='body2' color="secondary">
+                    //     <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                    //       {hitGenes.sort().map( gene => (<div style={{ paddingLeft: '20px', minWidth: 0, width: '80px'}}>{gene}</div>))}
+                    //     </div>
+                    //   </Typography>
+                    // </React.Fragment>
+                  // }>
                     <Typography variant="caption" color="secondary" >
                       { hitGenes.length > 5 ? `${hitGenes.sort().slice(0, 5).join(' ')}...` : hitGenes.sort().slice(0, 5).join(' ') }
                     </Typography>
-                  </WhiteTooltip> : null}
+                  // </WhiteTooltip> 
+                  : null}
                 </td>
                 {selectedIndex === index ? <QueryGeneList {...props} /> : null}
               </tr>
@@ -658,7 +663,7 @@ const Ndex = props => {
   const { hideSearchBar } = props.uiState;
 
   return (
-    <Split sizes={[30, 70]} gutterSize={4} className={ hideSearchBar ? 'headerless-ndex-base' : "ndex-base" } >
+    <Split sizes={[30, 70]} minSize={[200, 300]} gutterSize={4} className={ hideSearchBar ? 'headerless-ndex-base' : "ndex-base" } >
       <NetworkList
         renderNetworkListItem={renderNetworkListItem}
         handleFetch={handleFetch}

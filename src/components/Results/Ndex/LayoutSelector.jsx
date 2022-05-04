@@ -51,6 +51,12 @@ const LayoutSelector = props => {
   const inputLabel = React.useRef(null)
   const [labelWidth, setLabelWidth] = React.useState(0)
 
+  const layoutDisplayNameMap = {
+    'Preset': 'Default',
+    'Cose': 'Spring',
+    'Concentric': 'Concentric'
+  };
+
   useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth)
   }, [])
@@ -77,7 +83,7 @@ const LayoutSelector = props => {
             ? menuItems.map(item => (
                 <MenuItem value={item} key={item}>
                   <Typography variant="body2" color="textSecondary">
-                    {item}
+                    {layoutDisplayNameMap[item]}
                   </Typography>
                 </MenuItem>
               ))

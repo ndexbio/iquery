@@ -223,8 +223,6 @@ const NetworkList = (props) => {
   } else {
     enrichmentStyle = {};
   }
-  console.log('HITS', hits);
-  console.log(props.search.actualResults);
   return (
     <div className='network-list-wrapper'>
       <SortPanel {...props} />

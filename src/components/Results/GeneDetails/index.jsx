@@ -114,7 +114,6 @@ class GeneDetails extends React.Component {
       description = description.substring(0, MAX_DESCRIPTION_LENGTH - 1) + '...'
     }
 
-    console.log('HITS:', hits)
     return (
       <React.Fragment>
         <ListItem

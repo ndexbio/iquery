@@ -54,8 +54,9 @@ const InfoModal = props => {
       <br/>
       <div>{`P-Value: Hypergeometric test adjusted for false discovery.`}</div>
       <br/>
-      <div>{`Overlap: the number of genes in common between the query gene list and the network.`}</div>
-      <div>{`Click the info icon to learn more`}</div>
+      <div>{`Overlap: The number of genes in common between the query gene list and the network.`}</div>
+      <br/>
+      <div>{`Click the info icon to learn more.`}</div>
     </div>
   )
   return (
