@@ -19,11 +19,11 @@ import rootSaga from './sagas/ndexSaga'
 import cyRestSaga from './sagas/cyRestSaga'
 import cyRestStatusSaga from './sagas/cyRestStatusSaga'
 import ndexSaveSaga from './sagas/ndexSaveSaga'
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 import { SET_QUERY } from './actions/search'
 
-import { GA_DEV_ID, GA_STAGING_ID, GA_PRODUCTION } from './analytics'
+import { GA_DEV_ID, GA_STAGING_ID, GA4_CBIO_IQUERY } from './analytics'
 
 // Avoid HTTP
 const location = window.location
@@ -31,7 +31,7 @@ if (location.hostname !== 'localhost' && location.protocol !== 'https:') {
   location.replace(`https:${location.href.substring(location.protocol.length)}`)
 }
 
-ReactGA.initialize(GA_PRODUCTION, {
+ReactGA.initialize(GA4_CBIO_IQUERY, {
   gaOptions: {
     siteSpeedSampleRate: 100
   }

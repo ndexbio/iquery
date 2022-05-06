@@ -56,6 +56,8 @@ const InfoModal = props => {
       <br/>
       <div>{`Overlap: The number of genes in common between the query gene list and the network.`}</div>
       <br/>
+      <div>{`Results contain the top 50 pathway hits.`}</div>
+      <br/>
       <div>{`Click the info icon to learn more.`}</div>
     </div>
   )
