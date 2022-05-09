@@ -23,7 +23,7 @@ import ReactGA from 'react-ga4'
 
 import { SET_QUERY } from './actions/search'
 
-import { GA_DEV_ID, GA_STAGING_ID, GA4_CBIO_IQUERY } from './analytics'
+import { GOOGLE_ANALYTICS_ID } from './api/config'
 
 // Avoid HTTP
 const location = window.location
@@ -31,7 +31,7 @@ if (location.hostname !== 'localhost' && location.protocol !== 'https:') {
   location.replace(`https:${location.href.substring(location.protocol.length)}`)
 }
 
-ReactGA.initialize(GA4_CBIO_IQUERY, {
+ReactGA.initialize(GOOGLE_ANALYTICS_ID, {
   gaOptions: {
     siteSpeedSampleRate: 100
   }

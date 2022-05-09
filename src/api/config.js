@@ -18,6 +18,7 @@ var DEPLOY_ENVIRON = ' on localhost';
 var SERVICE_SERVER_URL = 'https://dev.ndexbio.org/v2'
 var BASE_URL = 'https://dev.ndexbio.org/integratedsearch/v1/';
 var GOOGLE_CLIENT_ID = '';
+var GOOGLE_ANALYTICS_ID = 'G-H5SCGJLM7Z';
 var COPYRIGHT = 'Copyright © 2013-@@YEAR@@, The Regents of University of California, The Cytoscape Consortium. All rights reserved.';
 var UCSD_URL = 'https://medschool.ucsd.edu/som/medicine/research/labs/ideker/Pages/default.aspx';
 var GENESET_EXAMPLES = [
@@ -47,6 +48,7 @@ if (window.ndexSettings === undefined){
       SERVICE_SERVER_URL = window.ndexSettings.ndexServerUri;
       BASE_URL = window.ndexSettings.iQuery.baseUri;
       GOOGLE_CLIENT_ID = window.ndexSettings.googleClientId;
+      GOOGLE_ANALYTICS_ID = window.ndexSettings.googleAnalyticsId;
       GENESET_EXAMPLES = window.ndexSettings.iQuery.geneSetExamples;
       UCSD_URL = window.ndexSettings.iQuery.ucsdUri;
       COPYRIGHT = window.ndexSettings.iQuery.copyRight;
@@ -70,6 +72,6 @@ if (COPYRIGHT !== undefined && COPYRIGHT !== null){
 }
 
 export { MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, CYTOSCAPE_URL,
-         GOOGLE_CLIENT_ID, BASE_URL, SERVICE_SERVER_URL, DEPLOY_ENVIRON, APP_VERSION,
+         GOOGLE_CLIENT_ID, GOOGLE_ANALYTICS_ID, BASE_URL, SERVICE_SERVER_URL, DEPLOY_ENVIRON, APP_VERSION,
         GENESET_EXAMPLES, UCSD_URL, COPYRIGHT, MAX_NETWORK_SIZE, HIGHLIGHT_GENES, 
         DEFAULT_SORT, HIDE_SEARCHBAR, VALIDATE_GENES_WITH_MYGENE, HIDE_VIEW_SOURCE_IN_NDEX_BUTTON, HIDE_SAVE_TO_NDEX_BUTTON };
