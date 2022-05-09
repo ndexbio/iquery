@@ -48,7 +48,7 @@ if (window.ndexSettings === undefined){
       SERVICE_SERVER_URL = window.ndexSettings.ndexServerUri;
       BASE_URL = window.ndexSettings.iQuery.baseUri;
       GOOGLE_CLIENT_ID = window.ndexSettings.googleClientId;
-      GOOGLE_ANALYTICS_ID = window.ndexSettings.googleAnalyticsId;
+      GOOGLE_ANALYTICS_ID = window.ndexSettings.iQuery.googleAnalyticsId;
       GENESET_EXAMPLES = window.ndexSettings.iQuery.geneSetExamples;
       UCSD_URL = window.ndexSettings.iQuery.ucsdUri;
       COPYRIGHT = window.ndexSettings.iQuery.copyRight;

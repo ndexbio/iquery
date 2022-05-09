@@ -178,18 +178,13 @@ const Ndex = props => {
     const pv = (
       <div style={{...subtitleStyle, marginRight: '10px', width: '150px',}}>
         <Typography
-          variant={props.uiState.sortBy === 'p-Value' ? 'body2' : "caption"}
+          variant="caption"
           display="inline"
           color={'textSecondary'}
-          style={props.uiState.sortBy === 'p-Value' ? {color: 'black', fontWeight: 'bold'} : null}
         >
           {`p-Value: `}
         </Typography>
-        <Typography 
-          style={props.uiState.sortBy === 'p-Value' ? {color: 'black', fontWeight: 'bold'} : null} 
-          variant={props.uiState.sortBy === 'p-Value' ? 'body2' : "caption"}
-          display="inline" 
-          color={'textSecondary'}>
+        <Typography style={{fontWeight: 'bold' }} variant="caption" display="inline" color={'textSecondary'}>
           {`${pVal}`}
         </Typography>
       </div>
@@ -218,18 +213,13 @@ const Ndex = props => {
         // </span>
         <div style={{...subtitleStyle, marginRight: '10px', width: '150px',}}>
         <Typography
-          variant={props.uiState.sortBy === 'Similarity' ? 'body2' : "caption"}
+          variant="caption"
           display="inline"
           color={'textSecondary'}
-          style={props.uiState.sortBy === 'Similarity' ? {color: 'black', fontWeight: 'bold'} : null} 
         >
           {`Similarity: `}
         </Typography>
-        <Typography 
-          style={props.uiState.sortBy === 'Similarity' ? {color: 'black', fontWeight: 'bold'} : null} 
-          variant={props.uiState.sortBy === 'Similarity' ? 'body2' : "caption"}
-          display="inline" 
-          color={'textSecondary'}>
+        <Typography style={{fontWeight: 'bold' }} variant="caption" display="inline" color={'textSecondary'}>
           {`${sim}`}
         </Typography>
       </div>
@@ -242,16 +232,14 @@ const Ndex = props => {
 
     const overlap = (
       <span style={{...subtitleStyle, width: '150px', marginRight: '10px'}}>
-        <Typography variant={props.uiState.sortBy === 'Overlap' ? 'body2' : "caption"} color="textSecondary">
+        <Typography variant="caption" color="textSecondary">
           <Typography 
             style={{fontWeight: 'bold', fontSize: '1.25em'}} 
             variant="caption" 
             color="secondary">
               {hitGenes.length}
           </Typography>
-          <span 
-            style={props.uiState.sortBy === 'Overlap' ? {color: 'black', fontWeight: 'bold'} : null} 
-          >
+          <span>
             { ` / ${totalGeneCount} unique genes`}
           </span>
         </Typography>
@@ -313,8 +301,7 @@ const Ndex = props => {
                   <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: '10px'}}>
                   {/* <div style={{display: 'flex', flexDirection: 'column', alignItems: 'start', marginBottom: '10px'}}> */}
                     {overlap}
-                    {similarity}
-                    {pv}
+                    {sortValueDisplay[props.uiState.sortBy]}
                   </div>
                 </td>
               </tr>
