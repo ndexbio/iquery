@@ -176,7 +176,7 @@ const Ndex = props => {
     }
 
     const pv = (
-      <div style={{...subtitleStyle, marginLeft: '10px', minWidth: '150px'}}>
+      <div style={{...subtitleStyle, marginRight: '10px', width: '150px',}}>
         <Typography
           variant="caption"
           display="inline"
@@ -211,7 +211,7 @@ const Ndex = props => {
         //     similarity
         //   </Typography>
         // </span>
-        <div style={{...subtitleStyle, marginLeft: '10px', minWidth: '150px'}}>
+        <div style={{...subtitleStyle, marginRight: '10px', width: '150px',}}>
         <Typography
           variant="caption"
           display="inline"
@@ -230,8 +230,8 @@ const Ndex = props => {
 
     const title = <Typography variant='body2'style={titleStyle}>{description.split(':').slice(1)}</Typography>
 
-    const subtitle = (
-      <span style={{...subtitleStyle, minWidth: '150px'}}>
+    const overlap = (
+      <span style={{...subtitleStyle, width: '150px', marginRight: '10px'}}>
         <Typography variant="caption" color="textSecondary">
           <Typography 
             style={{fontWeight: 'bold', fontSize: '1.25em'}} 
@@ -298,8 +298,9 @@ const Ndex = props => {
                 <td align="left" padding="0">
                   {title}
                   {newline}
-                  <div style={{display: 'flex', alignItems: 'center', marginBottom: '10px'}}>
-                    {subtitle}
+                  <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: '10px'}}>
+                  {/* <div style={{display: 'flex', flexDirection: 'column', alignItems: 'start', marginBottom: '10px'}}> */}
+                    {overlap}
                     {sortValueDisplay[props.uiState.sortBy]}
                   </div>
                 </td>
@@ -469,6 +470,26 @@ const Ndex = props => {
                   {newline}
                   {subtitle}
                 </td>
+              </tr>
+              <tr style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>
+                <td style={{ display: 'flex', alignItems: 'center' }}>
+                  {selectedIndex !== index ? 
+                    // <WhiteTooltip placement='bottom' title={
+                    // <React.Fragment>
+                    //   <Typography variant='body2' color="secondary">
+                    //     <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                    //       {hitGenes.sort().map( gene => (<div style={{ paddingLeft: '20px', minWidth: 0, width: '80px'}}>{gene}</div>))}
+                    //     </div>
+                    //   </Typography>
+                    // </React.Fragment>
+                  // }>
+                    <Typography variant="caption" color="secondary" >
+                      { hitGenes.length > 5 ? `${hitGenes.sort().slice(0, 5).join(' ')}...` : hitGenes.sort().slice(0, 5).join(' ') }
+                    </Typography>
+                  // </WhiteTooltip> 
+                  : null}
+                </td>
+                {selectedIndex === index ? <QueryGeneList {...props} /> : null}
               </tr>
             </tbody>
           </table>
@@ -654,6 +675,26 @@ const Ndex = props => {
                 {subtitle}
               </td>
             </tr>
+            <tr style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>
+                <td style={{ display: 'flex', alignItems: 'center' }}>
+                  {selectedIndex !== index ? 
+                    // <WhiteTooltip placement='bottom' title={
+                    // <React.Fragment>
+                    //   <Typography variant='body2' color="secondary">
+                    //     <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                    //       {hitGenes.sort().map( gene => (<div style={{ paddingLeft: '20px', minWidth: 0, width: '80px'}}>{gene}</div>))}
+                    //     </div>
+                    //   </Typography>
+                    // </React.Fragment>
+                  // }>
+                    <Typography variant="caption" color="secondary" >
+                      { hitGenes.length > 5 ? `${hitGenes.sort().slice(0, 5).join(' ')}...` : hitGenes.sort().slice(0, 5).join(' ') }
+                    </Typography>
+                  // </WhiteTooltip> 
+                  : null}
+                </td>
+                {selectedIndex === index ? <QueryGeneList {...props} /> : null}
+              </tr>
           </tbody>
         </table>
       </ListItem>

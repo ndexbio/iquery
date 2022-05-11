@@ -128,7 +128,9 @@ const CytoscapeViewer = (props) => {
         });
         if (edges.length === 0) {
           props.networkActions.unselectEdges();
+          props.networkActions.unselectNodes();
         } else {
+          props.networkActions.unselectNodes();
           props.networkActions.selectEdges(edges);
         }
       }, 1);
@@ -145,7 +147,9 @@ const CytoscapeViewer = (props) => {
         });
         if (nodes.length === 0) {
           props.networkActions.unselectNodes();
+          props.networkActions.unselectEdges();
         } else {
+          props.networkActions.unselectEdges();
           props.networkActions.selectNodes(nodes);
         }
       }, 1);
