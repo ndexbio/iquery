@@ -113,6 +113,7 @@ const Ndex = props => {
   }
 
   const renderNetworkListItem = (querySize, networkEntry, classes, handleListItemClick, selectedIndex, index) => {
+    console.log(props.uiState.selectedSource);
     if (props.uiState.selectedSource === 'enrichment') {
       return <EnrichmentListItem key={networkEntry?.networkUUID} {...props} networkEntry={networkEntry} handleListItemClick={handleListItemClick} selectedIndex={selectedIndex} index={index} />
     } else if (props.uiState.selectedSource.startsWith('interactome')) {
@@ -561,6 +562,26 @@ const Ndex = props => {
                   {newline}
                   {subtitle}
                 </td>
+              </tr>
+              <tr style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>
+                <td style={{ display: 'flex', alignItems: 'center' }}>
+                  {selectedIndex !== index ? 
+                    // <WhiteTooltip placement='bottom' title={
+                    // <React.Fragment>
+                    //   <Typography variant='body2' color="secondary">
+                    //     <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                    //       {hitGenes.sort().map( gene => (<div style={{ paddingLeft: '20px', minWidth: 0, width: '80px'}}>{gene}</div>))}
+                    //     </div>
+                    //   </Typography>
+                    // </React.Fragment>
+                  // }>
+                    <Typography variant="caption" color="secondary" >
+                      { hitGenes.length > 5 ? `${hitGenes.sort().slice(0, 5).join(' ')}...` : hitGenes.sort().slice(0, 5).join(' ') }
+                    </Typography>
+                  // </WhiteTooltip> 
+                  : null}
+                </td>
+                {selectedIndex === index ? <QueryGeneList {...props} /> : null}
               </tr>
             </tbody>
           </table>
