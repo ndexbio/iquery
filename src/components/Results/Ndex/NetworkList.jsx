@@ -166,7 +166,7 @@ const NetworkList = (props) => {
           hits[i].rank = i;
         }
         
-        hits = (sortFns[props.uiState.sortBy] || sortFns['Similarity'])(hits);
+        hits = sortFns[props.uiState.sortBy](hits);
       }
       //Check if you need to rerender first hit
       let opened = false;
@@ -186,6 +186,8 @@ const NetworkList = (props) => {
       ) {
         openFirst(hits[0]);
         props.networkActions.changeListIndex(1);
+      } else {
+        openFirst(hits[0]);
       }
     }
   }, [props.uiState.sortBy, props.uiState.selectedSource]);
