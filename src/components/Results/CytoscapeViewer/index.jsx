@@ -231,6 +231,14 @@ const CytoscapeViewer = (props) => {
       return;
     }
 
+    // Refs UD-2110.  Sometimes the renderer seems to be null, and cy.animate methods
+    // call .isHeadless() which is a function of the renderer.  Check that this method is 
+    // not null before animating.  I suspect that this has to do with the cyInstance being unmounted
+    // whenever networks are changed. Search for the string 'Network viewer unmounted'
+    if(cyInstance?._private?.renderer?.isHeadless == null){
+      return;
+    }
+
     const selected = cyInstance.elements('node[name = "' + targets[0] + '"]');
 
     if (selected.length !== 0) {
@@ -274,6 +282,15 @@ const CytoscapeViewer = (props) => {
     if (cyInstance === undefined || cyInstance === null) {
       return;
     }
+
+    // Refs UD-2110.  Sometimes the renderer seems to be null, and cy.animate methods
+    // call .isHeadless() which is a function of the renderer.  Check that this method is 
+    // not null before animating.  I suspect that this has to do with the cyInstance being unmounted
+    // whenever networks are changed. Search for the string 'Network viewer unmounted'
+    if(cyInstance?._private?.renderer?.isHeadless == null){
+      return;
+    }
+
     if (fit) {
       cyInstance.animate(
         {
