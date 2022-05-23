@@ -31,11 +31,13 @@ if (location.hostname !== 'localhost' && location.protocol !== 'https:') {
   location.replace(`https:${location.href.substring(location.protocol.length)}`)
 }
 
-ReactGA.initialize(GOOGLE_ANALYTICS_ID, {
-  gaOptions: {
-    siteSpeedSampleRate: 100
-  }
-})
+if (GOOGLE_ANALYTICS_ID === '' || GOOGLE_ANALYTICS_ID == null){
+  ReactGA.initialize(GOOGLE_ANALYTICS_ID, {
+    gaOptions: {
+      siteSpeedSampleRate: 100
+    }
+  })
+}
 
 const EventActions = {
   SetQuery: SET_QUERY,
