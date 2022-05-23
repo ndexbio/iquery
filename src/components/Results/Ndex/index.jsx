@@ -105,14 +105,13 @@ const Ndex = props => {
   }
 
   const renderNetworkListItem = (querySize, networkEntry, classes, handleListItemClick, selectedIndex, index) => {
-    console.log(props.uiState.selectedSource);
-    if (props.uiState.selectedSource === 'enrichment') {
+    // if (props.uiState.selectedSource === 'enrichment') {
       return <EnrichmentListItem key={networkEntry?.networkUUID} {...props} networkEntry={networkEntry} handleListItemClick={handleListItemClick} selectedIndex={selectedIndex} index={index} />
-    } else if (props.uiState.selectedSource.startsWith('interactome')) {
-      return renderNetworkListItemInteractome(networkEntry, handleListItemClick, selectedIndex, index)
-    } else {
-      return renderNetworkListItemDefault(networkEntry, handleListItemClick, selectedIndex, index)
-    }
+    // } else if (props.uiState.selectedSource.startsWith('interactome')) {
+      // return renderNetworkListItemInteractome(networkEntry, handleListItemClick, selectedIndex, index)
+    // } else {
+      // return renderNetworkListItemDefault(networkEntry, handleListItemClick, selectedIndex, index)
+    // }
   }
 
   const EnrichmentListItem = (props) => {

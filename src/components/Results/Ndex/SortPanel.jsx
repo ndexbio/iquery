@@ -79,7 +79,7 @@ const SortPanel = props => {
     setSortBy(event.target.value)
   }
 
-  if (props.uiState.selectedSource === 'enrichment') {
+  // if (props.uiState.selectedSource === 'enrichment') {
     return (
       <React.Fragment>
         <div style={divStyle}>
@@ -127,12 +127,12 @@ const SortPanel = props => {
         </div>
       </React.Fragment>
     )
-  } else {
-    return <React.Fragment>
-      <div style={divStyle}>
-      </div>
-    </React.Fragment>
-  }
+  // } else {
+  //   return <React.Fragment>
+  //     <div style={divStyle}>
+  //     </div>
+  //   </React.Fragment>
+  // }
 }
 
 export default SortPanel
