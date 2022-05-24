@@ -25,13 +25,15 @@ import { SET_QUERY } from './actions/search'
 
 import { GOOGLE_ANALYTICS_ID } from './api/config'
 
+const googleAnalyticsIdExists = GOOGLE_ANALYTICS_ID !== '' && GOOGLE_ANALYTICS_ID != null;
+
 // Avoid HTTP
 const location = window.location
 if (location.hostname !== 'localhost' && location.protocol !== 'https:') {
   location.replace(`https:${location.href.substring(location.protocol.length)}`)
 }
 
-if (GOOGLE_ANALYTICS_ID === '' || GOOGLE_ANALYTICS_ID == null){
+if (googleAnalyticsIdExists){
   ReactGA.initialize(GOOGLE_ANALYTICS_ID, {
     gaOptions: {
       siteSpeedSampleRate: 100
@@ -82,7 +84,7 @@ const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(sagaMiddleware),
-    applyMiddleware(gaMiddleware)
+    googleAnalyticsIdExists ? applyMiddleware(gaMiddleware): applyMiddleware(() => {})
   )
 )
 
