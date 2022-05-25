@@ -111,7 +111,7 @@ const OpenInCytoscapeButton = (props) => {
         disableFocusListener
         title={
           disabled
-            ? 'To use this feature, you need Cytoscape 3.6.0 or higher running on your machine (default port: 1234) and the CyNDEx-2 app installed'
+            ? 'Open this network in Cytoscape.  To use this feature, you need Cytoscape 3.6.0 or higher running on your machine (default port: 1234) and the CyNDEx-2 app installed'
             : 'Open this network in Cytoscape Desktop'
         }
         placement='bottom'
