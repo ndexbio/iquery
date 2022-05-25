@@ -409,7 +409,7 @@ const EdgeProperties = props => {
             <td>
               <Typography 
                 variant="body2" 
-                color={props.search.queryList.includes(source?.toUpperCase()) ? 'secondary' : 'initial'}
+                color={props.search?.searchResults?.query?.includes(source?.toUpperCase()) ? 'secondary' : 'initial'}
               >
                   {source}
               </Typography>
@@ -420,7 +420,7 @@ const EdgeProperties = props => {
             <td>
               <Typography 
                 variant="body2"
-                color={props.search.queryList.includes(target?.toUpperCase()) ? 'secondary' : 'initial'}
+                color={props.search?.searchResults?.query?.includes(target?.toUpperCase()) ? 'secondary' : 'initial'}
               >
                 {target}
               </Typography>
