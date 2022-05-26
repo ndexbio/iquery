@@ -77,8 +77,17 @@ const highlight = {
   css: {
     opacity: 1.0,
     'underlay-color': '#C51162',
-    'underlay-padding': 12,
-    'underlay-opacity': 0.4
+    'underlay-padding': 4,
+    'underlay-opacity': 0.4,
+    'underlay-shape': node => {
+      const shape = node.style('shape');
+
+      if(shape === 'ellipse'){
+        return 'ellipse';
+      }
+
+      return 'round-rectangle';
+    }
   },
 };
 
