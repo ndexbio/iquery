@@ -112,8 +112,17 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: calc(100vh - 100px);
   overflow: scroll;
+}
+
+.headerless-network-list-wrapper {
+  box-sizing: content-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: scroll; 
 }
 
 .network-list {

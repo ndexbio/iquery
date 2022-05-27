@@ -222,7 +222,7 @@ const NetworkList = (props) => {
   const hideSearchBar = props.uiState.hideSearchBar;
 
   return (
-    <div className='network-list-wrapper'>
+    <div className={hideSearchBar ? 'headerless-network-list-wrapper': 'network-list-wrapper'}>
       <SortPanel {...props} />
       {/* <div className={hideSearchBar ? 'headerless-network-list' : 'network-list'}> */}
         {/* <MenuList style={{height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'scroll', alignItems: 'flex-start'}} className={props.classes.noPadding}> */}
