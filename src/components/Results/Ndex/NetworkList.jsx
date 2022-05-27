@@ -224,22 +224,20 @@ const NetworkList = (props) => {
   return (
     <div className='network-list-wrapper'>
       <SortPanel {...props} />
-      <div style={{display: 'flex', height: '100%'}}>
-        <div className={hideSearchBar ? 'headerless-network-list' : 'network-list'}>
-          <MenuList className={props.classes.noPadding}>
-            {props.search.actualResults.map((entry) =>
-              props.renderNetworkListItem(
-                props.search.queryList.length,
-                entry,
-                props.classes,
-                handleListItemClick,
-                selectedIndex,
-                index++
-              )
-            )}
-          </MenuList>
-        </div>
-      </div>
+      {/* <div className={hideSearchBar ? 'headerless-network-list' : 'network-list'}> */}
+        {/* <MenuList style={{height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'scroll', alignItems: 'flex-start'}} className={props.classes.noPadding}> */}
+          {props.search.actualResults.map((entry) =>
+            props.renderNetworkListItem(
+              props.search.queryList.length,
+              entry,
+              props.classes,
+              handleListItemClick,
+              selectedIndex,
+              index++
+            )
+          )}
+        {/* </MenuList> */}
+      {/* </div> */}
     </div>
   );
 };

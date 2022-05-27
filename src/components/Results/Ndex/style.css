@@ -110,7 +110,10 @@
 .network-list-wrapper {
   box-sizing: content-box;
   width: 100%;
-  /* height: inherit; */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: scroll;
 }
 
 .network-list {

@@ -41,13 +41,17 @@ const formStyle = {
 }
 
 const divStyle = {
+  position: 'sticky',
+  top: '0px',
   paddingLeft: '16px',
   borderBottom: '1px solid rgba(239, 239, 239, 1)',
   display: 'flex',
   minHeight: '56px',
   height: 'auto',
   width: '100%',
-  alignItems: 'center'
+  alignItems: 'center',
+  backgroundColor: 'white',
+  zIndex: 1
 }
 
 const textStyle = {
