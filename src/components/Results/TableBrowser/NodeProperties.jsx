@@ -409,7 +409,7 @@ const NodeProperties = props => {
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography variant="body2">{primaryString}
+                  <Typography variant="caption">{primaryString}
                   </Typography>
                 </div>
               </React.Fragment>
