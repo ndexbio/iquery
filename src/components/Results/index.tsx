@@ -109,7 +109,7 @@ const Results = (props) => {
     index = 0
   }
 
-  const results = findResult(selectedSource, searchResults)
+  let results = findResult(selectedSource, searchResults) 
   const hideSearchBar = props.uiState.hideSearchBar
 
   const tabs = (
@@ -125,6 +125,10 @@ const Results = (props) => {
       })}
     </Tabs>
   );
+
+  if(results == null){
+    results = findResult(sourceList?.[0]?.sourceName, searchResults)
+  }
 
   // Get current tab selection
   return (
