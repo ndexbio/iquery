@@ -55,8 +55,6 @@ const divStyle = {
 }
 
 const textStyle = {
-  // position: 'relative',
-  // top: '8px'
 }
 
 const selectStyle = {
@@ -83,7 +81,6 @@ const SortPanel = props => {
     setSortBy(event.target.value)
   }
 
-  // if (props.uiState.selectedSource === 'enrichment') {
     return (
       <React.Fragment>
         <div style={divStyle}>
@@ -110,33 +107,9 @@ const SortPanel = props => {
               />
             ))}
           </div>
-          {/* <FormControl style={formStyle}>
-            <Select
-              value={sortBy}
-              onChange={handleChange}
-              displayEmpty
-              name="Sort by"
-              style={selectStyle}
-              input={<BootstrapInput name="sort" id="sort-customized-select" />}
-            >
-              {sortOptions.map(item => (
-                <MenuItem value={item} key={item}>
-                  <Typography variant="body2" color="textSecondary">
-                    {item}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl> */}
         </div>
       </React.Fragment>
     )
-  // } else {
-  //   return <React.Fragment>
-  //     <div style={divStyle}>
-  //     </div>
-  //   </React.Fragment>
-  // }
 }
 
 export default SortPanel

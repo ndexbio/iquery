@@ -57,52 +57,6 @@ const styles = (theme) => ({
   },
 });
 
-// const findSort = (sortBy) => {
-//   if (sortBy === 'p-Value') {
-//     return (a, b) => {
-//       if (a.details.PValue > b.details.PValue) {
-//         return 1;
-//       } else if (a.details.PValue < b.details.PValue) {
-//         return -1;
-//       } else {
-//         if (a.rank > b.rank) {
-//           return 1;
-//         } else {
-//           return -1;
-//         }
-//       }
-//     };
-//   } else if (sortBy === 'Similarity') {
-//     return (a, b) => {
-//       if (a.details.similarity < b.details.similarity) {
-//         return 1;
-//       } else if (a.details.similarity > b.details.similarity) {
-//         return -1;
-//       } else {
-//         if (a.rank > b.rank) {
-//           return 1;
-//         } else {
-//           return -1;
-//         }
-//       }
-//     };
-//   } else {
-//     return (a, b) => {
-//       if (a.hitGenes.length < b.hitGenes.length) {
-//         return 1;
-//       } else if (a.hitGenes.length > b.hitGenes.length) {
-//         return -1;
-//       } else {
-//         if (a.rank > b.rank) {
-//           return 1;
-//         } else {
-//           return -1;
-//         }
-//       }
-//     };
-//   }
-// };
-
 const pvalSort = hit => hit.details.PValue;
 const similaritySort = hit => hit.details.similarity;
 const overlapSort = hit => hit.hitGenes.length;
@@ -146,7 +100,8 @@ const NetworkList = (props) => {
     ) {
       hits = sortFns['p-Value'](hits);
 
-      // pvalue is now adjusted on the server side
+      // legacy code that used to adjust p-values on the client side
+      // Feb-Mar 2022: Chris changed this to adjust them on the server side
       // const networkCount = hits[0].details.totalNetworkCount;
       // for (let i = 0; i < hits.length; i++) {
       //   hits[i].details.PValue =
@@ -224,20 +179,16 @@ const NetworkList = (props) => {
   return (
     <div className={hideSearchBar ? 'headerless-network-list-wrapper': 'network-list-wrapper'}>
       <SortPanel {...props} />
-      {/* <div className={hideSearchBar ? 'headerless-network-list' : 'network-list'}> */}
-        {/* <MenuList style={{height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'scroll', alignItems: 'flex-start'}} className={props.classes.noPadding}> */}
-          {props.search.actualResults.map((entry) =>
-            props.renderNetworkListItem(
-              props.search.queryList.length,
-              entry,
-              props.classes,
-              handleListItemClick,
-              selectedIndex,
-              index++
-            )
-          )}
-        {/* </MenuList> */}
-      {/* </div> */}
+      {props.search.actualResults.map((entry) =>
+        props.renderNetworkListItem(
+          props.search.queryList.length,
+          entry,
+          props.classes,
+          handleListItemClick,
+          selectedIndex,
+          index++
+        )
+      )}
     </div>
   );
 };

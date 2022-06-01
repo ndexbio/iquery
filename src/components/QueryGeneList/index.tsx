@@ -78,35 +78,6 @@ const QueryGeneList = props => {
 
   return (
     <GeneList geneToNodeMap={geneToNodeMap} {...props} />
-
-    // <div className={hideSearchBar ? 'headerless-query-gene-list-container' : 'query-gene-list-container'}>
-    //   <div className={'query-gene-list-wrapper'}>
-    //     <Typography variant="caption" color="textPrimary">
-    //       <div className={'query-gene-list-title'}>
-    //         <div>
-    //         Query Genes
-    //         </div>
-
-    //         <div>
-    //           <span>
-    //             <Typography variant="caption" color="textSecondary">
-    //               <Typography 
-    //                 style={{fontWeight: 'bold', fontSize: '1.25em'}} 
-    //                 variant="caption" 
-    //                 color="secondary">
-    //                   {network.hitGenes.length}
-    //               </Typography>
-    //               <span>
-    //                {` / ${ genesValidated ? results.genes.size : searchResults.query.length}`}
-    //               </span>
-    //             </Typography>
-    //           </span>
-    //         </div>
-    //       </div>
-    //     </Typography>
-    //     <GeneList geneToNodeMap={geneToNodeMap} {...props} />
-    //   </div>
-    // </div>
   )
 }
 
