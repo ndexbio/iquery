@@ -50,6 +50,12 @@ const InfoModal = props => {
   }
   const infoTooltip = (
     <div>
+      <div>
+        <Typography variant="body2" style={{fontWeight: 'bold', textDecoration: 'underline'}}>
+        {`Click for a full description of the sorting options.`}
+        </Typography>
+      </div>
+      <br/>
       <div>{`Similarity: Cosine similarity of the query genes and the network genes. Uncommon shared genes contribute more to the score.`}</div>
       <br/>
       <div>{`P-Value: Hypergeometric test adjusted for false discovery.`}</div>
@@ -57,8 +63,6 @@ const InfoModal = props => {
       <div>{`Overlap: The number of genes in common between the query gene list and the network.`}</div>
       <br/>
       <div>{`Results contain the top 50 pathway hits.`}</div>
-      <br/>
-      <div>{`Click the info icon to learn more.`}</div>
     </div>
   )
   return (
