@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './style.css'
 
 import GeneList from '../GeneList'
+import { Typography } from '@material-ui/core'
 
 /**
  * List of query genes displayed on the right side of the window
@@ -10,7 +11,7 @@ import GeneList from '../GeneList'
  * @returns {*}
  * @constructor
  */
-const InputPanel = props => {
+const QueryGeneList = props => {
   const { network, uiState, search } = props
   const { hideSearchBar } = uiState
 
@@ -71,21 +72,13 @@ const InputPanel = props => {
     setGeneToNodeMap(geneMap)
   }, [network])
 
+  const genesValidated = validateGenesWithMyGene && results && results.genes.size;
+  const queryGeneCount = `(${network.hitGenes.length} / ${ genesValidated ? results.genes.size : searchResults.query.length})`;
 
 
   return (
-    <div className={hideSearchBar ? 'headerless-input-container' : 'input-container'}>
-      <div className="input-wrapper">
-        <div className={'gene-list-title'}>
-          Query Genes{' '}
-          {
-            validateGenesWithMyGene && results && results.genes.size ? `(${network.hitGenes.length} / ${results.genes.size})` : `(${network.hitGenes.length} / ${searchResults.query.length})`
-          }
-        </div>
-        <GeneList geneToNodeMap={geneToNodeMap} {...props} />
-      </div>
-    </div>
+    <GeneList geneToNodeMap={geneToNodeMap} {...props} />
   )
 }
 
-export default InputPanel
+export default QueryGeneList

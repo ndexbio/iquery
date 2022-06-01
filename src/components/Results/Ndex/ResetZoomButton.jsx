@@ -16,7 +16,7 @@ const styles = (theme) => ({
 
 const BootstrapButton = withStyles({
   root: {
-    height: '3em',
+    height: '2.5em',
     width: '4.3em',
     minWidth: '4.3em',
     marginLeft: '0.5em',

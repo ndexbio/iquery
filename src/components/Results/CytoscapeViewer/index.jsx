@@ -3,7 +3,7 @@ import CytoscapeComponent from 'react-cytoscapejs';
 import { CxToJs, CyNetworkUtils } from '@js4cytoscape/cx2js';
 import Cytoscape from 'cytoscape';
 import CyCanvas from 'cytoscape-canvas';
-import { CxToCyCanvas } from '@js4cytoscape/cyannotation-cx2js';
+import { CxToCyCanvas } from 'cyannotation-cx2js';
 import Warning from './Warning';
 import { CONCENTRIC_LAYOUT, COSE_LAYOUT } from './LayoutSettings';
 import { cloneDeep } from 'lodash';
@@ -128,7 +128,9 @@ const CytoscapeViewer = (props) => {
         });
         if (edges.length === 0) {
           props.networkActions.unselectEdges();
+          props.networkActions.unselectNodes();
         } else {
+          props.networkActions.unselectNodes();
           props.networkActions.selectEdges(edges);
         }
       }, 1);
@@ -145,7 +147,9 @@ const CytoscapeViewer = (props) => {
         });
         if (nodes.length === 0) {
           props.networkActions.unselectNodes();
+          props.networkActions.unselectEdges();
         } else {
+          props.networkActions.unselectEdges();
           props.networkActions.selectNodes(nodes);
         }
       }, 1);
@@ -227,6 +231,14 @@ const CytoscapeViewer = (props) => {
       return;
     }
 
+    // Refs UD-2110.  Sometimes the renderer seems to be null, and cy.animate methods
+    // call .isHeadless() which is a function of the renderer.  Check that this method is 
+    // not null before animating.  I suspect that this has to do with the cyInstance being unmounted
+    // whenever networks are changed. Search for the string 'Network viewer unmounted'
+    if(cyInstance?._private?.renderer?.isHeadless == null){
+      return;
+    }
+
     const selected = cyInstance.elements('node[name = "' + targets[0] + '"]');
 
     if (selected.length !== 0) {
@@ -270,6 +282,15 @@ const CytoscapeViewer = (props) => {
     if (cyInstance === undefined || cyInstance === null) {
       return;
     }
+
+    // Refs UD-2110.  Sometimes the renderer seems to be null, and cy.animate methods
+    // call .isHeadless() which is a function of the renderer.  Check that this method is 
+    // not null before animating.  I suspect that this has to do with the cyInstance being unmounted
+    // whenever networks are changed. Search for the string 'Network viewer unmounted'
+    if(cyInstance?._private?.renderer?.isHeadless == null){
+      return;
+    }
+
     if (fit) {
       cyInstance.animate(
         {
@@ -343,7 +364,7 @@ const CytoscapeViewer = (props) => {
 
     if (highlights) {
       cyInstance.elements().addClass('faded');
-      const query = cyInstance.filter('node[querynode = "true"]');
+      const query = cyInstance.nodes().filter('node[?querynode]');
       query.addClass('highlight');
     } else {
       cyInstance

@@ -109,24 +109,41 @@ const Results = (props) => {
     index = 0
   }
 
-  const results = findResult(selectedSource, searchResults)
+  let results = findResult(selectedSource, searchResults) 
   const hideSearchBar = props.uiState.hideSearchBar
+
+  const tabs = (
+    <Tabs value={index} onChange={handleChange} className={classes.tabs}>
+      {sourceList.map((entry) => {
+        return (
+          <HoverTab
+            key={entry.sourceName}
+            label={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].label : null}
+            tooltip={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].tooltip : null}
+          />
+        )
+      })}
+    </Tabs>
+  );
+
+  // There is a bug related to when the user runs a query, presses the back button
+  // in the browser and then runs a new query leading to a infinite loading screen (UD-2032).  
+  // Specifically, the `selectedSource` state is set to some
+  // uuid e.g. "a9b8f8f8-f8f8-f8f8-f8f8-f8f8f8f8f8f8".  Typical `selectedSource` values are
+  // the source names from the `sourceList` array. e.g. `enrichment`, `indrago`, `ppi-interactome`
+
+  // The temporary fix for this bug is to check if the results are null.   If they are,
+  // then also check get the result from the first source in the sourcelist.  This computation
+  // is independent of the `selectedSource` variable and avoids the bug.
+  if(results == null){
+    results = findResult(sourceList?.[0]?.sourceName, searchResults)
+  }
 
   // Get current tab selection
   return (
     <div className={hideSearchBar ? 'headerless-results-container' : 'results-container'}>
       <div className="results-wrapper">
-        <Tabs value={index} onChange={handleChange} className={classes.tabs}>
-          {sourceList.map((entry) => {
-            return (
-              <HoverTab
-                key={entry.sourceName}
-                label={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].label : null}
-                tooltip={PresetDataSources[entry.sourceName] ? PresetDataSources[entry.sourceName].tooltip : null}
-              />
-            )
-          })}
-        </Tabs>
+        {!hideSearchBar ? tabs : null}
 
         {queryGenes.length !== 0 ? (
           <TabContent jobId={jobId} results={results} {...others} />

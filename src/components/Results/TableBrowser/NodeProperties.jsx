@@ -11,8 +11,7 @@ import { stripScripts } from './strip-scripts-util.js'
 import GeneAnnotationList from './GeneAnnotationList'
 import ExpandPanel from './ExpandPanel'
 import { isEqual } from 'lodash'
-import CheckIcon from '@material-ui/icons/Check'
-import Avatar from '@material-ui/core/Avatar'
+
 
 import { MAX_NETWORK_SIZE } from '../../../api/config'
 
@@ -276,6 +275,7 @@ const NodeProperties = props => {
           propertyString += property + '<br/>'
         }
       })
+
       if (propertyList.size > 1) {
         attributes.push({
           title: camelCaseToTitleCase(propertyName),
@@ -346,7 +346,7 @@ const NodeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2" component="div">
+                        <Typography variant="caption" component="div">
                           {primaryString}
                         </Typography>
                       </div>
@@ -371,7 +371,7 @@ const NodeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2">{primaryString}</Typography>
+                        <Typography variant="caption">{primaryString}</Typography>
                       </div>
                     </React.Fragment>
                   }
@@ -382,6 +382,7 @@ const NodeProperties = props => {
         }
       }
     })
+
 
     primaryString = ''
     attributes.forEach(entry => {
@@ -408,7 +409,8 @@ const NodeProperties = props => {
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography variant="body2">{primaryString}</Typography>
+                  <Typography variant="caption">{primaryString}
+                  </Typography>
                 </div>
               </React.Fragment>
             }
@@ -422,15 +424,13 @@ const NodeProperties = props => {
         <tbody>
           <tr>
             <td>
-              <Typography variant="body2">{node.name}</Typography>
+              <Typography 
+                variant="body2" 
+                color={querynode ? 'secondary' : 'initial'}
+              >
+                {node.name}
+              </Typography>
             </td>
-            {querynode ? (
-              <td>
-                <Avatar className={classes.matched}>
-                  <CheckIcon className={classes.icon} />
-                </Avatar>
-              </td>
-            ) : null}
           </tr>
         </tbody>
       </table>
@@ -521,7 +521,7 @@ const formatPrimary = entry => {
     .replace(/<\/?p\/?>/gi, '<br>')
     .replace(/(<\/?br\/?>)+/gi, '<br>')
     .replace(/(\n)+/gi, '\n')
-    .replace(/<a\s+href=/gi, '<a target="_blank" href=')
+    .replace(/<a\s+href=/gi, '<a class="table-property-link" target="_blank" href=')
     .trim()
   if (modifiedText.startsWith('<br>')) {
     modifiedText = modifiedText.slice(4, modifiedText.length - 1)
@@ -530,7 +530,7 @@ const formatPrimary = entry => {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
   modifiedText = parse(modifiedText)
-  return <Linkify key={'link' + index++}>{modifiedText}</Linkify>
+  return <Linkify options={{className: 'table-property-link'}} key={'link' + index++}>{modifiedText}</Linkify>
 }
 
 //Necessary because otherwise open list items will collapse every time "SET_AVAILABLE" happens

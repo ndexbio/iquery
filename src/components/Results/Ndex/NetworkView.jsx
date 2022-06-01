@@ -6,7 +6,9 @@ import NetworkViewer from './NetworkViewer';
 import MemoTableBrowser from '../TableBrowser';
 import NetworkToolbar from './NetworkToolbar';
 
-const DEFAULT_RATIO = [50, 50];
+import Dialog from '@material-ui/core/Dialog'
+import QueryGeneList from '../../QueryGeneList';
+const DEFAULT_RATIO = [100, 0];
 
 /**
  * Top page for the application
@@ -22,9 +24,22 @@ const NetworkView = (props) => {
     setResize(e);
   };
 
+  const { showTableModal } = props.network;
+
   return (
     <div className={'network-view-top'}>
       <NetworkToolbar {...props} />
+      <Dialog 
+        fullWidth={true}
+        maxWidth={'md'}
+        open={showTableModal}
+        onClose={() => {
+          props.networkActions.changeTab(0); // 0 for network info
+          props.networkActions.setShowTableModal(false);
+        }}
+      >
+        <MemoTableBrowser {...props} />
+      </Dialog>
       <Split
         sizes={DEFAULT_RATIO}
         direction='vertical'
@@ -37,8 +52,9 @@ const NetworkView = (props) => {
             : null
         }
       >
-        <NetworkViewer resized={resized} {...props} />
-        <MemoTableBrowser {...props} />
+        <div style={{display: 'flex'}}>
+          <NetworkViewer resized={resized} {...props} />        
+        </div>
       </Split>
     </div>
   );

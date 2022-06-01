@@ -6,6 +6,7 @@ import MenuList from '@material-ui/core/MenuList';
 import Typography from '@material-ui/core/Typography';
 
 import SortPanel from './SortPanel';
+import { orderBy } from 'lodash';
 
 import './style.css';
 
@@ -56,50 +57,18 @@ const styles = (theme) => ({
   },
 });
 
-const findSort = (sortBy) => {
-  if (sortBy === 'p-Value') {
-    return (a, b) => {
-      if (a.details.PValue > b.details.PValue) {
-        return 1;
-      } else if (a.details.PValue < b.details.PValue) {
-        return -1;
-      } else {
-        if (a.rank > b.rank) {
-          return 1;
-        } else {
-          return -1;
-        }
-      }
-    };
-  } else if (sortBy === 'Similarity') {
-    return (a, b) => {
-      if (a.details.similarity < b.details.similarity) {
-        return 1;
-      } else if (a.details.similarity > b.details.similarity) {
-        return -1;
-      } else {
-        if (a.rank > b.rank) {
-          return 1;
-        } else {
-          return -1;
-        }
-      }
-    };
-  } else {
-    return (a, b) => {
-      if (a.hitGenes.length < b.hitGenes.length) {
-        return 1;
-      } else if (a.hitGenes.length > b.hitGenes.length) {
-        return -1;
-      } else {
-        if (a.rank > b.rank) {
-          return 1;
-        } else {
-          return -1;
-        }
-      }
-    };
-  }
+const pvalSort = hit => hit.details.PValue;
+const similaritySort = hit => hit.details.similarity;
+const overlapSort = hit => hit.hitGenes.length;
+const titleSort = hit => hit.description;
+
+const sortFns = {
+  // sort by pvalue asc, overlap desc, alphabetically asc
+  'p-Value': (hits) => orderBy(hits, [pvalSort, overlapSort, titleSort], ['asc', 'desc', 'asc']),
+  // sort by similarity desc,  pvalue asc, overlap desc, alphabetically asc
+  'Similarity': (hits) => orderBy(hits, [similaritySort, pvalSort, overlapSort, titleSort], ['desc', 'asc', 'desc', 'asc']),
+  // sort by overlap desc, alphabetically asc
+  'Overlap': (hits) => orderBy(hits, [overlapSort, titleSort], ['desc', 'asc'])
 };
 
 const NetworkList = (props) => {
@@ -129,12 +98,15 @@ const NetworkList = (props) => {
       hits != null &&
       hits[0] != null
     ) {
-      hits.sort(findSort('p-Value'));
-      const networkCount = hits[0].details.totalNetworkCount;
-      for (let i = 0; i < hits.length; i++) {
-        hits[i].details.PValue =
-          (hits[i].details.PValue * networkCount) / (i + 1);
-      }
+      hits = sortFns['p-Value'](hits);
+
+      // legacy code that used to adjust p-values on the client side
+      // Feb-Mar 2022: Chris changed this to adjust them on the server side
+      // const networkCount = hits[0].details.totalNetworkCount;
+      // for (let i = 0; i < hits.length; i++) {
+      //   hits[i].details.PValue =
+      //     (hits[i].details.PValue * networkCount) / (i + 1);
+      // }
     }
   }, [hits]);
 
@@ -143,14 +115,13 @@ const NetworkList = (props) => {
     if (hits !== null) {
       const firstHit = cloneDeep(hits[0]);
       if (props.uiState.selectedSource === 'enrichment') {
-        const sortFunction = findSort(props.uiState.sortBy);
 
         //Allow stable sorting
         for (let i = 0; i < hits.length; i++) {
           hits[i].rank = i;
         }
-
-        hits = hits.sort(sortFunction);
+        
+        hits = sortFns[props.uiState.sortBy](hits);
       }
       //Check if you need to rerender first hit
       let opened = false;
@@ -170,6 +141,11 @@ const NetworkList = (props) => {
       ) {
         openFirst(hits[0]);
         props.networkActions.changeListIndex(1);
+      } else {
+        // refs UD-2170
+        // changing sort should sort the results and 
+        // open the first network in the new results list
+        openFirst(hits[0]);
       }
     }
   }, [props.uiState.sortBy, props.uiState.selectedSource]);
@@ -198,33 +174,21 @@ const NetworkList = (props) => {
   }
 
   const selectedIndex = props.network.listIndex;
-
-  let enrichmentStyle;
-  if (props.uiState.selectedSource === 'enrichment') {
-    enrichmentStyle = {
-      height: 'calc(100% - 49px)',
-    };
-  } else {
-    enrichmentStyle = {};
-  }
+  const hideSearchBar = props.uiState.hideSearchBar;
 
   return (
-    <div className='network-list-wrapper'>
+    <div className={hideSearchBar ? 'headerless-network-list-wrapper': 'network-list-wrapper'}>
       <SortPanel {...props} />
-      <div className='network-list' style={enrichmentStyle}>
-        <MenuList className={props.classes.noPadding}>
-          {props.search.actualResults.map((entry) =>
-            props.renderNetworkListItem(
-              props.search.queryList.length,
-              entry,
-              props.classes,
-              handleListItemClick,
-              selectedIndex,
-              index++
-            )
-          )}
-        </MenuList>
-      </div>
+      {props.search.actualResults.map((entry) =>
+        props.renderNetworkListItem(
+          props.search.queryList.length,
+          entry,
+          props.classes,
+          handleListItemClick,
+          selectedIndex,
+          index++
+        )
+      )}
     </div>
   );
 };

@@ -1,0 +1,38 @@
+.query-gene-list-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.query-gene-list-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1em;
+  padding-bottom: 0.5em;
+  font-weight: 500;
+  min-width: 88px;
+}
+
+.query-gene-list-padding-cell {
+  height: 3.4em;
+  background-color: #fafafa;
+}
+
+.query-gene-list-container {
+  background-color: rgba(0, 0, 0, 0.08);
+  padding-top: 0;
+  margin: 0;
+  height: 88vh;
+  overflow-y: scroll;
+  min-width: 100px;
+}
+
+.headerless-query-gene-list-container { 
+  background-color: rgba(0, 0, 0, 0.08);
+  padding-top: 0;
+  margin: 0;
+  height: 93vh;
+  overflow-y: scroll;
+  min-width: 100px;
+}

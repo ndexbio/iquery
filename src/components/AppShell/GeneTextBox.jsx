@@ -24,7 +24,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     width: '60vmin',
-    padding: '0.3em',
+    padding: '0em 0.3em',
     background: '#f1f1f1',
     marginLeft: '1em',
   },
@@ -34,6 +34,8 @@ const styles = {
   },
   iconButton: {
     padding: 10,
+    height: '1em',
+    width: '1em'
   },
   divider: {
     width: 1,

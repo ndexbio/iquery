@@ -27,7 +27,7 @@ const styles = (theme) => ({
     height: '2em',
   },
   button: {
-    height: '3em',
+    height: '2.5em',
     width: '4.3em',
     minWidth: '4.3em',
   },
@@ -111,7 +111,7 @@ const OpenInCytoscapeButton = (props) => {
         disableFocusListener
         title={
           disabled
-            ? 'Open Cytoscape Desktop to view this network'
+            ? 'Open this network in Cytoscape.  To use this feature, you need Cytoscape 3.6.0 or higher running on your machine (default port: 1234) and the CyNDEx-2 app installed'
             : 'Open this network in Cytoscape Desktop'
         }
         placement='bottom'

@@ -7,6 +7,12 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import { Tooltip } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
+import Link from '@material-ui/core/Link';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 import HoverTab from '../HoverTab';
 
 import OpenInCytoscapeButton from './OpenInCytoscapeButton';
@@ -19,11 +25,13 @@ import NDExSave from '../../NDExSave';
 import OpenOriginalNetworkButton from './OpenOriginalNetworkButton';
 import LayoutSelector from './LayoutSelector';
 import { camelCaseToTitleCase } from '../TableBrowser/camel-case-util';
-import { findAttributes } from '../TableBrowser/attribute-util';
+import { findAttributes, getNetworkAttributes } from '../TableBrowser/attribute-util';
+
+import NetworkProperties from '../TableBrowser/NetworkProperties';
 
 const styles = (theme) => ({
   toolbar: {
-    background: '#EFEFEF',
+    background: 'rgba(0, 0, 0, 0.08)',
     height: '4em',
     paddingTop: '0',
     paddingBottom: '0',
@@ -45,6 +53,8 @@ const styles = (theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
+    cursor: 'pointer',
+    overflowX: 'clip'
   },
   search: {
     position: 'relative',
@@ -114,6 +124,8 @@ const NetworkToolbar = (props) => {
 
   const [layout, setLayout] = useState(props.uiState.layout);
 
+  const [showNetworkInfo, setShowNetworkInfo] = useState(false)
+
   //Check if pathway figure is valid
   const [tab, setTab] = useState(props.uiState.pathwayFigure ? 0 : 1);
   useEffect(() => {
@@ -181,6 +193,9 @@ const NetworkToolbar = (props) => {
     setLayout(props.uiState.layout);
   }, [props.uiState.layout]);
 
+  let networkInfoDialog = null;
+  
+
   return (
     <>
       <div>
@@ -192,18 +207,24 @@ const NetworkToolbar = (props) => {
                 : props.network.networkName
             }
           >
-            <Typography
-              className={classes.title}
-              variant='subtitle1'
-              color='inherit'
-              noWrap
+            <Link 
+              className={classes.title} 
+              component="button" 
+              variant="body2" 
+              onClick={() => props.networkActions.setShowTableModal(true)}
             >
-              {name
-                ? camelCaseToTitleCase(prefix) + ':' + name
-                : props.network.networkName}
-            </Typography>
+              <Typography
+                className={classes.title}
+                variant='subtitle1'
+                color='inherit'
+                noWrap
+              >
+                {name
+                  ? camelCaseToTitleCase(prefix) + ':' + name
+                  : props.network.networkName}
+              </Typography>
+            </Link>
           </Tooltip>
-
           <div className={classes.grow} />
           {props.uiState.selectedSource !== 'pathwayfigures' ||
           props.uiState.pathwayFigure === false ? (

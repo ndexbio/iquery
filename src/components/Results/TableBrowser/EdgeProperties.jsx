@@ -9,8 +9,6 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
 import ExpandPanel from './ExpandPanel'
-import CheckIcon from '@material-ui/icons/Check'
-import Avatar from '@material-ui/core/Avatar'
 
 import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
@@ -327,7 +325,7 @@ const EdgeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography component="span" variant="body2">
+                        <Typography component="span" variant="caption">
                           {primaryString}
                         </Typography>
                       </div>
@@ -352,7 +350,7 @@ const EdgeProperties = props => {
                         {secondaryString}
                       </Typography>
                       <div>
-                        <Typography variant="body2">{primaryString}</Typography>
+                        <Typography variant="caption">{primaryString}</Typography>
                       </div>
                     </React.Fragment>
                   }
@@ -392,7 +390,7 @@ const EdgeProperties = props => {
                   {secondaryString}
                 </Typography>
                 <div>
-                  <Typography component="span" variant="body2">
+                  <Typography component="span" variant="caption">
                     {primaryString}
                   </Typography>
                 </div>
@@ -409,28 +407,24 @@ const EdgeProperties = props => {
         <tbody>
           <tr>
             <td>
-              <Typography variant="body2">{source}</Typography>
+              <Typography 
+                variant="body2" 
+                color={props.search?.searchResults?.query?.includes(source?.toUpperCase()) ? 'secondary' : 'initial'}
+              >
+                  {source}
+              </Typography>
             </td>
-            {props.search.queryList.includes(source?.toUpperCase()) ? (
-              <td>
-                <Avatar className={classes.matched}>
-                  <CheckIcon className={classes.icon} />
-                </Avatar>
-              </td>
-            ) : null}
             <td>
               <Typography variant="body2">{' ➝ '}</Typography>
             </td>
             <td>
-              <Typography variant="body2">{target}</Typography>
+              <Typography 
+                variant="body2"
+                color={props.search?.searchResults?.query?.includes(target?.toUpperCase()) ? 'secondary' : 'initial'}
+              >
+                {target}
+              </Typography>
             </td>
-            {props.search.queryList.includes(target?.toUpperCase()) ? (
-              <td>
-                <Avatar className={classes.matched}>
-                  <CheckIcon className={classes.icon} />
-                </Avatar>
-              </td>
-            ) : null}
           </tr>
         </tbody>
       </table>
@@ -516,7 +510,7 @@ const formatPrimary = entry => {
     .replace(/<\/?p\/?>/gi, '<br>')
     .replace(/(<\/?br\/?>)+/gi, '<br>')
     .replace(/(\n)+/gi, '\n')
-    .replace(/<a\s+href=/gi, '<a target="_blank" href=')
+    .replace(/<a\s+href=/gi, '<a class="table-property-link" target="_blank" href=')
     .trim()
   if (modifiedText.startsWith('<br>')) {
     modifiedText = modifiedText.slice(4, modifiedText.length - 1)
@@ -524,8 +518,9 @@ const formatPrimary = entry => {
   if (modifiedText.endsWith('<br>')) {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
+
   modifiedText = parse(modifiedText)
-  return <Linkify key={'link:' + index++}>{modifiedText}</Linkify>
+  return <Linkify options={{className: "table-property-link"}} key={'link:' + index++}>{modifiedText}</Linkify>
 }
 
 const findNode = (nodeId, nodeArray) => {

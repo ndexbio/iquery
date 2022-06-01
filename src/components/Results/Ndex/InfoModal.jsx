@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { Tooltip } from '@material-ui/core'
 import InfoIcon from '@material-ui/icons/Info'
 import IconButton from '@material-ui/core/IconButton'
 import Dialog from '@material-ui/core/Dialog'
@@ -11,20 +12,14 @@ import Paper from '@material-ui/core/Paper'
 import Draggable from 'react-draggable'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import CloseIcon from '@material-ui/icons/Close';
 
 const infoStyle = {
-  position: 'relative',
-  left: '0.5em',
-  top: '6px',
-  height: '0.5em',
-  width: '0.5em'
 }
 
 const iconStyle = {
   height: '0.7em',
   width: '0.7em',
-  position: 'relative',
-  bottom: '2px',
   color: '#3576BE'
 }
 
@@ -46,12 +41,30 @@ const InfoModal = props => {
   const handleClose = () => {
     setOpen(false)
   }
-
+  const infoTooltip = (
+    <div>
+      <div>
+        <Typography variant="body2" style={{fontWeight: 'bold', textDecoration: 'underline'}}>
+        {`Click for a full description of the sorting options.`}
+        </Typography>
+      </div>
+      <br/>
+      <div>{`Similarity: Cosine similarity of the query genes and the network genes. Uncommon shared genes contribute more to the score.`}</div>
+      <br/>
+      <div>{`P-Value: Hypergeometric test adjusted for false discovery.`}</div>
+      <br/>
+      <div>{`Overlap: The number of genes in common between the query gene list and the network.`}</div>
+      <br/>
+      <div>{`Results contain the top 50 pathway hits.`}</div>
+    </div>
+  )
   return (
     <React.Fragment>
-      <IconButton aria-haspopup="true" onClick={handleOpen} style={infoStyle}>
-        <InfoIcon style={iconStyle} />
-      </IconButton>
+      <Tooltip title={infoTooltip} placement='bottom'>
+        <IconButton aria-haspopup="true" onClick={handleOpen} style={infoStyle}>
+          <InfoIcon style={iconStyle} />
+        </IconButton>
+      </Tooltip>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -59,31 +72,42 @@ const InfoModal = props => {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          <Typography component="span" variant="h6">
-            Sorting
-          </Typography>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <Typography component="span" variant="h6">
+              Sorting
+            </Typography>
+
+            <IconButton onClick={handleClose} aria-label="close">
+              <CloseIcon/>
+            </IconButton>
+          </div>
         </DialogTitle>
         <DialogContent dividers={true}>
           <DialogContentText component="span">
-            <Typography component="div" variant="h6" color="textPrimary">
-              Overlap:
+          <Typography component="div" variant="h6" color="textPrimary">
+              Similarity:
             </Typography>
             <Typography component="div" variant="body2">
-              This refers to the number of genes that are in both the query set
-              and the network. When sorting by overlap, networks with a high
-              number of overlapping genes are at the top of the list, and
-              networks with a low number of overlapping genes are at the bottom
-              of the list.{' '}
-              <Typography
-                component="span"
-                variant="inherit"
-                color="textPrimary"
+              This is a way of scoring the similarity between the query set and
+              the genes in the network, while taking into account that some
+              genes are much more universal than other genes, and will appear in
+              many more networks without adding much information. This is based
+              on cosine similarity, using values derived from the{' '}
+              <a
+                href="https://ethen8181.github.io/machine-learning/clustering_old/tf_idf/tf_idf.html"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <strong>Sorting is stable</strong>
-              </Typography>
-              , so sorting by <em>p</em>-value and then by overlap will result
-              in a list where networks are sorted by overlap, and networks that
-              are tied for overlap are sorted by <em>p</em>-value.
+                Term Frequency-Inverse Document Frequency
+              </a>{' '}
+              of each gene in the query set and the network. Rare genes that are
+              shared between the query set and network will contribute more to
+              the similarity score than common genes, resulting in a higher
+              similarity score. When sorting by similarity, networks that have
+              high similarity are at the top of the list, and networks that have
+              low similarity are at the bottom of the list.  Networks with matching similarity 
+              scores are then sorted by <em>p</em>-values, and if <em>p</em>-value matches, 
+              sorted by overlap and then alphabetically.{' '}
             </Typography>
             <br />
             <Typography component="div" variant="h6" color="textPrimary">
@@ -125,7 +149,7 @@ const InfoModal = props => {
               false discovery rate that is an effect of querying a large
               database of networks. This is done using the{' '}
               <a
-                href="http://www.jstor.org/stable/2346101"
+                href="https://royalsocietypublishing.org/doi/full/10.1098/rsta.2009.0127"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -134,9 +158,12 @@ const InfoModal = props => {
               , where each <em>p</em>-value is multiplied by the number of
               networks queried, and then divided by its rank relative to other{' '}
               <em>p</em>-values (where low <em>p</em>-values have a low rank and
-              vice versa). When sorting by <em>p</em>-value, networks with a low{' '}
-              <em>p</em>-value are at the top of the list, and networks with a
-              high <em>p</em>-value are at the bottom of the list.{' '}
+              vice versa). Lower value <em>p</em>-values are propagated up the list so that 
+              the <em>p</em>-values are always ascending. When sorting by <em>p</em>-value, 
+              networks with a low <em>p</em>-value are at the top of the list, and networks with a 
+              high <em>p</em>-value are at the bottom of the list. 
+              Networks with matching <em>p</em>-values are then sorted by overlap, and if overlap matches, 
+              sorted alphabetically.{' '}
               <a
                 href="https://github.com/ndexbio/ndex-enrichment-rest/wiki/How-Pvalue-is-calculated"
                 target="_blank"
@@ -147,34 +174,20 @@ const InfoModal = props => {
               .
             </Typography>
             <br />
+
+            <br/>
             <Typography component="div" variant="h6" color="textPrimary">
-              Similarity:
+              Overlap:
             </Typography>
             <Typography component="div" variant="body2">
-              This is a way of scoring the similarity between the query set and
-              the genes in the network, while taking into account that some
-              genes are much more universal than other genes, and will appear in
-              many more networks without adding much information. This is based
-              on cosine similarity, using values derived from the{' '}
-              <a
-                href="https://ethen8181.github.io/machine-learning/clustering_old/tf_idf/tf_idf.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Term Frequency-Inverse Document Frequency
-              </a>{' '}
-              of each gene in the query set and the network. Rare genes that are
-              shared between the query set and network will contribute more to
-              the similarity score than common genes, resulting in a higher
-              similarity score. When sorting by similarity, networks that have
-              high similarity are at the top of the list, and networks that have
-              low similarity are at the bottom of the list.{' '}
+              This refers to the number of genes that are in both the query set
+              and the network. When sorting by overlap, networks with a high
+              number of overlapping genes are at the top of the list, and
+              networks with a low number of overlapping genes are at the bottom
+              of the list. Networks with matching overlaps are sorted alphabetically. {' '}
             </Typography>
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
       </Dialog>
     </React.Fragment>
   )

@@ -3,6 +3,7 @@
   grid-gap: 0;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: min-content 1fr;
+  flex-grow: 3;
 }
 
 .start-container {
@@ -71,11 +72,9 @@
 }
 
 .results-container {
-  padding-top: 6.5vmin;
-  grid-column: 1/12;
+  grid-column: 1/13;
   grid-row: 2/3;
   margin: 0;
-  height: 100vh;
   overflow: hidden;
 }
 

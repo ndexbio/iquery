@@ -17,7 +17,7 @@ export default function ExpandPanel(props) {
 
   if (props.divider) {
     style = {
-      borderTop: '1px solid #EFEFEF'
+      borderTop: '1px solid rgba(0, 0, 0, 0.08)'
     }
   } else {
     style = {}
