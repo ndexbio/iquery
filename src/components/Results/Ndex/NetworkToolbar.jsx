@@ -127,7 +127,7 @@ const NetworkToolbar = (props) => {
   const [showNetworkInfo, setShowNetworkInfo] = useState(false)
 
   //Check if pathway figure is valid
-  const [tab, setTab] = useState(props.uiState.pathwayFigure ? 0 : 1);
+  const [tab, setTab] = useState(0);
   useEffect(() => {
     props.uiStateActions.setPathwayFigureSource('loading');
     if (tab === 0) {
@@ -141,26 +141,7 @@ const NetworkToolbar = (props) => {
             break;
           }
         }
-        if (figureSource == null) {
-          //props.uiStateActions.setPathwayFigureSource(null);
-          handleTabChange(null, 1);
-        } else {
-          //Check if image is valid
-          const request = new XMLHttpRequest();
-          request.open('HEAD', figureSource, true);
-          request.send();
-          request.onreadystatechange = function() {
-            if (
-              request.status === 0 ||
-              (request.status >= 200 && request.status < 400)
-            ) {
-              props.uiStateActions.setPathwayFigureSource(figureSource);
-            } else {
-              props.uiStateActions.setPathwayFigureSource(null);
-              handleTabChange(null, 1);
-            }
-          };
-        }
+        props.uiStateActions.setPathwayFigureSource(figureSource);
       }
     }
   }, [props.network.originalCX]);
