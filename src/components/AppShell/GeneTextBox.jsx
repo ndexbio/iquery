@@ -217,6 +217,8 @@ const GeneTextBox = (props) => {
           ref={geneTextRef}
         />
 
+        <Divider className={classes.divider} />
+
         <Tooltip title='Start new search' placement='bottom'>
           <IconButton
             color='primary'
