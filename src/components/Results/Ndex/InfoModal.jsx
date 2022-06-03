@@ -45,17 +45,9 @@ const InfoModal = props => {
     <div>
       <div>
         <Typography variant="body2" style={{fontWeight: 'bold', textDecoration: 'underline'}}>
-        {`Click for a full description of the sorting options.`}
+        {`Click for details on available sorting options.`}
         </Typography>
       </div>
-      <br/>
-      <div>{`Similarity: Cosine similarity of the query genes and the network genes. Uncommon shared genes contribute more to the score.`}</div>
-      <br/>
-      <div>{`P-Value: Hypergeometric test adjusted for false discovery.`}</div>
-      <br/>
-      <div>{`Overlap: The number of genes in common between the query gene list and the network.`}</div>
-      <br/>
-      <div>{`Results contain the top 50 pathway hits.`}</div>
     </div>
   )
   return (
@@ -87,6 +79,9 @@ const InfoModal = props => {
           <Typography component="div" variant="h6" color="textPrimary">
               Similarity:
             </Typography>
+            <Typography variant="body2" color="textPrimary" style={{fontWeight: 'bold'}}>
+              Cosine similarity of the query genes and the network genes. Uncommon shared genes contribute more to the score.
+            </Typography>
             <Typography component="div" variant="body2">
               This is a way of scoring the similarity between the query set and
               the genes in the network, while taking into account that some
@@ -112,6 +107,9 @@ const InfoModal = props => {
             <br />
             <Typography component="div" variant="h6" color="textPrimary">
               <em>P</em>-Value:
+            </Typography>
+            <Typography variant="body2" color="textPrimary" style={{fontWeight: 'bold'}}>
+              Hypergeometric test adjusted for false discovery.
             </Typography>
             <Typography component="div" variant="body2">
               This refers to the probability that the query set and the network
@@ -178,6 +176,9 @@ const InfoModal = props => {
             <br/>
             <Typography component="div" variant="h6" color="textPrimary">
               Overlap:
+            </Typography>
+            <Typography variant="body2" color="textPrimary" style={{fontWeight: 'bold'}}>
+              The number of genes in common between the query gene list and the network.
             </Typography>
             <Typography component="div" variant="body2">
               This refers to the number of genes that are in both the query set
