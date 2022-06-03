@@ -23,7 +23,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '60vmin',
+    width: '60vw',
     padding: '0em 0.3em',
     background: '#f1f1f1',
     marginLeft: '1em',
