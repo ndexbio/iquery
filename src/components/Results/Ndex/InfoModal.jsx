@@ -18,8 +18,8 @@ const infoStyle = {
 }
 
 const iconStyle = {
-  height: '0.7em',
-  width: '0.7em',
+  height: '0.95em',
+  width: '0.95em',
   color: '#3576BE'
 }
 

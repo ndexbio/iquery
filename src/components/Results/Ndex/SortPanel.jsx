@@ -43,7 +43,7 @@ const formStyle = {
 const divStyle = {
   position: 'sticky',
   top: '0px',
-  paddingLeft: '16px',
+  paddingLeft: '12px',
   borderBottom: '1px solid rgba(239, 239, 239, 1)',
   display: 'flex',
   minHeight: '56px',
@@ -66,11 +66,17 @@ const radioStyle = {
 }
 
 const radioButtonsDiv = {
-  alignItems: 'center'
+  alignItems: 'center',
+  display: 'flex',
+  flexShrink: 0
 }
 
 const sortInfoStyle = {
   flexBasis: '100px',
+  display: 'flex',
+  alignItems: 'center',
+  flexShrink: 0,
+  marginRight: '10px'
 }
 const SortPanel = props => {
   const [sortBy, setSortBy] = useState(props.uiState.sortBy)
