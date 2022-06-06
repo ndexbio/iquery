@@ -83,9 +83,12 @@ const GeneTextBox = (props) => {
     } else {
       genes = query;
     }
-    const sources = props.source.sources;
 
-    if (genes.length === 0 || sources === null || sources.length === 0) {
+    // If sources are not found, searchActions.searchStarted will send a request to find them
+    // refs UD-2219
+    const sources = props.source.sources || [];
+
+    if (genes.length === 0) {
       // TODO: add better error message
       return;
     }
