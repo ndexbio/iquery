@@ -126,8 +126,8 @@ const NetworkToolbar = (props) => {
 
   const [showNetworkInfo, setShowNetworkInfo] = useState(false)
 
-  //Check if pathway figure is valid
-  const [tab, setTab] = useState(0);
+  const tab = props.uiState.pathwayFigureTab;
+
   useEffect(() => {
     props.uiStateActions.setPathwayFigureSource('loading');
     if (tab === 0) {
@@ -153,22 +153,15 @@ const NetworkToolbar = (props) => {
 
   const handleTabChange = (event, newValue) => {
     if (newValue !== tab) {
-      setTab(newValue);
       if (newValue === 0) {
         props.uiStateActions.setPathwayFigure(true);
+        props.uiStateActions.setPathwayFigureTab(newValue);
       } else {
         props.uiStateActions.setPathwayFigure(false);
+        props.uiStateActions.setPathwayFigureTab(newValue);
       }
     }
   };
-
-  useEffect(() => {
-    if (props.uiState.pathwayFigure) {
-      setTab(0);
-    } else {
-      setTab(1);
-    }
-  }, [props.uiState.pathwayFigure]);
 
   useEffect(() => {
     setLayout(props.uiState.layout);

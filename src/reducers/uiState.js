@@ -6,6 +6,7 @@ import {
   setSelectedSource,
   setPathwayFigure,
   setPathwayFigureSource,
+  setPathwayFigureTab,
   setFitPathwayFigure,
   setSortBy,
   setSortOptions,
@@ -25,6 +26,7 @@ const DEF_STATE = {
   selectedSource: '',
   pathwayFigure: true,
   pathwayFigureSource: null,
+  pathwayFigureTab: 0, // whether to view the figure or the genelist tab
   fitPathwayFigure: false,
   sortOptions: ['Similarity', 'p-Value', 'Overlap'],
   sortBy: DEFAULT_SORT,
@@ -50,10 +52,17 @@ const uiState = handleActions(
       return { ...state, highlights: payload.payload };
     },
     [setSelectedSource]: (state, payload) => {
-      return { ...state, selectedSource: payload.payload };
+      // anytime a new source is selected, reset the default pathwayfigure view
+      // it is possible the user has changed the pathway figure view to the gene tab
+      // reset this to the default pathway figure view
+      // refs UD-2216
+      return { ...state, selectedSource: payload.payload, pathwayFigureTab: 0, pathwayFigure: true };
     },
     [setPathwayFigure]: (state, payload) => {
       return { ...state, pathwayFigure: payload.payload };
+    },
+    [setPathwayFigureTab]: (state, payload) => {
+      return {...state, pathwayFigureTab: payload.payload};
     },
     [setPathwayFigureSource]: (state, payload) => {
       return { ...state, pathwayFigureSource: payload.payload };
