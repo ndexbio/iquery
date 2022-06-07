@@ -122,15 +122,22 @@ const CytoscapeViewer = (props) => {
     const selectEdge = () => {
       setTimeout(() => {
         const edges = [];
+        const connectedNodes = [];
         const selectedEdges = cyInstance.$('edge:selected');
         selectedEdges.forEach((element) => {
           edges.push(element.data());
         });
+
+        selectedEdges.connectedNodes().forEach(el => {
+          connectedNodes.push(el.data());
+        });
+
         if (edges.length === 0) {
           props.networkActions.unselectEdges();
           props.networkActions.unselectNodes();
         } else {
           props.networkActions.unselectNodes();
+          props.networkActions.selectNodes(connectedNodes);
           props.networkActions.selectEdges(edges);
         }
       }, 1);
@@ -139,23 +146,30 @@ const CytoscapeViewer = (props) => {
     const selectNode = () => {
       setTimeout(() => {
         const nodes = [];
+        const connectedEdges = [];
         const selectedNodes = cyInstance.$('node:selected');
         selectedNodes.forEach((element) => {
           if (element.data().name !== '') {
             nodes.push(element.data());
           }
         });
+
+        selectedNodes.connectedEdges().forEach((element) => {
+          connectedEdges.push(element.data());
+        });
         if (nodes.length === 0) {
           props.networkActions.unselectNodes();
           props.networkActions.unselectEdges();
         } else {
           props.networkActions.unselectEdges();
+          props.networkActions.selectEdges(connectedEdges);
           props.networkActions.selectNodes(nodes);
         }
       }, 1);
     };
 
-    cyInstance.on('tap', 'node', function() {
+    cyInstance.on('tap', 'node', function(e) {
+      // console.log(e);
       try {
         cyInstance.nodes().removeClass('connected');
       } catch (e) {

@@ -36,6 +36,8 @@ const NetworkView = (props) => {
         onClose={() => {
           props.networkActions.changeTab(0); // 0 for network info
           props.networkActions.setShowTableModal(false);
+          props.networkActions.unselectNodes();
+          props.networkActions.unselectEdges();
         }}
       >
         <MemoTableBrowser {...props} />
