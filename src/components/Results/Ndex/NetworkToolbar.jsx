@@ -129,8 +129,8 @@ const NetworkToolbar = (props) => {
   const tab = props.uiState.pathwayFigureTab;
 
   useEffect(() => {
-    props.uiStateActions.setPathwayFigureSource('loading');
     if (tab === 0) {
+      props.uiStateActions.setPathwayFigureSource('loading');
       const { originalCX } = props.network;
       if (originalCX !== null) {
         const networkAttr = findAttributes(originalCX, 'networkAttributes');

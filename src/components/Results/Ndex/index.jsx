@@ -77,6 +77,10 @@ const Ndex = props => {
       nodeCount,
       edgeCount
     })
+    // reset pathway figure tab when switching to a new
+    // network
+    props.uiStateActions.setPathwayFigureTab(0);
+    props.uiStateActions.setPathwayFigure(true);
     updateHistory(networkUUID)
   }
 
