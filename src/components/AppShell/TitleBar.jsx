@@ -40,8 +40,8 @@ const styles = (theme) => ({
     marginRight: 10,
   },
   logo: {
-    height: '40px',
-    width: '139px',
+    height: '45px',
+    width: '141px',
   },
   helpIcon: {
     height: '1em',
