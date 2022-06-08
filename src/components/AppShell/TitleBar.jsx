@@ -9,10 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import HelpIcon from '@material-ui/icons/Help';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
-
+import {Box} from '@material-ui/core';
 import classNames from 'classnames';
 
-import logo from '../../assets/images/ndex-logo.svg';
+import logo from '../../assets/images/powered-by-ndex-logo.png'
 //import cytoLogo from '../../assets/images/cytoscape-logo-mono-dark.svg'
 //import nrnbLogo from '../../assets/images/nrnb-logo-mono-dark.svg'
 //import wpLogo from '../../assets/images/wp-logo-mono-dark.svg'
@@ -40,6 +40,10 @@ const styles = (theme) => ({
     marginRight: 10,
   },
   logo: {
+    height: '40px',
+    width: '139px',
+  },
+  helpIcon: {
     height: '1em',
     width: '1.5em',
   },
@@ -135,16 +139,11 @@ class TitleBar extends React.Component {
 
             <div className={classes.grow} />
 
-            <div>
-              <Tooltip title='NDEx' placement='bottom'>
-                <IconButton
-                  color='default'
-                  aria-label='Home'
-                  onClick={() => openLink("/")}
-                >
+            <div style={{display: 'flex', alignItems: 'center'}}>
+            <span>
+
                   <img alt='NDEx logo' src={logo} className={classes.logo} />
-                </IconButton>
-              </Tooltip>
+            </span>
 
               <Tooltip
                 title='Help'
@@ -157,7 +156,7 @@ class TitleBar extends React.Component {
                     onClick={() => openLink(HELP_URL)}
                     color='inherit'
                   >
-                    <HelpIcon className={classes.logo} />
+                    <HelpIcon className={classes.helpIcon} />
                   </IconButton>
                 </Typography>
               </Tooltip>
