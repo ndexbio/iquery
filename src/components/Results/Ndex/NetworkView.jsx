@@ -78,6 +78,7 @@ const NetworkView = (props) => {
       >
         <div style={{display: 'flex'}}>
           <NetworkViewer resized={resized} {...props} />      
+          { props.network.isFetching ? null : 
           <div style={{position: 'absolute', bottom: '1em', left: '1em'}}>
             <ButtonGroup
               // className={classes.root}
@@ -112,6 +113,7 @@ const NetworkView = (props) => {
               </IconButton>
             </ButtonGroup>
           </div>  
+          }
         </div>
       </Split>
     </div>

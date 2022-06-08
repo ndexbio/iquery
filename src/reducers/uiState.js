@@ -8,6 +8,7 @@ import {
   setPathwayFigureSource,
   setPathwayFigureTab,
   setFitPathwayFigure,
+  setPathwayFigureZoom,
   setSortBy,
   setSortOptions,
   setLayout,
@@ -28,6 +29,10 @@ const DEF_STATE = {
   pathwayFigureSource: null,
   pathwayFigureTab: 0, // whether to view the figure or the genelist tab
   fitPathwayFigure: false,
+  pathwayFigureZoom: {
+    scale: 1,
+    translation: { x: 0, y: 0 },
+  },
   sortOptions: ['Similarity', 'p-Value', 'Overlap'],
   sortBy: DEFAULT_SORT,
   layout: 'Preset',
@@ -116,6 +121,12 @@ const uiState = handleActions(
         annotations: payload.payload,
       };
     },
+    [setPathwayFigureZoom]: (state, payload) => {
+      return {
+        ...state,
+        pathwayFigureZoom: Object.assign(state.pathwayFigureZoom, payload.payload),
+      };
+    }
   },
   DEF_STATE
 );
