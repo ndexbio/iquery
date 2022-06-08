@@ -16,7 +16,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import HoverTab from '../HoverTab';
 
 import OpenInCytoscapeButton from './OpenInCytoscapeButton';
-import ResetZoomButton from './ResetZoomButton';
 import ResetPathwayFigureZoomButton from './ResetPathwayFigureZoomButton';
 import Highlighter from './Highlighter';
 import SaveToNDExButton from './SaveToNDExButton';
@@ -208,7 +207,6 @@ const NetworkToolbar = (props) => {
                 handleChange={handleLayoutChange}
                 {...other}
               />
-              <ResetZoomButton {...other} />
               <Highlighter {...other} />
             </>
           ) : (

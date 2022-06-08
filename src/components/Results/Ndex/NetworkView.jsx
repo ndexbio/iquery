@@ -8,6 +8,12 @@ import NetworkToolbar from './NetworkToolbar';
 
 import Dialog from '@material-ui/core/Dialog'
 import QueryGeneList from '../../QueryGeneList';
+
+import { ButtonGroup, IconButton } from '@material-ui/core';
+import FitIcon from '@material-ui/icons/ZoomOutMap'
+import ZoomInIcon from '@material-ui/icons/ZoomIn'
+import ZoomOutIcon from '@material-ui/icons/ZoomOut'
+
 const DEFAULT_RATIO = [100, 0];
 
 /**
@@ -25,6 +31,22 @@ const NetworkView = (props) => {
   };
 
   const { showTableModal } = props.network;
+  const handleZoomIn = (evt) => {
+    const cy = props.network.cyJsInstance;
+    if (cy?._private?.renderer?.isHeadless != null) {
+      const currentZoom = cy.zoom()
+      const newLevel = currentZoom * 1.2
+      cy.zoom(newLevel)
+    }
+  }
+  const handleZoomOut = (evt) => {
+    const cy = props.network.cyJsInstance;
+    if (cy?._private?.renderer?.isHeadless != null) {
+      const currentZoom = cy.zoom()
+      const newLevel = currentZoom * 0.8
+      cy.zoom(newLevel)
+    }
+  }
 
   return (
     <div className={'network-view-top'}>
@@ -55,7 +77,41 @@ const NetworkView = (props) => {
         }
       >
         <div style={{display: 'flex'}}>
-          <NetworkViewer resized={resized} {...props} />        
+          <NetworkViewer resized={resized} {...props} />      
+          <div style={{position: 'absolute', bottom: '1em', left: '1em'}}>
+            <ButtonGroup
+              // className={classes.root}
+              style={{border: '1px solid #DDDDDD', backgroundColor: 'white', opacity: 1}}
+              orientation="vertical"
+              color="secondary"
+              variant="outlined"
+            >
+              <IconButton
+                key={'fitButton'}
+                color={'primary'}
+                style={{ backgroundColor: 'transparent' }}
+                onClick={() => props.uiStateActions.fitNetworkView()}
+              >
+                <FitIcon />
+              </IconButton>
+              <IconButton
+                key={'zoomInButton'}
+                color={'primary'}
+                style={{ backgroundColor: 'transparent' }}
+                onClick={handleZoomIn}
+              >
+                <ZoomInIcon />
+              </IconButton>
+              <IconButton
+                key={'zoomOutButton'}
+                color={'primary'}
+                style={{ backgroundColor: 'transparent' }}
+                onClick={handleZoomOut}
+              >
+                <ZoomOutIcon />
+              </IconButton>
+            </ButtonGroup>
+          </div>  
         </div>
       </Split>
     </div>

@@ -228,6 +228,8 @@ const CytoscapeViewer = (props) => {
         layouts: propLayouts,
         layout: propLayout,
       });
+      props.networkActions.setCyJs(cyInstance);
+
     });
 
     return () => {
@@ -351,7 +353,7 @@ const CytoscapeViewer = (props) => {
     background: 'rgba(0,0,0,0)',
   };
 
-  if (cyInstance !== null) {
+  if (cyInstance != null) {
     cyInstance.resize();
 
     if (layout === COSE_LAYOUT || layout === CONCENTRIC_LAYOUT) {

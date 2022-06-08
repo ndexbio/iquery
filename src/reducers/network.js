@@ -17,6 +17,7 @@ import {
   changeListIndex,
   setShowTableModal,
   setOriginalNetworkUrl,
+  setCyJs,
 } from '../actions/network';
 
 const defaultState = {
@@ -30,6 +31,7 @@ const defaultState = {
   hitGenes: [],
   originalCX: null,
   network: null,
+  cyJsInstance: null,
   nodeCount: 0,
   edgeCount: 0,
   isLayoutComplete: false,
@@ -240,6 +242,12 @@ const network = handleActions(
         url: payload.payload,
       };
     },
+    [setCyJs]: (state, payload) => {
+      return {
+        ...state,
+        cyJsInstance: payload.payload
+      };
+    }
   },
   defaultState
 );
