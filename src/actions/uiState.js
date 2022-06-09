@@ -29,6 +29,8 @@ export const SET_FIT_PATHWAY_FIGURE = 'SET_FIT_PATHWAY_FIGURE';
 export const setFitPathwayFigure = createAction(SET_FIT_PATHWAY_FIGURE);
 export const SET_PATHWAY_FIGURE_TAB = 'SET_PATHWAY_FIGURE_TAB';
 export const setPathwayFigureTab = createAction(SET_PATHWAY_FIGURE_TAB);
+export const SET_PATHWAY_FIGURE_ZOOM = 'SET_PATHWAY_FIGURE_ZOOM';
+export const setPathwayFigureZoom = createAction(SET_PATHWAY_FIGURE_ZOOM);
 
 // Sort settings
 export const SET_SORT_OPTIONS = 'SET_SORT_OPTIONS';

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { makeStyles } from '@material-ui/styles';
 import { Typography } from '@material-ui/core';
+import _ from 'lodash';
 
 import LoadingPanel from '../../LoadingPanel';
 
@@ -26,10 +27,10 @@ const PathwayFigureViewer = (props) => {
   const classes = useStyles();
 
   //Set up figure zoom requirements
-  const [zoomValue, setZoomValue] = useState({
-    scale: 1,
-    translation: { x: 0, y: 0 },
-  });
+  // const [zoomValue, setZoomValue] = useState({
+  //   scale: 1,
+  //   translation: { x: 0, y: 0 },
+  // });
   const [imageHeight, setImageHeight] = useState(0);
   const [imageWidth, setImageWidth] = useState(0);
 
@@ -53,11 +54,11 @@ const PathwayFigureViewer = (props) => {
     if (heightScale < widthScale) {
       //Find translation
       const xValue = (containerWidth - width * heightScale) / 2;
-      setZoomValue({ scale: heightScale, translation: { x: xValue, y: 0 } });
+      props.uiStateActions.setPathwayFigureZoom({ scale: heightScale, translation: { x: xValue, y: 0 } });
     } else {
       //Find translation
       const yValue = (containerHeight - height * widthScale) / 2;
-      setZoomValue({ scale: heightScale, translation: { x: 0, y: yValue } });
+      props.uiStateActions.setPathwayFigureZoom({ scale: heightScale, translation: { x: 0, y: yValue } });
     }
   };
 
@@ -87,8 +88,8 @@ const PathwayFigureViewer = (props) => {
     return (
       <div className={classes.imageContainer} ref={imageContainerRef}>
         <MapInteractionCSS
-          value={zoomValue}
-          onChange={(value) => setZoomValue(value)}
+          value={props.uiState.pathwayFigureZoom}
+          onChange={(value) => props.uiStateActions.setPathwayFigureZoom(value)}
         >
           <img src={figureSource} ref={imageRef} onLoad={handleLoad} />
         </MapInteractionCSS>

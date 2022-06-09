@@ -31,20 +31,41 @@ const NetworkView = (props) => {
   };
 
   const { showTableModal } = props.network;
+
+  const handleFit = (evt) => {
+    if(props.uiState.selectedSource === 'pathwayfigures') {
+      props.uiStateActions.setFitPathwayFigure(true);
+    } else {
+      props.uiStateActions.fitNetworkView();
+    }
+  };
+
   const handleZoomIn = (evt) => {
-    const cy = props.network.cyJsInstance;
-    if (cy?._private?.renderer?.isHeadless != null) {
-      const currentZoom = cy.zoom()
-      const newLevel = currentZoom * 1.2
-      cy.zoom(newLevel)
+    if (props.uiState.selectedSource === 'pathwayfigures') {
+      props.uiStateActions.setPathwayFigureZoom({
+        scale: props.uiState.pathwayFigureZoom.scale * 1.2,
+      });
+    } else {
+      const cy = props.network.cyJsInstance;
+      if (cy?._private?.renderer?.isHeadless != null) {
+        const currentZoom = cy.zoom()
+        const newLevel = currentZoom * 1.2
+        cy.zoom(newLevel)
+      }  
     }
   }
   const handleZoomOut = (evt) => {
-    const cy = props.network.cyJsInstance;
-    if (cy?._private?.renderer?.isHeadless != null) {
-      const currentZoom = cy.zoom()
-      const newLevel = currentZoom * 0.8
-      cy.zoom(newLevel)
+    if (props.uiState.selectedSource === 'pathwayfigures') {
+      props.uiStateActions.setPathwayFigureZoom({
+        scale: props.uiState.pathwayFigureZoom.scale * 0.8,
+      });
+    } else {
+      const cy = props.network.cyJsInstance;
+      if (cy?._private?.renderer?.isHeadless != null) {
+        const currentZoom = cy.zoom()
+        const newLevel = currentZoom * 0.8
+        cy.zoom(newLevel)
+      }  
     }
   }
 
@@ -91,7 +112,7 @@ const NetworkView = (props) => {
                 key={'fitButton'}
                 color={'primary'}
                 style={{ backgroundColor: 'transparent' }}
-                onClick={() => props.uiStateActions.fitNetworkView()}
+                onClick={handleFit}
               >
                 <FitIcon />
               </IconButton>

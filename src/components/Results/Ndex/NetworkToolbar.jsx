@@ -210,7 +210,7 @@ const NetworkToolbar = (props) => {
               <Highlighter {...other} />
             </>
           ) : (
-            <ResetPathwayFigureZoomButton {...other} />
+            null
           )}
 
           <NDExSignInModal {...other}>
