@@ -23,6 +23,7 @@ import NDExSignInModal from '../../NDExSignInModal';
 import NDExSave from '../../NDExSave';
 import OpenOriginalNetworkButton from './OpenOriginalNetworkButton';
 import LayoutSelector from './LayoutSelector';
+import LegendToggle from './LegendToggle';
 import { camelCaseToTitleCase } from '../TableBrowser/camel-case-util';
 import { findAttributes, getNetworkAttributes } from '../TableBrowser/attribute-util';
 
@@ -219,6 +220,19 @@ const NetworkToolbar = (props) => {
           { props.uiState.hideViewSourceInNdexButton ? null : <OpenOriginalNetworkButton {...other} /> } 
           <OpenInCytoscapeButton {...other} />
           { props.uiState.hideSaveToNdexButton ? null :  <SaveToNDExButton {...other} />}
+          {props.uiState.selectedSource !== 'pathwayfigures' ||
+          props.uiState.pathwayFigure === false ? (
+            <>
+              <LegendToggle
+                value={layout}
+                handleChange={handleLayoutChange}
+                {...other}
+              />
+            </>
+          ) : (
+            null
+          )}
+
         </div>
         <div>
           {props.uiState.selectedSource === 'pathwayfigures' ? (
