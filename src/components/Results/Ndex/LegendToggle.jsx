@@ -8,6 +8,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import { alpha } from '@material-ui/core/styles/colorManipulator'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const formControl = {
   height: '3em',
@@ -50,36 +51,50 @@ const LegendToggle = props => {
 
   const inputLabel = React.useRef(null)
   const [labelWidth, setLabelWidth] = React.useState(0)
-  const [showLegend, setShowLegend] = React.useState(false);
 
   useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth)
   }, [])
 
+  // anytime the network changes or a new source tab is changed, hide the legend
+  useEffect(() => {
+    props.uiStateActions.setShowLegend(false);
+  }, [props.uiState.selectedSource, props.network])
 
+  const title = props.enableLegend ? 'Show/hide legend' : 'Legend is not available for this network';
   return (
-    <div style={formControl}>
-      <FormControl variant="outlined">
-        <InputLabel ref={inputLabel} htmlFor="outlined">
-          <font color="#4154b2">Legend</font>
-        </InputLabel>
-        <Select
-          value={'hide'}
-          onChange={() => setShowLegend(!showLegend)}
-          input={
-            <OutlinedInput
-              labelWidth={labelWidth}
-              name="legend"
-              id="outlined-legend"
-              classes={classes}
-            />
-          }
-        >
-            <MenuItem>Show</MenuItem>
-            <MenuItem>Hide</MenuItem>
-        </Select>
-      </FormControl>
-    </div>
+      <Tooltip title={title}>
+            <div style={formControl}>
+            <FormControl variant="outlined" disabled={!props.enableLegend}>
+                <InputLabel ref={inputLabel} htmlFor="outlined">
+                <font color={ props.enableLegend ? "#4154b2" : "gray" }>Legend</font>
+                </InputLabel>
+                <Select
+                value={props.uiState.showLegend}
+                onChange={e => props.uiStateActions.setShowLegend(e.target.value)}
+                input={
+                    <OutlinedInput
+                    labelWidth={labelWidth}
+                    name="legend"
+                    id="outlined-legend"
+                    classes={classes}
+                    />
+                }
+                >
+                    <MenuItem value={true}>
+                        <Typography variant="body2" color="textSecondary">
+                            Show
+                        </Typography>
+                    </MenuItem>
+                    <MenuItem value={false}>
+                        <Typography variant="body2" color="textSecondary">
+                            Hide
+                        </Typography>
+                    </MenuItem>
+                </Select>
+            </FormControl>
+            </div>
+      </Tooltip>
   )
 }
 

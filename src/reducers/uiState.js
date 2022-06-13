@@ -16,6 +16,7 @@ import {
   fitNetworkView,
   update,
   setAnnotations,
+  setShowLegend
 } from '../actions/uiState';
 
 import { HIGHLIGHT_GENES, DEFAULT_SORT, HIDE_SEARCHBAR, HIDE_VIEW_SOURCE_IN_NDEX_BUTTON, HIDE_SAVE_TO_NDEX_BUTTON } from '../api/config';
@@ -41,7 +42,8 @@ const DEF_STATE = {
   annotations: false,
   hideSearchBar: HIDE_SEARCHBAR,
   hideViewSourceInNdexButton: HIDE_VIEW_SOURCE_IN_NDEX_BUTTON,
-  hideSaveToNdexButton: HIDE_SAVE_TO_NDEX_BUTTON
+  hideSaveToNdexButton: HIDE_SAVE_TO_NDEX_BUTTON,
+  showLegend: false
 };
 
 const uiState = handleActions(
@@ -125,6 +127,12 @@ const uiState = handleActions(
       return {
         ...state,
         pathwayFigureZoom: Object.assign(state.pathwayFigureZoom, payload.payload),
+      };
+    },
+    [setShowLegend]: (state, payload) => {
+      return {
+        ...state,
+        showLegend: payload.payload,
       };
     }
   },

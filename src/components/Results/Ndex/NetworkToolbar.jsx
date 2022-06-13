@@ -29,6 +29,16 @@ import { findAttributes, getNetworkAttributes } from '../TableBrowser/attribute-
 
 import NetworkProperties from '../TableBrowser/NetworkProperties';
 
+import indraGoLegend from '../../../assets/images/indra_go_legend.png';
+import ncipidLegend from '../../../assets/images/ncipid_legend.png';
+import signorLegend from '../../../assets/images/signor_legend.png';
+
+const networkSource2LegendMap = {
+  'ncipid': ncipidLegend,
+  'signor': signorLegend,
+  'INDRA GO': indraGoLegend
+};
+
 const styles = (theme) => ({
   toolbar: {
     background: 'rgba(0, 0, 0, 0.08)',
@@ -111,6 +121,20 @@ const styles = (theme) => ({
   openIcon: {
     marginRight: '0.5em',
   },
+  legend: {
+    border: '1px solid gray',
+    borderRadius: '4px',
+    position: 'absolute',
+    right: '6px',
+    maxWidth: '20vw',
+    maxHeight: '90vh',
+    zIndex: 10,
+    opacity: 0.8
+  },
+  legendFigure: {
+    maxWidth: '100%',
+    maxHeight: '100%'
+  }
 });
 
 const NetworkToolbar = (props) => {
@@ -169,6 +193,13 @@ const NetworkToolbar = (props) => {
 
   let networkInfoDialog = null;
   
+  const networkSource = props.network?.networkName?.split(':')[0]; 
+  // whether the user can hide/show the legend
+  const enableLegend = ['ncipid', 'INDRA GO', 'signor'].includes(networkSource);
+  const legend = (<div className={classes.legend}>
+    <img className={classes.legendFigure} src={enableLegend ? networkSource2LegendMap[networkSource] : ''} />
+  </div>);
+
 
   return (
     <>
@@ -224,6 +255,7 @@ const NetworkToolbar = (props) => {
           props.uiState.pathwayFigure === false ? (
             <>
               <LegendToggle
+                enableLegend={enableLegend}
                 value={layout}
                 handleChange={handleLayoutChange}
                 {...other}
@@ -234,6 +266,7 @@ const NetworkToolbar = (props) => {
           )}
 
         </div>
+        {props.uiState.showLegend ? legend : null}
         <div>
           {props.uiState.selectedSource === 'pathwayfigures' ? (
             <Tabs

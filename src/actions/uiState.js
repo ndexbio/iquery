@@ -54,3 +54,6 @@ export const fitNetworkView = createAction(FIT_NETWORK_VIEW);
 
 export const UPDATE = 'UPDATE';
 export const update = createAction(UPDATE);
+
+export const SET_SHOW_LEGEND = 'SET_SHOW_LEGEND';
+export const setShowLegend = createAction(SET_SHOW_LEGEND);
