@@ -79,7 +79,11 @@ const highlight = {
   css: {
     opacity: 1.0,
     'underlay-color': '#C51162',
-    'underlay-padding': 5,
+    'underlay-padding': node => {
+      const borderWidth = node.numericStyle('border-width') || 0;
+      
+      return 5 + borderWidth;
+    },
     'underlay-opacity': 0.4,
     'underlay-shape': node => {
       const shape = node.style('shape');
