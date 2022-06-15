@@ -129,7 +129,7 @@ class TitleBar extends React.Component {
               </div>
             </Tooltip>
 
-            {searchResults === null ? (
+            {searchResults == null ? (
               <div />
             ) : (
               <div className={classes.textBox}>
@@ -140,10 +140,10 @@ class TitleBar extends React.Component {
             <div className={classes.grow} />
 
             <div style={{display: 'flex', alignItems: 'center'}}>
-            <span>
+              <span>
 
-                  <img alt='NDEx logo' src={logo} className={classes.logo} />
-            </span>
+                    <img alt='NDEx logo' src={logo} className={classes.logo} />
+              </span>
 
               <Tooltip
                 title='Help'

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -12,18 +12,19 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import Popover from '@material-ui/core/Popover';
+import { Typography } from '@material-ui/core';
 import MessageSnackbar from './MessageSnackbar';
 
 import { GENESET_EXAMPLES } from '../../api/config';
 
+import dnaIcon from '../../assets/images/dna_gray.svg';
 
 const styles = {
   root: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '60vw',
     padding: '0em 0.3em',
     background: '#f1f1f1',
     marginLeft: '1em',
@@ -31,6 +32,7 @@ const styles = {
   input: {
     marginLeft: 8,
     flex: 1,
+    width: '50vw',
   },
   iconButton: {
     padding: 10,
@@ -42,6 +44,11 @@ const styles = {
     height: 28,
     margin: 4,
   },
+  fullQueryContainer: {
+    width: '50vw',
+    padding: 10,
+    backgroundColor: '#F1F1F1'
+  }
 };
 
 const ORIGINAL_GENE_TEXT = 'original-gene-text';
@@ -55,6 +62,21 @@ const GeneTextBox = (props) => {
     query: props.searchResults.query.join(' '),
   });
   const [open, setOpen] = useState(false);
+
+  const [queryPopperEl, setQueryPopperEl] = React.useState(null);
+
+  const showQueryPopper = (event) => {
+    console.log(geneTextRef.current);
+    setQueryPopperEl(geneTextRef.current);
+  };
+
+  const closeQueryPopper = () => {
+    setQueryPopperEl(null);
+  };
+
+  const popperOpen = Boolean(queryPopperEl);
+  const popperId = popperOpen ? 'query-popper' : undefined;
+
 
   const menuOpen = Boolean(state.anchorEl);
 
@@ -206,6 +228,47 @@ const GeneTextBox = (props) => {
             <DeleteIcon />
           </IconButton>
         </Tooltip>
+        <Divider className={classes.divider} />
+        <Tooltip title='View my query' placement='bottom'>
+          <IconButton
+            aria-describedby={popperId}
+            color='default'
+            className={classes.iconButton}
+            aria-label='Clear'
+            onClick={showQueryPopper}
+          >
+            <img
+              alt="DNA icon"
+              src={dnaIcon}
+              style={{
+                height: '1em',
+                width: '1em'
+              }}
+            />
+          </IconButton>
+        </Tooltip>
+        <Popover
+          id={popperId}
+          open={popperOpen}
+          anchorEl={queryPopperEl}
+          onClose={closeQueryPopper}
+          anchorReference='anchorEl'
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'start',
+          }}
+        >
+          <Paper className={classes.fullQueryContainer}>
+            <Typography>
+              <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                {state.query.split(' ').map(gene => {
+                  return <div key={gene} style={{paddingRight: '10px', width: '80px'}}>{gene}</div>
+                
+                })}
+              </div>
+            </Typography>
+          </Paper>
+        </Popover>
         <Divider className={classes.divider} />
         <InputBase
           id={ORIGINAL_GENE_TEXT}
