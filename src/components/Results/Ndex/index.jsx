@@ -150,7 +150,7 @@ const Ndex = props => {
     }
 
     const pv = (
-      <div style={{...subtitleStyle, marginRight: '10px', width: '150px',}}>
+      <div style={{...subtitleStyle, marginRight: '10px', width: '120px',}}>
         <Typography
           variant="caption"
           display="inline"
@@ -158,7 +158,11 @@ const Ndex = props => {
         >
           {`p-Value: `}
         </Typography>
-        <Typography style={{fontWeight: 'bold' }} variant="caption" display="inline" color={'textSecondary'}>
+        <Typography 
+          style={{fontWeight: 'bold' }} 
+          variant="caption" 
+          display="inline" 
+          color={ props.uiState.sortBy === 'p-Value' ? 'textPrimary' : 'textSecondary'}>
           {`${pVal}`}
         </Typography>
       </div>
@@ -173,7 +177,7 @@ const Ndex = props => {
         sim = sim.toFixed(2)
       }
       similarity = (
-        <div style={{...subtitleStyle, marginRight: '10px', width: '150px',}}>
+        <div style={{...subtitleStyle, marginRight: '10px', width: '110px',}}>
         <Typography
           variant="caption"
           display="inline"
@@ -181,7 +185,11 @@ const Ndex = props => {
         >
           {`Similarity: `}
         </Typography>
-        <Typography style={{fontWeight: 'bold' }} variant="caption" display="inline" color={'textSecondary'}>
+        <Typography 
+          style={{fontWeight: 'bold' }} 
+          variant="caption" 
+          display="inline" 
+          color={ props.uiState.sortBy === 'Similarity' ? 'textPrimary' : 'textSecondary'}>
           {`${sim}`}
         </Typography>
       </div>
@@ -193,7 +201,7 @@ const Ndex = props => {
     const title = <Typography variant='body2'style={titleStyle}>{description.split(':').slice(1)}</Typography>
 
     const overlap = (
-      <span style={{...subtitleStyle, width: '150px', marginRight: '10px'}}>
+      <span style={{...subtitleStyle, width: '130px', marginRight: '10px'}}>
         <Typography variant="caption" color="textSecondary">
           <Typography 
             style={{fontWeight: 'bold', fontSize: '1.25em'}} 
@@ -201,9 +209,12 @@ const Ndex = props => {
             color="secondary">
               {hitGenes.length}
           </Typography>
-          <span>
-            { ` / ${totalGeneCount} unique genes`}
-          </span>
+          <span style={{
+            color: props.uiState.sortBy === 'Overlap' ? 'black' : null,
+            fontWeight: props.uiState.sortBy == 'Overlap'? 'bold' : null
+          }}>
+              { ` / ${totalGeneCount} unique genes`}
+            </span>
         </Typography>
       </span>
     )
@@ -241,7 +252,8 @@ const Ndex = props => {
                   {newline}
                   <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: '10px'}}>
                     {overlap}
-                    {sortValueDisplay[props.uiState.sortBy]}
+                    {similarity}
+                    {pv}
                   </div>
                 </td>
               </tr>
@@ -264,7 +276,7 @@ const Ndex = props => {
   const { hideSearchBar } = props.uiState;
 
   return (
-    <Split sizes={[30, 70]} minSize={[200, 300]} gutterSize={4} className={ hideSearchBar ? 'headerless-ndex-base' : "ndex-base" } >
+    <Split sizes={[40, 60]} minSize={[200, 300]} gutterSize={4} className={ hideSearchBar ? 'headerless-ndex-base' : "ndex-base" } >
       <NetworkList
         renderNetworkListItem={renderNetworkListItem}
         handleFetch={handleFetch}
