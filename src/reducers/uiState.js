@@ -16,7 +16,8 @@ import {
   fitNetworkView,
   update,
   setAnnotations,
-  setShowLegend
+  setShowLegend,
+  setShowTour
 } from '../actions/uiState';
 
 import { HIGHLIGHT_GENES, DEFAULT_SORT, HIDE_SEARCHBAR, HIDE_VIEW_SOURCE_IN_NDEX_BUTTON, HIDE_SAVE_TO_NDEX_BUTTON } from '../api/config';
@@ -43,7 +44,8 @@ const DEF_STATE = {
   hideSearchBar: HIDE_SEARCHBAR,
   hideViewSourceInNdexButton: HIDE_VIEW_SOURCE_IN_NDEX_BUTTON,
   hideSaveToNdexButton: HIDE_SAVE_TO_NDEX_BUTTON,
-  showLegend: false
+  showLegend: false,
+  showTour: false
 };
 
 const uiState = handleActions(
@@ -134,6 +136,12 @@ const uiState = handleActions(
         ...state,
         showLegend: payload.payload,
       };
+    },
+    [setShowTour]: (state, payload) => {
+      return {
+        ...state,
+        showTour: payload.payload
+      }
     }
   },
   DEF_STATE

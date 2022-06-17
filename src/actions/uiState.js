@@ -57,3 +57,6 @@ export const update = createAction(UPDATE);
 
 export const SET_SHOW_LEGEND = 'SET_SHOW_LEGEND';
 export const setShowLegend = createAction(SET_SHOW_LEGEND);
+
+export const SET_SHOW_TOUR = 'SET_SHOW_TOUR';
+export const setShowTour = createAction(SET_SHOW_TOUR);

@@ -9,7 +9,9 @@ import IconButton from '@material-ui/core/IconButton';
 import HelpIcon from '@material-ui/icons/Help';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
-import {Box} from '@material-ui/core';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import classNames from 'classnames';
 
 import logo from '../../assets/images/powered-by-ndex-logo.png'
@@ -20,7 +22,7 @@ import logo from '../../assets/images/powered-by-ndex-logo.png'
 import HomeIcon from '@material-ui/icons/Home';
 
 import GeneTextBox from './GeneTextBox';
-
+import Tour from '../Tour'
 import { HELP_URL } from '../../api/config';
 
 const drawerWidth = 240;
@@ -86,6 +88,23 @@ const titleStyle = {
 };
 
 class TitleBar extends React.Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      helpMenuAnchor: null,
+    };
+  }
+
+  handleMenuOpen = e => {
+    this.setState({helpMenuAnchor: e.currentTarget});
+  }
+
+  handleMenuClose = e => {
+    this.setState({helpMenuAnchor: null})
+  }
+
   handleMenu = () => {
     this.props.uiStateActions.setSettingsOpen(
       !this.props.uiState.isSettingsOpen
@@ -146,23 +165,41 @@ class TitleBar extends React.Component {
               </span>
 
               <Tooltip
-                title='Help'
+                title='Learn how to use IQuery'
                 placement='bottom'
                 style={{ marginRight: '1em' }}
               >
                 <Typography color='textPrimary' noWrap={true} display='inline'>
                   <IconButton
+                      aria-haspopup='true'
+                      onClick={this.handleMenuOpen}
+                      color='inherit'
+                    >
+                    <HelpIcon className={classes.helpIcon} />
+                  </IconButton>                  
+                  {/* <IconButton
                     aria-haspopup='true'
                     onClick={() => openLink(HELP_URL)}
                     color='inherit'
                   >
                     <HelpIcon className={classes.helpIcon} />
-                  </IconButton>
+                  </IconButton> */}
                 </Typography>
               </Tooltip>
+              <Menu
+                id="simple-menu"
+                anchorEl={this.state.helpMenuAnchor}
+                keepMounted
+                open={Boolean(this.state.helpMenuAnchor)}
+                onClose={this.handleMenuClose}
+              >
+                <MenuItem onClick={() => openLink(HELP_URL)}>Documentation</MenuItem>
+                <MenuItem onClick={() => this.props.uiStateActions.setShowTour(true)}>Take a tour</MenuItem>
+              </Menu>
             </div>
           </Toolbar>
         </div>
+        <Tour open={this.props.uiState.showTour} setOpen={this.props.uiStateActions.setShowTour} />
       </AppBar>
     );
   }

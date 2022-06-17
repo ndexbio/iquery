@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './style.css'
 
 import Split from 'react-split'
@@ -15,6 +15,8 @@ import { Tooltip } from '@material-ui/core'
 import { withStyles } from '@material-ui/styles'
 
 import QueryGeneList from '../../QueryGeneList'
+
+import { checkFirstTimeVisitor } from '../../Tour/check-visitor'
 
 const titleStyle = {
   lineHeight: '22px',
@@ -83,6 +85,14 @@ const Ndex = props => {
     props.uiStateActions.setPathwayFigure(true);
     updateHistory(networkUUID)
   }
+
+  // Check first time visitor
+  useEffect(() => {
+    if (checkFirstTimeVisitor()) {
+      props.uiStateActions.setShowTour(true)
+    }
+  }, [])
+  
 
   const updateHistory = networkUUID => {
     // Update URL
