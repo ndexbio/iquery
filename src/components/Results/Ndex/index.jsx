@@ -16,7 +16,7 @@ import { withStyles } from '@material-ui/styles'
 
 import QueryGeneList from '../../QueryGeneList'
 
-import { checkFirstTimeVisitor } from '../../Tour/check-visitor'
+import { checkFirstTimeVisitor, getTourDisabled } from '../../Tour/check-visitor'
 
 const titleStyle = {
   lineHeight: '22px',
@@ -88,7 +88,8 @@ const Ndex = props => {
 
   // Check first time visitor
   useEffect(() => {
-    if (checkFirstTimeVisitor()) {
+    const userDisabledTour = getTourDisabled();
+    if (checkFirstTimeVisitor() && !userDisabledTour) {
       props.uiStateActions.setShowTour(true)
     }
   }, [])

@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { createStyles, makeStyles } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import HelpIcon from '@material-ui/icons/HelpOutlineOutlined'
+import { Checkbox } from '@material-ui/core';
+import { FormControlLabel } from '@material-ui/core';
+
+import { setTourDisabled, getTourDisabled } from './check-visitor';
 
 import imageA from '../../assets/images/tourImages/Frame 7.gif'
 
@@ -33,6 +37,12 @@ const useStyles = makeStyles(theme =>
 
 const Slide6 = () => {
   const classes = useStyles()
+  const [disableTour, setDisableTour] = useState(getTourDisabled());
+
+  const toggleDisableTour = () => {
+    setTourDisabled(!disableTour)
+    setDisableTour(!disableTour)
+  }
 
   return (
     <>
@@ -50,6 +60,12 @@ const Slide6 = () => {
         Click the <HelpIcon color="secondary" className={classes.icon} /> button. Or, access the HiView User Guide for
         more detailed documentation.
       </Typography>
+      <FormControlLabel
+          value="left"
+          control={<Checkbox checked={disableTour} color="primary" onClick={toggleDisableTour}/>}
+          label="Don't show this again"
+          labelPlacement="left"
+        />
     </>
   )
 }

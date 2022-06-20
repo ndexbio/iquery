@@ -1,4 +1,4 @@
-const KEY = '__visited'
+const VISITED_KEY = '__visited'
 const DAYS = 180
 const EXPIRATION = 60 * 60 * 24 * DAYS
 
@@ -24,13 +24,25 @@ const getCookieMap = () => {
 }
 
 const checkFirstTimeVisitor = () => {
-  const visited = getCookie(KEY)
+  const visited = getCookie(VISITED_KEY)
   if (visited === null || visited === undefined) {
-    document.cookie = `${KEY}=true;max-age=${EXPIRATION}`
+    document.cookie = `${VISITED_KEY}=true;max-age=${EXPIRATION}`
     return true
   }
 
   return false
 }
 
-export { checkFirstTimeVisitor }
+
+const TOUR_DISABLED_KEY = '__tourDisabled'
+
+const setTourDisabled = (disableTour) => {
+  localStorage.setItem(TOUR_DISABLED_KEY, disableTour);
+};
+
+const getTourDisabled = () => {
+  return localStorage.getItem(TOUR_DISABLED_KEY) || false;
+}
+
+
+export { checkFirstTimeVisitor, setTourDisabled, getTourDisabled }
