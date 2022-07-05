@@ -16,6 +16,8 @@ import Popover from '@material-ui/core/Popover';
 import { Typography } from '@material-ui/core';
 import MessageSnackbar from './MessageSnackbar';
 
+import { NormalizedGeneTypography, InvalidGeneTypography } from '../GeneList';
+
 import { GENESET_EXAMPLES } from '../../api/config';
 
 import dnaIcon from '../../assets/images/dna_gray.svg';
@@ -57,9 +59,12 @@ const GeneTextBox = (props) => {
   const { classes } = props;
   const geneTextRef = useRef();
 
+  const { queryGenes, invalid, normalizedGenes } = props.search.searchResults.validatedGenes
+
+
   const [state, setState] = useState({
     anchorEl: null,
-    query: props.searchResults.query.join(' '),
+    query: [queryGenes, invalid].join(' '),
   });
   const [open, setOpen] = useState(false);
 
@@ -158,6 +163,44 @@ const GeneTextBox = (props) => {
     });
     handleSearch(null, GENESET_EXAMPLES[exampleIdx].genes);
   };
+
+  const createGeneInfo = gene => {
+    const isValid = queryGenes.includes(gene)
+    const isNormalized = normalizedGenes[gene] != null;
+
+    return {
+      gene,
+      isValid,
+      alias: isNormalized ? normalizedGenes[gene] : null
+    }
+  };
+
+  const validGeneText = ({gene, alias}) => {
+    return <Typography variant="body2" 
+    color={"default"}
+    >
+      {gene}
+    </Typography>  
+  }
+
+  const normalizedGeneText = ({gene, alias}) => {
+   return <Tooltip title={`Original query term: ${gene}`}>
+    <NormalizedGeneTypography variant="body2">
+      {alias}
+    </NormalizedGeneTypography>
+  </Tooltip>
+  }
+
+  const invalidGeneText = ({gene, alias}) => {
+    return <Tooltip title={`Not a valid human gene: ${gene}`}>
+     <InvalidGeneTypography variant="body2">
+       {gene}
+     </InvalidGeneTypography>
+   </Tooltip>
+   }
+  
+   const queryTokens =  [...queryGenes, ...invalid];
+
 
   return (
     <div>
@@ -261,9 +304,11 @@ const GeneTextBox = (props) => {
           <Paper className={classes.fullQueryContainer}>
             <Typography>
               <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                {state.query.split(' ').map(gene => {
-                  return <div key={gene} style={{paddingRight: '10px', width: '80px'}}>{gene}</div>
-                
+                {queryTokens.map(createGeneInfo).map(({gene, isValid, alias}) => {
+                  const isNormalized = alias != null
+                  return <div key={gene} style={{paddingRight: '10px', width: '80px'}}>
+                    {!isValid ? invalidGeneText({gene, alias}) : isNormalized ?  normalizedGeneText({gene, alias}) : validGeneText({gene, alias})  }
+                  </div> 
                 })}
               </div>
             </Typography>

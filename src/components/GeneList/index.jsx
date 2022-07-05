@@ -5,6 +5,7 @@ import ListItem from '@material-ui/core/ListItem'
 import MuiToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import { Typography } from '@material-ui/core'
+import { Tooltip } from '@material-ui/core'
 
 const buttonStyle = {
   height: '24px',
@@ -26,11 +27,29 @@ const ToggleButton = withStyles({
   },
 })(MuiToggleButton)
 
+export const NormalizedGeneTypography = withStyles({
+  root: {
+    color: "#E8B59A",
+    textDecoration: 'underline'
+  }
+})(Typography);
+
+export const InvalidGeneTypography = withStyles({
+  root: {
+    textDecoration: 'line-through',
+    textDecorationColor: 'red'
+  }
+})(Typography);
+
+
 const GeneList = props => {
   const results = props.search.searchResults
   const hits = props.network.hitGenes
   const hitSets = new Set(hits)
 
+  // when a user clicks on a query gene, we need to find it in the network
+  // sometimes genes are under aliases or different names, so we need to look
+  // up the gene in a node map
   const handleChange = (event, newAlignment) => {
     event.stopPropagation();
     if (newAlignment in props.geneToNodeMap) {
@@ -55,6 +74,7 @@ const GeneList = props => {
 
 
   const queryGeneList = results.query
+  const { queryGenes, invalid, normalizedGenes } = results.validatedGenes
 
   if (!queryGeneList) {
     return <div className="gene-list-wrapper" />
@@ -63,7 +83,7 @@ const GeneList = props => {
   const matched = []
   const unmatched = []
 
-  const unique = new Set()
+  const unique = new Set([...queryGenes, ...invalid])
   for (const gene of queryGeneList) {
     unique.add(gene)
   }
@@ -76,14 +96,49 @@ const GeneList = props => {
     }
   }
 
+  const createGeneInfo = gene => {
+    const isValid = queryGenes.includes(gene)
+    const isNormalized = normalizedGenes[gene] != null;
+
+    return {
+      gene,
+      isValid,
+      alias: isNormalized ? normalizedGenes[gene] : null
+    }
+  };
+
   const matchedSorted = matched.sort()
   const unmatchedSorted = unmatched.sort()
-  const sorted = [...matchedSorted]
+  const sorted = [...matchedSorted, ...unmatchedSorted].map(createGeneInfo);
 
+  const validGeneText = ({gene, alias}) => {
+    return <Typography variant="body2" 
+    color={hitSets.has(gene.toUpperCase()) ? "secondary" : "default"}
+    >
+      {gene}
+    </Typography>  
+  }
+
+  const normalizedGeneText = ({gene, alias}) => {
+   return <Tooltip title={`Original query term: ${gene}`}>
+    <NormalizedGeneTypography variant="body2">
+      {alias}
+    </NormalizedGeneTypography>
+  </Tooltip>
+  }
+
+  const invalidGeneText = ({gene, alias}) => {
+    return <Tooltip title={`Not a valid human gene: ${gene}`}>
+     <InvalidGeneTypography variant="body2">
+       {gene}
+     </InvalidGeneTypography>
+   </Tooltip>
+   }
   return (
     <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', maxHeight: '500px', overflowX: 'hidden', overflowY: 'scroll'}}>
-        {sorted.map(geneValue => (
-          <div key={geneValue} style={{ minWidth: 0, width: '80px', paddingTop: 0, paddingBottom: 0, paddingRight: 0}}>
+        {sorted.map(({gene, isValid, alias}) => {
+          const isNormalized = alias != null
+          return (<div key={({gene})} style={{ minWidth: 0, width: '80px', paddingTop: 0, paddingBottom: 0, paddingRight: 0}}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
               exclusive
@@ -91,24 +146,19 @@ const GeneList = props => {
               style={toggleButtonGroupStyle}
             >
               <ToggleButton
-                disabled={!hitSets.has(geneValue.toUpperCase())}
-                value={geneValue}
+                value={gene}
                 style={
-                  {...(hitSets.has(geneValue) && props.search.selectedGenes[0] === geneValue
+                  {...(hitSets.has(gene) && props.search.selectedGenes[0] === gene
                     ? selectedButtonStyle
                     : buttonStyle),
-                    cursor: hitSets.has(geneValue.toUpperCase()) ? 'pointer' : 'default'}
+                    cursor: hitSets.has(gene.toUpperCase()) ? 'pointer' : 'default'}
                 }
               >
-                {
-                  <Typography variant="body2" color={hitSets.has(geneValue.toUpperCase()) ? "secondary" : "default"}>
-                    {geneValue}
-                  </Typography>  
-                }
+                { !isValid ? invalidGeneText({gene, alias}) : isNormalized ?  normalizedGeneText({gene, alias}) : validGeneText({gene, alias})  }
               </ToggleButton>
             </ToggleButtonGroup>
-          </div>
-        ))}
+          </div>)
+        })}
     </div>
   )
 }
