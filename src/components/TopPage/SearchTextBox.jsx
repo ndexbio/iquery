@@ -80,9 +80,9 @@ const SearchTextBox = (props) => {
     } else {
       genes = query;
     }
-    const sources = props.source.sources;
+    const sources = props.source.sources || [];
 
-    if (genes.length === 0 || sources === null || sources.length === 0) {
+    if (genes.length === 0) {
       // TODO: add better error message
       return;
     }

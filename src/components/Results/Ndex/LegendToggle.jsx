@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import { alpha } from '@material-ui/core/styles/colorManipulator'
 import Tooltip from '@material-ui/core/Tooltip'
-
+import { Button } from '@material-ui/core'
 const formControl = {
   height: '3em',
   paddingTop: '0.5em',
@@ -17,6 +17,7 @@ const formControl = {
 }
 
 const styles = theme => ({
+
   input: {
     padding: '8px 26px 8px 12px',
     backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -30,6 +31,9 @@ const styles = theme => ({
     }
   },
   root: {
+    marginLeft: '8px',
+    width: '120px',
+    padding: '8px 12px 8px 12px',
     borderColor: '#ced4da',
     '& $notchedOutline': {
       borderColor: 'rgb(65, 84, 178)'
@@ -42,6 +46,14 @@ const styles = theme => ({
       borderWidth: '1px'
     }
   },
+  legendDisabled: {
+    marginLeft: '8px',
+    width: '120px',
+    padding: '8px 12px 8px 12px',
+    cursor: 'default',
+    borderColor: '#ced4da',
+    color: 'gray',
+  },
   focused: {},
   notchedOutline: {}
 })
@@ -49,52 +61,34 @@ const styles = theme => ({
 const LegendToggle = props => {
   const { classes } = props
 
-  const inputLabel = React.useRef(null)
-  const [labelWidth, setLabelWidth] = React.useState(0)
-
-  useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth)
-  }, [])
-
   // anytime the network changes or a new source tab is changed, hide the legend
   useEffect(() => {
     props.uiStateActions.setShowLegend(false);
   }, [props.uiState.selectedSource, props.network])
 
-  const title = props.enableLegend ? 'Show/hide legend' : 'Legend is not available for this network';
+  const title = props.enableLegend ? 'Toggle network legend' : 'Legend is not available for this network';
+  const label = props.enableLegend ? props.uiState.showLegend ? 'Hide Legend' : 'Show Legend' : 'Show Legend';
   return (
-      <Tooltip title={title}>
-            <div style={formControl}>
-            <FormControl variant="outlined" disabled={!props.enableLegend}>
-                <InputLabel ref={inputLabel} htmlFor="outlined">
-                <font color={ props.enableLegend ? "#4154b2" : "gray" }>Legend</font>
-                </InputLabel>
-                <Select
-                value={props.uiState.showLegend}
-                onChange={e => props.uiStateActions.setShowLegend(e.target.value)}
-                input={
-                    <OutlinedInput
-                    labelWidth={labelWidth}
-                    name="legend"
-                    id="outlined-legend"
-                    classes={classes}
-                    />
-                }
-                >
-                    <MenuItem value={true}>
-                        <Typography variant="body2" color="textSecondary">
-                            Show
-                        </Typography>
-                    </MenuItem>
-                    <MenuItem value={false}>
-                        <Typography variant="body2" color="textSecondary">
-                            Hide
-                        </Typography>
-                    </MenuItem>
-                </Select>
-            </FormControl>
-            </div>
-      </Tooltip>
+    <Tooltip title={title}>
+      {
+        props.legendEnabled ?         
+        <Button
+          variant="outlined" color="primary"
+          value={props.uiState.showLegend}
+          onClick={e => props.uiStateActions.setShowLegend(!props.uiState.showLegend)}
+          className={classes.root}
+        >
+          <Typography variant="caption">{label}</Typography>
+        </Button> : 
+        <Button
+        variant="outlined" color="primary"
+        value={props.uiState.showLegend}
+        className={classes.legendDisabled}
+      >
+        <Typography variant="caption">{label}</Typography>
+      </Button>
+    }
+    </Tooltip>
   )
 }
 
