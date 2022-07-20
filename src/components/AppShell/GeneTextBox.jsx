@@ -64,7 +64,7 @@ const GeneTextBox = (props) => {
 
   const [state, setState] = useState({
     anchorEl: null,
-    query: [queryGenes, invalid].join(' '),
+    query: [...queryGenes, ...invalid].join(' '),
   });
   const [open, setOpen] = useState(false);
 
