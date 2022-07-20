@@ -32,7 +32,9 @@ const styles = theme => ({
   },
   root: {
     marginLeft: '8px',
+    height: '2.5em',
     width: '120px',
+    minWidth: '120px',
     padding: '8px 12px 8px 12px',
     borderColor: '#ced4da',
     '& $notchedOutline': {
@@ -48,11 +50,16 @@ const styles = theme => ({
   },
   legendDisabled: {
     marginLeft: '8px',
+    height: '2.5em',
     width: '120px',
+    minWidth: '120px',
     padding: '8px 12px 8px 12px',
     cursor: 'default',
     borderColor: '#ced4da',
     color: 'gray',
+    '&:hover': {
+      borderColor: '#ced4da'
+    }
   },
   focused: {},
   notchedOutline: {}
@@ -68,14 +75,16 @@ const LegendToggle = props => {
 
   const title = props.enableLegend ? 'Toggle network legend' : 'Legend is not available for this network';
   const label = props.enableLegend ? props.uiState.showLegend ? 'Hide Legend' : 'Show Legend' : 'Show Legend';
+  console.log(props.uiState.showLegend)
   return (
-    <Tooltip title={title}>
+    <Tooltip title={title} disableFocusListener>
       {
-        props.legendEnabled ?         
+        props.enableLegend ?         
         <Button
           variant="outlined" color="primary"
           value={props.uiState.showLegend}
-          onClick={e => props.uiStateActions.setShowLegend(!props.uiState.showLegend)}
+          onClick={e => props.uiStateActions.setShowLegend(!props.uiState.showLegend)
+          }
           className={classes.root}
         >
           <Typography variant="caption">{label}</Typography>
@@ -89,6 +98,7 @@ const LegendToggle = props => {
       </Button>
     }
     </Tooltip>
+
   )
 }
 

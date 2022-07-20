@@ -138,7 +138,7 @@ const GeneList = props => {
     <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', maxHeight: '500px', overflowX: 'hidden', overflowY: 'scroll'}}>
         {sorted.map(({gene, isValid, alias}) => {
           const isNormalized = alias != null
-          return (<div key={({gene})} style={{ minWidth: 0, width: '80px', paddingTop: 0, paddingBottom: 0, paddingRight: 0}}>
+          return (<div key={gene} style={{ minWidth: 0, width: '80px', paddingTop: 0, paddingBottom: 0, paddingRight: 0}}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
               exclusive
