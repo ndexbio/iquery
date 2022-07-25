@@ -126,7 +126,7 @@ const styles = (theme) => ({
     borderRadius: '4px',
     position: 'absolute',
     right: '6px',
-    maxWidth: '20vw',
+    maxWidth: '300px',
     maxHeight: '90vh',
     zIndex: 10,
     opacity: 0.8

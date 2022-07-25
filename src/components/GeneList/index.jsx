@@ -29,7 +29,7 @@ const ToggleButton = withStyles({
 
 export const NormalizedGeneTypography = withStyles({
   root: {
-    color: "#E8B59A",
+    color: "#fc9b6f",
     textDecoration: 'underline'
   }
 })(Typography);
@@ -120,9 +120,9 @@ const GeneList = props => {
   }
 
   const normalizedGeneText = ({gene, alias}) => {
-   return <Tooltip title={`Original query term: ${gene}`}>
-    <NormalizedGeneTypography variant="body2">
-      {alias}
+   return <Tooltip title={`This query gene was normalized. Original query term: ${alias}`}>
+    <NormalizedGeneTypography variant="body2" style={{overflow: 'hidden'}}>
+      {gene}
     </NormalizedGeneTypography>
   </Tooltip>
   }
@@ -138,7 +138,7 @@ const GeneList = props => {
     <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', maxHeight: '500px', overflowX: 'hidden', overflowY: 'scroll'}}>
         {sorted.map(({gene, isValid, alias}) => {
           const isNormalized = alias != null
-          return (<div key={gene} style={{ minWidth: 0, width: '80px', paddingTop: 0, paddingBottom: 0, paddingRight: 0}}>
+          return (<div key={gene} style={{ minWidth: 0, width: '90px', paddingTop: 0, paddingBottom: 0, paddingRight: 0}}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
               exclusive

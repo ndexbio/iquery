@@ -61,7 +61,6 @@ const GeneTextBox = (props) => {
 
   const { queryGenes, invalid, normalizedGenes } = props.search.searchResults.validatedGenes
 
-
   const [state, setState] = useState({
     anchorEl: null,
     query: [...queryGenes, ...invalid].join(' '),
@@ -184,9 +183,9 @@ const GeneTextBox = (props) => {
   }
 
   const normalizedGeneText = ({gene, alias}) => {
-   return <Tooltip title={`Original query term: ${gene}`}>
+   return <Tooltip title={`This query gene was normalized. Original query term: ${alias}`}>
     <NormalizedGeneTypography variant="body2">
-      {alias}
+      {gene}
     </NormalizedGeneTypography>
   </Tooltip>
   }

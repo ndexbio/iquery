@@ -75,7 +75,7 @@ const LegendToggle = props => {
 
   const title = props.enableLegend ? 'Toggle network legend' : 'Legend is not available for this network';
   const label = props.enableLegend ? props.uiState.showLegend ? 'Hide Legend' : 'Show Legend' : 'Show Legend';
-  console.log(props.uiState.showLegend)
+
   return (
     <Tooltip title={title} disableFocusListener>
       {
