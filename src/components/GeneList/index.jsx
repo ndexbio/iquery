@@ -7,15 +7,7 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import { Typography } from '@material-ui/core'
 import { Tooltip } from '@material-ui/core'
 
-const buttonStyle = {
-  height: '24px',
-  borderWidth: '0',
-}
 
-const selectedButtonStyle = {
-  height: '24px',
-  borderWidth: '0',
-}
 
 const toggleButtonGroupStyle = {
   backgroundColor: 'transparent',
@@ -29,8 +21,9 @@ const ToggleButton = withStyles({
 
 export const NormalizedGeneTypography = withStyles({
   root: {
-    color: "#fc9b6f",
-    textDecoration: 'underline'
+    // color: "#fc9b6f",
+    // textDecoration: 'underline'
+    // color: 'black'
   }
 })(Typography);
 
@@ -119,11 +112,18 @@ const GeneList = props => {
     </Typography>  
   }
 
-  const normalizedGeneText = ({gene, alias}) => {
+  const normalizedGeneText = ({gene, alias, networkContainsQueryGene}) => {
    return <Tooltip title={`This query gene was normalized. Original query term: ${alias}`}>
-    <NormalizedGeneTypography variant="body2" style={{overflow: 'hidden'}}>
-      {gene}
-    </NormalizedGeneTypography>
+     <div>
+       <NormalizedGeneTypography 
+        variant="body2" 
+        style={{overflow: 'hidden'}}
+        color={networkContainsQueryGene ? 'secondary' : 'default'}
+        >
+
+        {gene}
+      </NormalizedGeneTypography>
+     </div>
   </Tooltip>
   }
 
@@ -138,7 +138,21 @@ const GeneList = props => {
     <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', maxHeight: '500px', overflowX: 'hidden', overflowY: 'scroll'}}>
         {sorted.map(({gene, isValid, alias}) => {
           const isNormalized = alias != null
-          return (<div key={gene} style={{ minWidth: 0, width: '90px', paddingTop: 0, paddingBottom: 0, paddingRight: 0}}>
+          const networkContainsQueryGene = hitSets.has(gene.toUpperCase())
+          const buttonStyle = {
+            height: '24px',
+            borderWidth: '0',
+            cursor: networkContainsQueryGene ? 'pointer' : 'default',
+            ...(isNormalized ? {backgroundColor: '#F9BD00', borderRadius: '4px', border: '1px solid black', color: 'black' } : {})
+          }
+
+          return (<div key={gene} style={{ 
+            minWidth: 0, 
+            width: '100px', 
+            paddingTop: 0, 
+            paddingBottom: 0, 
+            paddingRight: 0,
+            }}>
             <ToggleButtonGroup
               value={props.search.selectedGenes}
               exclusive
@@ -147,14 +161,9 @@ const GeneList = props => {
             >
               <ToggleButton
                 value={gene}
-                style={
-                  {...(hitSets.has(gene) && props.search.selectedGenes[0] === gene
-                    ? selectedButtonStyle
-                    : buttonStyle),
-                    cursor: hitSets.has(gene.toUpperCase()) ? 'pointer' : 'default'}
-                }
+                style={buttonStyle}
               >
-                { !isValid ? invalidGeneText({gene, alias}) : isNormalized ?  normalizedGeneText({gene, alias}) : validGeneText({gene, alias})  }
+                { !isValid ? invalidGeneText({gene, alias}) : isNormalized ?  normalizedGeneText({gene, alias, networkContainsQueryGene}) : validGeneText({gene, alias})  }
               </ToggleButton>
             </ToggleButtonGroup>
           </div>)

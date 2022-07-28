@@ -61,9 +61,15 @@ const GeneTextBox = (props) => {
 
   const { queryGenes, invalid, normalizedGenes } = props.search.searchResults.validatedGenes
 
+  const originalQueryGeneTokens = new Set(queryGenes);
+  Object.entries(normalizedGenes).forEach(([normalizedGene, originalToken]) => {
+    originalQueryGeneTokens.delete(normalizedGene);
+    originalQueryGeneTokens.add(originalToken);
+  });
+
   const [state, setState] = useState({
     anchorEl: null,
-    query: [...queryGenes, ...invalid].join(' '),
+    query: [...Array.from(originalQueryGeneTokens).sort(), ...invalid.sort()].join(' '),
   });
   const [open, setOpen] = useState(false);
 
@@ -184,9 +190,11 @@ const GeneTextBox = (props) => {
 
   const normalizedGeneText = ({gene, alias}) => {
    return <Tooltip title={`This query gene was normalized. Original query term: ${alias}`}>
-    <NormalizedGeneTypography variant="body2">
-      {gene}
-    </NormalizedGeneTypography>
+    <div style={{backgroundColor: '#F9BD00', paddingLeft: '2px', paddingRight: '2px', borderRadius: '4px', border: '1px solid black' }}>
+       <NormalizedGeneTypography variant="body2">
+        {gene}
+      </NormalizedGeneTypography>
+     </div>
   </Tooltip>
   }
 
@@ -305,7 +313,7 @@ const GeneTextBox = (props) => {
               <div style={{display: 'flex', flexWrap: 'wrap'}}>
                 {queryTokens.map(createGeneInfo).map(({gene, isValid, alias}) => {
                   const isNormalized = alias != null
-                  return <div key={gene} style={{paddingRight: '10px', width: '80px'}}>
+                  return <div key={gene} style={{paddingRight: '10px', width: '100px'}}>
                     {!isValid ? invalidGeneText({gene, alias}) : isNormalized ?  normalizedGeneText({gene, alias}) : validGeneText({gene, alias})  }
                   </div> 
                 })}
