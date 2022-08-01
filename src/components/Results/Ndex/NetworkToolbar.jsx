@@ -29,16 +29,6 @@ import { findAttributes, getNetworkAttributes } from '../TableBrowser/attribute-
 
 import NetworkProperties from '../TableBrowser/NetworkProperties';
 
-import indraGoLegend from '../../../assets/images/indra_go_legend.png';
-import ncipidLegend from '../../../assets/images/ncipid_legend.png';
-import signorLegend from '../../../assets/images/signor_legend.png';
-
-const networkSource2LegendMap = {
-  'ncipid': ncipidLegend,
-  'signor': signorLegend,
-  'INDRA GO': indraGoLegend
-};
-
 const styles = (theme) => ({
   toolbar: {
     background: 'rgba(0, 0, 0, 0.08)',
@@ -195,9 +185,9 @@ const NetworkToolbar = (props) => {
   
   const networkSource = props.network?.networkName?.split(':')[0]; 
   // whether the user can hide/show the legend
-  const enableLegend = ['ncipid', 'INDRA GO', 'signor'].includes(networkSource);
+  const enableLegend = props.network.legendUrl != null
   const legend = (<div className={classes.legend}>
-    <img className={classes.legendFigure} src={enableLegend ? networkSource2LegendMap[networkSource] : ''} />
+    <img className={classes.legendFigure} src={enableLegend ? props.network.legendUrl : ''} />
   </div>);
 
 

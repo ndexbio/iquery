@@ -15,6 +15,7 @@ import {
   deselectAll,
   changeTab,
   changeListIndex,
+  changeLegendUrl,
   setShowTableModal,
   setOriginalNetworkUrl,
   setCyJs,
@@ -39,6 +40,7 @@ const defaultState = {
   selectedEdges: [],
   tableDisplayTab: 0,
   listIndex: 0,
+  legendUrl: null
 };
 
 const utils = new CyNetworkUtils();
@@ -132,6 +134,7 @@ const network = handleActions(
         tableDisplayTab: 0,  // 0 -> network info, 1 -> node info, 2 -> edge info
         layout: 'Preset',
         layouts: [],
+        legendUrl: payload.payload.legendUrl
       };
     },
     [networkFetchSucceeded]: (state, payload) => {
@@ -239,6 +242,12 @@ const network = handleActions(
         ...state,
         listIndex: payload.payload,
       };
+    },
+    [changeLegendUrl]: (state, payload) => {
+      return {
+        ...state,
+        legendUrl: payload.payload
+      }
     },
     [setOriginalNetworkUrl]: (state, payload) => {
       return {

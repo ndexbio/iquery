@@ -81,7 +81,8 @@ const NetworkList = (props) => {
         first.description,
         first.nodes,
         first.edges,
-        first.hitGenes
+        first.hitGenes,
+        first.legendURL
       );
       if (first.url != null) {
         props.networkActions.setOriginalNetworkUrl('https://' + first.url);
@@ -168,8 +169,9 @@ const NetworkList = (props) => {
 
   let index = 1;
 
-  function handleListItemClick(event, index) {
+  function handleListItemClick(event, index, legendUrl) {
     props.networkActions.changeListIndex(index);
+    props.networkActions.changeLegendUrl(legendUrl)
     props.uiStateActions.setPathwayFigure(true);
   }
 
@@ -179,8 +181,8 @@ const NetworkList = (props) => {
   return (
     <div className={hideSearchBar ? 'headerless-network-list-wrapper': 'network-list-wrapper'}>
       <SortPanel {...props} />
-      {props.search.actualResults.map((entry) =>
-        props.renderNetworkListItem(
+      {props.search.actualResults.map((entry) => {
+        return props.renderNetworkListItem(
           props.search.queryList.length,
           entry,
           props.classes,
@@ -188,6 +190,7 @@ const NetworkList = (props) => {
           selectedIndex,
           index++
         )
+      }
       )}
     </div>
   );

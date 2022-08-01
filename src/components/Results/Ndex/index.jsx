@@ -61,7 +61,7 @@ const tableStyle = {
  * @constructor
  */
 const Ndex = props => {
-  const handleFetch = (networkUUID, networkName, nodeCount, edgeCount, hitGenes) => {
+  const handleFetch = (networkUUID, networkName, nodeCount, edgeCount, hitGenes, legendUrl) => {
     //checkCytoscapeConnection(props)
     const geneList = props.search.queryList
     const sourceUUID = props.sourceUUID
@@ -77,7 +77,8 @@ const Ndex = props => {
       geneList,
       hitGenes,
       nodeCount,
-      edgeCount
+      edgeCount,
+      legendUrl
     })
     // reset pathway figure tab when switching to a new
     // network
@@ -140,7 +141,8 @@ const Ndex = props => {
       hitGenes,
       details,
       url,
-      totalGeneCount = '?'
+      totalGeneCount = '?',
+      legendURL
     } = networkEntry
 
     const sourceName = description.split(':')[0] || 'NDEx';
@@ -236,7 +238,6 @@ const Ndex = props => {
       'Similarity': similarity
     };
 
-
     return (
       <ListItem
         button
@@ -244,7 +245,7 @@ const Ndex = props => {
         onClick={event => {
           if (selectedIndex !== index) {
             handleFetch(networkUUID, description, nodes, edges, hitGenes)
-            handleListItemClick(event, index)
+            handleListItemClick(event, index, legendURL)
             if (url != null) {
               props.networkActions.setOriginalNetworkUrl('https://' + url)
             }
