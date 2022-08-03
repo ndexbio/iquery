@@ -6,6 +6,7 @@ import LoadingPanel from '../../LoadingPanel';
 import Warning from '../CytoscapeViewer/Warning';
 import PathwayFigureViewer from './PathwayFigureViewer';
 import { MAX_NETWORK_SIZE } from '../../../api/config';
+import ProteinInteractionsWidget from './ProteinInteractionsWidget';
 
 const NetworkViewer = (props) => {
   if (props.network.isFetching) {
@@ -25,6 +26,8 @@ const NetworkViewer = (props) => {
         <Warning {...props} />
       </div>
     );
+  }  else if (props.uiState.selectedSource === 'protein-interactions-test') {
+    return <ProteinInteractionsWidget/>
   } else if (props.uiState.selectedSource === 'pathwayfigures') {
     return (
       <div className='network-view'>

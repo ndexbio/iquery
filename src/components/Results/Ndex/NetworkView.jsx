@@ -98,7 +98,6 @@ const NetworkView = (props) => {
             : null
         }
       >
-       { props.uiState.selectedSource !== 'protein-interactions-test' ?
         <div style={{display: 'flex'}}>
         <NetworkViewer resized={resized} {...props} />      
         { props.network.isFetching ? null : 
@@ -138,8 +137,6 @@ const NetworkView = (props) => {
         </div>  
         }
         </div>
-        : <ProteinInteractionsWidget/>
-        }
       </Split>
     </div>
   );
