@@ -146,7 +146,11 @@ const NetworkToolbar = (props) => {
     if (tab === 0) {
       props.uiStateActions.setPathwayFigureSource('loading');
       const { originalCX } = props.network;
-      if (originalCX !== null) {
+
+      // sometimes the CX is not null but it returns a plain js object with a stacktrace/error message
+      // this hack is needed for the protein interactions tab that is implemented only on the client to work
+      const cxExists = originalCX != null && originalCX.stackTrace == null;
+      if (originalCX != null && originalCX.stackTrace == null) {
         const networkAttr = findAttributes(originalCX, 'networkAttributes');
         let figureSource;
         for (let attr of networkAttr) {

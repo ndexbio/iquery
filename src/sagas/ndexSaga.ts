@@ -2,6 +2,7 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import * as api from '../api/ndex';
 import * as myGeneApi from '../api/mygene';
 import { getResult, checkStatus, getSource, postQuery } from '../api/search';
+import getProteinInteractionsData from '../api/proteinInteractions';
 
 import { FilteredGenes, filterGenes } from './ndexSaga-util';
 
@@ -109,6 +110,8 @@ function* watchSearchResult(action) {
       const statusRes = yield call(checkStatus, jobId);
       const statusJson = yield call([statusRes, 'json']);
 
+      const proteinInteractionsSourceKey = 'protein-interactions-test';
+
       const status: any[] = statusJson.sources;
       let idx: number = status.length;
 
@@ -123,6 +126,17 @@ function* watchSearchResult(action) {
             // Need to add this new result.
             resultList.push(json.sources[0]);
             finishedSourceNames.add(sourceName);
+
+            if(!finishedSourceNames.has(proteinInteractionsSourceKey) && json.validatedGenes != null){
+              const proteinInteractionsData = yield call(getProteinInteractionsData, [json.validatedGenes])
+              resultList.push(Object.assign({}, json.sources[0], {
+                sourceName: proteinInteractionsSourceKey,
+                sourceRank: 5,
+                status: "complete",
+                results: proteinInteractionsData
+              }))
+              finishedSourceNames.add(proteinInteractionsSourceKey)
+            }
 
             json.sources = resultList;
 
