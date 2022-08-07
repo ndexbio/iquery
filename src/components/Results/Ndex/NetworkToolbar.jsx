@@ -206,10 +206,10 @@ const NetworkToolbar = (props) => {
                 : props.network.networkName
             }
           >
-            <Link 
-              className={classes.title} 
-              component="button" 
-              variant="body2" 
+            <Link
+              className={classes.title}
+              component="button"
+              variant="body2"
               onClick={() => props.networkActions.setShowTableModal(true)}
             >
               <Typography
@@ -225,8 +225,10 @@ const NetworkToolbar = (props) => {
             </Link>
           </Tooltip>
           <div className={classes.grow} />
-          {props.uiState.selectedSource !== 'pathwayfigures' ||
-          props.uiState.pathwayFigure === false ? (
+          {
+            props.uiState.selectedSource !== 'protein-interactions-test' ? <>
+                      {props.uiState.selectedSource !== 'pathwayfigures' ||
+            props.uiState.pathwayFigure === false ? (
             <>
               <LayoutSelector
                 value={layout}
@@ -238,15 +240,14 @@ const NetworkToolbar = (props) => {
           ) : (
             null
           )}
-
           <NDExSignInModal {...other}>
             <NDExSave {...other} />
           </NDExSignInModal>
-          { props.uiState.hideViewSourceInNdexButton ? null : <OpenOriginalNetworkButton {...other} /> } 
+          {props.uiState.hideViewSourceInNdexButton ? null : <OpenOriginalNetworkButton {...other} />}
           <OpenInCytoscapeButton {...other} />
-          { props.uiState.hideSaveToNdexButton ? null :  <SaveToNDExButton {...other} />}
+          {props.uiState.hideSaveToNdexButton ? null : <SaveToNDExButton {...other} />}
           {props.uiState.selectedSource !== 'pathwayfigures' ||
-          props.uiState.pathwayFigure === false ? (
+            props.uiState.pathwayFigure === false ? (
             <>
               <LegendToggle
                 enableLegend={enableLegend}
@@ -259,6 +260,8 @@ const NetworkToolbar = (props) => {
             null
           )}
 
+            </> : null
+          }
         </div>
         {props.uiState.showLegend ? legend : null}
         <div>

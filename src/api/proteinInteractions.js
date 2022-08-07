@@ -90,11 +90,12 @@ const getProteinInteractionsData = async (args) => {
     const overlaps = await Promise.all(proteinInteractomes.map(networkId => getGeneOverlap(networkId, Array.from(validGenes))));
     const results = summaries.map((s, index) => {
         return {
-            description: s.description,
+            description: s.name,
             details: {
                 parent_network_nodes: s.nodeCount,
                 parent_network_edges: s.edgeCount,    
             },
+            detailedDescription: s.description,
             hitGenes: [],
             legendURL: null,
             imageURL: null,
