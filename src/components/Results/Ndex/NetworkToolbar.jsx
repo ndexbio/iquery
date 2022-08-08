@@ -56,6 +56,13 @@ const styles = (theme) => ({
     cursor: 'pointer',
     overflowX: 'clip'
   },
+  titleNonInteractive: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
+    overflowX: 'clip'
+  },
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -206,7 +213,9 @@ const NetworkToolbar = (props) => {
                 : props.network.networkName
             }
           >
-            <Link
+            {
+              props.uiState.selectedSource !== 'protein-interactions-test' ? 
+              <Link
               className={classes.title}
               component="button"
               variant="body2"
@@ -223,6 +232,19 @@ const NetworkToolbar = (props) => {
                   : props.network.networkName}
               </Typography>
             </Link>
+              
+              :               
+              <Typography
+              className={classes.titleNonInteractive}
+              variant='subtitle1'
+              color='inherit'
+              noWrap
+            >
+              {name
+                ? camelCaseToTitleCase(prefix) + ':' + name
+                : props.network.networkName}
+            </Typography>
+            }
           </Tooltip>
           <div className={classes.grow} />
           {
