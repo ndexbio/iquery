@@ -91,18 +91,19 @@ const SortPanel = props => {
       <React.Fragment>
         <div style={divStyle}>
           <div style={sortInfoStyle}>
-            <InfoModal />
+          {props.uiState.selectedSource !== 'protein-interactions-test' ? <InfoModal /> : null}
+            
             <Typography
               variant="body2"
               display="inline"
               color="textSecondary"
               style={textStyle}
             >
-              Sort by
+              {props.uiState.selectedSource !== 'protein-interactions-test' ? 'Sort by' : null}
             </Typography>
           </div>
           <div style={radioButtonsDiv}>
-            {sortOptions.map(option => (
+            {props.uiState.selectedSource !== 'protein-interactions-test' ? sortOptions.map(option => (
               <FormControlLabel
                   key={option}
                   style={radioStyle}
@@ -111,7 +112,7 @@ const SortPanel = props => {
                   label={<Typography variant="body2">{option}</Typography>}
                   labelPlacement="end"
               />
-            ))}
+            )) : null}
           </div>
         </div>
       </React.Fragment>

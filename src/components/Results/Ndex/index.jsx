@@ -118,6 +118,18 @@ const Ndex = props => {
   }
 
   const renderNetworkListItem = (querySize, networkEntry, classes, handleListItemClick, selectedIndex, index) => {
+    if(props.uiState.selectedSource === 'protein-interactions-test') {
+      return (
+        <ProteinInteractionsListItem
+          key={networkEntry?.networkUUID} 
+          {...props} 
+          networkEntry={networkEntry} 
+          handleListItemClick={handleListItemClick} 
+          selectedIndex={selectedIndex} 
+          index={index} 
+        />
+      )
+    }
     return (
       <EnrichmentListItem 
         key={networkEntry?.networkUUID} 
@@ -128,6 +140,90 @@ const Ndex = props => {
         index={index} 
       />
     );
+  }
+
+  const ProteinInteractionsListItem = (props) => {
+    const {networkEntry, results, handleListItemClick, selectedIndex, index} = props;
+    const {
+      description,
+      networkUUID,
+      nodes,
+      edges,
+      imageURL,
+      hitGenes,
+      details,
+      url,
+      totalGeneCount = '?',
+      legendURL
+    } = networkEntry
+
+    const sourceName = description.split(':')[0] || 'NDEx';
+
+    const icon = (
+      <ListItemIcon style={{ width: '5px' }}>
+        <Tooltip placement="bottom" title={`Pathway source: ${sourceName}`}>
+          <img className="list-icon" src={imageURL} alt="list icon" />
+        </Tooltip>
+      </ListItemIcon>
+    )
+
+    const newline = <Typography>{'\n'}</Typography>
+
+    const title = <Typography variant='body2'style={titleStyle}>{description}</Typography>
+
+
+    const overlap = (
+      <span style={{...subtitleStyle, width: '130px', marginRight: '10px'}}>
+        <Typography variant="caption" color="textSecondary">
+          <Typography 
+            style={{fontWeight: 'bold', fontSize: '1.25em'}} 
+            variant="caption" 
+            color="secondary">
+              {hitGenes.length}
+          </Typography>
+          <span style={{
+            color: props.uiState.sortBy === 'Overlap' ? 'black' : null,
+            fontWeight: props.uiState.sortBy == 'Overlap'? 'bold' : null
+          }}>
+              { ` / ${props.search?.searchResults?.validatedGenes?.queryGenes.length} unique genes`}
+            </span>
+        </Typography>
+      </span>
+    )
+
+    return (
+      <ListItem
+        button
+        key={networkUUID}
+        onClick={event => {
+          if (selectedIndex !== index) {
+            handleFetch(networkUUID, description, nodes, edges, hitGenes)
+            handleListItemClick(event, index, legendURL)
+            if (url != null) {
+              props.networkActions.setOriginalNetworkUrl('https://' + url)
+            }
+          }
+        }}
+        selected={selectedIndex === index}
+      >
+      <table style={tableStyle}>
+        <tbody>
+          <tr padding="0">
+            <td align="center" valign="middle" rowSpan="2" padding="0">
+              {icon}
+            </td>
+            <td align="left" padding="0">
+              {title}
+              {newline}
+              <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: '10px'}}>
+                {overlap}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </ListItem>)
+
   }
 
   const EnrichmentListItem = (props) => {

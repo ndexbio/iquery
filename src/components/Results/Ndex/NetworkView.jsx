@@ -8,6 +8,7 @@ import NetworkToolbar from './NetworkToolbar';
 
 import Dialog from '@material-ui/core/Dialog'
 import QueryGeneList from '../../QueryGeneList';
+import ProteinInteractionsWidget from './ProteinInteractionsWidget';
 
 import { ButtonGroup, IconButton } from '@material-ui/core';
 import FitIcon from '@material-ui/icons/ZoomOutMap'
@@ -98,43 +99,43 @@ const NetworkView = (props) => {
         }
       >
         <div style={{display: 'flex'}}>
-          <NetworkViewer resized={resized} {...props} />      
-          { props.network.isFetching ? null : 
-          <div style={{position: 'absolute', bottom: '1em', left: '1em'}}>
-            <ButtonGroup
-              // className={classes.root}
-              style={{border: '1px solid #DDDDDD', backgroundColor: 'white', opacity: 1}}
-              orientation="vertical"
-              color="secondary"
-              variant="outlined"
+        <NetworkViewer resized={resized} {...props} />      
+        { props.network.isFetching || props.uiState.selectedSource === 'protein-interactions-test' ? null : 
+        <div style={{position: 'absolute', bottom: '1em', left: '1em'}}>
+          <ButtonGroup
+            // className={classes.root}
+            style={{border: '1px solid #DDDDDD', backgroundColor: 'white', opacity: 1}}
+            orientation="vertical"
+            color="secondary"
+            variant="outlined"
+          >
+            <IconButton
+              key={'fitButton'}
+              color={'primary'}
+              style={{ backgroundColor: 'transparent' }}
+              onClick={handleFit}
             >
-              <IconButton
-                key={'fitButton'}
-                color={'primary'}
-                style={{ backgroundColor: 'transparent' }}
-                onClick={handleFit}
-              >
-                <FitIcon />
-              </IconButton>
-              <IconButton
-                key={'zoomInButton'}
-                color={'primary'}
-                style={{ backgroundColor: 'transparent' }}
-                onClick={handleZoomIn}
-              >
-                <ZoomInIcon />
-              </IconButton>
-              <IconButton
-                key={'zoomOutButton'}
-                color={'primary'}
-                style={{ backgroundColor: 'transparent' }}
-                onClick={handleZoomOut}
-              >
-                <ZoomOutIcon />
-              </IconButton>
-            </ButtonGroup>
-          </div>  
-          }
+              <FitIcon />
+            </IconButton>
+            <IconButton
+              key={'zoomInButton'}
+              color={'primary'}
+              style={{ backgroundColor: 'transparent' }}
+              onClick={handleZoomIn}
+            >
+              <ZoomInIcon />
+            </IconButton>
+            <IconButton
+              key={'zoomOutButton'}
+              color={'primary'}
+              style={{ backgroundColor: 'transparent' }}
+              onClick={handleZoomOut}
+            >
+              <ZoomOutIcon />
+            </IconButton>
+          </ButtonGroup>
+        </div>  
+        }
         </div>
       </Split>
     </div>

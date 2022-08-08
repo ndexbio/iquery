@@ -56,6 +56,13 @@ const styles = (theme) => ({
     cursor: 'pointer',
     overflowX: 'clip'
   },
+  titleNonInteractive: {
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    },
+    overflowX: 'clip'
+  },
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -146,7 +153,11 @@ const NetworkToolbar = (props) => {
     if (tab === 0) {
       props.uiStateActions.setPathwayFigureSource('loading');
       const { originalCX } = props.network;
-      if (originalCX !== null) {
+
+      // sometimes the CX is not null but it returns a plain js object with a stacktrace/error message
+      // this hack is needed for the protein interactions tab that is implemented only on the client to work
+      const cxExists = originalCX != null && originalCX.stackTrace == null;
+      if (originalCX != null && originalCX.stackTrace == null) {
         const networkAttr = findAttributes(originalCX, 'networkAttributes');
         let figureSource;
         for (let attr of networkAttr) {
@@ -202,10 +213,12 @@ const NetworkToolbar = (props) => {
                 : props.network.networkName
             }
           >
-            <Link 
-              className={classes.title} 
-              component="button" 
-              variant="body2" 
+            {
+              props.uiState.selectedSource !== 'protein-interactions-test' ? 
+              <Link
+              className={classes.title}
+              component="button"
+              variant="body2"
               onClick={() => props.networkActions.setShowTableModal(true)}
             >
               <Typography
@@ -219,10 +232,25 @@ const NetworkToolbar = (props) => {
                   : props.network.networkName}
               </Typography>
             </Link>
+              
+              :               
+              <Typography
+              className={classes.titleNonInteractive}
+              variant='subtitle1'
+              color='inherit'
+              noWrap
+            >
+              {name
+                ? camelCaseToTitleCase(prefix) + ':' + name
+                : props.network.networkName}
+            </Typography>
+            }
           </Tooltip>
           <div className={classes.grow} />
-          {props.uiState.selectedSource !== 'pathwayfigures' ||
-          props.uiState.pathwayFigure === false ? (
+          {
+            props.uiState.selectedSource !== 'protein-interactions-test' ? <>
+                      {props.uiState.selectedSource !== 'pathwayfigures' ||
+            props.uiState.pathwayFigure === false ? (
             <>
               <LayoutSelector
                 value={layout}
@@ -234,15 +262,14 @@ const NetworkToolbar = (props) => {
           ) : (
             null
           )}
-
           <NDExSignInModal {...other}>
             <NDExSave {...other} />
           </NDExSignInModal>
-          { props.uiState.hideViewSourceInNdexButton ? null : <OpenOriginalNetworkButton {...other} /> } 
+          {props.uiState.hideViewSourceInNdexButton ? null : <OpenOriginalNetworkButton {...other} />}
           <OpenInCytoscapeButton {...other} />
-          { props.uiState.hideSaveToNdexButton ? null :  <SaveToNDExButton {...other} />}
+          {props.uiState.hideSaveToNdexButton ? null : <SaveToNDExButton {...other} />}
           {props.uiState.selectedSource !== 'pathwayfigures' ||
-          props.uiState.pathwayFigure === false ? (
+            props.uiState.pathwayFigure === false ? (
             <>
               <LegendToggle
                 enableLegend={enableLegend}
@@ -255,6 +282,8 @@ const NetworkToolbar = (props) => {
             null
           )}
 
+            </> : null
+          }
         </div>
         {props.uiState.showLegend ? legend : null}
         <div>

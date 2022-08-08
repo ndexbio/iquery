@@ -76,12 +76,12 @@ const Results = (props) => {
   }, [location])
 
   const handleChange = (event, idx) => {
-    updateHistory(idx)
-    props.networkActions.networkClear()
-    props.networkActions.changeListIndex(0)
-    if (idx === 3) {
-      uiStateActions.setPathwayFigure(true)
-    }
+      updateHistory(idx)
+      props.networkActions.networkClear()
+      props.networkActions.changeListIndex(0)
+      if (idx === 3) {
+        uiStateActions.setPathwayFigure(true)
+      }
   }
 
   const updateHistory = (newSelectedIndex: number): void => {

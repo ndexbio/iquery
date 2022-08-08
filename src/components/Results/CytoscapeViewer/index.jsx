@@ -202,7 +202,7 @@ const CytoscapeViewer = (props) => {
 
     //Layout
 
-    if (cyjs != null) {
+    if (cyjs != null && cyjs != {}) {
       const isLayoutAvailable = cyjs.isLayout;
       if (isLayoutAvailable) {
         propLayouts = ['Preset', 'Cose', 'Concentric'];
