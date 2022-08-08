@@ -51,15 +51,10 @@ const PathwayFigureViewer = (props) => {
     if (width > containerWidth) {
       widthScale = containerWidth / width;
     }
-    if (heightScale < widthScale) {
-      //Find translation
-      const xValue = (containerWidth - width * heightScale) / 2;
-      props.uiStateActions.setPathwayFigureZoom({ scale: heightScale, translation: { x: xValue, y: 0 } });
-    } else {
-      //Find translation
-      const yValue = (containerHeight - height * widthScale) / 2;
-      props.uiStateActions.setPathwayFigureZoom({ scale: heightScale, translation: { x: 0, y: yValue } });
-    }
+
+    const xValue = (containerWidth - width * heightScale) / 2;
+    const yValue = (containerHeight - height * widthScale) / 2;
+    props.uiStateActions.setPathwayFigureZoom({ scale: heightScale, translation: { x: xValue, y: yValue } });
   };
 
   const handleLoad = () => {
