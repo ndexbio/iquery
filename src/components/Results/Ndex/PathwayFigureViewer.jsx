@@ -2,15 +2,31 @@ import React, { useRef, useEffect } from 'react';
 import { useState } from 'react';
 import { MapInteractionCSS } from 'react-map-interaction';
 import { makeStyles } from '@material-ui/styles';
-import { Typography } from '@material-ui/core';
+import { Typography, Container, Divider } from '@material-ui/core';
 import _ from 'lodash';
 
+
 import LoadingPanel from '../../LoadingPanel';
+import Linkify from 'linkify-react';
+import parse from 'html-react-parser';
 
 const useStyles = makeStyles((theme) => ({
-  imageContainer: {
+  container: {
     height: '100%',
     width: '100%',
+    display: 'flex'
+  },
+  imageContainer: {
+    height: '100%',
+    width: 'calc(100% - 400px)',
+  },
+  descriptionContainer: {
+    width: '400px',
+    height: '100%',
+    border: '1px solid gray',
+    overflow: 'scroll',
+    paddingTop: '20px',
+    paddingBottom: '20px'
   },
   messageContainer: {
     display: 'flex',
@@ -26,11 +42,17 @@ const useStyles = makeStyles((theme) => ({
 const PathwayFigureViewer = (props) => {
   const classes = useStyles();
 
-  //Set up figure zoom requirements
-  // const [zoomValue, setZoomValue] = useState({
-  //   scale: 1,
-  //   translation: { x: 0, y: 0 },
-  // });
+  const getNetworkInfo = () => {
+    const cx = props.network.originalCX
+    const description = cx?.find(attr => attr.networkAttributes != null)?.networkAttributes?.find(attr => attr.n === 'description').v || ''
+    const reference = cx?.find(attr => attr.networkAttributes != null)?.networkAttributes?.find(attr => attr.n === 'reference').v || ''
+
+    return { description, reference }
+  }
+
+  const { reference, description } = getNetworkInfo()
+  console.log(reference, description)
+
   const [imageHeight, setImageHeight] = useState(0);
   const [imageWidth, setImageWidth] = useState(0);
 
@@ -81,13 +103,28 @@ const PathwayFigureViewer = (props) => {
 
   if (figureSource !== null) {
     return (
-      <div className={classes.imageContainer} ref={imageContainerRef}>
-        <MapInteractionCSS
-          value={props.uiState.pathwayFigureZoom}
-          onChange={(value) => props.uiStateActions.setPathwayFigureZoom(value)}
-        >
-          <img src={figureSource} ref={imageRef} onLoad={handleLoad} />
-        </MapInteractionCSS>
+      <div className={classes.container}>
+        <div className={classes.imageContainer} ref={imageContainerRef}>
+          <MapInteractionCSS
+            value={props.uiState.pathwayFigureZoom}
+            onChange={(value) => props.uiStateActions.setPathwayFigureZoom(value)}
+          >
+            <img src={figureSource} ref={imageRef} onLoad={handleLoad} />
+          </MapInteractionCSS>
+        </div>
+        <Container className={classes.descriptionContainer}>
+            <Typography style={{marginTop: '30px'}} variant="body1" color="textSecondary">Reference</Typography>
+            <Linkify>
+              {parse(reference)}
+            </Linkify>
+            <Divider style={{marginTop: '20px', marginBottom: '20px'}}/>
+          <Typography variant="body1" color="textSecondary">Description</Typography>
+           <Typography variant="body2">
+              <Linkify>
+                {parse(description, { replace: domNode => domNode.name === 'img' ? <></> : null})}
+              </Linkify>
+            </Typography>
+        </Container>
       </div>
     );
   }
