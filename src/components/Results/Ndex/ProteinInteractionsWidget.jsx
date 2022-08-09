@@ -9,6 +9,10 @@ import { Container, Box } from '@material-ui/core';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
+
+import Linkify from 'linkify-react';
+import parse from 'html-react-parser';
+
 const styles = (theme) => ({
   toolbar: {
     background: 'rgba(0, 0, 0, 0.08)',
@@ -46,17 +50,29 @@ const ProteinInteractionsWidget = (props) => {
     setQueryType(e.target.value)
   }
 
+  const networkInfo = props.search.actualResults.find(r => r.networkUUID === props.network.uuid)
+  const reference = networkInfo?.reference || '';
+  const description = networkInfo?.detailedDescription || '';
+
   const handleProteinInteractionsSearch = () => {
-    const url = `https://ndexbio.org/viewer/networks/${props.network.uuid}?query=${props.search.searchResults.validatedGenes.queryGenes.join(' ')}&queryType=${queryType}&maximizeResultView=true`;
+    const url = `https://dev.ndexbio.org/viewer/networks/${props.network.uuid}?query=${props.search.searchResults.validatedGenes.queryGenes.join(' ')}&queryType=${queryType}&maximizeResultView=true`;
     window.open(url, '_blank');
   }
   return (
       <Container fixed>
         <div style={{marginTop: '20px'}}>
             <Typography variant="body1" color="textSecondary">Description</Typography>
-            <Typography variant="body2">network description that is pulled from a config.</Typography>
+            <Typography variant="body2">
+              <Linkify>
+                  {parse(description)}
+              </Linkify>
+            </Typography>
             <Typography style={{marginTop: '30px'}} variant="body1" color="textSecondary">Reference</Typography>
-            <Typography variant="body2">reference content for the network that is pulled from a config.</Typography>
+            <Typography variant="body2">
+              <Linkify>
+                {parse(reference)}
+              </Linkify>
+            </Typography>
         </div>
             <Divider style={{marginTop: '20px'}}/>
         <div>
