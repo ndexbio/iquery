@@ -160,6 +160,24 @@ const NetworkProperties = (props) => {
 
   //Right side of display
   const rightDisplay = [];
+  if(reference != null){
+    rightDisplay.push(<ListItem key={`net-${index++}`} className={classes.noPadding}>
+      <ListItemText
+        primary={
+          <React.Fragment>
+            <Typography variant='caption' color='textSecondary'>
+              Reference
+            </Typography>
+            <div>
+              <Typography variant='body2'>
+                {parse(reference)}
+              </Typography>
+            </div>
+          </React.Fragment>
+        }
+      />
+    </ListItem>)
+  }
   rightDisplayItems.forEach((list) => {
     // console.log(list);
     let primaryString = '';
@@ -193,24 +211,6 @@ const NetworkProperties = (props) => {
         break;
     }
 
-    if(reference != null){
-      rightDisplay.push(<ListItem key={`net-${index++}`} className={classes.noPadding}>
-        <ListItemText
-          primary={
-            <React.Fragment>
-              <Typography variant='caption' color='textSecondary'>
-                Reference
-              </Typography>
-              <div>
-                <Typography variant='body2'>
-                  {parse(reference)}
-                </Typography>
-              </div>
-            </React.Fragment>
-          }
-        />
-      </ListItem>)
-    }
 
     primaryString = formatPrimary(primaryString);
     if (primaryString !== '') {
