@@ -90,7 +90,7 @@ const ProteinInteractionsWidget = (props) => {
           </div>
           <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
             <IconButton onClick={e => setShowQueryHelper(true)}>
-              <InfoIcon style={{marginRight: '10px', color: '#3576BE'}}></InfoIcon>
+              <InfoIcon style={{color: '#3576BE'}}></InfoIcon>
             </IconButton>
               <Select
                 style={{minWidth: '200px'}}
