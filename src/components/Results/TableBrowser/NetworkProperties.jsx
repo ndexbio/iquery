@@ -51,6 +51,7 @@ const NetworkProperties = (props) => {
     return;
   }
 
+  const reference = originalCX?.find(attr => attr.networkAttributes != null)?.networkAttributes?.find(attr => attr.n === 'reference')?.v || null
   //What to display
   const leftDisplayItems = [
     'Name',
@@ -191,6 +192,26 @@ const NetworkProperties = (props) => {
         secondaryString = 'Network Information';
         break;
     }
+
+    if(reference != null){
+      rightDisplay.push(<ListItem key={`net-${index++}`} className={classes.noPadding}>
+        <ListItemText
+          primary={
+            <React.Fragment>
+              <Typography variant='caption' color='textSecondary'>
+                Reference
+              </Typography>
+              <div>
+                <Typography variant='body2'>
+                  {parse(reference)}
+                </Typography>
+              </div>
+            </React.Fragment>
+          }
+        />
+      </ListItem>)
+    }
+
     primaryString = formatPrimary(primaryString);
     if (primaryString !== '') {
       rightDisplay.push(
