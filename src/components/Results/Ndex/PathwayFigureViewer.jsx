@@ -46,38 +46,61 @@ const PathwayFigureViewer = (props) => {
 
   const getNetworkInfo = () => {
     const cx = props.network.originalCX
-    const description = cx?.find(attr => attr.networkAttributes != null)?.networkAttributes?.find(attr => attr.n === 'description').v || ''
-    const reference = cx?.find(attr => attr.networkAttributes != null)?.networkAttributes?.find(attr => attr.n === 'reference').v || ''
+    const description = cx?.find(attr => attr.networkAttributes != null)?.networkAttributes?.find(attr => attr.n === 'description')?.v || ''
+    const reference = cx?.find(attr => attr.networkAttributes != null)?.networkAttributes?.find(attr => attr.n === 'reference')?.v || ''
 
     return { description, reference }
   }
 
   const { reference, description } = getNetworkInfo()
-  console.log(props.uiState.pathwayFigureZoom)
   const [imageHeight, setImageHeight] = useState(0);
   const [imageWidth, setImageWidth] = useState(0);
 
   const imageContainerRef = useRef(null);
   const imageRef = useRef(null);
 
-  const centerFigure = (height, width) => {
+  const centerFigure = () => {
     //Resize and center image
     const containerHeight = imageContainerRef.current.offsetHeight;
     const containerWidth = imageContainerRef.current.offsetWidth;
+    
+    const imageHeight = imageRef.current.naturalHeight;
+    const imageWidth = imageRef.current.naturalWidth;
 
-    let heightScale = 1;
-    let widthScale = 1;
-    //Find scale
-    if (height > containerHeight) {
-      heightScale = containerHeight / height;
-    }
-    if (width > containerWidth) {
-      widthScale = containerWidth / width;
+    const imageAspectRatio = imageHeight / imageWidth;
+    const containerAspectRatio = containerHeight / containerWidth;
+
+    // basic idea:
+    // compare aspect ratios into two cases:
+    // 1. scale by width and then translate by Y
+    // 2. scale by height and then translate by X
+    // translations are computed by halving the dimension difference between the scaled image
+    // and the container dimension
+
+
+    if(containerAspectRatio > imageAspectRatio) {
+      const scale = containerWidth / imageWidth
+      const translationY = (containerHeight - (imageHeight * scale)) / 2
+      props.uiStateActions.setPathwayFigureZoom({ 
+        scale: (containerWidth / imageWidth), 
+        translation: { 
+          x: 0,
+          y: translationY
+        } 
+      });
+  
+    } else {
+      const scale = containerHeight / imageHeight
+      const translationX = (containerWidth - (imageWidth * scale)) / 2
+      props.uiStateActions.setPathwayFigureZoom({ 
+        scale: containerHeight / imageHeight, 
+        translation: { 
+          x: translationX,
+          y: 0
+        } 
+      });
     }
 
-    const xValue = (containerWidth - width * heightScale) / 2;
-    const yValue = (containerHeight - height * widthScale) / 2;
-    props.uiStateActions.setPathwayFigureZoom({ scale: 0.5, translation: { x: (containerWidth / 2) - (imageWidth / 2), y: (containerHeight / 2) - (imageHeight / 2)} });
   };
 
   const handleLoad = () => {
@@ -85,13 +108,13 @@ const PathwayFigureViewer = (props) => {
     const width = imageRef.current.naturalWidth;
     setImageHeight(height);
     setImageWidth(width);
-    centerFigure(height, width);
+    centerFigure();
   };
 
   //Allow zoom to be controlled by external button
   useEffect(() => {
     if (props.uiState.fitPathwayFigure) {
-      centerFigure(imageHeight, imageWidth);
+      centerFigure();
       props.uiStateActions.setFitPathwayFigure(false);
     }
   }, [props.uiState.fitPathwayFigure]);
