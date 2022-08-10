@@ -4,6 +4,7 @@ import { MapInteractionCSS } from 'react-map-interaction';
 import { makeStyles } from '@material-ui/styles';
 import { Typography, Container, Divider } from '@material-ui/core';
 import _ from 'lodash';
+import Split from 'react-split'
 
 
 import LoadingPanel from '../../LoadingPanel';
@@ -14,16 +15,17 @@ const useStyles = makeStyles((theme) => ({
   container: {
     height: '100%',
     width: '100%',
-    display: 'flex'
+    display: 'flex',
+    borderTop: '1px solid #D6D6D6',
+    borderBottom: '1px solid #D6D6D6',
   },
   imageContainer: {
     height: '100%',
-    width: 'calc(100% - 400px)',
+    width: '100%'
   },
   descriptionContainer: {
     width: '400px',
     height: '100%',
-    border: '1px solid gray',
     overflow: 'scroll',
     paddingTop: '20px',
     paddingBottom: '20px'
@@ -51,8 +53,7 @@ const PathwayFigureViewer = (props) => {
   }
 
   const { reference, description } = getNetworkInfo()
-  console.log(reference, description)
-
+  console.log(props.uiState.pathwayFigureZoom)
   const [imageHeight, setImageHeight] = useState(0);
   const [imageWidth, setImageWidth] = useState(0);
 
@@ -76,7 +77,7 @@ const PathwayFigureViewer = (props) => {
 
     const xValue = (containerWidth - width * heightScale) / 2;
     const yValue = (containerHeight - height * widthScale) / 2;
-    props.uiStateActions.setPathwayFigureZoom({ scale: heightScale, translation: { x: xValue, y: yValue } });
+    props.uiStateActions.setPathwayFigureZoom({ scale: 0.5, translation: { x: (containerWidth / 2) - (imageWidth / 2), y: (containerHeight / 2) - (imageHeight / 2)} });
   };
 
   const handleLoad = () => {
@@ -103,7 +104,8 @@ const PathwayFigureViewer = (props) => {
 
   if (figureSource !== null) {
     return (
-      <div className={classes.container}>
+
+      <Split sizes={[70, 30]} gutterSize={4} className={classes.container}>
         <div className={classes.imageContainer} ref={imageContainerRef}>
           <MapInteractionCSS
             value={props.uiState.pathwayFigureZoom}
@@ -125,7 +127,7 @@ const PathwayFigureViewer = (props) => {
               </Linkify>
             </Typography>
         </Container>
-      </div>
+      </Split>
     );
   }
 
