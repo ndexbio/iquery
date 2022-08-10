@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import { Divider } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import InfoIcon from '@material-ui/icons/InfoOutlined';
+import InfoIcon from '@material-ui/icons/Info'
 import { Container, Box } from '@material-ui/core';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
-
 import Linkify from 'linkify-react';
 import parse from 'html-react-parser';
+
+import NDExQueryHelpDialog from './NDExQueryHelpDialog';
 
 const styles = (theme) => ({
   toolbar: {
@@ -45,6 +46,7 @@ const styles = (theme) => ({
 const ProteinInteractionsWidget = (props) => {
 
   const [queryType, setQueryType] = useState('direct')
+  const [showQueryHelper, setShowQueryHelper] = useState(false)
 
   const handleChange = (e) => {
     setQueryType(e.target.value)
@@ -60,7 +62,7 @@ const ProteinInteractionsWidget = (props) => {
   }
   return (
       <Container fixed>
-        <div style={{marginTop: '20px'}}>
+        <div style={{marginTop: '20px', overflowY: 'scroll'}}>
             <Typography variant="body1" color="textSecondary">Description</Typography>
             <Typography variant="body2">
               <Linkify>
@@ -77,25 +79,19 @@ const ProteinInteractionsWidget = (props) => {
             <Divider style={{marginTop: '20px'}}/>
         <div>
             <Typography variant="body2" style={{marginTop: '20px'}}>
-                Select the type of the Neighborhood Query you wish to execute using the dropdown menu below, then click the magnifier to run.
+                Select the type of the Neighborhood Query you wish to run using the dropdown menu below, then click the magnifier to run.
+                The query result will be opened in NDEx.
             </Typography>
-            <Typography variant="body2">
-              <div style={{display: 'flex', alignItems: 'center'}}>
-                <span>Click the </span><InfoIcon/><span>info icon for more details about the available types of query.</span>
-              </div>
-            </Typography>    
-            <Typography variant="body2">
-                Query results will open in a new tab.
-            </Typography>    
         </div>
 
         <div style={{backgroundColor: '#F5F5F5', marginTop: '30px', height: '50px', padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
           <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-            <span><Typography style={{paddingRight: "5px"}} variant="body1" color="secondary">{'!'}</Typography></span>
-            <span><Typography variant="body1" color="textSecondary">{' Query genes cannot be modified.'}</Typography></span>
+            <div style={{color: '#f9880e'}}>Click the info icon for details about the available types of query</div>
           </div>
           <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-            <InfoIcon style={{marginRight: '10px'}}></InfoIcon>
+            <IconButton onClick={e => setShowQueryHelper(true)}>
+              <InfoIcon style={{marginRight: '10px', color: '#3576BE'}}></InfoIcon>
+            </IconButton>
               <Select
                 style={{minWidth: '200px'}}
                 labelId="demo-simple-select-outlined-label"
@@ -113,7 +109,6 @@ const ProteinInteractionsWidget = (props) => {
 
               </Select>
               <IconButton
-                      aria-haspopup='true'
                       onClick={handleProteinInteractionsSearch}
                       color='inherit'
                     >
@@ -122,6 +117,7 @@ const ProteinInteractionsWidget = (props) => {
 
           </div>
         </div>
+        <NDExQueryHelpDialog onClose={e => setShowQueryHelper(false)} open={showQueryHelper} />
       </Container>
   );
 };
