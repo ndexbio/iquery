@@ -30,11 +30,7 @@ export default function ExpandPanel(props) {
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem>
-            <ListItemText primary={props.details} />
-          </ListItem>
-        </List>
+        {props.details}
       </Collapse>
     </React.Fragment>
   )

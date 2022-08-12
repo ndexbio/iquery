@@ -310,114 +310,23 @@ const NodeProperties = props => {
       )
     }
 
-    const displayCol1 = []
-    const displayCol2 = []
-    let primaryString
-    let secondaryString
-    displayItems.forEach(list => {
-      primaryString = ''
-      let currentEntry
-      list.forEach(element => {
-        currentEntry = attributes.filter(entry => {
-          return entry.title === element
-        })[0]
-        if (currentEntry != null && currentEntry.content != null) {
-          primaryString +=
-            currentEntry.title + ': ' + currentEntry.content + '<br>'
-          currentEntry.displayed = true
-        }
-      })
-      primaryString = formatPrimary(primaryString)
-      if (primaryString !== '') {
-        switch (list) {
-          case entityProperties:
-            secondaryString = 'Entity Properties'
-            displayCol1.push(
-              <ListItem
-                key={index++}
-                className={classes.noPadding}
-                disableGutters={true}
-              >
-                <ListItemText
-                  inset={inset}
-                  primary={
-                    <React.Fragment>
-                      <Typography variant="caption" color="textSecondary">
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography variant="caption" component="div">
-                          {primaryString}
-                        </Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
-            break
-          case nodeProperties:
-            secondaryString = 'Node Properties'
-            displayCol2.push(
-              <ListItem
-                key={index++}
-                className={classes.noPadding}
-                disableGutters={true}
-              >
-                <ListItemText
-                  primary={
-                    <React.Fragment>
-                      <Typography variant="caption" color="textSecondary">
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography variant="caption">{primaryString}</Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
-            break
-        }
-      }
-    })
 
+    const sortedAttributes = (
+      attributes
+        .filter(a => !a.title.startsWith('__'))
+        .sort((a, b) => a.title.localeCompare(b.title))
+    )
 
-    primaryString = ''
-    attributes.forEach(entry => {
-      if (!entry.displayed) {
-        primaryString += entry.title + ': ' + entry.content + '<br>'
-        entry.displayed = true
-      }
-    })
-    primaryString = formatPrimary(primaryString)
-    secondaryString = 'Additional properties'
-
-    if (primaryString !== '') {
-      displayCol1.push(
-        <ListItem
-          key={index++}
-          className={classes.noPadding}
-          disableGutters={true}
-        >
-          <ListItemText
-            inset={inset}
-            primary={
-              <React.Fragment>
-                <Typography variant="caption" color="textSecondary">
-                  {secondaryString}
-                </Typography>
-                <div>
-                  <Typography variant="caption">{primaryString}
-                  </Typography>
-                </div>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-      )
-    }
+    const displayCol1 = sortedAttributes.map(attr => {
+      return (<div style={{marginBottom: '10px'}}>
+        <Typography component="div" variant="caption" color="textSecondary">
+          {attr.title}
+        </Typography>
+        <Typography variant="body2">
+          {formatPrimary(attr.content)}
+        </Typography>
+      </div>)
+    });
 
     const summary = (
       <table>
@@ -436,20 +345,11 @@ const NodeProperties = props => {
       </table>
     )
     const details = (
-      <table className={classes.table}>
-        <tbody>
-          <tr>
-            <td colSpan="2" valign="top">
-              {geneAnnotation}
-            </td>
-          </tr>
-          <tr>
-            <td valign={'top'}>{displayCol1}</td>
-            <td valign={'top'}>{displayCol2}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div style={{marginLeft: '20px'}}>
+        {displayCol1}
+      </div>
     )
+
     topDisplay.push(
       <ExpandPanel
         summary={summary}

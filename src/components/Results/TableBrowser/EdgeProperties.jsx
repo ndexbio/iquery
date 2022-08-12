@@ -120,8 +120,6 @@ const EdgeProperties = props => {
     'Edge Id'
   ]
 
-  const displayItems = [entityProperties, edgeProperties]
-
   edges.sort((a, b) => {
     let aScore = 0
     let bScore = 0
@@ -285,121 +283,18 @@ const EdgeProperties = props => {
       }
     }
 
-    const displayCol1 = []
-    const displayCol2 = []
-    let primaryString
-    let secondaryString
-    displayItems.forEach(list => {
-      primaryString = ''
-      let currentEntry
-      list.forEach(element => {
-        currentEntry = attributes.filter(entry => {
-          return entry.title === element
-        })[0]
-        if (currentEntry != null && currentEntry.content != null) {
-          primaryString +=
-            currentEntry.title +
-            ': ' +
-            currentEntry.content +
-            (currentEntry.noBreak ? '' : '<br>')
-          currentEntry.displayed = true
-        }
-      })
-      primaryString = formatPrimary(primaryString)
-      if (primaryString !== '') {
-        switch (list) {
-          case entityProperties:
-            secondaryString = 'Entity Properties'
-            // console.log(secondaryString, primaryString.props)
-            displayCol1.push(
-              <ListItem key={Math.random()} className={classes.noPadding}>
-                <ListItemText
-                  inset={false}
-                  primary={
-                    <React.Fragment>
-                      <Typography
-                        component="span"
-                        variant="caption"
-                        color="textSecondary"
-                      >
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography component="span" variant="caption">
-                          {primaryString}
-                        </Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
-            break
-          case edgeProperties:
-            secondaryString = 'Edge Properties'
-            displayCol2.push(
-              <ListItem
-                key={Math.random()}
-                className={classes.listPadding}
-                disableGutters={true}
-              >
-                <ListItemText
-                  primary={
-                    <React.Fragment>
-                      <Typography variant="caption" color="textSecondary">
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography variant="caption">{primaryString}</Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
-            break
-        }
-      }
-    })
+    const sortedAttributes = attributes.sort((a, b) => a.title.localeCompare(b.title))
 
-    primaryString = ''
-    attributes.forEach(entry => {
-      if (!entry.displayed) {
-        primaryString +=
-          entry.title + ': ' + entry.content + (entry.noBreak ? '' : '<br/>')
-        entry.displayed = true
-      }
-    })
-
-    // this following logic seems to handle 'Additional properties' in the edge properties panel
-    primaryString = formatPrimary(primaryString)
-    secondaryString = 'Additional properties'
-
-    if (primaryString !== '') {
-      displayCol1.push(
-        <ListItem key={index++} className={classes.noPadding}>
-          <ListItemText
-            inset={false}
-            primary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="caption"
-                  color="textSecondary"
-                >
-                  {secondaryString}
-                </Typography>
-                <div>
-                  <Typography component="span" variant="caption">
-                    {primaryString}
-                  </Typography>
-                </div>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-      )
-    }
+    const displayCol1 = sortedAttributes.map(attr => {
+      return (<div style={{marginBottom: '10px'}}>
+        <Typography component="div" variant="caption" color="textSecondary">
+          {attr.title}
+        </Typography>
+        <Typography variant="body2">
+          {formatPrimary(attr.content)}
+        </Typography>
+      </div>)
+    });
 
     //Create summary
     const summary = (
@@ -430,14 +325,9 @@ const EdgeProperties = props => {
       </table>
     )
     const details = (
-      <table className={classes.table}>
-        <tbody>
-          <tr>
-            <td valign={'top'}>{displayCol1}</td>
-            <td valign={'top'}>{displayCol2}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div style={{marginLeft: '20px', maxHeight: '300px'}}>
+        {displayCol1}
+      </div>
     )
     topDisplay.push(
       <ExpandPanel
