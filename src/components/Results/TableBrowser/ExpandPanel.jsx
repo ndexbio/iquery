@@ -29,7 +29,7 @@ export default function ExpandPanel(props) {
         <ListItemText primary={props.summary} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse style={{overflow: 'scroll', padding: '10px'}} in={open} timeout="auto" unmountOnExit>
         {props.details}
       </Collapse>
     </React.Fragment>
