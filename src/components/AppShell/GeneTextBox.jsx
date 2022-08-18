@@ -220,7 +220,7 @@ const GeneTextBox = (props) => {
         vertical={'bottom'}
       />
       <Paper className={classes.root} elevation={0}>
-        <Tooltip title='Query gene set examples' placement='bottom'>
+        <Tooltip title='Gene set examples' placement='bottom'>
           <div>
             <IconButton
               className={classes.iconButton}
@@ -257,7 +257,7 @@ const GeneTextBox = (props) => {
           </div>
         </Tooltip>
         <Divider className={classes.divider} />
-        <Tooltip title='Copy' placement='bottom'>
+        <Tooltip title='Copy gene set' placement='bottom'>
           <IconButton
             color='default'
             className={classes.iconButton}
@@ -268,7 +268,7 @@ const GeneTextBox = (props) => {
           </IconButton>
         </Tooltip>
         <Divider className={classes.divider} />
-        <Tooltip title='Clear gene list' placement='bottom'>
+        <Tooltip title='Clear gene set' placement='bottom'>
           <IconButton
             color='default'
             className={classes.iconButton}
@@ -279,7 +279,7 @@ const GeneTextBox = (props) => {
           </IconButton>
         </Tooltip>
         <Divider className={classes.divider} />
-        <Tooltip title='View my query' placement='bottom'>
+        <Tooltip title='View gene set' placement='bottom'>
           <IconButton
             aria-describedby={popperId}
             color='default'
