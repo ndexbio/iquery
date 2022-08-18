@@ -89,28 +89,6 @@ const titleStyle = {
 
 class TitleBar extends React.Component {
 
-  constructor(props){
-    super(props);
-
-    this.state = {
-      helpMenuAnchor: null,
-    };
-  }
-
-  handleMenuOpen = e => {
-    this.setState({helpMenuAnchor: e.currentTarget});
-  }
-
-  handleMenuClose = e => {
-    this.setState({helpMenuAnchor: null})
-  }
-
-  handleMenu = () => {
-    this.props.uiStateActions.setSettingsOpen(
-      !this.props.uiState.isSettingsOpen
-    );
-  };
-
   handleHomeButton = () => {
     this.props.searchActions.clearAll();
     this.props.uiStateActions.setSelectedSource('enrichment');
@@ -172,30 +150,13 @@ class TitleBar extends React.Component {
                 <Typography color='textPrimary' noWrap={true} display='inline'>
                   <IconButton
                       aria-haspopup='true'
-                      onClick={this.handleMenuOpen}
+                      onClick={() => this.props.uiStateActions.setShowTour(true)}
                       color='inherit'
                     >
                     <HelpIcon className={classes.helpIcon} />
                   </IconButton>                  
-                  {/* <IconButton
-                    aria-haspopup='true'
-                    onClick={() => openLink(HELP_URL)}
-                    color='inherit'
-                  >
-                    <HelpIcon className={classes.helpIcon} />
-                  </IconButton> */}
                 </Typography>
               </Tooltip>
-              <Menu
-                id="simple-menu"
-                anchorEl={this.state.helpMenuAnchor}
-                keepMounted
-                open={Boolean(this.state.helpMenuAnchor)}
-                onClose={this.handleMenuClose}
-              >
-                <MenuItem onClick={() => openLink(HELP_URL)}>Documentation</MenuItem>
-                <MenuItem onClick={() => this.props.uiStateActions.setShowTour(true)}>Take a tour</MenuItem>
-              </Menu>
             </div>
           </Toolbar>
         </div>
