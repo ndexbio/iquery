@@ -172,8 +172,6 @@ const InfoModal = props => {
               .
             </Typography>
             <br />
-
-            <br/>
             <Typography component="div" variant="h6" color="textPrimary">
               Overlap:
             </Typography>
