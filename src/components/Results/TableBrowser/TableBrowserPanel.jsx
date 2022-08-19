@@ -4,7 +4,7 @@ import HoverTab from '../HoverTab';
 import { makeStyles } from '@material-ui/styles';
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-
+import {Tooltip} from '@material-ui/core';
 import { getNetworkAttributes, getNetworkElementAttributes } from './attribute-util';
 
 import NetworkProperties from './NetworkProperties';
@@ -102,12 +102,27 @@ const TableBrowserPanel = (props) => {
               label={'Nodes'}
               backgroundcolor={backgroundcolor}
             />
+
+            {props.network.edgeCount === 0 ? <Tooltip title={'This network has no edges'}>
+              <span>
+                <HoverTab
+                className={classes.root}
+                key={'edges-tab'}
+                label={'Edges'}
+                tooltip={props.network.edgeCount === 0 ? 'This network has no edges': null}
+                backgroundcolor={backgroundcolor}
+                disabled={true}
+              />
+              </span>
+            </Tooltip>
+          :             
             <HoverTab
               className={classes.root}
               key={'edges-tab'}
               label={'Edges'}
               backgroundcolor={backgroundcolor}
             />
+          }
           </Tabs>
           <IconButton onClick={() => props.networkActions.setShowTableModal(false)} aria-label="close">
            <CloseIcon/>

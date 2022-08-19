@@ -5,11 +5,12 @@ import { makeStyles } from '@material-ui/styles';
 import { Typography, Container, Divider } from '@material-ui/core';
 import _ from 'lodash';
 import Split from 'react-split'
-
-
-import LoadingPanel from '../../LoadingPanel';
 import Linkify from 'linkify-react';
 import parse from 'html-react-parser';
+
+
+import { extractContent, formatPrimary } from '../TableBrowser/NetworkProperties';
+import LoadingPanel from '../../LoadingPanel';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -27,8 +28,13 @@ const useStyles = makeStyles((theme) => ({
     width: '400px',
     height: '100%',
     overflow: 'scroll',
-    paddingTop: '20px',
-    paddingBottom: '20px'
+    paddingTop: '0px',
+    paddingBottom: '20px',
+    paddingRight: '14px',
+    paddingLeft: '14px',
+    wordBreak: 'break-word',
+    display: 'flex',
+    flexDirection: 'column'
   },
   messageContainer: {
     display: 'flex',
@@ -125,6 +131,21 @@ const PathwayFigureViewer = (props) => {
     return <LoadingPanel title={'Loading Figure...'} />;
   }
 
+  // there is a hack in the NDEx network cx that includes the image url 
+  // in the reference with img tags.  since the pathway figure already displays
+  // these images, we need another hack to remove them
+  const tmpDiv = document.createElement('div');
+  tmpDiv.innerHTML = description;
+
+  // get all <a> elements from div
+  const imgTags = tmpDiv.getElementsByTagName('img');
+
+  // remove all <a> elements
+  while (imgTags[0])
+    imgTags[0].parentNode.removeChild(imgTags[0])
+
+  const processedDescription = tmpDiv.innerHTML
+
   if (figureSource !== null) {
     return (
 
@@ -138,15 +159,12 @@ const PathwayFigureViewer = (props) => {
           </MapInteractionCSS>
         </div>
         <Container className={classes.descriptionContainer}>
-            <Typography style={{marginTop: '30px'}} variant="body1" color="textSecondary">Reference</Typography>
-            <Linkify>
-              {parse(reference)}
-            </Linkify>
-            <Divider style={{marginTop: '20px', marginBottom: '20px'}}/>
-          <Typography variant="body1" color="textSecondary">Description</Typography>
-           <Typography variant="body2">
-              <Linkify>
-                {parse(description, { replace: domNode => domNode.name === 'img' ? <></> : null})}
+            <Typography style={{marginTop: '8px'}} variant="caption" color="textSecondary">Reference</Typography>
+            {formatPrimary(reference)}
+          <Typography style={{marginTop: '16px'}} variant="caption" color="textSecondary">Description</Typography>
+           <Typography variant="body2" component="div">
+              <Linkify options={{className: classes.description}}>
+                {formatPrimary(extractContent({ v: processedDescription}))}
               </Linkify>
             </Typography>
         </Container>

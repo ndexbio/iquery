@@ -168,7 +168,7 @@ const NetworkProperties = (props) => {
             <Typography variant='caption' color='textSecondary'>
               Reference
             </Typography>
-            <div>
+            <div style={{wordBreak: 'break-word'}}>
               <Typography variant='body2'>
                 {parse(reference)}
               </Typography>
@@ -325,7 +325,7 @@ const NetworkProperties = (props) => {
   );
 };
 
-const extractContent = (entry) => {
+export const extractContent = (entry) => {
   let modifiedText = entry.v;
   if (Array.isArray(entry.v)) {
     modifiedText = entry.v.join(', ');
@@ -343,7 +343,7 @@ const extractTitle = (entry) => {
   return stripScripts(modifiedText.trim());
 };
 
-const formatPrimary = (entry) => {
+export const formatPrimary = (entry) => {
   if (entry === '') {
     return entry;
   }
