@@ -13,11 +13,10 @@ import { Button } from '@material-ui/core'
 const formControl = {
   height: '3em',
   paddingTop: '0.5em',
-  marginLeft: '0.3em'
+  marginLeft: '0.3em',
 }
 
 const styles = theme => ({
-
   input: {
     padding: '8px 26px 8px 12px',
     backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -28,14 +27,14 @@ const styles = theme => ({
     },
     '&:hover': {
       backgroundColor: alpha('rgb(65, 84, 178)', 0.08)
-    }
+    },
+    cursor: 'pointer',
   },
   root: {
-    marginLeft: '8px',
+    width: '80px',
     height: '2.5em',
-    width: '120px',
-    minWidth: '120px',
-    padding: '8px 12px 8px 12px',
+    color: '#76767A',
+    fontSize: 14,
     borderColor: '#ced4da',
     '& $notchedOutline': {
       borderColor: 'rgb(65, 84, 178)'
@@ -48,25 +47,52 @@ const styles = theme => ({
       borderWidth: '1px'
     }
   },
-  legendDisabled: {
-    marginLeft: '8px',
-    height: '2.5em',
-    width: '120px',
-    minWidth: '120px',
-    padding: '8px 12px 8px 12px',
-    cursor: 'default',
-    borderColor: '#ced4da',
-    color: 'gray',
+  disabled: {
+    padding: '8px 26px 8px 12px',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    borderRadius: 4,
+    '&:focus': {
+      backgroundColor: 'rgba(0, 0, 0, 0)',
+      borderRadius: 4
+    },
     '&:hover': {
-      borderColor: '#ced4da'
+      backgroundColor: alpha('rgb(65, 84, 178)', 0.08)
+    },
+    cursor: 'pointer',
+
+    width: '80px',
+    height: '2.5em',
+    color: '#D6D6D6',
+    fontSize: 14,
+    borderColor: '#ced4da',
+    '& $notchedOutline': {
+      borderColor: 'rgb(65, 84, 178)'
+    },
+    '&:hover $notchedOutline': {
+      borderColor: 'rgb(65, 84, 178)'
+    },
+    '&$focused $notchedOutline': {
+      borderColor: 'rgb(65, 84, 178)',
+      borderWidth: '1px'
     }
   },
   focused: {},
-  notchedOutline: {}
+  notchedOutline: {},
+  // label: {
+  //   cursor: 'pointer'
+  // }
 })
 
 const LegendToggle = props => {
   const { classes } = props
+
+  const inputLabel = React.useRef(null)
+  const [labelWidth, setLabelWidth] = React.useState(0)
+
+
+  useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth)
+  }, [])
 
   // anytime the network changes or a new source tab is changed, hide the legend
   useEffect(() => {
@@ -74,31 +100,47 @@ const LegendToggle = props => {
   }, [props.uiState.selectedSource, props.network])
 
   const title = props.enableLegend ? 'Toggle network legend' : 'Legend is not available for this network';
-  const label = props.enableLegend ? props.uiState.showLegend ? 'Hide Legend' : 'Show Legend' : 'Show Legend';
+  const label = props.enableLegend ? props.uiState.showLegend ? 'Hide' : 'Show' : 'Show';
+
+  const style = {
+    color: !props.legendEnabled ? '#d6d6d6' : null,
+    cursor: !props.legendEnabled ? 'default' : 'pointer' 
+  }
 
   return (
     <Tooltip title={title} disableFocusListener>
-      {
-        props.enableLegend ?         
-        <Button
-          variant="outlined" color="primary"
-          value={props.uiState.showLegend}
-          onClick={e => props.uiStateActions.setShowLegend(!props.uiState.showLegend)
-          }
-          className={classes.root}
-        >
-          <Typography variant="caption">{label}</Typography>
-        </Button> : 
-        <Button
-        variant="outlined" color="primary"
-        value={props.uiState.showLegend}
-        className={classes.legendDisabled}
-      >
-        <Typography variant="caption">{label}</Typography>
-      </Button>
-    }
+    <div style={formControl}>
+      <FormControl variant="outlined">
+        <InputLabel ref={inputLabel} htmlFor="outlined">
+          <font color="#4154b2">Legend</font>
+        </InputLabel>
+        {
+          props.enableLegend ? 
+          <OutlinedInput
+          style={{cursor: 'pointer'}}
+          readOnly={true}
+          labelWidth={labelWidth}
+          name="layout"
+          id="outlined-layout"
+          classes={classes}
+          color="primary"
+          value={label}
+          onClick={e => props.uiStateActions.setShowLegend(!props.uiState.showLegend)}
+        />  : 
+        <OutlinedInput
+        readOnly={true}
+        labelWidth={labelWidth}
+        name="layout"
+        id="outlined-layout"
+        classes={classes}
+        color="primary"
+        style={{color: '#d6d6d6', cursor: 'default !important'}}
+        value={label}
+    /> 
+        }
+      </FormControl>
+    </div>
     </Tooltip>
-
   )
 }
 
