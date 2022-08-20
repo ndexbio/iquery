@@ -1,5 +1,6 @@
 import ndexClient from '@js4cytoscape/ndex-client';
 
+
 const proteinInteractomes = [
 
     //dev
@@ -36,8 +37,19 @@ const getGeneOverlap = async (networkId, geneList) => {
             searchString: geneList.join(' ')
         })
     }).then(res => res.json());
+
+    if(overlap.length > geneList.length){
+        // const nodeData = overlap.map(o => test.find(nd => {
+        //     // console.log(nd, o.id)
+        //     return nd['@id'] === parseInt(o.id)
+        // }));
+
+        // console.log(nodeData)
+    }
+
+    // console.log(overlap, geneList.join(' '), networkId)
     
-    return overlap;
+    return { networkId, overlap };
 };
 
 const getNetworkSummaries = async (networkIds) => {
@@ -118,6 +130,8 @@ const getProteinInteractionsData = async (args) => {
     const results = summaries.map((s, index) => {
         const imageUrl = s.properties.find(p => p.predicateString === '__iconurl')
         const reference = s.properties.find(p => p.predicateString === 'reference')
+        const overlap = overlaps.find(o => o.networkId === s.externalId)
+        
         return {
             description: s.name,
             details: {
@@ -125,12 +139,11 @@ const getProteinInteractionsData = async (args) => {
                 parent_network_edges: s.edgeCount,    
             },
             detailedDescription: s.description,
-            hitGenes: [],
             legendURL: null,
             imageURL: imageUrl != null ? imageUrl.value : null,
             reference: reference != null  ? reference.value : null,
             networkUUID: s.externalId,
-            hitGenes: overlaps[index], // overlaps is an array of ids, we don't have access to the exact gene names, but we have the count via hitgenes.length
+            hitGenes: overlap.overlap, // overlaps is an array of ids, we don't have access to the exact gene names, but we have the count via hitgenes.length
             percentOverlap: 0,
             rank: 0,
             totalGeneCount: 0
@@ -141,4 +154,4 @@ const getProteinInteractionsData = async (args) => {
     return Promise.resolve(results);
 };
 
-export default getProteinInteractionsData;
+export default getProteinInteractionsData
