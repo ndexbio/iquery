@@ -7,7 +7,7 @@ const proteinInteractomes = [
     // '692b1e01-12b4-11ed-9208-0242c246b7fb',
     '86827cf7-1759-11ed-9208-0242c246b7fb',
     '369e5ec4-1759-11ed-9208-0242c246b7fb',
-    '2f19a061-1759-11ed-9208-0242c246b7fb',
+    // '2f19a061-1759-11ed-9208-0242c246b7fb',
     '038fcfcf-e757-11ec-8bfe-0242c246b7fb',
     'b6e6451f-ff67-11ea-819c-525400c25d22',
     'abd741f7-fe93-11ea-819c-525400c25d22',
@@ -48,7 +48,15 @@ const getGeneOverlap = async (networkId, geneList) => {
     }
 
     // console.log(overlap, geneList.join(' '), networkId)
-    
+
+    // const nodesUrl = `${NDEX_API_URL}/network/${networkId}/aspect/nodes`
+    // const nodes = await fetch(nodesUrl).then(res => res.json());
+    // const processedOverlaps = overlap.map(o => {
+    //     const name = nodes.find(n => n['@id'] === parseInt(o.id));
+
+    //     return Object.assign({}, o, {name})
+    // })
+    // console.log(processedOverlaps.map(po => po.name))
     return { networkId, overlap };
 };
 
@@ -122,8 +130,6 @@ const getProteinInteractionsData = async (args) => {
     const validGenes = new Set(queryGenes);
     invalid.forEach(gene => validGenes.delete(gene))
 
-    const ndex = new ndexClient.NDEx(NDEX_API_URL);
-
     // const summaries = await Promise.all(proteinInteractomes.map(networkId => ndex.getNetworkSummary(networkId)));
     const summaries = await getNetworkSummaries(proteinInteractomes)
     const overlaps = await Promise.all(proteinInteractomes.map(networkId => getGeneOverlap(networkId, Array.from(validGenes))));
@@ -148,6 +154,8 @@ const getProteinInteractionsData = async (args) => {
             rank: 0,
             totalGeneCount: 0
         }
+    }).sort((a, b) => {
+        return b.hitGenes.length - a.hitGenes.length
     });
 
 
