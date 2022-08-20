@@ -183,7 +183,6 @@ const Ndex = props => {
           </Typography>
           <span style={{
             color: props.uiState.sortBy === 'Overlap' ? 'black' : null,
-            fontWeight: props.uiState.sortBy == 'Overlap'? 'bold' : null
           }}>
               { ` / ${props.search?.searchResults?.validatedGenes?.queryGenes.length} unique genes`}
             </span>
