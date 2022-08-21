@@ -123,10 +123,9 @@ const styles = (theme) => ({
     borderRadius: '4px',
     position: 'absolute',
     right: '6px',
-    maxWidth: '300px',
-    maxHeight: '90vh',
-    zIndex: 10,
-    opacity: 0.8
+    width: 'min(30vw, 30vh)',
+    height: 'auto',
+    zIndex: 10
   },
   legendFigure: {
     maxWidth: '100%',
