@@ -32,6 +32,16 @@ var DEFAULT_SORT = 'Similarity';
 var HIDE_SEARCHBAR = false;
 var HIDE_VIEW_SOURCE_IN_NDEX_BUTTON = false;
 var HIDE_SAVE_TO_NDEX_BUTTON = false;
+
+var PROTEIN_INTERACTIONS_NETWORKS = [
+  '038fcfcf-e757-11ec-8bfe-0242c246b7fb',
+  'b6e6451f-ff67-11ea-819c-525400c25d22',
+  'abd741f7-fe93-11ea-819c-525400c25d22',
+  'c0315eba-3fa7-11e9-a05d-525400c25d22',
+  '86827cf7-1759-11ed-9208-0242c246b7fb',
+  '369e5ec4-1759-11ed-9208-0242c246b7fb',
+]
+
 if (window.ndexSettings === undefined){
   console.log('ndexSettings is not defined. Using dummy config');
 } else 
@@ -59,6 +69,7 @@ if (window.ndexSettings === undefined){
       VALIDATE_GENES_WITH_MYGENE = window.ndexSettings.iQuery.validateGenesWithMyGene;
       HIDE_VIEW_SOURCE_IN_NDEX_BUTTON = window.ndexSettings.iQuery.hideViewSourceInNdexButton;
       HIDE_SAVE_TO_NDEX_BUTTON = window.ndexSettings.iQuery.hideSaveToNdexButton;
+      PROTEIN_INTERACTIONS_NETWORKS = window.ndexSettings.iQuery.proteinInteractionsNetworks;
   }
 }
 
@@ -71,7 +82,7 @@ if (COPYRIGHT !== undefined && COPYRIGHT !== null){
   COPYRIGHT = COPYRIGHT.replace('@@YEAR@@', new Date().getFullYear().toString());
 }
 
-export { MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, CYTOSCAPE_URL,
+export { PROTEIN_INTERACTIONS_NETWORKS, MYGENE_BASE_URL, GENE_CARDS_URL, HELP_URL, FEEDBACK_URL, CYTOSCAPE_URL,
          GOOGLE_CLIENT_ID, GOOGLE_ANALYTICS_ID, BASE_URL, SERVICE_SERVER_URL, DEPLOY_ENVIRON, APP_VERSION,
         GENESET_EXAMPLES, UCSD_URL, COPYRIGHT, MAX_NETWORK_SIZE, HIGHLIGHT_GENES, 
         DEFAULT_SORT, HIDE_SEARCHBAR, VALIDATE_GENES_WITH_MYGENE, HIDE_VIEW_SOURCE_IN_NDEX_BUTTON, HIDE_SAVE_TO_NDEX_BUTTON };

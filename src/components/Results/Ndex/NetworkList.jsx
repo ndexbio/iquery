@@ -180,7 +180,7 @@ const NetworkList = (props) => {
 
   return (
     <div className={hideSearchBar ? 'headerless-network-list-wrapper': 'network-list-wrapper'}>
-      {props.uiState.selectedSource !== 'protein-interactions-test' ? <SortPanel {...props} /> : null}
+      {props.uiState.selectedSource !== 'protein-interactions' ? <SortPanel {...props} /> : null}
       {props.search.actualResults.map((entry) => {
         return props.renderNetworkListItem(
           props.search.queryList.length,

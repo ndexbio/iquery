@@ -26,7 +26,7 @@ const NetworkViewer = (props) => {
         <Warning {...props} />
       </div>
     );
-  }  else if (props.uiState.selectedSource === 'protein-interactions-test') {
+  }  else if (props.uiState.selectedSource === 'protein-interactions') {
     return <ProteinInteractionsWidget {...props} />
   } else if (props.uiState.selectedSource === 'pathwayfigures') {
     return (

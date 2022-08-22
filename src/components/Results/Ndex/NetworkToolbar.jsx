@@ -213,7 +213,7 @@ const NetworkToolbar = (props) => {
             }
           >
             {
-              props.uiState.selectedSource !== 'protein-interactions-test' ? 
+              props.uiState.selectedSource !== 'protein-interactions' ? 
               <Link
               className={classes.title}
               component="button"
@@ -247,7 +247,7 @@ const NetworkToolbar = (props) => {
           </Tooltip>
           <div className={classes.grow} />
           {
-            props.uiState.selectedSource !== 'protein-interactions-test' ? <>
+            props.uiState.selectedSource !== 'protein-interactions' ? <>
                       {props.uiState.selectedSource !== 'pathwayfigures' ||
             props.uiState.pathwayFigure === false ? (
             <>

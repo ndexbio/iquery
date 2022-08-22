@@ -118,7 +118,7 @@ const Ndex = props => {
   }
 
   const renderNetworkListItem = (querySize, networkEntry, classes, handleListItemClick, selectedIndex, index) => {
-    if(props.uiState.selectedSource === 'protein-interactions-test') {
+    if(props.uiState.selectedSource === 'protein-interactions') {
       return (
         <ProteinInteractionsListItem
           key={networkEntry?.networkUUID} 

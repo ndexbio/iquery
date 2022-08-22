@@ -100,7 +100,7 @@ const NetworkView = (props) => {
       >
         <div style={{display: 'flex'}}>
         <NetworkViewer resized={resized} {...props} />      
-        { props.network.isFetching || props.uiState.selectedSource === 'protein-interactions-test' ? null : 
+        { props.network.isFetching || props.uiState.selectedSource === 'protein-interactions' ? null : 
         <div style={{position: 'absolute', bottom: '1em', left: '1em'}}>
           <ButtonGroup
             // className={classes.root}

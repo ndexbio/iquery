@@ -1,27 +1,5 @@
-import ndexClient from '@js4cytoscape/ndex-client';
+import { PROTEIN_INTERACTIONS_NETWORKS } from "./config";
 
-
-const proteinInteractomes = [
-
-    //dev
-    // '692b1e01-12b4-11ed-9208-0242c246b7fb',
-    '86827cf7-1759-11ed-9208-0242c246b7fb',
-    '369e5ec4-1759-11ed-9208-0242c246b7fb',
-    // '2f19a061-1759-11ed-9208-0242c246b7fb',
-    '038fcfcf-e757-11ec-8bfe-0242c246b7fb',
-    'b6e6451f-ff67-11ea-819c-525400c25d22',
-    'abd741f7-fe93-11ea-819c-525400c25d22',
-    'c0315eba-3fa7-11e9-a05d-525400c25d22'
-
-    // prod
-    // 'b192ccaa-2261-11e8-b939-0ac135e8bacf',
-    // '904c6f47-38e4-11ec-b3be-0ac135e8bacf',
-    // '0dcb39d6-43b6-11e6-a5c7-06603eb7f303',
-    // '89dd3925-3718-11e9-9f06-0ac135e8bacf',
-    // '36f7d8fd-23dc-11e8-b939-0ac135e8bacf',
-    // 'f7a218c0-2376-11ea-bb65-0ac135e8bacf',
-    // '49488c61-7832-11e9-848d-0ac135e8bacf',
-];
 const NDEX_API_URL = 'https://dev.ndexbio.org/v2'
 
 const getGeneOverlap = async (networkId, geneList) => {
@@ -131,8 +109,8 @@ const getProteinInteractionsData = async (args) => {
     invalid.forEach(gene => validGenes.delete(gene))
 
     // const summaries = await Promise.all(proteinInteractomes.map(networkId => ndex.getNetworkSummary(networkId)));
-    const summaries = await getNetworkSummaries(proteinInteractomes)
-    const overlaps = await Promise.all(proteinInteractomes.map(networkId => getGeneOverlap(networkId, Array.from(validGenes))));
+    const summaries = await getNetworkSummaries(PROTEIN_INTERACTIONS_NETWORKS)
+    const overlaps = await Promise.all(PROTEIN_INTERACTIONS_NETWORKS.map(networkId => getGeneOverlap(networkId, Array.from(validGenes))));
     const results = summaries.map((s, index) => {
         const imageUrl = s.properties.find(p => p.predicateString === '__iconurl')
         const reference = s.properties.find(p => p.predicateString === 'reference')

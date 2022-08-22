@@ -110,7 +110,7 @@ function* watchSearchResult(action) {
       const statusRes = yield call(checkStatus, jobId);
       const statusJson = yield call([statusRes, 'json']);
 
-      const proteinInteractionsSourceKey = 'protein-interactions-test';
+      const proteinInteractionsSourceKey = 'protein-interactions';
 
       const status: any[] = statusJson.sources;
       let idx: number = status.length;
