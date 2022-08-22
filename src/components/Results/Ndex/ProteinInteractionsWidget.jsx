@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
 import Linkify from 'linkify-react';
 import parse from 'html-react-parser';
+import {Tooltip} from '@material-ui/core';
 
 import NDExQueryHelpDialog from './NDExQueryHelpDialog';
 
@@ -61,64 +62,76 @@ const ProteinInteractionsWidget = (props) => {
     window.open(url, '_blank');
   }
   return (
-      <Container fixed>
-        <div style={{marginTop: '20px', overflowY: 'scroll'}}>
+    <div>
+      <div style={{height: 'calc(100% - 150px)', padding: '10px'}}>
+        <div style={{marginTop: '10px', height: 'inherit'}}>
             <Typography variant="body1" color="textSecondary">Description</Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" style={{maxHeight: '90%', overflow: 'scroll'}}>
               <Linkify>
                   {parse(description)}
               </Linkify>
             </Typography>
-            <Typography style={{marginTop: '30px'}} variant="body1" color="textSecondary">Reference</Typography>
-            <Typography variant="body2">
+            <Divider style={{marginTop: '10px' }}/>
+            <Typography style={{marginTop: '10px'}} variant="body1" color="textSecondary">Reference</Typography>
+            <Typography variant="body2" style={{height: '30%', overflow: 'scroll'}}>
               <Linkify>
                 {parse(reference)}
               </Linkify>
             </Typography>
         </div>
-            <Divider style={{marginTop: '20px'}}/>
-        <div>
-            <Typography variant="body2" style={{marginTop: '20px'}}>
-                Select the type of the Neighborhood Query you wish to run using the dropdown menu below, then click the magnifier to run.
-                The query result will be opened in NDEx.
-            </Typography>
-        </div>
+      </div>
+      <div style={{    
+        position: 'fixed',
+        bottom: 0,
+        width: 'inherit',
+        borderTop: '1px solid #D6D5D6',
+        height: '120px',
+        overflow: 'hidden'
+      }}>
+        <Typography variant="body2" style={{padding: '10px', overflow: 'hidden', height: '35px'}}>
+            Select the type of the Neighborhood Query you wish to run using the dropdown menu below, then click the magnifier to run.
+            The query result will be opened in NDEx.
+        </Typography>
+        <div style={{backgroundColor: '#F5F5F5', height: '50px', padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'nowrap'}}>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+              <div style={{color: '#f9880e', height: '20px', overflow: 'hidden', flexShrink: 10}}>Click the info icon for details about the available types of queries.</div>
+            </div>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+              <IconButton onClick={e => setShowQueryHelper(true)}>
+                <InfoIcon style={{color: '#3576BE', flexShrink: 20}}></InfoIcon>
+              </IconButton>
+                <Select
+                  style={{width: '180px', flexShrink: 20}}
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={queryType}
+                  onChange={handleChange}
+                  label="Age"
+                >
+                  <MenuItem value="direct">Direct</MenuItem>
+                  <MenuItem value={'firstStepNeighborhood'}>1-Step Neighborhood</MenuItem>
+                  <MenuItem value={'firstStepAdjacent'}>1-Step adjacent</MenuItem>
+                  <MenuItem value={'interconnect'}>Interconnect</MenuItem>
+                  <MenuItem value={'twoStepNeighborhood'}>2-step neighborhood</MenuItem>
+                  <MenuItem value={'twoStepAdjacent'}>2-step adjacent</MenuItem>
 
-        <div style={{backgroundColor: '#F5F5F5', marginTop: '30px', height: '50px', padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-          <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-            <div style={{color: '#f9880e'}}>Click the info icon for details about the available types of query</div>
-          </div>
-          <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-            <IconButton onClick={e => setShowQueryHelper(true)}>
-              <InfoIcon style={{color: '#3576BE'}}></InfoIcon>
-            </IconButton>
-              <Select
-                style={{minWidth: '200px'}}
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
-                value={queryType}
-                onChange={handleChange}
-                label="Age"
-              >
-                <MenuItem value="direct">Direct</MenuItem>
-                <MenuItem value={'firstStepNeighborhood'}>1-Step Neighborhood</MenuItem>
-                <MenuItem value={'firstStepAdjacent'}>1-Step adjacent</MenuItem>
-                <MenuItem value={'interconnect'}>Interconnect</MenuItem>
-                <MenuItem value={'twoStepNeighborhood'}>2-step neighborhood</MenuItem>
-                <MenuItem value={'twoStepAdjacent'}>2-step adjacent</MenuItem>
-
-              </Select>
-              <IconButton
+                </Select>
+                <Tooltip title={`Run ${queryType} query`}>
+                  <IconButton
+                      style={{flexShrink: 1, minWidth: '25px'}}
                       onClick={handleProteinInteractionsSearch}
-                      color='inherit'
-                    >
-                  <SearchIcon />
-              </IconButton>                  
+                      color='inherit'>
+                    <SearchIcon />
+                  </IconButton>                  
 
+                
+                </Tooltip>
+            </div>
           </div>
-        </div>
-        <NDExQueryHelpDialog onClose={e => setShowQueryHelper(false)} open={showQueryHelper} />
-      </Container>
+          <NDExQueryHelpDialog onClose={e => setShowQueryHelper(false)} open={showQueryHelper} />
+
+      </div>
+    </div>
   );
 };
 

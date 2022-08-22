@@ -123,7 +123,7 @@ const styles = (theme) => ({
     borderRadius: '4px',
     position: 'absolute',
     right: '6px',
-    width: 'min(30vw, 30vh)',
+    width: 'min(25vw, 25vh)',
     height: 'auto',
     zIndex: 10
   },
@@ -190,6 +190,11 @@ const NetworkToolbar = (props) => {
   useEffect(() => {
     setLayout(props.uiState.layout);
   }, [props.uiState.layout]);
+
+  // anytime the user changes source tabs (e.g. pathways to indra go) close the legend
+  useEffect(() => {
+    props.uiStateActions.setShowLegend(false)
+  }, [props.uiState.selectedSource])
 
   let networkInfoDialog = null;
   
