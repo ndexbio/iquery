@@ -81,7 +81,7 @@ const ProteinInteractionsWidget = (props) => {
         </div>
       </div>
       <div style={{    
-        position: 'fixed',
+        position: 'sticky',
         bottom: 0,
         width: 'inherit',
         borderTop: '1px solid #D6D5D6',
