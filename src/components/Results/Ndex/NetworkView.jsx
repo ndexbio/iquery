@@ -101,7 +101,7 @@ const NetworkView = (props) => {
         <div style={{display: 'flex'}}>
         <NetworkViewer resized={resized} {...props} />      
         { props.network.isFetching || props.uiState.selectedSource === 'protein-interactions' ? null : 
-        <div style={{position: 'absolute', bottom: '1em', left: '1em'}}>
+        <div style={{position: 'absolute', bottom: '0.5em', left: '0.5em'}}>
           <ButtonGroup
             // className={classes.root}
             style={{border: '1px solid #DDDDDD', backgroundColor: 'white', opacity: 1}}
@@ -112,7 +112,7 @@ const NetworkView = (props) => {
             <IconButton
               key={'fitButton'}
               color={'primary'}
-              style={{ backgroundColor: 'transparent' }}
+              style={{ backgroundColor: 'transparent', padding: '0.5em 0.25em' }}
               onClick={handleFit}
             >
               <FitIcon />
@@ -120,7 +120,7 @@ const NetworkView = (props) => {
             <IconButton
               key={'zoomInButton'}
               color={'primary'}
-              style={{ backgroundColor: 'transparent' }}
+              style={{ backgroundColor: 'transparent', padding: '0.5em 0.25em' }}
               onClick={handleZoomIn}
             >
               <ZoomInIcon />
@@ -128,7 +128,7 @@ const NetworkView = (props) => {
             <IconButton
               key={'zoomOutButton'}
               color={'primary'}
-              style={{ backgroundColor: 'transparent' }}
+              style={{ backgroundColor: 'transparent', padding: '0.5em 0.25em' }}
               onClick={handleZoomOut}
             >
               <ZoomOutIcon />
