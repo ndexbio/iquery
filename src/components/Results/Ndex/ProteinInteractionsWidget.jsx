@@ -11,6 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
 import Linkify from 'linkify-react';
 import parse from 'html-react-parser';
+
+import { formatPrimary } from '../TableBrowser/NetworkProperties';
 import {Tooltip} from '@material-ui/core';
 
 import NDExQueryHelpDialog from './NDExQueryHelpDialog';
@@ -63,19 +65,18 @@ const ProteinInteractionsWidget = (props) => {
   }
   return (
     <div>
-      <div style={{height: 'calc(100% - 150px)', padding: '10px'}}>
-        <div style={{marginTop: '10px', height: 'inherit'}}>
-            <Typography variant="body1" color="textSecondary">Description</Typography>
-            <Typography variant="body2" style={{maxHeight: '90%', overflow: 'scroll'}}>
+      <div style={{height: 'calc(100% - 75px)', padding: '10px', paddingTop: '0px'}}>
+        <div style={{marginTop: '10px', height: 'inherit', overflow: 'scroll'}}>
+            <Typography style={{marginTop: '8px'}} variant="caption" color="textSecondary">Reference</Typography>
+            <Typography variant="body2">
               <Linkify>
-                  {parse(description)}
+                {formatPrimary(reference)}
               </Linkify>
             </Typography>
-            <Divider style={{marginTop: '10px' }}/>
-            <Typography style={{marginTop: '10px'}} variant="body1" color="textSecondary">Reference</Typography>
-            <Typography variant="body2" style={{height: '30%', overflow: 'scroll'}}>
+            <Typography style={{marginTop: '10px'}} component="div" variant="caption" color="textSecondary">Description</Typography>
+            <Typography variant="body2" component="div">
               <Linkify>
-                {parse(reference)}
+                  {formatPrimary(description)}
               </Linkify>
             </Typography>
         </div>
