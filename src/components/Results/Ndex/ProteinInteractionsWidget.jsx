@@ -66,9 +66,9 @@ const ProteinInteractionsWidget = (props) => {
   return (
     <div>
       <div style={{height: 'calc(100% - 75px)', padding: '10px', paddingTop: '0px'}}>
-        <div style={{marginTop: '10px', height: 'inherit', overflow: 'scroll'}}>
+        <div style={{marginTop: '10px', height: 'inherit', overflowY: 'scroll'}}>
             <Typography style={{marginTop: '8px'}} variant="caption" color="textSecondary">Reference</Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" component="div">
               <Linkify>
                 {formatPrimary(reference)}
               </Linkify>

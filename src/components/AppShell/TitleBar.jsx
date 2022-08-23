@@ -30,6 +30,9 @@ const drawerWidth = 240;
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
+    [theme.breakpoints.up('sm')]: {
+      overflow: 'hidden'
+    },
   },
   grow: {
     flexGrow: 1,
