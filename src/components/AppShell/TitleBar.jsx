@@ -146,7 +146,7 @@ class TitleBar extends React.Component {
               </span>
 
               <Tooltip
-                title='Learn how to use IQuery'
+                title='Take a tour of IQuery'
                 placement='bottom'
                 style={{ marginRight: '1em' }}
               >

@@ -14,6 +14,9 @@ const drawerWidth = 240
 const styles = theme => ({
   root: {
     display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      overflow: 'hidden'
+    },
   },
   drawerHeader: {
     display: 'flex',
