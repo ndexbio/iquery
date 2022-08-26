@@ -1,5 +1,5 @@
 import './style.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import Typography from '@material-ui/core/Typography';
@@ -191,10 +191,6 @@ const NetworkToolbar = (props) => {
     setLayout(props.uiState.layout);
   }, [props.uiState.layout]);
 
-  // anytime the user changes source tabs (e.g. pathways to indra go) close the legend
-  useEffect(() => {
-    props.uiStateActions.setShowLegend(false)
-  }, [props.uiState.selectedSource])
 
   let networkInfoDialog = null;
   

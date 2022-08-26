@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useRef } from 'react'
 
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
@@ -83,6 +83,19 @@ const styles = theme => ({
   // }
 })
 
+function usePrevious(value) {
+  // The ref object is a generic container whose current property is mutable ...
+  // ... and can hold any value, similar to an instance property on a class
+  const ref = useRef();
+  // Store current value in ref
+  useEffect(() => {
+    ref.current = value;
+  }, [value]); // Only re-run if value changes
+  // Return previous value (happens before update in useEffect above)
+  return ref.current;
+}
+
+
 const LegendToggle = props => {
   const { classes } = props
 
@@ -95,8 +108,17 @@ const LegendToggle = props => {
   }, [])
 
   // anytime the network changes or a new source tab is changed, hide the legend
+  const prevSource = usePrevious(props.uiState.selectedSource)
+  const prevNetwork = usePrevious(props.network)
   useEffect(() => {
-    props.uiStateActions.setShowLegend(false);
+    if(
+      (prevSource != null && props.uiState.selectedSource != null && prevSource != props.uiState.selectedSource) ||
+      (prevNetwork != null && props.network != null && props.network.uuid != prevNetwork.uuid)
+      ) {
+      props.uiStateActions.setShowLegend(false)
+    }
+
+    // props.uiStateActions.setShowLegend(false);
   }, [props.uiState.selectedSource, props.network])
 
   const title = props.enableLegend ? 'Toggle network legend' : 'Legend is not available for this network';
@@ -125,7 +147,10 @@ const LegendToggle = props => {
           classes={classes}
           color="primary"
           value={label}
-          onClick={e => props.uiStateActions.setShowLegend(!props.uiState.showLegend)}
+          onClick={e => {
+              props.uiStateActions.setShowLegend(!props.uiState.showLegend)
+            }
+          }
         />  : 
         <OutlinedInput
         readOnly={true}
