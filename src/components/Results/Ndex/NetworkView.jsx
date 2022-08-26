@@ -112,7 +112,7 @@ const NetworkView = (props) => {
             <IconButton
               key={'fitButton'}
               color={'primary'}
-              style={{ backgroundColor: 'transparent', padding: '0.5em 0.25em' }}
+              style={{ backgroundColor: 'transparent', padding: '0.4em 0.1em' }}
               onClick={handleFit}
             >
               <FitIcon />
@@ -120,7 +120,7 @@ const NetworkView = (props) => {
             <IconButton
               key={'zoomInButton'}
               color={'primary'}
-              style={{ backgroundColor: 'transparent', padding: '0.5em 0.25em' }}
+              style={{ backgroundColor: 'transparent', padding: '0.4em 0.1em' }}
               onClick={handleZoomIn}
             >
               <ZoomInIcon />
@@ -128,7 +128,7 @@ const NetworkView = (props) => {
             <IconButton
               key={'zoomOutButton'}
               color={'primary'}
-              style={{ backgroundColor: 'transparent', padding: '0.5em 0.25em' }}
+              style={{ backgroundColor: 'transparent', padding: '0.4em 0.1em' }}
               onClick={handleZoomOut}
             >
               <ZoomOutIcon />
