@@ -95,9 +95,6 @@ const ProteinInteractionsWidget = (props) => {
         </Typography>
         <div style={{backgroundColor: '#F5F5F5', height: '50px', padding: '10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'nowrap'}}>
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-              <div style={{color: '#f9880e', height: '20px', overflow: 'hidden', flexShrink: 10}}>Click the info icon for details about the available types of queries.</div>
-            </div>
-            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
               <IconButton onClick={e => setShowQueryHelper(true)}>
                 <InfoIcon style={{color: '#3576BE', flexShrink: 20}}></InfoIcon>
               </IconButton>
@@ -124,10 +121,12 @@ const ProteinInteractionsWidget = (props) => {
                       color='inherit'>
                     <SearchIcon />
                   </IconButton>                  
-
-                
                 </Tooltip>
             </div>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+              <div style={{color: '#f9880e', height: '20px', overflow: 'hidden', flexShrink: 10}}>Click the info icon for details about the available types of queries.</div>
+            </div>
+
           </div>
           <NDExQueryHelpDialog onClose={e => setShowQueryHelper(false)} open={showQueryHelper} />
 
