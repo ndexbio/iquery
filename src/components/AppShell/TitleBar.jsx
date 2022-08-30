@@ -116,7 +116,7 @@ class TitleBar extends React.Component {
         <div className={classes.noWrap}>
           <Toolbar disableGutters={!open} variant='dense'>
             <Tooltip
-              title='Search by Relevant Pathways / Protein-Protein Interactions / Gene Association'
+              title='Analyze you gene set by querying curated pathways and large interactomes'
               aria-label='NDEx_tooltip'
             >
               <div>
