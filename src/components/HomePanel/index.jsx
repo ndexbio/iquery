@@ -103,7 +103,7 @@ const HomePanel = (props) => {
   // Display the search results
   // TODO: define types for props
   return (
-    <div style={{display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw'}}>
+    <div style={{display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', minWidth: '1200px'}}>
       <AppShell {...props} />
       <div className="container">
         <Results {...props} />
