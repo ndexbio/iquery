@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 
-import { createStyles, makeStyles } from '@material-ui/core'
+import { createStyles, makeStyles, withStyles } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
-import HelpIcon from '@material-ui/icons/HelpOutlineOutlined'
-import { Checkbox } from '@material-ui/core';
-import { FormControlLabel } from '@material-ui/core';
+import MuiAccordion from '@material-ui/core/Accordion'
+import MuiAccordionSummary from '@material-ui/core/AccordionSummary'
 
-import { setTourDisabled, getTourDisabled } from './check-visitor';
-
-import imageA from '../../assets/images/tourImages/Frame 7.gif'
+import tourMovie6 from '../../assets/movies/tour_6_annotations.mov'
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -18,54 +15,42 @@ const useStyles = makeStyles(theme =>
       justifyContent: 'center',
     },
     image: {
-      width: '33.7747598vh',
-      //width: '22em',
-      margin: '0.5em 0 2em',
+      height: '41.8604651vh',
+      margin: '0em 1em 2.09302326vh',
+    },
+    textContainer: {
+      marginBottom: '1em',
     },
     heading: {
       fontWeight: 500,
       marginBottom: '0.75em',
-      whiteSpace: 'nowrap',
-      display: 'inline-block',
-    },
-    icon: {
-      top: '0.25rem',
-      position: 'relative',
     },
   }),
 )
 
+
 const Slide6 = () => {
   const classes = useStyles()
-  const [disableTour, setDisableTour] = useState(getTourDisabled());
-
-  const toggleDisableTour = () => {
-    setTourDisabled(!disableTour)
-    setDisableTour(!disableTour)
-  }
 
   return (
     <>
-      <div className={classes.imageContainer}>{<img src={imageA} className={classes.image} />}</div>
-      <Typography
-        component="div"
-        variant="h5"
-        color="textPrimary"
-        className={classes.heading}
-        style={{ fontSize: '3.13953488vh' }}
-      >
-        To take this tour again,
-      </Typography>
-      <Typography color="textPrimary" style={{ fontSize: '2.09302326vh', marginBottom: '1em' }}>
-        Click the <HelpIcon color="secondary" className={classes.icon} /> button. Or, access the HiView User Guide for
-        more detailed documentation.
-      </Typography>
-      <FormControlLabel
-          value="left"
-          control={<Checkbox checked={disableTour} color="primary" onClick={toggleDisableTour}/>}
-          label="Don't show this again"
-          labelPlacement="left"
-        />
+      <video src={tourMovie6} style={{border: '1px solid #d6d6d6'}}  width="725" height="400" muted autoplay="autoplay"  controls loop>
+      </video>
+      <div className={classes.textContainer}>
+        <Typography variant="h5" color="textPrimary" className={classes.heading} style={{ fontSize: '3.13953488vh' }}>
+          Annotations
+        </Typography>
+        <Typography style={{ fontSize: '2.09302326vh', marginTop: '5px', marginBottom: '5px' }}>
+        Nodes and edges in the graphic can be clicked to explore their annotations
+        </Typography>
+        <Typography style={{ fontSize: '2.09302326vh', marginTop: '5px', marginBottom: '5px' }}>
+        Annotations often include a text paragraph that support the interaction
+        </Typography>
+        <Typography style={{ fontSize: '2.09302326vh', marginTop: '5px', marginBottom: '5px' }}>
+        Annotations often contain direct links to publications and other external resources 
+        </Typography>
+
+      </div>
     </>
   )
 }

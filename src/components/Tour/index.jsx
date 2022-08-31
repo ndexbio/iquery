@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import Button from '@material-ui/core/Button'
 import CircleIcon from '@material-ui/icons/FiberManualRecord'
 
-import background from '../../assets/images/tourImages/image 8.png'
+// import background from '../../assets/images/tourImages/image 8.png'
 
 import Slide0 from './Slide0'
 import Slide1 from './Slide1'
@@ -17,6 +17,7 @@ import Slide3 from './Slide3'
 import Slide4 from './Slide4'
 import Slide5 from './Slide5'
 import Slide6 from './Slide6'
+import Slide7 from './Slide7'
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -105,8 +106,8 @@ const useStyles = makeStyles(theme =>
       justifyContent: 'center',
       height: '100%',
     },
-    navigationButtonsContainerFirstPage: { width: '37vh', display: 'inline-block', height: '100%' },
-    navigationButtonsContainer: { width: '37vh', display: 'inline-block', textAlign: 'center', height: '100%' },
+    navigationButtonsContainerFirstPage: { width: '40vh', display: 'inline-block', height: '100%' },
+    navigationButtonsContainer: { width: '40vh', display: 'inline-block', textAlign: 'center', height: '100%' },
     navigationButtonsContainerLastPage: {
       width: '100%',
       height: '100%',
@@ -169,7 +170,7 @@ const Tour = props => {
   const defaultSlide = 0
   const { open, setOpen } = props
   const [slide, setSlide] = useState(defaultSlide)
-  const slides = [<Slide0 />, <Slide1 />, <Slide2 />, <Slide3 />, <Slide4 />, <Slide5 />, <Slide6 />]
+  const slides = [ <Slide1 />, <Slide2 />, <Slide3 />, <Slide4 />, <Slide5 />, <Slide6 />, <Slide7 />]
 
   const handleOpen = () => {
     setSlide(defaultSlide)
@@ -193,7 +194,7 @@ const Tour = props => {
   }
 
   const backgroundStyle = {
-    backgroundImage: `url(${background})`,
+    // backgroundImage: `url(${background})`,
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     padding: 0,
@@ -210,7 +211,6 @@ const Tour = props => {
     >
       <DialogContent
         className={slide !== slides.length - 1 ? classes.dialogContentBorder : classes.dialogContentNoBorder}
-        style={slide == 0 ? backgroundStyle : null}
       >
         <DialogContentText component="span">{slides[slide]}</DialogContentText>
       </DialogContent>
@@ -218,34 +218,7 @@ const Tour = props => {
         className={slide !== slides.length - 1 ? classes.dialogActionsBorder : classes.dialogActionsNoBorder}
       >
         <div className={classes.navigationContainer}>
-          {slide === 0 ? (
-            <>
-              <div className={classes.navigationButtonsContainerFirstPage}>
-                <div className={classes.circleContainerFirstPage}>
-                  <div className={classes.circleContainerInnerFirstPage}>
-                    {slides.map((image, index) => (
-                      <CircleIcon
-                        key={index}
-                        className={classes.circle}
-                        style={slide === index ? { color: 'rgb(75, 75, 75)' } : null}
-                        onClick={() => {
-                          setSlide(index)
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-                <Button className={classes.nextButton} onClick={handleNext}>
-                  Next
-                </Button>
-              </div>
-              <div className={classes.skipButtonContainer}>
-                <Button className={classes.skipButton} onClick={handleClose}>
-                  Skip
-                </Button>
-              </div>
-            </>
-          ) : slide !== slides.length - 1 ? (
+          {slide !== slides.length - 1 ? (
             <>
               <div className={classes.navigationButtonsContainer}>
                 <Button className={classes.backButton} onClick={handlePrevious}>

@@ -88,32 +88,16 @@ const Slide0 = () => {
     <>
       <div className={classes.titleContainer}>
         <Typography variant="h1" className={classes.title} style={{ fontSize: '12.5581395vh' }}>
-          Welcome to {<br />}HiView!
+          Welcome to {<br />}IQuery!
         </Typography>
       </div>
       <div className={classes.textContainer}>
         <Typography variant="h5" color="textPrimary" className={classes.heading} style={{ fontSize: '3.13953488vh' }}>
-          What is HiView?
+          What is IQuery?
         </Typography>
         <Typography color="textPrimary" style={{ fontSize: '2.09302326vh' }}>
-          HiView is a web-application for visualizing and analyzing hierarchical network models. Genes are organized in
-          systems and represented as nested circles.
+          IQuery is a web-application that lets you analyze your gene set by querying curated pathways and large interactomes.
         </Typography>
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography style={{ fontSize: '2.09302326vh' }}>
-              Learn more about <strong>hierarchical models</strong>.
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography style={{ fontSize: '2.09302326vh' }}>
-              Hierarchical models provide effective abstraction of data in many scientific fields. The main feature of
-              hierarchical models is nesting: elements of the model (often genes) are grouped into subsystems, which are
-              organized into larger and larger systems. A gene or a subsystem can be part of more than one larger
-              system.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
       </div>
     </>
   )
