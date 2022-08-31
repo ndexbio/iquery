@@ -30,9 +30,6 @@ const drawerWidth = 240;
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
-    [theme.breakpoints.up('sm')]: {
-      overflow: 'hidden'
-    },
   },
   grow: {
     flexGrow: 1,
@@ -62,6 +59,10 @@ const styles = (theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    root: {
+      minWidth: '100vw'
+    }
+    // width: '100vw'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
