@@ -124,7 +124,10 @@ const TableBrowserPanel = (props) => {
             />
           }
           </Tabs>
-          <IconButton onClick={() => props.networkActions.setShowTableModal(false)} aria-label="close">
+          <IconButton onClick={() => {
+            props.networkActions.setShowTableModal(false)
+            props.networkActions.changeTab(0)
+          }} aria-label="close">
            <CloseIcon/>
           </IconButton>
 

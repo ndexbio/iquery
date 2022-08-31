@@ -219,7 +219,10 @@ const NetworkToolbar = (props) => {
               className={classes.title}
               component="button"
               variant="body2"
-              onClick={() => props.networkActions.setShowTableModal(true)}
+              onClick={() => {
+                props.networkActions.changeTab(0)
+                props.networkActions.setShowTableModal(true)
+              }}
             >
               <Typography
                 className={classes.title}
