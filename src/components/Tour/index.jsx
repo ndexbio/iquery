@@ -218,7 +218,34 @@ const Tour = props => {
         className={slide !== slides.length - 1 ? classes.dialogActionsBorder : classes.dialogActionsNoBorder}
       >
         <div className={classes.navigationContainer}>
-          {slide !== slides.length - 1 ? (
+        {slide === 0 ? (
+            <>
+              <div className={classes.navigationButtonsContainerFirstPage}>
+                <div className={classes.circleContainerFirstPage}>
+                  <div className={classes.circleContainerInnerFirstPage}>
+                    {slides.map((image, index) => (
+                      <CircleIcon
+                        key={index}
+                        className={classes.circle}
+                        style={slide === index ? { color: 'rgb(75, 75, 75)' } : null}
+                        onClick={() => {
+                          setSlide(index)
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <Button className={classes.nextButton} onClick={handleNext}>
+                  Next
+                </Button>
+              </div>
+              <div className={classes.skipButtonContainer}>
+                <Button className={classes.skipButton} onClick={handleClose}>
+                  Skip
+                </Button>
+              </div>
+            </>
+          ) : slide !== slides.length - 1 ? (
             <>
               <div className={classes.navigationButtonsContainer}>
                 <Button className={classes.backButton} onClick={handlePrevious}>

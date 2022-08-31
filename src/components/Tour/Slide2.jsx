@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import MuiAccordion from '@material-ui/core/Accordion'
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary'
 
-import tourMovie2 from '../../assets/movies/tour_2_sorting.mov'
+import tourMovie2 from '../../assets/images/tourImages/tour_2_sorting.gif'
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -71,17 +71,17 @@ const Slide1 = () => {
 
   return (
     <>
-      <video src={tourMovie2} style={{border: '1px solid #d6d6d6'}}  width="725" height="400" muted autoplay="autoplay"  controls loop>
-      </video>
+      <img src={tourMovie2} style={{height: '50%', width: 'auto', marginLeft: 'auto', marginRight: 'auto', marginBottom: '5px'}}>
+      </img>
       <div className={classes.textContainer}>
-        <Typography variant="h5" color="textPrimary" className={classes.heading} style={{ fontSize: '3.13953488vh' }}>
+        <Typography variant="h5" color="textPrimary" className={classes.heading} style={{ fontSize: '2.13953488vh' }}>
           Sorting Options
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh', marginTop: '5px', marginBottom: '10px' }}>
-          Use the radio buttons to change the sorting method.
+          - Use the radio buttons to change the sorting method.
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh' }}>
-        Click the blue  icon for details about the available options.
+        - Click the blue  icon for details about the available options.
         </Typography>
       </div>
     </>

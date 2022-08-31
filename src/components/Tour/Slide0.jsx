@@ -42,45 +42,6 @@ const useStyles = makeStyles(theme =>
   }),
 )
 
-const Accordion = withStyles({
-  root: {
-    border: '1px solid rgba(0, 0, 0, .125)',
-    boxShadow: 'none',
-    margin: '1em 0',
-    '&:before': {
-      display: 'none',
-    },
-    '&$expanded': {
-      margin: '1em 0',
-    },
-  },
-  expanded: {},
-})(MuiAccordion)
-
-const AccordionSummary = withStyles({
-  root: {
-    marginBottom: -1,
-    minHeight: 0,
-    '&$expanded': {
-      minHeight: 0,
-    },
-  },
-  content: {
-    margin: '0.375em 0',
-    '&$expanded': {
-      margin: '0.375em 0',
-    },
-  },
-  expanded: {},
-})(MuiAccordionSummary)
-
-const AccordionDetails = withStyles(theme => ({
-  root: {
-    padding: theme.spacing(2),
-    paddingBottom: 0,
-  },
-}))(MuiAccordionDetails)
-
 const Slide0 = () => {
   const classes = useStyles()
 

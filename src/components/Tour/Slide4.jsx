@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import MuiAccordion from '@material-ui/core/Accordion'
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary'
 
-import tourMovie4 from '../../assets/movies/tour_4_info.mov'
+import tourMovie4 from '../../assets/images/tourImages/tour_4_info.gif'
 
 const useStyles = makeStyles(theme =>
   createStyles({
@@ -34,17 +34,17 @@ const Slide4 = () => {
 
   return (
     <>
-      <video src={tourMovie4} style={{border: '1px solid #d6d6d6'}}  width="725" height="400" muted autoplay="autoplay"  controls loop>
-      </video>
+      <img src={tourMovie4} style={{height: '70%', width: 'auto', marginLeft: 'auto', marginRight: 'auto', display: 'block', marginBottom: '5px'}}>
+      </img>
       <div className={classes.textContainer}>
-        <Typography variant="h5" color="textPrimary" className={classes.heading} style={{ fontSize: '3.13953488vh' }}>
+        <Typography variant="h5" color="textPrimary" className={classes.heading} style={{ fontSize: '2.13953488vh' }}>
           Result's Info
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh', marginTop: '5px', marginBottom: '10px' }}>
-        Click the pathway name to display its description, reference and other metadata.
+        - Click the pathway name to display its description, reference and other metadata.
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh' }}>
-        You can also browse the nodes and edges in tabular form using the related tabs.
+        - You can also browse the nodes and edges in tabular form using the related tabs.
         </Typography>
       </div>
     </>
