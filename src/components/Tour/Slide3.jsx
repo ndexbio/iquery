@@ -36,7 +36,7 @@ const Slide3 = () => {
 
   return (
     <>
-      <img src={tourMovie3} style={{height: '75%', width: 'auto', marginLeft: 'auto', marginRight: 'auto', display: 'block', marginBottom: '5px'}}>
+      <img src={tourMovie3} style={{border: '1px solid #d6d6d5', height: '75%', width: 'auto', marginLeft: 'auto', marginRight: 'auto', display: 'block', marginBottom: '5px'}}>
       </img>  
       <div className={classes.textContainer}>
         <Typography variant="h5" color="textPrimary" className={classes.heading} style={{ fontSize: '2.13953488vh' }}>
