@@ -35,6 +35,7 @@ const styles = {
     marginLeft: 8,
     flex: 1,
     width: '50vw',
+    minWidth: '700px'
   },
   iconButton: {
     padding: 10,
