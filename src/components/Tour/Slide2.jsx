@@ -78,10 +78,10 @@ const Slide1 = () => {
           Sorting Options
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh', marginTop: '5px', marginBottom: '10px' }}>
-          - Use the radio buttons to change the sorting method.
+          - Use the radio buttons to change the sorting method
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh' }}>
-        - Click the blue  icon for details about the available options.
+        - Click the blue  icon for details about the available options
         </Typography>
       </div>
     </>

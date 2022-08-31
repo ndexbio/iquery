@@ -41,10 +41,10 @@ const Slide4 = () => {
           Result's Info
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh', marginTop: '5px', marginBottom: '10px' }}>
-        - Click the pathway name to display its description, reference and other metadata.
+        - Click the pathway name to display its description, reference and other metadata
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh' }}>
-        - You can also browse the nodes and edges in tabular form using the related tabs.
+        - You can also browse the nodes and edges in tabular form using the related tabs
         </Typography>
       </div>
     </>

@@ -43,10 +43,10 @@ const Slide3 = () => {
           Search Results
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh', marginTop: '5px', marginBottom: '5px' }}>
-        - Scroll down to browse the results.
+        - Scroll down to browse the results
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh', marginBottom: '5px' }}>
-        - Click a result to display it.
+        - Click a result to display it
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh', marginBottom: '5px' }}>
         - Matched query genes are shown in red, normalized genes in orange and invalid genes strikethrough
