@@ -30,12 +30,13 @@ const styles = {
     padding: '0em 0.3em',
     background: '#f1f1f1',
     marginLeft: '1em',
+    minWidth: '500px'
   },
   input: {
     marginLeft: 8,
     flex: 1,
     width: '50vw',
-    minWidth: '700px'
+    minWidth: '500px'
   },
   iconButton: {
     padding: 10,
