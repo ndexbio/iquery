@@ -18,9 +18,10 @@ const useStyles = makeStyles(theme =>
       justifyContent: 'center',
     },
     image: {
-      width: '33.7747598vh',
+      width: '100%',
       //width: '22em',
       margin: '0.5em 0 2em',
+      border: '1.5px solid #0088D2'
     },
     heading: {
       fontWeight: 500,
