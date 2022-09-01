@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme =>
       padding: '3.13953488vh 3em 0.25em',
       position: 'relative',
       boxSizing: 'border-box',
-      border: '1px solid #EBEBEB',
+      border: '5px solid #0088D2',
       borderBottom: 'none',
       '&:first-child': {
         paddingTop: '3.13953488vh',
@@ -42,15 +42,15 @@ const useStyles = makeStyles(theme =>
       paddingLeft: '3em',
       paddingRight: '3em',
       paddingBottom: '1em',
-      borderRightColor: '#EBEBEB',
+      borderRightColor: '#0088D2',
       borderRightStyle: 'solid',
-      borderRightWidth: '1px',
-      borderBottomColor: '#EBEBEB',
+      borderRightWidth: '5px',
+      borderBottomColor: '#0088D2',
       borderBottomStyle: 'solid',
-      borderBottomWidth: '1px',
-      borderLeftColor: '#EBEBEB',
+      borderBottomWidth: '5px',
+      borderLeftColor: '#0088D2',
       borderLeftStyle: 'solid',
-      borderLeftWidth: '1px',
+      borderLeftWidth: '5px',
     },
     dialogActionsNoBorder: {
       paddingLeft: '3em',
@@ -117,9 +117,9 @@ const useStyles = makeStyles(theme =>
     },
     nextButton: {
       backgroundColor: '#EBEBEB',
-      border: '1px solid rgb(65, 84, 178)',
+      border: '1px solid #0088D2',
       boxSizing: 'border-box',
-      color: 'rgb(65, 84, 178)',
+      color: '#0088D2',
       fontSize: '1.83139535vh',
       padding: '0.209302326vh 0',
       minWidth: '8.37209304vh',
@@ -127,7 +127,7 @@ const useStyles = makeStyles(theme =>
       marginLeft: '1em',
       '&:hover': {
         color: 'white',
-        backgroundColor: 'rgb(65, 84, 178)',
+        backgroundColor: '#0088D2',
       },
     },
     skipButtonContainer: {
@@ -145,15 +145,15 @@ const useStyles = makeStyles(theme =>
     },
     backButton: {
       backgroundColor: '#EBEBEB',
-      border: '1px solid rgb(65, 84, 178)',
+      border: '1px solid #0088D2',
       boxSizing: 'border-box',
-      color: 'rgb(65, 84, 178)',
+      color: '#0088D2',
       fontSize: '1.83139535vh',
       padding: '0.209302326vh 0',
       minWidth: '8.37209304vh',
       '&:hover': {
         color: 'white',
-        backgroundColor: 'rgb(65, 84, 178)',
+        backgroundColor: '#0088D2',
       },
       float: 'left',
       marginRight: '1em',
@@ -205,17 +205,17 @@ const Tour = props => {
       open={open}
       onClose={handleClose}
       onEnter={handleOpen}
-      maxWidth={slide !== slides.length - 1 ? 'xl' : 'xs'}
+      maxWidth={'xl'}
       className={classes.dialog}
-      classes={slide === slides.length - 1 ? null : { paperScrollPaper: classes.paperScrollPaper }}
+      classes={{ paperScrollPaper: classes.paperScrollPaper }}
     >
       <DialogContent
-        className={slide !== slides.length - 1 ? classes.dialogContentBorder : classes.dialogContentNoBorder}
+        className={classes.dialogContentBorder}
       >
         <DialogContentText component="span">{slides[slide]}</DialogContentText>
       </DialogContent>
       <DialogActions
-        className={slide !== slides.length - 1 ? classes.dialogActionsBorder : classes.dialogActionsNoBorder}
+        className={classes.dialogActionsBorder}
       >
         <div className={classes.navigationContainer}>
         {slide === 0 ? (
