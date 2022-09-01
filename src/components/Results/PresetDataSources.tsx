@@ -47,7 +47,7 @@ const PresetDataSources = {
   },
   'protein-interactions': {
     label: 'Protein Interactions',
-    tooltip: <div style={tooltipStyle}>PPI networks from several sources (BioGRID, STRING, etc.)</div>,
+    tooltip: <div style={tooltipStyle}>Protein-protein interaction networks from several sources (BioGRID, STRING, etc.)</div>,
   }
 }
 
