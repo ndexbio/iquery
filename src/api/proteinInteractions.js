@@ -107,6 +107,7 @@ const getProteinInteractionsData = async (args) => {
     const { queryGenes, normalizedGenes, invalid } = geneInfo;
     const validGenes = new Set(queryGenes);
     invalid.forEach(gene => validGenes.delete(gene))
+    const defaultIcon = 'http://search.ndexbio.org/static/media/ndex-logo.04d7bf44.svg'
 
     // const summaries = await Promise.all(proteinInteractomes.map(networkId => ndex.getNetworkSummary(networkId)));
     const summaries = await getNetworkSummaries(PROTEIN_INTERACTIONS_NETWORKS)
@@ -124,7 +125,7 @@ const getProteinInteractionsData = async (args) => {
             },
             detailedDescription: s.description,
             legendURL: null,
-            imageURL: imageUrl != null ? imageUrl.value : null,
+            imageURL: imageUrl != null ? imageUrl.value : defaultIcon,
             reference: reference != null  ? reference.value : null,
             networkUUID: s.externalId,
             hitGenes: overlap.overlap, // overlaps is an array of ids, we don't have access to the exact gene names, but we have the count via hitgenes.length
