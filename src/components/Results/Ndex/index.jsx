@@ -173,7 +173,7 @@ const Ndex = props => {
 
 
     const overlap = (
-      <span style={{...subtitleStyle, width: '130px', marginRight: '10px'}}>
+      <span style={{...subtitleStyle, width: '150px', marginRight: '10px'}}>
         <Typography variant="caption" color="textSecondary">
           <Typography 
             style={{fontWeight: 'bold', fontSize: '1.25em'}} 
