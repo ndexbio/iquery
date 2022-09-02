@@ -321,7 +321,7 @@ const Ndex = props => {
             color: props.uiState.sortBy === 'Overlap' ? 'black' : null,
             fontWeight: props.uiState.sortBy == 'Overlap'? 'bold' : null
           }}>
-              { ` / ${totalGeneCount} unique genes`}
+              { ` / ${totalGeneCount} genes`}
             </span>
         </Typography>
       </span>
