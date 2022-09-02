@@ -309,7 +309,7 @@ const Ndex = props => {
     const title = <Typography variant='body2'style={titleStyle}>{description.split(':').slice(1)}</Typography>
 
     const overlap = (
-      <span style={{...subtitleStyle, width: '130px', marginRight: '10px'}}>
+      <span style={{...subtitleStyle, width: '150px', overlfow: 'visible', marginRight: '10px'}}>
         <Typography variant="caption" color="textSecondary">
           <Typography 
             style={{fontWeight: 'bold', fontSize: '1.25em'}} 
@@ -321,7 +321,7 @@ const Ndex = props => {
             color: props.uiState.sortBy === 'Overlap' ? 'black' : null,
             fontWeight: props.uiState.sortBy == 'Overlap'? 'bold' : null
           }}>
-              { ` / ${totalGeneCount} genes`}
+              { ` / ${totalGeneCount} unique genes`}
             </span>
         </Typography>
       </span>
