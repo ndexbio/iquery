@@ -8,7 +8,7 @@ const tooltipStyle: CSSProperties = {
 
 const PresetDataSources = {
   enrichment: {
-    label: 'Relevant Pathways',
+    label: 'Curated Pathways',
     tooltip: (
       <div style={tooltipStyle}>
         Selected curated and experimentally derived pathways <br />
@@ -46,8 +46,8 @@ const PresetDataSources = {
     ),
   },
   'protein-interactions': {
-    label: 'Protein Interactions',
-    tooltip: <div style={tooltipStyle}>Protein-protein interaction networks from several sources (BioGRID, STRING, etc.)</div>,
+    label: 'Interactomes',
+    tooltip: <div style={tooltipStyle}>Interaction networks from diverse sources (BioGRID, Human Protein Atlas, etc.)</div>,
   }
 }
 
