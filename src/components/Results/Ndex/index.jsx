@@ -173,7 +173,7 @@ const Ndex = props => {
 
 
     const overlap = (
-      <span style={{...subtitleStyle, width: '150px', marginRight: '10px'}}>
+      <span style={{...subtitleStyle, marginRight: '10px'}}>
         <Typography variant="caption" color="textSecondary">
           <Typography 
             style={{fontWeight: 'bold', fontSize: '1.25em'}} 
@@ -184,7 +184,7 @@ const Ndex = props => {
           <span style={{
             color: props.uiState.sortBy === 'Overlap' ? 'black' : null,
           }}>
-              { ` / ${props.search?.searchResults?.validatedGenes?.queryGenes.length} unique genes`}
+            {` nodes are relevant to your ${props.search?.searchResults?.validatedGenes?.queryGenes.length} query genes`}
             </span>
         </Typography>
       </span>
