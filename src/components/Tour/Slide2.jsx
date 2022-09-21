@@ -76,7 +76,8 @@ const Slide1 = () => {
         src={tourMovie2}
         style={{
           border: '1.5px solid #0088D2',
-          height: '50%',
+          height: '48%',
+          display: 'block',
           width: 'auto',
           marginLeft: 'auto',
           marginRight: 'auto',
