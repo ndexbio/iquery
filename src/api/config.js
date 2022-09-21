@@ -53,6 +53,8 @@ var TOUR_IMAGES = [
   'https://home.ndexbio.org/iquerytutorials/tour_7_takethetour.png',
 ]
 
+var LANDING_PAGE_TEXT = 'One search finds a variety of pathways and interaction networks relevant to your set of genes.'
+
 if (window.ndexSettings === undefined) {
   console.log('ndexSettings is not defined. Using dummy config')
 } else {
@@ -81,6 +83,7 @@ if (window.ndexSettings === undefined) {
     HIDE_SAVE_TO_NDEX_BUTTON = window.ndexSettings.iQuery.hideSaveToNdexButton
     PROTEIN_INTERACTIONS_NETWORKS = window.ndexSettings.iQuery.proteinInteractionsNetworks
     TOUR_IMAGES = window.ndexSettings.iQuery.tourImages
+    LANDING_PAGE_TEXT = window.ndexSettings.iQuery.landingPageText
   }
 }
 
@@ -117,4 +120,5 @@ export {
   HIDE_VIEW_SOURCE_IN_NDEX_BUTTON,
   HIDE_SAVE_TO_NDEX_BUTTON,
   TOUR_IMAGES,
+  LANDING_PAGE_TEXT,
 }
