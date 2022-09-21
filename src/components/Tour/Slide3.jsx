@@ -5,9 +5,10 @@ import Typography from '@material-ui/core/Typography'
 import MuiAccordion from '@material-ui/core/Accordion'
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary'
 
-import tourMovie3 from '../../assets/images/tourImages/tour_3_results.gif'
+import { TOUR_IMAGES } from '../../api/config'
+const tourMovie3 = TOUR_IMAGES[2]
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     imageContainer: {
       width: '100%',
@@ -36,20 +37,30 @@ const Slide3 = () => {
 
   return (
     <>
-      <img src={tourMovie3} style={{border: '1.5px solid #0088D2', height: '75%', width: 'auto', marginLeft: 'auto', marginRight: 'auto', display: 'block', marginBottom: '5px'}}>
-      </img>  
+      <img
+        src={tourMovie3}
+        style={{
+          border: '1.5px solid #0088D2',
+          height: '75%',
+          width: 'auto',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          display: 'block',
+          marginBottom: '5px',
+        }}
+      ></img>
       <div className={classes.textContainer}>
         <Typography variant="h5" color="textPrimary" className={classes.heading} style={{ fontSize: '1.1rem' }}>
           Search Results
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh', marginTop: '5px', marginBottom: '5px' }}>
-        - Scroll down to browse the results
+          - Scroll down to browse the results
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh', marginBottom: '5px' }}>
-        - Click a result to display it
+          - Click a result to display it
         </Typography>
         <Typography style={{ fontSize: '2.09302326vh', marginBottom: '5px' }}>
-        - Matched query genes are shown in red, normalized genes in orange and invalid genes strikethrough
+          - Matched query genes are shown in red, normalized genes in orange and invalid genes strikethrough
         </Typography>
       </div>
     </>
