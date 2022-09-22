@@ -1,57 +1,55 @@
-import { PROTEIN_INTERACTIONS_NETWORKS } from "./config";
+import { PROTEIN_INTERACTIONS_NETWORKS, SERVICE_SERVER_URL } from './config'
 
-const NDEX_API_URL = 'https://dev.ndexbio.org/v2'
+const NDEX_API_URL = SERVICE_SERVER_URL
 
 const getGeneOverlap = async (networkId, geneList) => {
-    // send a query with the genelist to see which genes are found in the network
-    const url = `${NDEX_API_URL}/search/network/${networkId}/nodes`;
+  // send a query with the genelist to see which genes are found in the network
+  const url = `${NDEX_API_URL}/search/network/${networkId}/nodes`
 
-    const overlap = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-          },
-        body: JSON.stringify({
-            searchString: geneList.join(' ')
-        })
-    }).then(res => res.json());
+  const overlap = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      searchString: geneList.join(' '),
+    }),
+  }).then((res) => res.json())
 
-    if(overlap.length > geneList.length){
-        // const nodeData = overlap.map(o => test.find(nd => {
-        //     // console.log(nd, o.id)
-        //     return nd['@id'] === parseInt(o.id)
-        // }));
+  if (overlap.length > geneList.length) {
+    // const nodeData = overlap.map(o => test.find(nd => {
+    //     // console.log(nd, o.id)
+    //     return nd['@id'] === parseInt(o.id)
+    // }));
+    // console.log(nodeData)
+  }
 
-        // console.log(nodeData)
-    }
+  // console.log(overlap, geneList.join(' '), networkId)
 
-    // console.log(overlap, geneList.join(' '), networkId)
+  // const nodesUrl = `${NDEX_API_URL}/network/${networkId}/aspect/nodes`
+  // const nodes = await fetch(nodesUrl).then(res => res.json());
+  // const processedOverlaps = overlap.map(o => {
+  //     const name = nodes.find(n => n['@id'] === parseInt(o.id));
 
-    // const nodesUrl = `${NDEX_API_URL}/network/${networkId}/aspect/nodes`
-    // const nodes = await fetch(nodesUrl).then(res => res.json());
-    // const processedOverlaps = overlap.map(o => {
-    //     const name = nodes.find(n => n['@id'] === parseInt(o.id));
-
-    //     return Object.assign({}, o, {name})
-    // })
-    // console.log(processedOverlaps.map(po => po.name))
-    return { networkId, overlap };
-};
-
-const getNetworkSummaries = async (networkIds) => {
-    const url = `${NDEX_API_URL}/batch/network/summary`;
-
-    const summaries = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-          },
-        body: JSON.stringify(networkIds)
-    }).then(res => res.json());
-
-    return summaries;
+  //     return Object.assign({}, o, {name})
+  // })
+  // console.log(processedOverlaps.map(po => po.name))
+  return { networkId, overlap }
 }
 
+const getNetworkSummaries = async (networkIds) => {
+  const url = `${NDEX_API_URL}/batch/network/summary`
+
+  const summaries = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(networkIds),
+  }).then((res) => res.json())
+
+  return summaries
+}
 
 // normal IQuery result example
 // description: "GeneHancer Associations"
@@ -80,7 +78,6 @@ const getNetworkSummaries = async (networkIds) => {
 // totalGeneCount: 0
 // url: null
 
-
 // summary example retured from the ndex api
 // completed: true
 // creationTime: 1635531486749
@@ -103,42 +100,45 @@ const getNetworkSummaries = async (networkIds) => {
 // owner: "hpa"
 // ownerUUID: "df813eda-7e7a-11e9-848d-0ac135e8bacf"
 const getProteinInteractionsData = async (args) => {
-    const geneInfo = args[0]
-    const { queryGenes, normalizedGenes, invalid } = geneInfo;
-    const validGenes = new Set(queryGenes);
-    invalid.forEach(gene => validGenes.delete(gene))
-    const defaultIcon = 'http://search.ndexbio.org/static/media/ndex-logo.04d7bf44.svg'
+  const geneInfo = args[0]
+  const { queryGenes, normalizedGenes, invalid } = geneInfo
+  const validGenes = new Set(queryGenes)
+  invalid.forEach((gene) => validGenes.delete(gene))
+  const defaultIcon = 'http://search.ndexbio.org/static/media/ndex-logo.04d7bf44.svg'
 
-    // const summaries = await Promise.all(proteinInteractomes.map(networkId => ndex.getNetworkSummary(networkId)));
-    const summaries = await getNetworkSummaries(PROTEIN_INTERACTIONS_NETWORKS)
-    const overlaps = await Promise.all(PROTEIN_INTERACTIONS_NETWORKS.map(networkId => getGeneOverlap(networkId, Array.from(validGenes))));
-    const results = summaries.map((s, index) => {
-        const imageUrl = s.properties.find(p => p.predicateString === '__iconurl')
-        const reference = s.properties.find(p => p.predicateString === 'reference')
-        const overlap = overlaps.find(o => o.networkId === s.externalId)
-        
-        return {
-            description: s.name,
-            details: {
-                parent_network_nodes: s.nodeCount,
-                parent_network_edges: s.edgeCount,    
-            },
-            detailedDescription: s.description,
-            legendURL: null,
-            imageURL: imageUrl != null ? imageUrl.value : defaultIcon,
-            reference: reference != null  ? reference.value : null,
-            networkUUID: s.externalId,
-            hitGenes: overlap.overlap, // overlaps is an array of ids, we don't have access to the exact gene names, but we have the count via hitgenes.length
-            percentOverlap: 0,
-            rank: 0,
-            totalGeneCount: 0
-        }
-    }).sort((a, b) => {
-        return b.hitGenes.length - a.hitGenes.length
-    });
+  // const summaries = await Promise.all(proteinInteractomes.map(networkId => ndex.getNetworkSummary(networkId)));
+  const summaries = await getNetworkSummaries(PROTEIN_INTERACTIONS_NETWORKS)
+  const overlaps = await Promise.all(
+    PROTEIN_INTERACTIONS_NETWORKS.map((networkId) => getGeneOverlap(networkId, Array.from(validGenes))),
+  )
+  const results = summaries
+    .map((s, index) => {
+      const imageUrl = s.properties.find((p) => p.predicateString === '__iconurl')
+      const reference = s.properties.find((p) => p.predicateString === 'reference')
+      const overlap = overlaps.find((o) => o.networkId === s.externalId)
 
+      return {
+        description: s.name,
+        details: {
+          parent_network_nodes: s.nodeCount,
+          parent_network_edges: s.edgeCount,
+        },
+        detailedDescription: s.description,
+        legendURL: null,
+        imageURL: imageUrl != null ? imageUrl.value : defaultIcon,
+        reference: reference != null ? reference.value : null,
+        networkUUID: s.externalId,
+        hitGenes: overlap.overlap, // overlaps is an array of ids, we don't have access to the exact gene names, but we have the count via hitgenes.length
+        percentOverlap: 0,
+        rank: 0,
+        totalGeneCount: 0,
+      }
+    })
+    .sort((a, b) => {
+      return b.hitGenes.length - a.hitGenes.length
+    })
 
-    return Promise.resolve(results);
-};
+  return Promise.resolve(results)
+}
 
 export default getProteinInteractionsData
