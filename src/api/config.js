@@ -88,7 +88,7 @@ if (window.ndexSettings === undefined) {
 }
 
 // Version of IQuery shown on main landing page of App
-var APP_VERSION = 'v1.4 beta' + DEPLOY_ENVIRON
+var APP_VERSION = 'v1.4' + DEPLOY_ENVIRON
 
 // As requested in UD-1954 if @@YEAR@@ is in copyright string replace it with
 // current year
