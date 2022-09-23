@@ -8,6 +8,8 @@ var MAX_NETWORK_SIZE = 5000
 var MYGENE_BASE_URL = 'https://mygene.info/v3/query'
 var VALIDATE_GENES_WITH_MYGENE = true
 
+var NDEX_URL = 'https://dev.ndexbio.org'
+
 var GENE_CARDS_URL = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene='
 var HELP_URL = 'https://github.com/cytoscape/search-portal/blob/master/README.md'
 
@@ -84,6 +86,7 @@ if (window.ndexSettings === undefined) {
     PROTEIN_INTERACTIONS_NETWORKS = window.ndexSettings.iQuery.proteinInteractionsNetworks
     TOUR_IMAGES = window.ndexSettings.iQuery.tourImages
     LANDING_PAGE_TEXT = window.ndexSettings.iQuery.landingPageText
+    NDEX_URL = window.ndexSettings.iQuery.ndexUri
   }
 }
 
@@ -121,4 +124,5 @@ export {
   HIDE_SAVE_TO_NDEX_BUTTON,
   TOUR_IMAGES,
   LANDING_PAGE_TEXT,
+  NDEX_URL,
 }
