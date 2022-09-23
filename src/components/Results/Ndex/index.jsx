@@ -20,7 +20,7 @@ import { checkFirstTimeVisitor, getTourDisabled } from '../../Tour/check-visitor
 
 const titleStyle = {
   lineHeight: '22px',
-  wordBreak: 'break-word'
+  wordBreak: 'break-word',
 }
 
 const subtitleStyle = {
@@ -33,7 +33,7 @@ const subtitleStyle = {
 const infoStyle = {
   display: 'block',
   margin: '0',
-  padding: '0'
+  padding: '0',
 }
 
 const edgeStyle = {
@@ -42,16 +42,15 @@ const edgeStyle = {
   margin: '0',
   padding: '0',
   position: 'relative',
-  top: '22px'
+  top: '22px',
 }
 
 const tableStyle = {
   tableLayout: 'fixed',
   wordBreak: 'breakWord',
   borderCollapse: 'collapse',
-  borderSpacing: '0'
+  borderSpacing: '0',
 }
-
 
 /**
  * Top page for the application
@@ -60,7 +59,7 @@ const tableStyle = {
  * @returns {*}
  * @constructor
  */
-const Ndex = props => {
+const Ndex = (props) => {
   const handleFetch = (networkUUID, networkName, nodeCount, edgeCount, hitGenes, legendUrl) => {
     //checkCytoscapeConnection(props)
     const geneList = props.search.queryList
@@ -78,25 +77,25 @@ const Ndex = props => {
       hitGenes,
       nodeCount,
       edgeCount,
-      legendUrl
+      legendUrl,
+      selectedSource: props.uiState.selectedSource,
     })
     // reset pathway figure tab when switching to a new
     // network
-    props.uiStateActions.setPathwayFigureTab(0);
-    props.uiStateActions.setPathwayFigure(true);
+    props.uiStateActions.setPathwayFigureTab(0)
+    props.uiStateActions.setPathwayFigure(true)
     updateHistory(networkUUID)
   }
 
   // Check first time visitor
   useEffect(() => {
-    const userDisabledTour = getTourDisabled();
+    const userDisabledTour = getTourDisabled()
     if (checkFirstTimeVisitor() && !userDisabledTour) {
       props.uiStateActions.setShowTour(true)
     }
   }, [])
-  
 
-  const updateHistory = networkUUID => {
+  const updateHistory = (networkUUID) => {
     // Update URL
     const jobId = props.jobId
     const searchResults = props.search.searchResults
@@ -113,37 +112,37 @@ const Ndex = props => {
     props.cyrestActions.importNetworkStarted({
       cx: props.network.originalCX,
       source: props.network.sourceId,
-      uuid: props.network.uuid
+      uuid: props.network.uuid,
     })
   }
 
   const renderNetworkListItem = (querySize, networkEntry, classes, handleListItemClick, selectedIndex, index) => {
-    if(props.uiState.selectedSource === 'protein-interactions') {
+    if (props.uiState.selectedSource === 'protein-interactions') {
       return (
         <ProteinInteractionsListItem
-          key={networkEntry?.networkUUID} 
-          {...props} 
-          networkEntry={networkEntry} 
-          handleListItemClick={handleListItemClick} 
-          selectedIndex={selectedIndex} 
-          index={index} 
+          key={networkEntry?.networkUUID}
+          {...props}
+          networkEntry={networkEntry}
+          handleListItemClick={handleListItemClick}
+          selectedIndex={selectedIndex}
+          index={index}
         />
       )
     }
     return (
-      <EnrichmentListItem 
-        key={networkEntry?.networkUUID} 
-        {...props} 
-        networkEntry={networkEntry} 
-        handleListItemClick={handleListItemClick} 
-        selectedIndex={selectedIndex} 
-        index={index} 
+      <EnrichmentListItem
+        key={networkEntry?.networkUUID}
+        {...props}
+        networkEntry={networkEntry}
+        handleListItemClick={handleListItemClick}
+        selectedIndex={selectedIndex}
+        index={index}
       />
-    );
+    )
   }
 
   const ProteinInteractionsListItem = (props) => {
-    const {networkEntry, results, handleListItemClick, selectedIndex, index} = props;
+    const { networkEntry, results, handleListItemClick, selectedIndex, index } = props
     const {
       description,
       networkUUID,
@@ -154,10 +153,10 @@ const Ndex = props => {
       details,
       url,
       totalGeneCount = '?',
-      legendURL
+      legendURL,
     } = networkEntry
 
-    const sourceName = description.split(':')[0] || 'NDEx';
+    const sourceName = description.split(':')[0] || 'NDEx'
 
     const icon = (
       <ListItemIcon style={{ width: '5px' }}>
@@ -169,23 +168,25 @@ const Ndex = props => {
 
     const newline = <Typography>{'\n'}</Typography>
 
-    const title = <Typography variant='body2'style={titleStyle}>{description}</Typography>
-
+    const title = (
+      <Typography variant="body2" style={titleStyle}>
+        {description}
+      </Typography>
+    )
 
     const overlap = (
-      <span style={{...subtitleStyle, marginRight: '10px'}}>
+      <span style={{ ...subtitleStyle, marginRight: '10px' }}>
         <Typography variant="caption" color="textSecondary">
-          <Typography 
-            style={{fontWeight: 'bold', fontSize: '1.25em'}} 
-            variant="caption" 
-            color="secondary">
-              {hitGenes.length}
+          <Typography style={{ fontWeight: 'bold', fontSize: '1.25em' }} variant="caption" color="secondary">
+            {hitGenes.length}
           </Typography>
-          <span style={{
-            color: props.uiState.sortBy === 'Overlap' ? 'black' : null,
-          }}>
+          <span
+            style={{
+              color: props.uiState.sortBy === 'Overlap' ? 'black' : null,
+            }}
+          >
             {` nodes are relevant to your ${props.search?.searchResults?.validatedGenes?.queryGenes.length} query genes`}
-            </span>
+          </span>
         </Typography>
       </span>
     )
@@ -194,7 +195,7 @@ const Ndex = props => {
       <ListItem
         button
         key={networkUUID}
-        onClick={event => {
+        onClick={(event) => {
           if (selectedIndex !== index) {
             handleFetch(networkUUID, description, nodes, edges, hitGenes)
             handleListItemClick(event, index, legendURL)
@@ -205,28 +206,28 @@ const Ndex = props => {
         }}
         selected={selectedIndex === index}
       >
-      <table style={tableStyle}>
-        <tbody>
-          <tr padding="0">
-            <td align="center" valign="middle" rowSpan="2" padding="0">
-              {icon}
-            </td>
-            <td align="left" padding="0">
-              {title}
-              {newline}
-              <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: '10px'}}>
-                {overlap}
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-  </ListItem>)
-
+        <table style={tableStyle}>
+          <tbody>
+            <tr padding="0">
+              <td align="center" valign="middle" rowSpan="2" padding="0">
+                {icon}
+              </td>
+              <td align="left" padding="0">
+                {title}
+                {newline}
+                <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: '10px' }}>
+                  {overlap}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ListItem>
+    )
   }
 
   const EnrichmentListItem = (props) => {
-    const {networkEntry, results, handleListItemClick, selectedIndex, index} = props;
+    const { networkEntry, results, handleListItemClick, selectedIndex, index } = props
     const {
       description,
       networkUUID,
@@ -237,10 +238,10 @@ const Ndex = props => {
       details,
       url,
       totalGeneCount = '?',
-      legendURL
+      legendURL,
     } = networkEntry
 
-    const sourceName = description.split(':')[0] || 'NDEx';
+    const sourceName = description.split(':')[0] || 'NDEx'
 
     const icon = (
       <ListItemIcon style={{ width: '5px' }}>
@@ -258,19 +259,16 @@ const Ndex = props => {
     }
 
     const pv = (
-      <div style={{...subtitleStyle, marginRight: '10px', width: '120px',}}>
-        <Typography
-          variant="caption"
-          display="inline"
-          color={'textSecondary'}
-        >
+      <div style={{ ...subtitleStyle, marginRight: '10px', width: '120px' }}>
+        <Typography variant="caption" display="inline" color={'textSecondary'}>
           {`p-Value: `}
         </Typography>
-        <Typography 
-          style={{fontWeight: 'bold' }} 
-          variant="caption" 
-          display="inline" 
-          color={ props.uiState.sortBy === 'p-Value' ? 'textPrimary' : 'textSecondary'}>
+        <Typography
+          style={{ fontWeight: 'bold' }}
+          variant="caption"
+          display="inline"
+          color={props.uiState.sortBy === 'p-Value' ? 'textPrimary' : 'textSecondary'}
+        >
           {`${pVal}`}
         </Typography>
       </div>
@@ -285,59 +283,59 @@ const Ndex = props => {
         sim = sim.toFixed(2)
       }
       similarity = (
-        <div style={{...subtitleStyle, marginRight: '10px', width: '110px',}}>
-        <Typography
-          variant="caption"
-          display="inline"
-          color={'textSecondary'}
-        >
-          {`Similarity: `}
-        </Typography>
-        <Typography 
-          style={{fontWeight: 'bold' }} 
-          variant="caption" 
-          display="inline" 
-          color={ props.uiState.sortBy === 'Similarity' ? 'textPrimary' : 'textSecondary'}>
-          {`${sim}`}
-        </Typography>
-      </div>
+        <div style={{ ...subtitleStyle, marginRight: '10px', width: '110px' }}>
+          <Typography variant="caption" display="inline" color={'textSecondary'}>
+            {`Similarity: `}
+          </Typography>
+          <Typography
+            style={{ fontWeight: 'bold' }}
+            variant="caption"
+            display="inline"
+            color={props.uiState.sortBy === 'Similarity' ? 'textPrimary' : 'textSecondary'}
+          >
+            {`${sim}`}
+          </Typography>
+        </div>
       )
     } else {
       similarity = null
     }
 
-    const title = <Typography variant='body2'style={titleStyle}>{description.split(':').slice(1)}</Typography>
+    const title = (
+      <Typography variant="body2" style={titleStyle}>
+        {description.split(':').slice(1)}
+      </Typography>
+    )
 
     const overlap = (
-      <span style={{...subtitleStyle, width: '150px', overlfow: 'visible', marginRight: '10px'}}>
+      <span style={{ ...subtitleStyle, width: '150px', overlfow: 'visible', marginRight: '10px' }}>
         <Typography variant="caption" color="textSecondary">
-          <Typography 
-            style={{fontWeight: 'bold', fontSize: '1.25em'}} 
-            variant="caption" 
-            color="secondary">
-              {hitGenes.length}
+          <Typography style={{ fontWeight: 'bold', fontSize: '1.25em' }} variant="caption" color="secondary">
+            {hitGenes.length}
           </Typography>
-          <span style={{
-            color: props.uiState.sortBy === 'Overlap' ? 'black' : null,
-            fontWeight: props.uiState.sortBy == 'Overlap'? 'bold' : null
-          }}>
-              { ` / ${totalGeneCount} unique genes`}
-            </span>
+          <span
+            style={{
+              color: props.uiState.sortBy === 'Overlap' ? 'black' : null,
+              fontWeight: props.uiState.sortBy == 'Overlap' ? 'bold' : null,
+            }}
+          >
+            {` / ${totalGeneCount} unique genes`}
+          </span>
         </Typography>
       </span>
     )
 
     const sortValueDisplay = {
       'p-Value': pv,
-      'Overlap': null,
-      'Similarity': similarity
-    };
+      Overlap: null,
+      Similarity: similarity,
+    }
 
     return (
       <ListItem
         button
         key={networkUUID}
-        onClick={event => {
+        onClick={(event) => {
           if (selectedIndex !== index) {
             handleFetch(networkUUID, description, nodes, edges, hitGenes)
             handleListItemClick(event, index, legendURL)
@@ -348,42 +346,44 @@ const Ndex = props => {
         }}
         selected={selectedIndex === index}
       >
-          <table style={tableStyle}>
-            <tbody>
-              <tr padding="0">
-                <td align="center" valign="middle" rowSpan="2" padding="0">
-                  {icon}
-                </td>
-                <td align="left" padding="0">
-                  {title}
-                  {newline}
-                  <div style={{display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: '10px'}}>
-                    {overlap}
-                    {similarity}
-                    {pv}
-                  </div>
-                </td>
-              </tr>
-              <tr style={{textOverflow: 'ellipsis', overflow: 'hidden'}}>
-                <td style={{ display: 'flex', alignItems: 'center' }}>
-                  {selectedIndex !== index ? 
-                    <Typography variant="caption" color="secondary" >
-                      { hitGenes.length > 5 ? `${hitGenes.sort().slice(0, 5).join(' ')}...` : hitGenes.sort().slice(0, 5).join(' ') }
-                    </Typography>
-                  : null}
-                </td>
-                {selectedIndex === index ? <QueryGeneList {...props} /> : null}
-              </tr>
-            </tbody>
-          </table>
+        <table style={tableStyle}>
+          <tbody>
+            <tr padding="0">
+              <td align="center" valign="middle" rowSpan="2" padding="0">
+                {icon}
+              </td>
+              <td align="left" padding="0">
+                {title}
+                {newline}
+                <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: '10px' }}>
+                  {overlap}
+                  {similarity}
+                  {pv}
+                </div>
+              </td>
+            </tr>
+            <tr style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
+              <td style={{ display: 'flex', alignItems: 'center' }}>
+                {selectedIndex !== index ? (
+                  <Typography variant="caption" color="secondary">
+                    {hitGenes.length > 5
+                      ? `${hitGenes.sort().slice(0, 5).join(' ')}...`
+                      : hitGenes.sort().slice(0, 5).join(' ')}
+                  </Typography>
+                ) : null}
+              </td>
+              {selectedIndex === index ? <QueryGeneList {...props} /> : null}
+            </tr>
+          </tbody>
+        </table>
       </ListItem>
     )
   }
 
-  const { hideSearchBar } = props.uiState;
+  const { hideSearchBar } = props.uiState
 
   return (
-    <Split sizes={[40, 60]} gutterSize={4} className={ hideSearchBar ? 'headerless-ndex-base' : "ndex-base" } >
+    <Split sizes={[40, 60]} gutterSize={4} className={hideSearchBar ? 'headerless-ndex-base' : 'ndex-base'}>
       <NetworkList
         renderNetworkListItem={renderNetworkListItem}
         handleFetch={handleFetch}
