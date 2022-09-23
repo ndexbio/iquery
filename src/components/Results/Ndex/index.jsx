@@ -118,6 +118,11 @@ const Ndex = (props) => {
 
   const renderNetworkListItem = (querySize, networkEntry, classes, handleListItemClick, selectedIndex, index) => {
     if (props.uiState.selectedSource === 'protein-interactions') {
+      // don't show protein interaction networks with 0 hit genes
+      if (networkEntry.hitGenes.length === 0) {
+        return null
+      }
+
       return (
         <ProteinInteractionsListItem
           key={networkEntry?.networkUUID}
