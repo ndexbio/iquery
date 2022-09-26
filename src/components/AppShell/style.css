@@ -3,11 +3,8 @@
   grid-gap: 0;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: min-content 1fr;
-  position: fixed;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
+  flex-grow: 3;
+  height: calc(100vh - 50px);
 }
 
 .start-container {
@@ -76,12 +73,9 @@
 }
 
 .results-container {
-  padding-top: 6.5vmin;
-  grid-column: 2/13;
+  grid-column: 1/13;
   grid-row: 2/3;
   margin: 0;
-  height: 100vh;
-  overflow: hidden;
 }
 
 .home-logo {

@@ -2,14 +2,17 @@ import React from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import HoverTab from '../HoverTab';
 import { makeStyles } from '@material-ui/styles';
-
-import { findAttributes } from './attribute-util';
+import { IconButton } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import {Tooltip} from '@material-ui/core';
+import { getNetworkAttributes, getNetworkElementAttributes } from './attribute-util';
 
 import NetworkProperties from './NetworkProperties';
 import MemoNodeProperties from './NodeProperties';
 import MemoEdgeProperties from './EdgeProperties';
 
-import { mapKeys } from 'lodash';
+import ErrorBoundary from '../../ErrorBoundary';
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -31,110 +34,15 @@ const backgroundcolor = 'rgb(220, 220, 220)';
 
 const TabContent = (props) => {
   const { value } = props;
-
-  //Find @context
-  let context;
-  context = findAttributes(props.network.originalCX, '@context');
-  if (context != null) {
-    context = context[0];
-  } else {
-    const networkAttr = findAttributes(
-      props.network.originalCX,
-      'networkAttributes'
-    );
-    if (networkAttr != null) {
-      for (let i = 0; i < networkAttr.length; i++) {
-        if (networkAttr[i].n === '@context') {
-          context = JSON.parse(networkAttr[i].v);
-        }
-      }
-    }
-  }
-  //Uppercase all keys in context
-  const contextUpper = mapKeys(context, function(v, k) {
-    return k.toUpperCase();
-  });
-
-  //Find lists and attributes
-  let nodeList;
-  let nodeAttributes;
-  let edgeAttributes;
-  for (let i = 0; i < props.network.originalCX.length; i++) {
-    if (props.network.originalCX[i].nodes != null) {
-      nodeList = props.network.originalCX[i].nodes;
-      if (nodeAttributes != null && edgeAttributes != null) {
-        break;
-      }
-    }
-    if (props.network.originalCX[i].nodeAttributes != null) {
-      nodeAttributes = props.network.originalCX[i].nodeAttributes;
-      if (nodeList != null && edgeAttributes != null) {
-        break;
-      }
-    }
-    if (props.network.originalCX[i].edgeAttributes != null) {
-      edgeAttributes = props.network.originalCX[i].edgeAttributes;
-      if (nodeList != null && nodeAttributes != null) {
-        break;
-      }
-    }
-  }
-
-  // Find node related properties
-  const represents = {};
-  const nodeListProperties = {}; //Dictionary { property name : dictionary { gene name : list of properties }}
-  if (nodeList != null) {
-    //Find represents
-    for (let i = 0; i < nodeList.length; i++) {
-      if (nodeList[i].r != null) {
-        represents[nodeList[i].n] = nodeList[i].r;
-      }
-    }
-    //Find node properties that are lists
-    if (nodeAttributes != null) {
-      for (let i = 0; i < nodeAttributes.length; i++) {
-        if (nodeAttributes[i].d === 'list_of_string') {
-          let propDict = {};
-          if (nodeListProperties[nodeAttributes[i].n] != null) {
-            propDict = nodeListProperties[nodeAttributes[i].n];
-          }
-          const geneName = nodeList.filter(
-            (node) => node['@id'] === nodeAttributes[i].po
-          )[0].n;
-          if (geneName != null) {
-            if (propDict[geneName] == null) {
-              propDict[geneName] = nodeAttributes[i].v;
-            } else {
-              propDict[geneName] = propDict[geneName].concat(
-                nodeAttributes[i].v
-              );
-            }
-          }
-          nodeListProperties[nodeAttributes[i].n] = propDict;
-        }
-      }
-    }
-  }
-
-  //Find edge properties that are lists
-  const edgeListProperties = {};
-  if (edgeAttributes != null) {
-    for (let i = 0; i < edgeAttributes.length; i++) {
-      if (edgeAttributes[i].d === 'list_of_string') {
-        let propDict = {};
-        if (edgeListProperties[edgeAttributes[i].n] != null) {
-          propDict = edgeListProperties[edgeAttributes[i].n];
-        }
-        const edgeId = edgeAttributes[i].po;
-        if (propDict[edgeId] == null) {
-          propDict[edgeId] = edgeAttributes[i].v;
-        } else {
-          propDict[edgeId] = propDict[edgeId].concat(edgeAttributes[i].v);
-        }
-        edgeListProperties[edgeAttributes[i].n] = propDict;
-      }
-    }
-  }
+  const context = getNetworkAttributes(props.network.originalCX);
+  const {
+    nodeListProperties,
+    edgeListProperties,
+    contextUpper,
+    represents,
+    nodeList
+  } = getNetworkElementAttributes(props.network.originalCX);
+  
 
   if (value === 0) {
     return <NetworkProperties context={context} {...props} />;
@@ -178,29 +86,55 @@ const TableBrowserPanel = (props) => {
 
   //Get current tab selection
   return (
-    <div className='table-browser-panel'>
-      <Tabs value={value} onChange={handleChange} className={classes.root}>
-        <HoverTab
-          className={classes.root}
-          key={'network-tab'}
-          label={'Network'}
-          backgroundcolor={backgroundcolor}
-        />
-        <HoverTab
-          className={classes.root}
-          key={'nodes-tab'}
-          label={'Nodes'}
-          backgroundcolor={backgroundcolor}
-        />
-        <HoverTab
-          className={classes.root}
-          key={'edges-tab'}
-          label={'Edges'}
-          backgroundcolor={backgroundcolor}
-        />
-      </Tabs>
-      <TabContent value={value} {...props} />
-    </div>
+    <ErrorBoundary message={'Sorry, there was an error loading tab content.'}>
+      <div className='table-browser-panel'>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+          <Tabs value={value} onChange={handleChange} className={classes.root}>
+            <HoverTab
+              className={classes.root}
+              key={'network-tab'}
+              label={'Network'}
+              backgroundcolor={backgroundcolor}
+            />
+            <HoverTab
+              className={classes.root}
+              key={'nodes-tab'}
+              label={'Nodes'}
+              backgroundcolor={backgroundcolor}
+            />
+
+            {props.network.edgeCount === 0 ? <Tooltip title={'This network has no edges'}>
+              <span>
+                <HoverTab
+                className={classes.root}
+                key={'edges-tab'}
+                label={'Edges'}
+                tooltip={props.network.edgeCount === 0 ? 'This network has no edges': null}
+                backgroundcolor={backgroundcolor}
+                disabled={true}
+              />
+              </span>
+            </Tooltip>
+          :             
+            <HoverTab
+              className={classes.root}
+              key={'edges-tab'}
+              label={'Edges'}
+              backgroundcolor={backgroundcolor}
+            />
+          }
+          </Tabs>
+          <IconButton onClick={() => {
+            props.networkActions.setShowTableModal(false)
+            props.networkActions.changeTab(0)
+          }} aria-label="close">
+           <CloseIcon/>
+          </IconButton>
+
+        </div>
+          <TabContent value={value} {...props} />
+      </div>
+    </ErrorBoundary>
   );
 };
 

@@ -3,6 +3,7 @@
   grid-gap: 0;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: min-content 1fr;
+  flex-grow: 3;
 }
 
 .start-container {
@@ -29,7 +30,7 @@
 }
 
 .app-title {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-size: 2.8em;
   color: #333333;
 }
@@ -68,7 +69,6 @@
   height: 4em;
 }
 
-
 /*
     For SearchTextBox
  */
@@ -93,15 +93,6 @@
 .query-example-panel {
   width: 100%;
   padding-top: 1em;
-
-}
-
-.input-container {
-  padding-top: 4.5em;
-  grid-column: 1/2;
-  grid-row: 2/3;
-  grid-gap: 0;
-  height: 100vh;
 }
 
 .source-wrapper {
@@ -110,21 +101,28 @@
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .source-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  width:70%;
+  width: 70%;
   margin-top: 1em;
   padding: 3em;
 }
 
 .results-container {
-  padding-top: 4.5em;
-  grid-column: 2/13;
+  grid-column: 1/13;
+  grid-row: 2/3;
+  margin: 0;
+  overflow: hidden;
+}
+
+.headerless-results-container {
+  padding-top: 0;
+  grid-column: 1/13;
   grid-row: 2/3;
   margin: 0;
   height: 100vh;
@@ -155,7 +153,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .footer-logo {
@@ -173,7 +171,7 @@ a:link {
 }
 
 .example-link {
-  color: #00A1DE;
+  color: #00a1de;
 }
 .example-text {
   padding-right: 1.2em;
@@ -187,7 +185,7 @@ a:link {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #00A1DE;
+  color: #00a1de;
 }
 
 .search-text-caption {
@@ -199,6 +197,6 @@ a:link {
 }
 
 .description-panel {
-  width: 90%;
+  width: 70%;
   padding-bottom: 3em;
 }

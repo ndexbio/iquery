@@ -1,47 +1,58 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 
-import { loadCSS } from 'fg-loadcss/src/loadCSS';
-import Icon from '@material-ui/core/Icon';
 import Tooltip from '@material-ui/core/Tooltip';
-import classNames from 'classnames';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import ClipboardIcon from '@material-ui/icons/AssignmentOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import Popover from '@material-ui/core/Popover';
+import { Typography } from '@material-ui/core';
 import MessageSnackbar from './MessageSnackbar';
+
+import { NormalizedGeneTypography, InvalidGeneTypography } from '../GeneList';
 
 import { GENESET_EXAMPLES } from '../../api/config';
 
+import dnaIcon from '../../assets/images/dna_gray.svg';
 
 const styles = {
   root: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '60vmin',
-    padding: '0.3em',
+    padding: '0em 0.3em',
     background: '#f1f1f1',
     marginLeft: '1em',
+    minWidth: '500px'
   },
   input: {
     marginLeft: 8,
     flex: 1,
+    width: '50vw',
+    minWidth: '500px'
   },
   iconButton: {
     padding: 10,
+    height: '1em',
+    width: '1em'
   },
   divider: {
     width: 1,
     height: 28,
     margin: 4,
   },
+  fullQueryContainer: {
+    width: '50vw',
+    padding: 10,
+    backgroundColor: '#F1F1F1'
+  }
 };
 
 const ORIGINAL_GENE_TEXT = 'original-gene-text';
@@ -50,21 +61,44 @@ const GeneTextBox = (props) => {
   const { classes } = props;
   const geneTextRef = useRef();
 
+  const { queryGenes, invalid, normalizedGenes } = props.search.searchResults.validatedGenes
+
+  const originalQueryGeneTokens = new Set(queryGenes);
+  Object.entries(normalizedGenes).forEach(([normalizedGene, originalToken]) => {
+    originalQueryGeneTokens.delete(normalizedGene);
+    originalQueryGeneTokens.add(originalToken);
+  });
+
   const [state, setState] = useState({
     anchorEl: null,
-    query: props.search.queryGenes,
+    query: [...Array.from(originalQueryGeneTokens).sort(), ...invalid.sort()].join(' '),
   });
   const [open, setOpen] = useState(false);
 
+  const [queryPopperEl, setQueryPopperEl] = React.useState(null);
+
+  const showQueryPopper = (event) => {
+    console.log(geneTextRef.current);
+    setQueryPopperEl(geneTextRef.current);
+  };
+
+  const closeQueryPopper = () => {
+    setQueryPopperEl(null);
+  };
+
+  const popperOpen = Boolean(queryPopperEl);
+  const popperId = popperOpen ? 'query-popper' : undefined;
+
+
   const menuOpen = Boolean(state.anchorEl);
 
-  useEffect(() => {
-    loadCSS(
-      'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
-      document.querySelector('#insertion-point-jss')
-    );
-    return () => {};
-  }, []);
+  // useEffect(() => {
+  //   loadCSS(
+  //     'https://use.fontawesome.com/releases/v5.1.0/css/all.css',
+  //     document.querySelector('#insertion-point-jss')
+  //   );
+  //   return () => {};
+  // }, []);
 
   const handleCopy = () => {
     // This is a hack...
@@ -83,9 +117,12 @@ const GeneTextBox = (props) => {
     } else {
       genes = query;
     }
-    const sources = props.source.sources;
 
-    if (genes.length === 0 || sources === null || sources.length === 0) {
+    // If sources are not found, searchActions.searchStarted will send a request to find them
+    // refs UD-2219
+    const sources = props.source.sources || [];
+
+    if (genes.length === 0) {
       // TODO: add better error message
       return;
     }
@@ -97,7 +134,7 @@ const GeneTextBox = (props) => {
     props.searchActions.clearAll();
     props.history.push('/');
     props.searchActions.setQuery(genes);
-    props.searchActions.searchStarted({ geneList, sourceNames });
+    props.searchActions.searchStarted({ geneList, sourceNames, validateGenesWithMyGene: props.search.validateGenesWithMyGene });
   };
 
   const handleChange = (name) => (event) => {
@@ -134,6 +171,46 @@ const GeneTextBox = (props) => {
     handleSearch(null, GENESET_EXAMPLES[exampleIdx].genes);
   };
 
+  const createGeneInfo = gene => {
+    const isValid = queryGenes.includes(gene)
+    const isNormalized = normalizedGenes[gene] != null;
+
+    return {
+      gene,
+      isValid,
+      alias: isNormalized ? normalizedGenes[gene] : null
+    }
+  };
+
+  const validGeneText = ({gene, alias}) => {
+    return <Typography variant="body2" 
+    color={"default"}
+    >
+      {gene}
+    </Typography>  
+  }
+
+  const normalizedGeneText = ({gene, alias}) => {
+   return <Tooltip title={`This query gene was normalized. Original query term: ${alias}`}>
+    <div style={{backgroundColor: '#F9BD00', paddingLeft: '2px', paddingRight: '2px', borderRadius: '4px', border: '1px solid black' }}>
+       <NormalizedGeneTypography variant="body2">
+        {gene}
+      </NormalizedGeneTypography>
+     </div>
+  </Tooltip>
+  }
+
+  const invalidGeneText = ({gene, alias}) => {
+    return <Tooltip title={`Not a valid human gene: ${gene}`}>
+     <InvalidGeneTypography variant="body2">
+       {gene}
+     </InvalidGeneTypography>
+   </Tooltip>
+   }
+  
+   const queryTokens =  [...queryGenes, ...invalid];
+
+
   return (
     <div>
       <MessageSnackbar
@@ -145,7 +222,7 @@ const GeneTextBox = (props) => {
         vertical={'bottom'}
       />
       <Paper className={classes.root} elevation={0}>
-        <Tooltip title='Query gene set examples' placement='bottom'>
+        <Tooltip title='Gene set examples' placement='bottom'>
           <div>
             <IconButton
               className={classes.iconButton}
@@ -182,18 +259,18 @@ const GeneTextBox = (props) => {
           </div>
         </Tooltip>
         <Divider className={classes.divider} />
-        <Tooltip title='Copy' placement='bottom'>
+        <Tooltip title='Copy gene set' placement='bottom'>
           <IconButton
             color='default'
             className={classes.iconButton}
             aria-label='Copy'
             onClick={handleCopy}
           >
-            <Icon className={classNames(classes.icon, 'far fa-clipboard')} />
+            <ClipboardIcon />
           </IconButton>
         </Tooltip>
         <Divider className={classes.divider} />
-        <Tooltip title='Clear gene list' placement='bottom'>
+        <Tooltip title='Clear gene set' placement='bottom'>
           <IconButton
             color='default'
             className={classes.iconButton}
@@ -204,6 +281,49 @@ const GeneTextBox = (props) => {
           </IconButton>
         </Tooltip>
         <Divider className={classes.divider} />
+        <Tooltip title='View gene set' placement='bottom'>
+          <IconButton
+            aria-describedby={popperId}
+            color='default'
+            className={classes.iconButton}
+            aria-label='Clear'
+            onClick={showQueryPopper}
+          >
+            <img
+              alt="DNA icon"
+              src={dnaIcon}
+              style={{
+                height: '1em',
+                width: '1em'
+              }}
+            />
+          </IconButton>
+        </Tooltip>
+        <Popover
+          id={popperId}
+          open={popperOpen}
+          anchorEl={queryPopperEl}
+          onClose={closeQueryPopper}
+          anchorReference='anchorEl'
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'start',
+          }}
+        >
+          <Paper className={classes.fullQueryContainer}>
+            <Typography>
+              <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                {queryTokens.map(createGeneInfo).map(({gene, isValid, alias}) => {
+                  const isNormalized = alias != null
+                  return <div key={gene} style={{paddingRight: '10px', width: '100px'}}>
+                    {!isValid ? invalidGeneText({gene, alias}) : isNormalized ?  normalizedGeneText({gene, alias}) : validGeneText({gene, alias})  }
+                  </div> 
+                })}
+              </div>
+            </Typography>
+          </Paper>
+        </Popover>
+        <Divider className={classes.divider} />
         <InputBase
           id={ORIGINAL_GENE_TEXT}
           className={classes.input}
@@ -213,6 +333,8 @@ const GeneTextBox = (props) => {
           onKeyDown={handleKeyPress}
           ref={geneTextRef}
         />
+
+        <Divider className={classes.divider} />
 
         <Tooltip title='Start new search' placement='bottom'>
           <IconButton

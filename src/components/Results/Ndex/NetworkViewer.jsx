@@ -1,10 +1,12 @@
 import React from 'react';
 import './style.css';
 import CytoscapeViewer from '../CytoscapeViewer';
+import ErrorBoundary from '../../ErrorBoundary';
 import LoadingPanel from '../../LoadingPanel';
 import Warning from '../CytoscapeViewer/Warning';
 import PathwayFigureViewer from './PathwayFigureViewer';
 import { MAX_NETWORK_SIZE } from '../../../api/config';
+import ProteinInteractionsWidget from './ProteinInteractionsWidget';
 
 const NetworkViewer = (props) => {
   if (props.network.isFetching) {
@@ -24,20 +26,26 @@ const NetworkViewer = (props) => {
         <Warning {...props} />
       </div>
     );
+  }  else if (props.uiState.selectedSource === 'protein-interactions') {
+    return <ProteinInteractionsWidget {...props} />
   } else if (props.uiState.selectedSource === 'pathwayfigures') {
     return (
       <div className='network-view'>
         {props.uiState.pathwayFigure ? (
           <PathwayFigureViewer {...props} />
         ) : (
-          <CytoscapeViewer resized={props.resized} {...props} />
+          <ErrorBoundary message={'Sorry, there was an error loading this network.'}>
+            <CytoscapeViewer resized={props.resized} {...props} />
+          </ErrorBoundary>
         )}
       </div>
     );
   } else {
     return (
       <div className='network-view'>
-        <CytoscapeViewer resized={props.resized} {...props} />
+        <ErrorBoundary message={'Sorry, there was an error loading this network.'}>
+          <CytoscapeViewer resized={props.resized} {...props} />
+        </ErrorBoundary>
       </div>
     );
   }

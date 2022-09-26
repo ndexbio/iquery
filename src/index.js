@@ -10,6 +10,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import './index.css'
 import { App, Top } from './App'
+import ErrorBoundary from './components/ErrorBoundary';
 import * as serviceWorker from './serviceWorker'
 
 // Import root reducers
@@ -18,11 +19,13 @@ import rootSaga from './sagas/ndexSaga'
 import cyRestSaga from './sagas/cyRestSaga'
 import cyRestStatusSaga from './sagas/cyRestStatusSaga'
 import ndexSaveSaga from './sagas/ndexSaveSaga'
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 import { SET_QUERY } from './actions/search'
 
-import { GA_DEV_ID, GA_STAGING_ID, GA_PRODUCTION } from './analytics'
+import { GOOGLE_ANALYTICS_ID } from './api/config'
+
+const googleAnalyticsIdExists = GOOGLE_ANALYTICS_ID !== '' && GOOGLE_ANALYTICS_ID != null;
 
 // Avoid HTTP
 const location = window.location
@@ -30,11 +33,13 @@ if (location.hostname !== 'localhost' && location.protocol !== 'https:') {
   location.replace(`https:${location.href.substring(location.protocol.length)}`)
 }
 
-ReactGA.initialize(GA_PRODUCTION, {
-  gaOptions: {
-    siteSpeedSampleRate: 100
-  }
-})
+if (googleAnalyticsIdExists){
+  ReactGA.initialize(GOOGLE_ANALYTICS_ID, {
+    gaOptions: {
+      siteSpeedSampleRate: 100
+    }
+  })
+}
 
 const EventActions = {
   SetQuery: SET_QUERY,
@@ -79,7 +84,7 @@ const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(sagaMiddleware),
-    applyMiddleware(gaMiddleware)
+    googleAnalyticsIdExists ? applyMiddleware(gaMiddleware): applyMiddleware(() => {})
   )
 )
 
@@ -90,18 +95,20 @@ sagaMiddleware.run(ndexSaveSaga)
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <Router basename={process.env.PUBLIC_URL}>
-      <Switch>
-        <Route exact path="/" component={Top} />
-        <Route exact path="/iquery" component={Top} />
-        <Route exact path="/iquery/" component={Top} />
-        <Route exact path="/iquery//" component={Top} />
-        <Route exact path="/iquery/iquery" component={Top} />
-        <Route path="/:jobid/:sourceId/:networkId" component={App} />
-        <Route path="/:jobid/:sourceId" component={App} />
-        <Route path="/:jobid" component={App} />
-      </Switch>
-    </Router>
+    <ErrorBoundary message={'Sorry, there was an error loading this page'}>
+      <Router basename={process.env.PUBLIC_URL}>
+        <Switch>
+          <Route
+            exact
+            path={['/', '/iquery', '/iquery/', '/iquery//', '/iquery/iquery']}
+            component={Top}
+          />
+          <Route path="/:jobid/:sourceId/:networkId" component={App} />
+          <Route path="/:jobid/:sourceId" component={App} />
+          <Route path="/:jobid" component={App} />
+        </Switch>
+      </Router>
+    </ErrorBoundary>
   </Provider>
 )
 

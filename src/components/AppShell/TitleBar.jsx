@@ -9,10 +9,12 @@ import IconButton from '@material-ui/core/IconButton';
 import HelpIcon from '@material-ui/icons/Help';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import classNames from 'classnames';
 
-import logo from '../../assets/images/ndex-logo.svg';
+import logo from '../../assets/images/powered-by-ndex-logo.png'
 //import cytoLogo from '../../assets/images/cytoscape-logo-mono-dark.svg'
 //import nrnbLogo from '../../assets/images/nrnb-logo-mono-dark.svg'
 //import wpLogo from '../../assets/images/wp-logo-mono-dark.svg'
@@ -20,7 +22,7 @@ import logo from '../../assets/images/ndex-logo.svg';
 import HomeIcon from '@material-ui/icons/Home';
 
 import GeneTextBox from './GeneTextBox';
-
+import Tour from '../Tour'
 import { HELP_URL } from '../../api/config';
 
 const drawerWidth = 240;
@@ -40,6 +42,10 @@ const styles = (theme) => ({
     marginRight: 10,
   },
   logo: {
+    height: '45px',
+    width: '141px',
+  },
+  helpIcon: {
     height: '1em',
     width: '1.5em',
   },
@@ -53,6 +59,10 @@ const styles = (theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    root: {
+      minWidth: '100vw'
+    }
+    // width: '100vw'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -70,6 +80,9 @@ const styles = (theme) => ({
     display: 'inline-block',
     whiteSpace: 'nowrap',
   },
+  title: {
+    fontWeight: 500
+  }
 });
 
 const titleStyle = {
@@ -79,11 +92,6 @@ const titleStyle = {
 };
 
 class TitleBar extends React.Component {
-  handleMenu = () => {
-    this.props.uiStateActions.setSettingsOpen(
-      !this.props.uiState.isSettingsOpen
-    );
-  };
 
   handleHomeButton = () => {
     this.props.searchActions.clearAll();
@@ -96,69 +104,67 @@ class TitleBar extends React.Component {
     const { classes, ...others } = this.props;
     const open = this.props.uiState.isSettingsOpen;
 
+    const {searchResults} = this.props.search
+
     return (
       <AppBar
-        position='fixed'
+        position='static'
         color='inherit'
         className={classNames(classes.appBar, {
           [classes.appBarShift]: open,
         })}
       >
         <div className={classes.noWrap}>
-          <Toolbar disableGutters={!open}>
+          <Toolbar disableGutters={!open} variant='dense'>
             <Tooltip
-              title='Search by Relevant Pathways / Protein-Protein Interactions / Gene Association'
+              title='Analyze your gene set by querying curated pathways and large interactomes'
               aria-label='NDEx_tooltip'
             >
               <div>
                 <Button style={titleStyle} onClick={this.handleHomeButton}>
-                  <HomeIcon fontSize='default' className={classes.homeLogo} />
-                  <Typography variant='h6' color='inherit' noWrap={true}>
+                  <HomeIcon fontSize='medium' className={classes.homeLogo} />
+                  <Typography className={classes.title} variant='body1' color='inherit' noWrap={true}>
                     NDEx Integrated Query
                   </Typography>
                 </Button>
               </div>
             </Tooltip>
 
-            {this.props.search.results === null ? (
+            {searchResults == null ? (
               <div />
             ) : (
               <div className={classes.textBox}>
-                <GeneTextBox {...others} />
+                <GeneTextBox searchResults={searchResults} {...others} />
               </div>
             )}
 
             <div className={classes.grow} />
 
-            <div>
-              <Tooltip title='NDEx' placement='bottom'>
-                <IconButton
-                  color='default'
-                  aria-label='Home'
-                  onClick={() => openLink("/")}
-                >
-                  <img alt='NDEx logo' src={logo} className={classes.logo} />
-                </IconButton>
-              </Tooltip>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              <span>
+
+                    <img alt='NDEx logo' src={logo} className={classes.logo} />
+              </span>
 
               <Tooltip
-                title='Help'
+                title='Take a tour of IQuery'
                 placement='bottom'
                 style={{ marginRight: '1em' }}
               >
                 <Typography color='textPrimary' noWrap={true} display='inline'>
                   <IconButton
-                    aria-haspopup='true'
-                    onClick={() => openLink(HELP_URL)}
-                    color='inherit'
-                  >
-                    <HelpIcon className={classes.logo} />
-                  </IconButton>
+                      aria-haspopup='true'
+                      onClick={() => this.props.uiStateActions.setShowTour(true)}
+                      color='inherit'
+                    >
+                    <HelpIcon className={classes.helpIcon} />
+                  </IconButton>                  
                 </Typography>
               </Tooltip>
             </div>
           </Toolbar>
         </div>
+        <Tour open={this.props.uiState.showTour} setOpen={this.props.uiStateActions.setShowTour} />
       </AppBar>
     );
   }

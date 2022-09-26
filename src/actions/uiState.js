@@ -27,6 +27,10 @@ export const SET_PATHWAY_FIGURE_SOURCE = 'SET_PATHWAY_FIGURE_SOURCE';
 export const setPathwayFigureSource = createAction(SET_PATHWAY_FIGURE_SOURCE);
 export const SET_FIT_PATHWAY_FIGURE = 'SET_FIT_PATHWAY_FIGURE';
 export const setFitPathwayFigure = createAction(SET_FIT_PATHWAY_FIGURE);
+export const SET_PATHWAY_FIGURE_TAB = 'SET_PATHWAY_FIGURE_TAB';
+export const setPathwayFigureTab = createAction(SET_PATHWAY_FIGURE_TAB);
+export const SET_PATHWAY_FIGURE_ZOOM = 'SET_PATHWAY_FIGURE_ZOOM';
+export const setPathwayFigureZoom = createAction(SET_PATHWAY_FIGURE_ZOOM);
 
 // Sort settings
 export const SET_SORT_OPTIONS = 'SET_SORT_OPTIONS';
@@ -50,3 +54,9 @@ export const fitNetworkView = createAction(FIT_NETWORK_VIEW);
 
 export const UPDATE = 'UPDATE';
 export const update = createAction(UPDATE);
+
+export const SET_SHOW_LEGEND = 'SET_SHOW_LEGEND';
+export const setShowLegend = createAction(SET_SHOW_LEGEND);
+
+export const SET_SHOW_TOUR = 'SET_SHOW_TOUR';
+export const setShowTour = createAction(SET_SHOW_TOUR);

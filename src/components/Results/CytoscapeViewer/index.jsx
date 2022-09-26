@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
-import { CxToJs, CyNetworkUtils } from 'cytoscape-cx2js';
+import { CxToJs, CyNetworkUtils } from '@js4cytoscape/cx2js';
 import Cytoscape from 'cytoscape';
 import CyCanvas from 'cytoscape-canvas';
 import { CxToCyCanvas } from 'cyannotation-cx2js';
@@ -122,13 +122,22 @@ const CytoscapeViewer = (props) => {
     const selectEdge = () => {
       setTimeout(() => {
         const edges = [];
+        const connectedNodes = [];
         const selectedEdges = cyInstance.$('edge:selected');
         selectedEdges.forEach((element) => {
           edges.push(element.data());
         });
+
+        selectedEdges.connectedNodes().forEach(el => {
+          connectedNodes.push(el.data());
+        });
+
         if (edges.length === 0) {
           props.networkActions.unselectEdges();
+          props.networkActions.unselectNodes();
         } else {
+          props.networkActions.unselectNodes();
+          props.networkActions.selectNodes(connectedNodes);
           props.networkActions.selectEdges(edges);
         }
       }, 1);
@@ -137,21 +146,30 @@ const CytoscapeViewer = (props) => {
     const selectNode = () => {
       setTimeout(() => {
         const nodes = [];
+        const connectedEdges = [];
         const selectedNodes = cyInstance.$('node:selected');
         selectedNodes.forEach((element) => {
           if (element.data().name !== '') {
             nodes.push(element.data());
           }
         });
+
+        selectedNodes.connectedEdges().forEach((element) => {
+          connectedEdges.push(element.data());
+        });
         if (nodes.length === 0) {
           props.networkActions.unselectNodes();
+          props.networkActions.unselectEdges();
         } else {
+          props.networkActions.unselectEdges();
+          props.networkActions.selectEdges(connectedEdges);
           props.networkActions.selectNodes(nodes);
         }
       }, 1);
     };
 
-    cyInstance.on('tap', 'node', function() {
+    cyInstance.on('tap', 'node', function(e) {
+      // console.log(e);
       try {
         cyInstance.nodes().removeClass('connected');
       } catch (e) {
@@ -179,12 +197,12 @@ const CytoscapeViewer = (props) => {
 
     // Reset the UI state (highlight)
     cyInstance.elements().addClass('faded');
-    const query = cyInstance.filter('node[querynode = "true"]');
+    const query = cyInstance.nodes().filter('node[?querynode]');
     query.addClass('highlight');
 
     //Layout
 
-    if (cyjs != null) {
+    if (cyjs != null && cyjs != {}) {
       const isLayoutAvailable = cyjs.isLayout;
       if (isLayoutAvailable) {
         propLayouts = ['Preset', 'Cose', 'Concentric'];
@@ -210,6 +228,8 @@ const CytoscapeViewer = (props) => {
         layouts: propLayouts,
         layout: propLayout,
       });
+      props.networkActions.setCyJs(cyInstance);
+
     });
 
     return () => {
@@ -224,6 +244,14 @@ const CytoscapeViewer = (props) => {
 
     const targets = props.search.selectedGenes;
     if (targets === null || targets === undefined) {
+      return;
+    }
+
+    // Refs UD-2110.  Sometimes the renderer seems to be null, and cy.animate methods
+    // call .isHeadless() which is a function of the renderer.  Check that this method is 
+    // not null before animating.  I suspect that this has to do with the cyInstance being unmounted
+    // whenever networks are changed. Search for the string 'Network viewer unmounted'
+    if(cyInstance?._private?.renderer?.isHeadless == null){
       return;
     }
 
@@ -270,6 +298,15 @@ const CytoscapeViewer = (props) => {
     if (cyInstance === undefined || cyInstance === null) {
       return;
     }
+
+    // Refs UD-2110.  Sometimes the renderer seems to be null, and cy.animate methods
+    // call .isHeadless() which is a function of the renderer.  Check that this method is 
+    // not null before animating.  I suspect that this has to do with the cyInstance being unmounted
+    // whenever networks are changed. Search for the string 'Network viewer unmounted'
+    if(cyInstance?._private?.renderer?.isHeadless == null){
+      return;
+    }
+
     if (fit) {
       cyInstance.animate(
         {
@@ -316,7 +353,7 @@ const CytoscapeViewer = (props) => {
     background: 'rgba(0,0,0,0)',
   };
 
-  if (cyInstance !== null) {
+  if (cyInstance != null) {
     cyInstance.resize();
 
     if (layout === COSE_LAYOUT || layout === CONCENTRIC_LAYOUT) {
@@ -343,7 +380,7 @@ const CytoscapeViewer = (props) => {
 
     if (highlights) {
       cyInstance.elements().addClass('faded');
-      const query = cyInstance.filter('node[querynode = "true"]');
+      const query = cyInstance.nodes().filter('node[?querynode]');
       query.addClass('highlight');
     } else {
       cyInstance

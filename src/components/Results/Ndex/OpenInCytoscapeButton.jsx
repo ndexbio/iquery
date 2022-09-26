@@ -4,8 +4,7 @@ import logo from '../../../assets/images/cytoscape-logo.svg';
 import logoDisabled from '../../../assets/images/cytoscape-logo-mono-light.svg';
 import { withStyles } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
-//import {fade} from "./color-manipulator-util"
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 import { _fetchCyRESTAvailable } from '../../../sagas/cyRestStatusSaga';
 
 import MessageSnackbar from '../../AppShell/MessageSnackbar.jsx';
@@ -18,7 +17,7 @@ const BootstrapButton = withStyles({
       borderColor: '#EA9123',
     },
     '&:hover': {
-      backgroundColor: fade('#EA9123', 0.08),
+      backgroundColor: alpha('#EA9123', 0.08),
     },
   },
 })(Button);
@@ -28,7 +27,7 @@ const styles = (theme) => ({
     height: '2em',
   },
   button: {
-    height: '3em',
+    height: '2.5em',
     width: '4.3em',
     minWidth: '4.3em',
   },
@@ -112,7 +111,7 @@ const OpenInCytoscapeButton = (props) => {
         disableFocusListener
         title={
           disabled
-            ? 'Open Cytoscape Desktop to view this network'
+            ? 'Open this network in Cytoscape.  To use this feature, you need Cytoscape 3.6.0 or higher running on your machine (default port: 1234) and the CyNDEx-2 app installed'
             : 'Open this network in Cytoscape Desktop'
         }
         placement='bottom'

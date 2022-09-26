@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography'
 const Footer = props => (
   <footer className="footer-container">
     <Typography variant="subtitle1">
-      &copy; {COPYRIGHT}
+      {COPYRIGHT}
     </Typography>
     <img
       alt="NDEx logo"

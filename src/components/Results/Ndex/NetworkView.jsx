@@ -6,7 +6,16 @@ import NetworkViewer from './NetworkViewer';
 import MemoTableBrowser from '../TableBrowser';
 import NetworkToolbar from './NetworkToolbar';
 
-const DEFAULT_RATIO = [50, 50];
+import Dialog from '@material-ui/core/Dialog'
+import QueryGeneList from '../../QueryGeneList';
+import ProteinInteractionsWidget from './ProteinInteractionsWidget';
+
+import { ButtonGroup, IconButton } from '@material-ui/core';
+import FitIcon from '@material-ui/icons/ZoomOutMap'
+import ZoomInIcon from '@material-ui/icons/ZoomIn'
+import ZoomOutIcon from '@material-ui/icons/ZoomOut'
+
+const DEFAULT_RATIO = [100, 0];
 
 /**
  * Top page for the application
@@ -22,9 +31,59 @@ const NetworkView = (props) => {
     setResize(e);
   };
 
+  const { showTableModal } = props.network;
+
+  const handleFit = (evt) => {
+    if(props.uiState.selectedSource === 'pathwayfigures') {
+      props.uiStateActions.setFitPathwayFigure(true);
+    } else {
+      props.uiStateActions.fitNetworkView();
+    }
+  };
+
+  const handleZoomIn = (evt) => {
+    if (props.uiState.selectedSource === 'pathwayfigures') {
+      props.uiStateActions.setPathwayFigureZoom({
+        scale: props.uiState.pathwayFigureZoom.scale * 1.2,
+      });
+    } else {
+      const cy = props.network.cyJsInstance;
+      if (cy?._private?.renderer?.isHeadless != null) {
+        const currentZoom = cy.zoom()
+        const newLevel = currentZoom * 1.2
+        cy.zoom(newLevel)
+      }  
+    }
+  }
+  const handleZoomOut = (evt) => {
+    if (props.uiState.selectedSource === 'pathwayfigures') {
+      props.uiStateActions.setPathwayFigureZoom({
+        scale: props.uiState.pathwayFigureZoom.scale * 0.8,
+      });
+    } else {
+      const cy = props.network.cyJsInstance;
+      if (cy?._private?.renderer?.isHeadless != null) {
+        const currentZoom = cy.zoom()
+        const newLevel = currentZoom * 0.8
+        cy.zoom(newLevel)
+      }  
+    }
+  }
+
   return (
     <div className={'network-view-top'}>
       <NetworkToolbar {...props} />
+      <Dialog 
+        fullWidth={true}
+        maxWidth={'md'}
+        open={showTableModal}
+        onClose={() => {
+          props.networkActions.changeTab(0); // 0 for network info
+          props.networkActions.setShowTableModal(false);
+        }}
+      >
+        <MemoTableBrowser {...props} />
+      </Dialog>
       <Split
         sizes={DEFAULT_RATIO}
         direction='vertical'
@@ -37,8 +96,45 @@ const NetworkView = (props) => {
             : null
         }
       >
-        <NetworkViewer resized={resized} {...props} />
-        <MemoTableBrowser {...props} />
+        <div style={{display: 'flex'}}>
+        <NetworkViewer resized={resized} {...props} />      
+        { props.network.isFetching || props.uiState.selectedSource === 'protein-interactions' ? null : 
+        <div style={{position: 'absolute', bottom: '0.5em', left: '0.5em'}}>
+          <ButtonGroup
+            // className={classes.root}
+            style={{border: '1px solid #DDDDDD', backgroundColor: 'white', opacity: 1}}
+            orientation="vertical"
+            color="secondary"
+            variant="outlined"
+          >
+            <IconButton
+              key={'fitButton'}
+              color={'primary'}
+              style={{ backgroundColor: 'transparent', padding: '0.4em 0.1em' }}
+              onClick={handleFit}
+            >
+              <FitIcon />
+            </IconButton>
+            <IconButton
+              key={'zoomInButton'}
+              color={'primary'}
+              style={{ backgroundColor: 'transparent', padding: '0.4em 0.1em' }}
+              onClick={handleZoomIn}
+            >
+              <ZoomInIcon />
+            </IconButton>
+            <IconButton
+              key={'zoomOutButton'}
+              color={'primary'}
+              style={{ backgroundColor: 'transparent', padding: '0.4em 0.1em' }}
+              onClick={handleZoomOut}
+            >
+              <ZoomOutIcon />
+            </IconButton>
+          </ButtonGroup>
+        </div>  
+        }
+        </div>
       </Split>
     </div>
   );

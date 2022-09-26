@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Linkify from 'linkifyjs/react'
+import Linkify from 'linkify-react'
 import parse from 'html-react-parser'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -11,8 +11,7 @@ import { stripScripts } from './strip-scripts-util.js'
 import GeneAnnotationList from './GeneAnnotationList'
 import ExpandPanel from './ExpandPanel'
 import { isEqual } from 'lodash'
-import CheckIcon from '@material-ui/icons/Check'
-import Avatar from '@material-ui/core/Avatar'
+
 
 import { MAX_NETWORK_SIZE } from '../../../api/config'
 
@@ -276,6 +275,7 @@ const NodeProperties = props => {
           propertyString += property + '<br/>'
         }
       })
+
       if (propertyList.size > 1) {
         attributes.push({
           title: camelCaseToTitleCase(propertyName),
@@ -296,7 +296,7 @@ const NodeProperties = props => {
     if (
       props.search.results != null &&
       (props.search.results.genes.get(node.name) != null ||
-        props.search.results.genes.get(node.name.toLowerCase()) != null)
+        props.search.results.genes.get(node?.name?.toLowerCase()) != null)
     ) {
       inset = true
       geneAnnotation = (
@@ -310,146 +310,46 @@ const NodeProperties = props => {
       )
     }
 
-    const displayCol1 = []
-    const displayCol2 = []
-    let primaryString
-    let secondaryString
-    displayItems.forEach(list => {
-      primaryString = ''
-      let currentEntry
-      list.forEach(element => {
-        currentEntry = attributes.filter(entry => {
-          return entry.title === element
-        })[0]
-        if (currentEntry != null && currentEntry.content != null) {
-          primaryString +=
-            currentEntry.title + ': ' + currentEntry.content + '<br>'
-          currentEntry.displayed = true
-        }
-      })
-      primaryString = formatPrimary(primaryString)
-      if (primaryString !== '') {
-        switch (list) {
-          case entityProperties:
-            secondaryString = 'Entity Properties'
-            displayCol1.push(
-              <ListItem
-                key={index++}
-                className={classes.noPadding}
-                disableGutters={true}
-              >
-                <ListItemText
-                  inset={inset}
-                  primary={
-                    <React.Fragment>
-                      <Typography variant="caption" color="textSecondary">
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography variant="body2" component="div">
-                          {primaryString}
-                        </Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
-            break
-          case nodeProperties:
-            secondaryString = 'Node Properties'
-            displayCol2.push(
-              <ListItem
-                key={index++}
-                className={classes.noPadding}
-                disableGutters={true}
-              >
-                <ListItemText
-                  primary={
-                    <React.Fragment>
-                      <Typography variant="caption" color="textSecondary">
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography variant="body2">{primaryString}</Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
-            break
-        }
-      }
-    })
 
-    primaryString = ''
-    attributes.forEach(entry => {
-      if (!entry.displayed) {
-        primaryString += entry.title + ': ' + entry.content + '<br>'
-        entry.displayed = true
-      }
-    })
-    primaryString = formatPrimary(primaryString)
-    secondaryString = 'Additional properties'
+    const sortedAttributes = (
+      attributes
+        .filter(a => !a.title.startsWith('__'))
+        .sort((a, b) => a.title.localeCompare(b.title))
+    )
 
-    if (primaryString !== '') {
-      displayCol1.push(
-        <ListItem
-          key={index++}
-          className={classes.noPadding}
-          disableGutters={true}
-        >
-          <ListItemText
-            inset={inset}
-            primary={
-              <React.Fragment>
-                <Typography variant="caption" color="textSecondary">
-                  {secondaryString}
-                </Typography>
-                <div>
-                  <Typography variant="body2">{primaryString}</Typography>
-                </div>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-      )
-    }
+    const displayCol1 = sortedAttributes.map(attr => {
+      return (<div style={{marginBottom: '10px'}}>
+        <Typography component="div" variant="caption" color="textSecondary">
+          {attr.title}
+        </Typography>
+        <Typography variant="body2">
+          {formatPrimary(attr.content)}
+        </Typography>
+      </div>)
+    });
 
     const summary = (
       <table>
         <tbody>
           <tr>
             <td>
-              <Typography variant="body2">{node.name}</Typography>
+              <Typography 
+                variant="body2" 
+                color={querynode ? 'secondary' : 'initial'}
+              >
+                {node.name}
+              </Typography>
             </td>
-            {querynode ? (
-              <td>
-                <Avatar className={classes.matched}>
-                  <CheckIcon className={classes.icon} />
-                </Avatar>
-              </td>
-            ) : null}
           </tr>
         </tbody>
       </table>
     )
     const details = (
-      <table className={classes.table}>
-        <tbody>
-          <tr>
-            <td colSpan="2" valign="top">
-              {geneAnnotation}
-            </td>
-          </tr>
-          <tr>
-            <td valign={'top'}>{displayCol1}</td>
-            <td valign={'top'}>{displayCol2}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div style={{marginLeft: '20px'}}>
+        {displayCol1}
+      </div>
     )
+
     topDisplay.push(
       <ExpandPanel
         summary={summary}
@@ -513,7 +413,7 @@ const extractTitle = entry => {
   return stripScripts(entry)
 }
 
-const formatPrimary = entry => {
+export const formatPrimary = entry => {
   if (entry === '') {
     return entry
   }
@@ -521,7 +421,7 @@ const formatPrimary = entry => {
     .replace(/<\/?p\/?>/gi, '<br>')
     .replace(/(<\/?br\/?>)+/gi, '<br>')
     .replace(/(\n)+/gi, '\n')
-    .replace(/<a\s+href=/gi, '<a target="_blank" href=')
+    .replace(/<a\s+href=/gi, '<a class="table-property-link" target="_blank" rel="noopener noreferrer" href=')
     .trim()
   if (modifiedText.startsWith('<br>')) {
     modifiedText = modifiedText.slice(4, modifiedText.length - 1)
@@ -530,7 +430,7 @@ const formatPrimary = entry => {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
   modifiedText = parse(modifiedText)
-  return <Linkify key={'link' + index++}>{modifiedText}</Linkify>
+  return <Linkify options={{className: 'table-property-link', target: '_blank'}} key={'link' + index++}>{modifiedText}</Linkify>
 }
 
 //Necessary because otherwise open list items will collapse every time "SET_AVAILABLE" happens

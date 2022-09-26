@@ -6,7 +6,9 @@ import {
   setSelectedSource,
   setPathwayFigure,
   setPathwayFigureSource,
+  setPathwayFigureTab,
   setFitPathwayFigure,
+  setPathwayFigureZoom,
   setSortBy,
   setSortOptions,
   setLayout,
@@ -14,22 +16,36 @@ import {
   fitNetworkView,
   update,
   setAnnotations,
+  setShowLegend,
+  setShowTour
 } from '../actions/uiState';
+
+import { HIGHLIGHT_GENES, DEFAULT_SORT, HIDE_SEARCHBAR, HIDE_VIEW_SOURCE_IN_NDEX_BUTTON, HIDE_SAVE_TO_NDEX_BUTTON } from '../api/config';
 
 const DEF_STATE = {
   isSettingsOpen: false,
   servicesListOpen: false,
-  highlights: false,
-  selectedSource: 'enrichment',
+  highlights: HIGHLIGHT_GENES,
+  selectedSource: '',
   pathwayFigure: true,
   pathwayFigureSource: null,
+  pathwayFigureTab: 0, // whether to view the figure or the genelist tab
   fitPathwayFigure: false,
-  sortOptions: ['Overlap', 'p-Value', 'Similarity'],
-  sortBy: 'Overlap',
+  pathwayFigureZoom: {
+    scale: 1,
+    translation: { x: 0, y: 0 },
+  },
+  sortOptions: ['Similarity', 'p-Value', 'Overlap'],
+  sortBy: DEFAULT_SORT,
   layout: 'Preset',
   layouts: [],
   fit: true,
   annotations: false,
+  hideSearchBar: HIDE_SEARCHBAR,
+  hideViewSourceInNdexButton: HIDE_VIEW_SOURCE_IN_NDEX_BUTTON,
+  hideSaveToNdexButton: HIDE_SAVE_TO_NDEX_BUTTON,
+  showLegend: false,
+  showTour: false
 };
 
 const uiState = handleActions(
@@ -45,10 +61,17 @@ const uiState = handleActions(
       return { ...state, highlights: payload.payload };
     },
     [setSelectedSource]: (state, payload) => {
-      return { ...state, selectedSource: payload.payload };
+      // anytime a new source is selected, reset the default pathwayfigure view
+      // it is possible the user has changed the pathway figure view to the gene tab
+      // reset this to the default pathway figure view
+      // refs UD-2216
+      return { ...state, selectedSource: payload.payload, pathwayFigureTab: 0, pathwayFigure: true };
     },
     [setPathwayFigure]: (state, payload) => {
       return { ...state, pathwayFigure: payload.payload };
+    },
+    [setPathwayFigureTab]: (state, payload) => {
+      return {...state, pathwayFigureTab: payload.payload};
     },
     [setPathwayFigureSource]: (state, payload) => {
       return { ...state, pathwayFigureSource: payload.payload };
@@ -102,6 +125,24 @@ const uiState = handleActions(
         annotations: payload.payload,
       };
     },
+    [setPathwayFigureZoom]: (state, payload) => {
+      return {
+        ...state,
+        pathwayFigureZoom: Object.assign(state.pathwayFigureZoom, payload.payload),
+      };
+    },
+    [setShowLegend]: (state, payload) => {
+      return {
+        ...state,
+        showLegend: payload.payload,
+      };
+    },
+    [setShowTour]: (state, payload) => {
+      return {
+        ...state,
+        showTour: payload.payload
+      }
+    }
   },
   DEF_STATE
 );

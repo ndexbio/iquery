@@ -7,11 +7,11 @@ import InputLabel from '@material-ui/core/InputLabel'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@material-ui/core/styles/colorManipulator'
 
 const formControl = {
   height: '3em',
-  paddingTop: '0.8em',
+  paddingTop: '0.5em',
   marginLeft: '0.3em'
 }
 
@@ -25,7 +25,7 @@ const styles = theme => ({
       borderRadius: 4
     },
     '&:hover': {
-      backgroundColor: fade('rgb(65, 84, 178)', 0.08)
+      backgroundColor: alpha('rgb(65, 84, 178)', 0.08)
     }
   },
   root: {
@@ -50,6 +50,12 @@ const LayoutSelector = props => {
   const menuItems = props.uiState.layouts
   const inputLabel = React.useRef(null)
   const [labelWidth, setLabelWidth] = React.useState(0)
+
+  const layoutDisplayNameMap = {
+    'Preset': 'Default',
+    'Cose': 'Spring',
+    'Concentric': 'Concentric'
+  };
 
   useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth)
@@ -77,7 +83,7 @@ const LayoutSelector = props => {
             ? menuItems.map(item => (
                 <MenuItem value={item} key={item}>
                   <Typography variant="body2" color="textSecondary">
-                    {item}
+                    {layoutDisplayNameMap[item]}
                   </Typography>
                 </MenuItem>
               ))

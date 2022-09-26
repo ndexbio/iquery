@@ -8,6 +8,10 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputBase from '@material-ui/core/InputBase'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
+import Radio from '@material-ui/core/Radio'
+
 
 const BootstrapInput = withStyles(theme => ({
   root: {
@@ -37,67 +41,82 @@ const formStyle = {
 }
 
 const divStyle = {
-  paddingLeft: '16px',
+  position: 'sticky',
+  top: '0px',
+  paddingLeft: '12px',
   borderBottom: '1px solid rgba(239, 239, 239, 1)',
-  display: 'inline-block',
-  width: '100%'
+  display: 'flex',
+  minHeight: '56px',
+  height: 'auto',
+  width: '100%',
+  alignItems: 'center',
+  backgroundColor: 'white',
+  zIndex: 1
 }
 
 const textStyle = {
-  position: 'relative',
-  top: '8px'
 }
 
 const selectStyle = {
   color: 'secondary'
 }
 
+const radioStyle = { 
+  marginRight: '20px'
+}
+
+const radioButtonsDiv = {
+  alignItems: 'center',
+  display: 'flex',
+  flexShrink: 0
+}
+
+const sortInfoStyle = {
+  flexBasis: '100px',
+  display: 'flex',
+  alignItems: 'center',
+  flexShrink: 0,
+  marginRight: '10px'
+}
 const SortPanel = props => {
   const [sortBy, setSortBy] = useState(props.uiState.sortBy)
-  const menuItems = props.uiState.sortOptions
+  const sortOptions = props.uiState.sortOptions
 
   const handleChange = event => {
     props.uiStateActions.setSortBy(event.target.value)
     setSortBy(event.target.value)
   }
 
-  if (props.uiState.selectedSource === 'enrichment') {
     return (
       <React.Fragment>
         <div style={divStyle}>
-          <Typography
-            variant="body2"
-            display="inline"
-            color="textSecondary"
-            style={textStyle}
-          >
-            Sort by
-          </Typography>
-          <FormControl style={formStyle}>
-            <Select
-              value={sortBy}
-              onChange={handleChange}
-              displayEmpty
-              name="Sort by"
-              style={selectStyle}
-              input={<BootstrapInput name="sort" id="sort-customized-select" />}
+          <div style={sortInfoStyle}>
+          {props.uiState.selectedSource !== 'protein-interactions' ? <InfoModal /> : null}
+            
+            <Typography
+              variant="body2"
+              display="inline"
+              color="textSecondary"
+              style={textStyle}
             >
-              {menuItems.map(item => (
-                <MenuItem value={item} key={item}>
-                  <Typography variant="body2" color="textSecondary">
-                    {item}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <InfoModal />
+              {props.uiState.selectedSource !== 'protein-interactions' ? 'Sort by' : null}
+            </Typography>
+          </div>
+          <div style={radioButtonsDiv}>
+            {props.uiState.selectedSource !== 'protein-interactions' ? sortOptions.map(option => (
+              <FormControlLabel
+                  key={option}
+                  style={radioStyle}
+                  value="top"
+                  control={<Radio color='primary' checked={sortBy === option} value={option} onChange={handleChange}></Radio>}
+                  label={<Typography variant="body2">{option}</Typography>}
+                  labelPlacement="end"
+              />
+            )) : null}
+          </div>
         </div>
       </React.Fragment>
     )
-  } else {
-    return null
-  }
 }
 
 export default SortPanel

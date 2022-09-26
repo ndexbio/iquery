@@ -14,7 +14,6 @@ const drawerWidth = 240
 const styles = theme => ({
   root: {
     display: 'flex',
-    height: '100vmin'
   },
   drawerHeader: {
     display: 'flex',
@@ -24,11 +23,6 @@ const styles = theme => ({
     justifyContent: 'flex-end'
   },
   content: {
-    flexGrow: 1,
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
     marginLeft: -drawerWidth
   },
   contentShift: {
@@ -52,18 +46,11 @@ const AppShell = props => {
   const { classes, ...others } = props
 
   const open = props.uiState.isSettingsOpen
-
+  const hideSearchBar = props.uiState.hideSearchBar;
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <TitleBar {...others} />
-      <SettingsPanel {...others} />
-
-      <div
-        className={classNames(classes.content, {
-          [classes.contentShift]: open
-        })}
-      />
+      {hideSearchBar ? null : <TitleBar {...others} />}
       {props.children}
     </div>
   )

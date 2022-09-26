@@ -7,6 +7,7 @@ import './style.css';
 const styles = (theme) => ({
   button: {
     'text-transform': 'none',
+    height: '2.5em'
   },
 });
 

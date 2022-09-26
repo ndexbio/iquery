@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Linkify from 'linkifyjs/react'
+import Linkify from 'linkify-react'
 import parse from 'html-react-parser'
 import { isEqual } from 'lodash'
 
@@ -9,13 +9,12 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/styles'
 import ExpandPanel from './ExpandPanel'
-import CheckIcon from '@material-ui/icons/Check'
-import Avatar from '@material-ui/core/Avatar'
 
 import { camelCaseToTitleCase } from './camel-case-util.js'
 import { stripScripts } from './strip-scripts-util.js'
 
 import { MAX_NETWORK_SIZE } from '../../../api/config'
+
 
 let index = 0
 
@@ -120,8 +119,6 @@ const EdgeProperties = props => {
     'Directed',
     'Edge Id'
   ]
-
-  const displayItems = [entityProperties, edgeProperties]
 
   edges.sort((a, b) => {
     let aScore = 0
@@ -286,118 +283,18 @@ const EdgeProperties = props => {
       }
     }
 
-    const displayCol1 = []
-    const displayCol2 = []
-    let primaryString
-    let secondaryString
-    displayItems.forEach(list => {
-      primaryString = ''
-      let currentEntry
-      list.forEach(element => {
-        currentEntry = attributes.filter(entry => {
-          return entry.title === element
-        })[0]
-        if (currentEntry != null && currentEntry.content != null) {
-          primaryString +=
-            currentEntry.title +
-            ': ' +
-            currentEntry.content +
-            (currentEntry.noBreak ? '' : '<br>')
-          currentEntry.displayed = true
-        }
-      })
-      primaryString = formatPrimary(primaryString)
-      if (primaryString !== '') {
-        switch (list) {
-          case entityProperties:
-            secondaryString = 'Entity Properties'
-            displayCol1.push(
-              <ListItem key={Math.random()} className={classes.noPadding}>
-                <ListItemText
-                  inset={false}
-                  primary={
-                    <React.Fragment>
-                      <Typography
-                        component="span"
-                        variant="caption"
-                        color="textSecondary"
-                      >
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography component="span" variant="body2">
-                          {primaryString}
-                        </Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
-            break
-          case edgeProperties:
-            secondaryString = 'Edge Properties'
-            displayCol2.push(
-              <ListItem
-                key={Math.random()}
-                className={classes.listPadding}
-                disableGutters={true}
-              >
-                <ListItemText
-                  primary={
-                    <React.Fragment>
-                      <Typography variant="caption" color="textSecondary">
-                        {secondaryString}
-                      </Typography>
-                      <div>
-                        <Typography variant="body2">{primaryString}</Typography>
-                      </div>
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            )
-            break
-        }
-      }
-    })
+    const sortedAttributes = attributes.sort((a, b) => a.title.localeCompare(b.title))
 
-    primaryString = ''
-    attributes.forEach(entry => {
-      if (!entry.displayed) {
-        primaryString +=
-          entry.title + ': ' + entry.content + (entry.noBreak ? '' : '<br/>')
-        entry.displayed = true
-      }
-    })
-    primaryString = formatPrimary(primaryString)
-    secondaryString = 'Additional properties'
-
-    if (primaryString !== '') {
-      displayCol1.push(
-        <ListItem key={index++} className={classes.noPadding}>
-          <ListItemText
-            inset={false}
-            primary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="caption"
-                  color="textSecondary"
-                >
-                  {secondaryString}
-                </Typography>
-                <div>
-                  <Typography component="span" variant="body2">
-                    {primaryString}
-                  </Typography>
-                </div>
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-      )
-    }
+    const displayCol1 = sortedAttributes.map(attr => {
+      return (<div style={{marginBottom: '10px'}}>
+        <Typography component="div" variant="caption" color="textSecondary">
+          {attr.title}
+        </Typography>
+        <Typography variant="body2">
+          {formatPrimary(attr.content)}
+        </Typography>
+      </div>)
+    });
 
     //Create summary
     const summary = (
@@ -405,41 +302,32 @@ const EdgeProperties = props => {
         <tbody>
           <tr>
             <td>
-              <Typography variant="body2">{source}</Typography>
+              <Typography 
+                variant="body2" 
+                color={props.search?.searchResults?.query?.includes(source?.toUpperCase()) ? 'secondary' : 'initial'}
+              >
+                  {source}
+              </Typography>
             </td>
-            {props.search.queryList.includes(source.toUpperCase()) ? (
-              <td>
-                <Avatar className={classes.matched}>
-                  <CheckIcon className={classes.icon} />
-                </Avatar>
-              </td>
-            ) : null}
             <td>
               <Typography variant="body2">{' ➝ '}</Typography>
             </td>
             <td>
-              <Typography variant="body2">{target}</Typography>
+              <Typography 
+                variant="body2"
+                color={props.search?.searchResults?.query?.includes(target?.toUpperCase()) ? 'secondary' : 'initial'}
+              >
+                {target}
+              </Typography>
             </td>
-            {props.search.queryList.includes(target.toUpperCase()) ? (
-              <td>
-                <Avatar className={classes.matched}>
-                  <CheckIcon className={classes.icon} />
-                </Avatar>
-              </td>
-            ) : null}
           </tr>
         </tbody>
       </table>
     )
     const details = (
-      <table className={classes.table}>
-        <tbody>
-          <tr>
-            <td valign={'top'}>{displayCol1}</td>
-            <td valign={'top'}>{displayCol2}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div style={{marginLeft: '20px', maxHeight: '300px'}}>
+        {displayCol1}
+      </div>
     )
     topDisplay.push(
       <ExpandPanel
@@ -512,7 +400,7 @@ const formatPrimary = entry => {
     .replace(/<\/?p\/?>/gi, '<br>')
     .replace(/(<\/?br\/?>)+/gi, '<br>')
     .replace(/(\n)+/gi, '\n')
-    .replace(/<a\s+href=/gi, '<a target="_blank" href=')
+    .replace(/<a\s+href=/gi, '<a class="table-property-link" target="_blank" href=')
     .trim()
   if (modifiedText.startsWith('<br>')) {
     modifiedText = modifiedText.slice(4, modifiedText.length - 1)
@@ -520,8 +408,9 @@ const formatPrimary = entry => {
   if (modifiedText.endsWith('<br>')) {
     modifiedText = modifiedText.slice(0, modifiedText.length - 4)
   }
-  modifiedText = parse(camelCaseToTitleCase(modifiedText))
-  return <Linkify key={'link:' + index++}>{modifiedText}</Linkify>
+
+  modifiedText = parse(modifiedText)
+  return <Linkify options={{className: "table-property-link"}} key={'link:' + index++}>{modifiedText}</Linkify>
 }
 
 const findNode = (nodeId, nodeArray) => {

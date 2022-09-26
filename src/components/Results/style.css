@@ -25,3 +25,8 @@
   position: relative;
   right: 0;
 }
+
+.table-property-link {
+  font-weight: 400;
+  text-decoration: underline !important;
+}
