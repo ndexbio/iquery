@@ -14,13 +14,11 @@
 
 ## What is IQuery?
 
-IQuery is a web application for querying a curated subset of the online biological network repository [NDEx](https://ndexbio.org). Given a set of query genes, IQuery will return NDEx pathways enriched for the query genes, networks representing the interactions between those genes and other proteins, and networks representing the associations between those genes and other biological or chemical entities. IQuery is designed such that new types of searches and analyses may be added in the future.
-
-Users can request to have their networks included in the search by uploading their networks to [NDEx](https://ndexbio.org) and [contacting us](https://home.ndexbio.org/contact-us/).
+IQuery is a web application for querying a curated subset of the online biological network repository [NDEx](https://ndexbio.org). Given a set of query genes, IQuery will return NDEx pathways enriched for the query genes, and networks representing the interactions between those genes and other proteins.
 
 This repo contains the sources for the IQuery web application. 
 The source code for the services that support IQuery may be found at: 
-* https://github.com/cytoscape/ndexsearch-rest
+* https://github.com/ndexbio/ndexsearch-rest
 * https://github.com/cytoscape/ndex-interactome-search
 * https://github.com/cytoscape/ndex-enrichment-rest
 * https://github.com/cytoscape/ndex-enrichment-rest-client
