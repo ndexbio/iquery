@@ -5,7 +5,6 @@
 * [What is IQuery?](#what-is-iquery)
 * [Using the IQuery interface](#using-the-iquery-interface)
     * [Quick start](#quick-start)
-    * [Detailed overview](#detailed-overview)
 * [Integrating IQuery into your application](#integrating-iquery-into-your-application)
 * [Configuring, building, and deploying IQuery locally for development](#configuring-building-and-deploying-iquery-locally-for-development)
     * [Configuration](#configuration)
