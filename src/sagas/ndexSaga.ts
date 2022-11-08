@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects';
+import { all, call, put, takeLatest, race, delay } from 'redux-saga/effects';
 import * as api from '../api/ndex';
 import * as myGeneApi from '../api/mygene';
 import { getResult, checkStatus, getSource, postQuery } from '../api/search';
@@ -35,12 +35,15 @@ const API_CALL_INTERVAL = 500;
  * @param action
  * @returns {IterableIterator<*>}
  */
-function* watchSearch(action) {
+export function* watchSearch(action) {
   const geneList: string[] = action.payload.geneList;
+  const geneListString: string = geneList.join();
   const validateGenesWithMyGene: boolean = action.payload.validateGenesWithMyGene;
+  const serviceTimeout: number = action.payload.serviceTimeout || 10000;
   let sourceNames: string[] = action.payload.sourceNames;
 
-  // If source names are missing, find them:
+
+  // 1. If source names are missing, find them:
   if (!sourceNames || sourceNames.length === 0) {
     const sources = yield call(getSource);
     const sourceJson = yield call([sources, 'json']);
@@ -49,38 +52,63 @@ function* watchSearch(action) {
     sourceNames = sourceNames.filter((name) => name !== 'keyword');
   }
 
-  const geneListString: string = geneList.join();
-
+  // 2. send genelist query to the mygene.info service to get gene information 
+  let genes = new Map<string, Record<string, any>>();
+  let notFound = new Array<string>();
+  let myGeneResponseMissing: boolean = true;
   try {
-    // 1. send query to the service mygene.info to get gene information 
-    let genes = new Map<string, Record<string, any>>();
-    let notFound = new Array<string>();
-
     if (validateGenesWithMyGene) {
-      const geneRes = yield call(myGeneApi.searchGenes, geneListString);
-      const geneJson = yield call([geneRes, 'json']);
-      const filtered: FilteredGenes = filterGenes(geneJson);
-
-      genes = filtered.uniqueGeneMap;
-      notFound = filtered.notFound;
+      const {geneRes, timeout} = yield race({
+        geneRes: call(myGeneApi.searchGenes, geneListString),
+        timeout: delay(serviceTimeout)
+      })
+    
+      // if the mygene service responds in time, get the results and set them
+      if (geneRes) {
+        const geneJson = yield call([geneRes, 'json']);
+        const filtered: FilteredGenes = filterGenes(geneJson);
+        genes = filtered.uniqueGeneMap;
+        notFound = filtered.notFound;
+        myGeneResponseMissing = false;
+      } 
     }
+  } catch (e: any) {
+    console.warn('mygene.info service error:', e);
+  }
 
-    // 2. send gene list query to the ndex service
-    const searchRes = yield call(postQuery, geneList, sourceNames);
 
-    const resultLocation = searchRes.headers.get('Location');
-    const parts: string[] = resultLocation.split('/');
-    const jobId: string = parts[parts.length - 1];
-
-    yield put({
-      type: SEARCH_SUCCEEDED,
-      payload: {
+  // 3. send genelist query to the ndex service
+  try {
+    const {searchRes, timeout} = yield race({
+      searchRes: call(postQuery, geneList, sourceNames),
+      timeout: delay(serviceTimeout)
+    })
+  
+    // if the mygene service responds in time, get the results and set them
+    if (searchRes) {
+      const resultLocation = searchRes.headers.get('Location');
+      const parts: string[] = resultLocation.split('/');
+      const jobId: string = parts[parts.length - 1];
+  
+      let payload: any = {
         genes,
         notFound,
         resultLocation,
-        jobId,
-      },
-    });
+        jobId
+      };
+  
+      if(validateGenesWithMyGene){
+        payload.myGeneResponseMissing = myGeneResponseMissing;
+      }
+  
+      yield put({
+        type: SEARCH_SUCCEEDED,
+        payload,
+      });  
+    } else {
+      throw new Error('ndex service call timed out')
+    }
+
   } catch (e: any) {
     console.warn('NDEx search error:', e);
     yield put({
