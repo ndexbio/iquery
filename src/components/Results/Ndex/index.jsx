@@ -371,9 +371,11 @@ const Ndex = (props) => {
               <td style={{ display: 'flex', alignItems: 'center' }}>
                 {selectedIndex !== index ? (
                   <Typography variant="caption" color="secondary">
-                    {hitGenes.length > 5
-                      ? `${hitGenes.sort().slice(0, 5).join(' ')}...`
-                      : hitGenes.sort().slice(0, 5).join(' ')}
+                   {hitGenes && hitGenes.sort
+                     ? hitGenes.length > 5
+                       ? `${hitGenes.sort().slice(0, 5).join(' ')}...`
+                       : hitGenes.sort().slice(0, 5).join(' ')
+                     : ''}
                   </Typography>
                 ) : null}
               </td>

@@ -113,6 +113,10 @@ const NetworkList = (props) => {
 
         hits = sortFns[props.uiState.sortBy](hits)
       }
+
+      if (props.uiState.selectedSource === 'pathwayfigures' || props.uiState.selectedSource === 'indra') {
+        hits = sortFns[props.uiState.sortBy](hits)
+      }
       //Check if you need to rerender first hit
       let opened = false
       if (props.search.actualResults.length === 0) {
