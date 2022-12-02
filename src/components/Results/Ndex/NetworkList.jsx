@@ -105,18 +105,11 @@ const NetworkList = (props) => {
   useEffect(() => {
     if (hits !== null) {
       const firstHit = cloneDeep(hits[0])
-      if (props.uiState.selectedSource === 'enrichment') {
-        //Allow stable sorting
-        for (let i = 0; i < hits.length; i++) {
-          hits[i].rank = i
-        }
-
+      const sourcesToSort = ['enrichment', 'pathwayfigures', 'indra']
+      if (sourcesToSort.includes(props.uiState.selectedSource)) {
         hits = sortFns[props.uiState.sortBy](hits)
       }
 
-      if (props.uiState.selectedSource === 'pathwayfigures' || props.uiState.selectedSource === 'indra') {
-        hits = sortFns[props.uiState.sortBy](hits)
-      }
       //Check if you need to rerender first hit
       let opened = false
       if (props.search.actualResults.length === 0) {
