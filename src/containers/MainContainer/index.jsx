@@ -7,7 +7,6 @@ import { browserHistory } from 'react-router-dom'
 import * as searchActions from '../../actions/search'
 import * as uiStateActions from '../../actions/uiState'
 import * as networkActions from '../../actions/network'
-import * as sourceActions from '../../actions/source'
 import * as cyrestActions from '../../actions/cyrest'
 import * as ndexSaveActions from '../../actions/ndexSave'
 
@@ -15,7 +14,7 @@ import ReactGA from 'react-ga'
 
 import HomePanel from '../../components/HomePanel'
 
-const MainContainer = props => {
+const MainContainer = (props) => {
   useEffect(() => {
     const { history } = props
 
@@ -34,7 +33,7 @@ function mapStateToProps(state) {
     network: state.network,
     source: state.source,
     cyrest: state.cyrest,
-    ndexSave: state.ndexSave
+    ndexSave: state.ndexSave,
   }
 }
 
@@ -43,12 +42,9 @@ function mapDispatchToProps(dispatch) {
     searchActions: bindActionCreators(searchActions, dispatch),
     uiStateActions: bindActionCreators(uiStateActions, dispatch),
     networkActions: bindActionCreators(networkActions, dispatch),
-    sourceActions: bindActionCreators(sourceActions, dispatch),
     cyrestActions: bindActionCreators(cyrestActions, dispatch),
-    ndexSaveActions: bindActionCreators(ndexSaveActions, dispatch)
+    ndexSaveActions: bindActionCreators(ndexSaveActions, dispatch),
   }
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(MainContainer)
-)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainContainer))
