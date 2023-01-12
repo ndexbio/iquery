@@ -1,7 +1,7 @@
-import { all, call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import * as api from '../api/ndex'
 import * as myGeneApi from '../api/mygene'
-import { getResult, checkStatus, getSource, postQuery } from '../api/search'
+import { getResult, checkStatus, postQuery } from '../api/search'
 import getProteinInteractionsData from '../api/proteinInteractions'
 
 import { FilteredGenes, filterGenes } from './ndexSaga-util'
@@ -16,14 +16,13 @@ import {
   SET_SEARCH_RESULT,
 } from '../actions/search'
 
-import { FIND_SOURCE_STARTED, FIND_SOURCE_FAILED, FIND_SOURCE_SUCCEEDED } from '../actions/source'
-
 import {
   NETWORK_FETCH_STARTED,
   NETWORK_FETCH_SUCCEEDED,
   NETWORK_FETCH_FAILED,
   NETWORK_FETCH_NOOP,
 } from '../actions/network'
+import { SOURCE_NAMES } from '../api/config'
 
 const API_CALL_INTERVAL = 500
 
@@ -36,16 +35,7 @@ const API_CALL_INTERVAL = 500
 function* watchSearch(action) {
   const geneList: string[] = action.payload.geneList
   const validateGenesWithMyGene: boolean = action.payload.validateGenesWithMyGene
-  let sourceNames: string[] = action.payload.sourceNames
-
-  // If source names are missing, find them:
-  if (!sourceNames || sourceNames.length === 0) {
-    const sources = yield call(getSource)
-    const sourceJson = yield call([sources, 'json'])
-    const sourceList: any[] = sourceJson.results
-    sourceNames = sourceList.map((source) => source.name)
-    sourceNames = sourceNames.filter((name) => name !== 'keyword')
-  }
+  let sourceNames: string[] = action.payload.sourceNames || SOURCE_NAMES
 
   const geneListString: string = geneList.join()
 
@@ -208,20 +198,8 @@ function* fetchNetwork(action) {
   }
 }
 
-export function* fetchSource(action) {
-  try {
-    const sources = yield call(getSource)
-    const json = yield call([sources, 'json'])
-    const orderedSources = json.results
-    yield put({ type: FIND_SOURCE_SUCCEEDED, sources: orderedSources })
-  } catch (error) {
-    yield put({ type: FIND_SOURCE_FAILED, error })
-  }
-}
-
 export default function* rootSaga() {
   yield takeLatest(SEARCH_STARTED, watchSearch)
   yield takeLatest(FETCH_RESULT_STARTED, watchSearchResult)
   yield takeLatest(NETWORK_FETCH_STARTED, fetchNetwork)
-  yield takeLatest(FIND_SOURCE_STARTED, fetchSource)
 }

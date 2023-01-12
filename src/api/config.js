@@ -36,6 +36,8 @@ var HIDE_SEARCHBAR = false
 var HIDE_VIEW_SOURCE_IN_NDEX_BUTTON = false
 var HIDE_SAVE_TO_NDEX_BUTTON = false
 
+var SOURCE_NAMES = ['enrichment', 'pathwayfigures', 'indra']
+
 var PROTEIN_INTERACTIONS_NETWORKS = [
   '038fcfcf-e757-11ec-8bfe-0242c246b7fb',
   'b6e6451f-ff67-11ea-819c-525400c25d22',
@@ -87,6 +89,7 @@ if (window.ndexSettings === undefined) {
     TOUR_IMAGES = window.ndexSettings.iQuery.tourImages
     LANDING_PAGE_TEXT = window.ndexSettings.iQuery.landingPageText
     NDEX_URL = window.ndexSettings.iQuery.ndexUri
+    SOURCE_NAMES = window.ndexSettings.iQuery.sourceNames
   }
 }
 
@@ -125,4 +128,5 @@ export {
   TOUR_IMAGES,
   LANDING_PAGE_TEXT,
   NDEX_URL,
+  SOURCE_NAMES,
 }

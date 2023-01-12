@@ -19,7 +19,6 @@ const StartPanel = (props) => {
       props.searchActions.setQuery(genes)
       props.searchActions.searchStarted({ geneList, validateGenesWithMyGene: props.search.validateGenesWithMyGene })
     }
-    props.sourceActions.findSourceStarted()
 
     return () => {}
   }, [])
