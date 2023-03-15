@@ -6,18 +6,18 @@ import SaveIcon from '@material-ui/icons/Save'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
 
-const styles = theme => ({
+const styles = (theme) => ({
   buttonIcon: {
     padding: 0,
     margin: 0,
-    paddingBottom: '0.1em'
+    paddingBottom: '0.1em',
   },
   button: {
     height: '2.5em',
     width: '4.3em',
     minWidth: '4.3em',
-    marginLeft: '0.5em'
-  }
+    marginLeft: '0.5em',
+  },
 })
 
 const BootstrapButton = withStyles({
@@ -27,30 +27,29 @@ const BootstrapButton = withStyles({
     color: '#212121',
     '&:active': {
       borderColor: '#212121',
-      color: '#212121'
-    }
-  }
+      color: '#212121',
+    },
+  },
 })(Button)
 
-const SaveToNDExButton = props => {
+const SaveToNDExButton = (props) => {
   const { classes } = props
 
   const handleImportNetwork = () => {
-
-  //checking if user has logged in already
-  let loggedInUserRaw = window.localStorage.getItem('loggedInUser');
-  if (loggedInUserRaw){
-    let loggedInUser = JSON.parse(loggedInUserRaw);
-    if (loggedInUser !== null){
-      let lProfile = {};
-      lProfile.name = loggedInUser.firstName;
-      lProfile.image = loggedInUser.image;
-      lProfile.authorization = {};
-      lProfile.authorization.type = "ndex";
-      lProfile.authorization.token = 'Basic ' + window.btoa(loggedInUser.userName + ':' + loggedInUser.token);
-      props.ndexSaveActions.setProfile(lProfile);
+    //checking if user has logged in already
+    let loggedInUserRaw = window.localStorage.getItem('loggedInUser')
+    if (loggedInUserRaw) {
+      let loggedInUser = JSON.parse(loggedInUserRaw)
+      if (loggedInUser !== null) {
+        let lProfile = {}
+        lProfile.name = loggedInUser.firstName
+        lProfile.image = loggedInUser.image
+        lProfile.authorization = {}
+        lProfile.authorization.type = 'ndex'
+        lProfile.authorization.token = 'Basic ' + window.btoa(loggedInUser.userName + ':' + loggedInUser.token)
+        props.ndexSaveActions.setProfile(lProfile)
+      }
     }
-  }
     props.ndexSaveActions.setNDExModalOpen(true)
   }
 
@@ -65,11 +64,7 @@ const SaveToNDExButton = props => {
           disabled={disabled}
           onClick={handleImportNetwork}
         >
-          <SaveIcon
-            color={disabled ? 'disabled' : 'inherit'}
-            fontSize="large"
-            className={classes.buttonIcon}
-          />
+          <SaveIcon color={disabled ? 'disabled' : 'inherit'} fontSize="large" className={classes.buttonIcon} />
         </BootstrapButton>
       </div>
     </Tooltip>

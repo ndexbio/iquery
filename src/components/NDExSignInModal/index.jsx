@@ -12,19 +12,17 @@ import {
   TextField,
   FormControl,
   Typography,
-  Avatar
+  Avatar,
 } from '@material-ui/core'
 
-import GoogleLogin from 'react-google-login'
 import GoogleLogo from './assets/images/google-logo.svg'
 import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 
 import NDExSave from '../NDExSave'
 
 import './style.css'
-import { GOOGLE_CLIENT_ID } from '../../api/config'
 
-const PaperComponent = props => {
+const PaperComponent = (props) => {
   return (
     <Draggable cancel={'[class*="MuiDialogContent-root"]'}>
       <Paper {...props} />
@@ -33,12 +31,9 @@ const PaperComponent = props => {
 }
 
 class GoogleSignOn extends React.Component {
-  onFailure = err => {
+  onFailure = (err) => {
     const message =
-      (err.details &&
-        err.details.startsWith(
-          'Not a valid origin for the client: http://localhost:'
-        )) ||
+      (err.details && err.details.startsWith('Not a valid origin for the client: http://localhost:')) ||
       (err.error && err['error']) ||
       JSON.stringify(err)
     this.props.onError(message, false)
@@ -47,9 +42,7 @@ class GoogleSignOn extends React.Component {
   render() {
     const { googleSSO, onSuccess } = this.props
 
-    const clsName = googleSSO
-      ? 'google-sign-in-button'
-      : 'google-sign-in-button googleButtonDisabled'
+    const clsName = googleSSO ? 'google-sign-in-button' : 'google-sign-in-button googleButtonDisabled'
     const title = googleSSO
       ? 'Sign in with your Google account'
       : "Google Sign In is currently unavailable because the 'BLOCK THIRD-PARTY COOKIES' option is enabled in your web browser." +
@@ -58,30 +51,7 @@ class GoogleSignOn extends React.Component {
         "2. Disable the 'BLOCK THIRD-PARTY COOKIES' option in your browser settings."
     const logo = googleSSO ? GoogleLogo : GoogleLogoDisabled
 
-    return (
-      <div className="google-button">
-        <GoogleLogin
-          clientId={GOOGLE_CLIENT_ID}
-          render={renderProps => (
-            <Button
-              id="googleSignInButtonId"
-              disabled={!googleSSO}
-              className={clsName}
-              title={title}
-              onClick={renderProps.onClick}
-            >
-              <span className="google-sign-in-button-span">
-                <img src={logo} alt="" className="googleLogo" />
-                <div className="googleSignInText">Sign in with Google</div>
-              </span>
-            </Button>
-          )}
-          buttonText="Login"
-          onSuccess={onSuccess}
-          onFailure={this.onFailure}
-        />
-      </div>
-    )
+    return <div className="google-button"></div>
   }
 }
 
@@ -104,14 +74,7 @@ class CredentialsSignOn extends React.Component {
           />
         </FormControl>
         <FormControl className="form-control">
-          <TextField
-            name="password"
-            type="password"
-            placeholder="Password"
-            required
-            title=""
-            autoComplete="password"
-          />
+          <TextField name="password" type="password" placeholder="Password" required title="" autoComplete="password" />
         </FormControl>
 
         <div className="ndex-account-links">
@@ -121,11 +84,7 @@ class CredentialsSignOn extends React.Component {
                     </div> */}
           <div>
             <span>Need an account? </span>
-            <a
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="/" target="_blank" rel="noopener noreferrer">
               Click here to sign up!
             </a>
           </div>
@@ -157,12 +116,7 @@ class CredentialsSignOn extends React.Component {
             </Button>
           )}
 
-          <Button
-            className={button_cls}
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
+          <Button className={button_cls} variant="contained" color="primary" type="submit">
             Sign In
           </Button>
         </div>
@@ -175,7 +129,7 @@ export class NDExSignIn extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      googleSSO: true
+      googleSSO: true,
     }
   }
 
@@ -187,20 +141,11 @@ export class NDExSignIn extends React.Component {
   render() {
     const { googleSSO } = this.state
 
-    const {
-      handleClose,
-      onLoginSuccess,
-      onSuccess,
-      handleCredentialsSignOn,
-      handleError,
-      error
-    } = this.props
+    const { handleClose, onLoginSuccess, onSuccess, handleCredentialsSignOn, handleError, error } = this.props
 
     return (
       <div>
-        <DialogTitle id="form-dialog-title">
-          Sign in to your NDEx Account
-        </DialogTitle>
+        <DialogTitle id="form-dialog-title">Sign in to your NDEx Account</DialogTitle>
         <DialogContent>
           <DialogContentText component="div">
             <div className="NDExSignInContainer">
@@ -249,9 +194,9 @@ class NDExSignInModal extends React.Component {
   onLoginSuccess = () => {}
 
   onLogout = () => {
-    this.props.ndexSaveActions.setProfile(null);
+    this.props.ndexSaveActions.setProfile(null)
     // remove credentials from local storage
-    window.localStorage.removeItem('loggedInUser');
+    window.localStorage.removeItem('loggedInUser')
     //this.handleClose()
   }
 
@@ -259,16 +204,16 @@ class NDExSignInModal extends React.Component {
     this.props.ndexSaveActions.setNDExModalOpen(false)
   }
 
-  handleCredentialsSignOn = event => {
+  handleCredentialsSignOn = (event) => {
     event.preventDefault()
     this.props.ndexSaveActions.credentialsSignOn(event)
   }
 
-  handleOnSuccess = resp => {
+  handleOnSuccess = (resp) => {
     this.props.ndexSaveActions.googleSignOn(resp)
   }
 
-  handleError = error => {
+  handleError = (error) => {
     this.props.ndexSaveActions.setErrorMessage(error)
   }
 
@@ -292,10 +237,7 @@ class NDExSignInModal extends React.Component {
         >
           {this.props.ndexSave.profile ? (
             <div className="sign-in-header">
-              <Avatar
-                className="ndex-account-avatar"
-                src={this.props.ndexSave.profile.image}
-              >
+              <Avatar className="ndex-account-avatar" src={this.props.ndexSave.profile.image}>
                 U
               </Avatar>
               <Typography variant="h4" className="ndex-account-greeting">
