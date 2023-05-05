@@ -59,6 +59,12 @@ var TOUR_IMAGES = [
 
 var LANDING_PAGE_TEXT = 'One search finds a variety of pathways and interaction networks relevant to your set of genes.'
 
+var KEYCLOAK_CONFIG = {
+  url: 'https://dev.ndexbio.org/auth2',
+  realm: 'ndex',
+  clientId: 'localtestclient',
+}
+
 if (window.ndexSettings === undefined) {
   console.log('ndexSettings is not defined. Using dummy config')
 } else {
@@ -90,6 +96,7 @@ if (window.ndexSettings === undefined) {
     LANDING_PAGE_TEXT = window.ndexSettings.iQuery.landingPageText
     NDEX_URL = window.ndexSettings.iQuery.ndexUri
     SOURCE_NAMES = window.ndexSettings.iQuery.sourceNames
+    KEYCLOAK_CONFIG = window.ndexSettings.iQuery.keycloakConfig
   }
 }
 
@@ -103,6 +110,7 @@ if (COPYRIGHT !== undefined && COPYRIGHT !== null) {
 }
 
 export {
+  KEYCLOAK_CONFIG,
   PROTEIN_INTERACTIONS_NETWORKS,
   MYGENE_BASE_URL,
   GENE_CARDS_URL,

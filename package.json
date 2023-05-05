@@ -15,6 +15,7 @@
     "cytoscape-panzoom": "^2.5.3",
     "html-react-parser": "^1.4.5",
     "husky": "^7.0.4",
+    "keycloak-js": "^21.1.1",
     "linkify-react": "^3.0.4",
     "linkifyjs": "^3.0.5",
     "lint-staged": "^12.1.7",
@@ -95,7 +96,7 @@
     ]
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=5500 react-scripts start",
     "build": "react-scripts build",
     "build:dev": "dotenv -e .env.development react-scripts build",
     "test": "react-scripts test --coverage --watchAll",
