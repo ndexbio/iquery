@@ -21,6 +21,7 @@ import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 import NDExSave from '../NDExSave'
 
 import './style.css'
+import { AUTH_TYPE, isAuthenticated } from '../../authentication'
 
 const PaperComponent = (props) => {
   return (
@@ -59,10 +60,8 @@ class GoogleSignOn extends React.Component {
           className={clsName}
           title={title}
           onClick={() => {
-            if (this.props.keycloak.keycloak != null) {
-              this.props.keycloak.keycloak.login().then((res) => {
-                console.log(res)
-              })
+            if (this.props.ndexSave.keycloak != null) {
+              this.props.ndexSave.keycloak.login().then((res) => {})
             }
           }}
         >
@@ -216,10 +215,17 @@ class SaveNDExNetworkDialog extends React.Component {
   onLoginSuccess = () => {}
 
   onLogout = () => {
-    this.props.ndexSaveActions.setProfile(null)
-    // remove credentials from local storage
-    window.localStorage.removeItem('loggedInUser')
-    //this.handleClose()
+    if (isAuthenticated(this.props.ndexSave.profile)) {
+      window.localStorage.removeItem('loggedInUser')
+
+      if (this.props.ndexSave.profile.type === AUTH_TYPE.KEYCLOAK) {
+        this.props.ndexSaveActions.setProfile(logoutUserProfile())
+
+        this.props.ndexSave.keycloak.logout()
+      } else {
+        this.props.ndexSaveActions.setProfile(logoutUserProfile())
+      }
+    }
   }
 
   handleClose = () => {
@@ -272,6 +278,7 @@ class SaveNDExNetworkDialog extends React.Component {
         {...this.props}
       />
     )
+
     return (
       <div>
         <Dialog
@@ -282,8 +289,8 @@ class SaveNDExNetworkDialog extends React.Component {
           PaperComponent={PaperComponent}
           scroll="body"
         >
-          {this.props.ndexSave.profile ? profileContent : signInContent}
-          <NDExSave {...props} />
+          {isAuthenticated(this.props.ndexSave.profile) ? profileContent : signInContent}
+          {isAuthenticated(this.props.ndexSave.profile) ? <NDExSave {...props} /> : null}
         </Dialog>
       </div>
     )

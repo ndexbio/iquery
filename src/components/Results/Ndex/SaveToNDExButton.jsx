@@ -1,23 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './style.css'
+import Keycloak from 'keycloak-js'
 
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
 
-const styles = theme => ({
+import { KEYCLOAK_CONFIG } from '../../../api/config'
+import { getUserProfileInformation } from '../../../authentication'
+
+const styles = (theme) => ({
   buttonIcon: {
     padding: 0,
     margin: 0,
-    paddingBottom: '0.1em'
+    paddingBottom: '0.1em',
   },
   button: {
     height: '2.5em',
     width: '4.3em',
     minWidth: '4.3em',
-    marginLeft: '0.5em'
-  }
+    marginLeft: '0.5em',
+  },
 })
 
 const BootstrapButton = withStyles({
@@ -27,30 +31,34 @@ const BootstrapButton = withStyles({
     color: '#212121',
     '&:active': {
       borderColor: '#212121',
-      color: '#212121'
-    }
-  }
+      color: '#212121',
+    },
+  },
 })(Button)
 
-const SaveToNDExButton = props => {
+const SaveToNDExButton = (props) => {
   const { classes } = props
 
-  const handleImportNetwork = () => {
-
-  //checking if user has logged in already
-  let loggedInUserRaw = window.localStorage.getItem('loggedInUser');
-  if (loggedInUserRaw){
-    let loggedInUser = JSON.parse(loggedInUserRaw);
-    if (loggedInUser !== null){
-      let lProfile = {};
-      lProfile.name = loggedInUser.firstName;
-      lProfile.image = loggedInUser.image;
-      lProfile.authorization = {};
-      lProfile.authorization.type = "ndex";
-      lProfile.authorization.token = 'Basic ' + window.btoa(loggedInUser.userName + ':' + loggedInUser.token);
-      props.ndexSaveActions.setProfile(lProfile);
-    }
+  const initializeAuthentication = () => {
+    const keycloak = new Keycloak(KEYCLOAK_CONFIG)
+    keycloak
+      .init({
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+      })
+      .then((authenticated) => {
+        const userProfileInfo = getUserProfileInformation(keycloak)
+        props.ndexSaveActions.setProfile(userProfileInfo)
+        props.ndexSaveActions.setKeycloak(keycloak)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
+
+  useEffect(initializeAuthentication, [])
+
+  const handleSaveNetworkToNDEx = () => {
     props.ndexSaveActions.setNDExModalOpen(true)
   }
 
@@ -63,13 +71,9 @@ const SaveToNDExButton = props => {
           className={classes.button}
           variant="outlined"
           disabled={disabled}
-          onClick={handleImportNetwork}
+          onClick={handleSaveNetworkToNDEx}
         >
-          <SaveIcon
-            color={disabled ? 'disabled' : 'inherit'}
-            fontSize="large"
-            className={classes.buttonIcon}
-          />
+          <SaveIcon color={disabled ? 'disabled' : 'inherit'} fontSize="large" className={classes.buttonIcon} />
         </BootstrapButton>
       </div>
     </Tooltip>
@@ -77,8 +81,3 @@ const SaveToNDExButton = props => {
 }
 
 export default withStyles(styles)(SaveToNDExButton)
-
-/*
-            color={disabled ? 'disabled' : 'inherit'}
-            className={classes.buttonIcon}
-            */
