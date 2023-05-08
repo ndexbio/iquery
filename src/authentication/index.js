@@ -40,6 +40,7 @@ export const getUserProfileInformation = (keycloak, basicAuthLocalStorageKey = L
   if (basicAuthInfoExists(basicAuthLocalStorageKey)) {
     const basicAuthInfo = getBasicAuthInfo(basicAuthLocalStorageKey)
     return {
+      userName: basicAuthInfo.userName,
       name: basicAuthInfo.firstName,
       token: basicAuthInfo.token,
       image: basicAuthInfo.image,
@@ -63,14 +64,13 @@ export const getKeycloakAuthHeader = (token) => {
 }
 
 export const getToken = (keycloak, userProfile) => {
-  console.log(userProfile)
   if (userProfile.type === AUTH_TYPE.KEYCLOAK) {
     return keycloak.updateToken(5).then(() => {
       return getKeycloakAuthHeader(keycloak.token)
     })
   } else {
     if (userProfile.type === AUTH_TYPE.BASIC) {
-      return Promise.resolve(userProfile.token)
+      return Promise.resolve(getBasicAuthHeader(userProfile.userName, userProfile.token))
     }
   }
   return Promise.resolve(null)

@@ -92,19 +92,18 @@ function* watchCredentialsSignOn(action) {
       window.localStorage.removeItem('loggedInUser')
     } else {
       const profile = {
+        userName: user,
         name: responseJson.firstName,
         image: responseJson.image,
         type: AUTH_TYPE.BASIC,
-        token: auth,
+        token: pwd,
       }
       // save credentials to local storage
-      let loggedInUser = {}
-      loggedInUser.userName = user
-      loggedInUser.firstName = responseJson.firstName
-      loggedInUser.lastName = responseJson.lastName
-      loggedInUser.externalId = responseJson.externalId
-      loggedInUser.image = responseJson.image
-      loggedInUser.token = auth
+      let loggedInUser = Object.assign({}, profile, {
+        firstName: responseJson.firstName,
+        lastName: responseJson.lastName,
+        externalId: responseJson.externalId,
+      })
       window.localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser))
       yield put({
         type: SET_PROFILE,
