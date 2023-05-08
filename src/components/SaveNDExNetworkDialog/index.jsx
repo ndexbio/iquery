@@ -21,7 +21,7 @@ import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 import NDExSave from '../NDExSave'
 
 import './style.css'
-import { AUTH_TYPE, isAuthenticated } from '../../authentication'
+import { AUTH_TYPE, isAuthenticated, logoutUserProfile } from '../../authentication'
 
 const PaperComponent = (props) => {
   return (
