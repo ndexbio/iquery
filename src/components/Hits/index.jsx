@@ -14,44 +14,50 @@ const dummyServices = [
   {
     name: 'Enrichment',
     title: 'Relevant Pathways',
-    hits: 10
+    hits: 10,
   },
+
   {
     name: 'Interactome',
     title: 'Interactome search',
-    hits: 20
+    hits: 20,
   },
   {
     name: 'NDEx',
     title: 'NDEx network search',
-    hits: 30
-  }
+    hits: 30,
+  },
+  {
+    name: 'CCMI',
+    title: 'Cancer Cell Map Networks',
+    hits: 10,
+  },
 ]
 
-const styles = theme => ({
+const styles = (theme) => ({
   tiles: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    backgroundColor: '#AAAAAA'
+    backgroundColor: '#AAAAAA',
   },
   card: {
     height: '10em',
-    padding: '0.5em'
+    padding: '0.5em',
   },
   gridList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: 'translateZ(0)'
+    transform: 'translateZ(0)',
   },
   title: {
-    color: theme.palette.primary.light
+    color: theme.palette.primary.light,
   },
-  titleBar: {}
+  titleBar: {},
 })
 
-const Hits = props => {
+const Hits = (props) => {
   const { classes } = props
 
   return (
@@ -60,15 +66,14 @@ const Hits = props => {
 
       <div className={classes.tiles}>
         <GridList className={classes.gridList} cols={2.5}>
-          {dummyServices.map(tile => (
+          {dummyServices.map((tile) => (
             <GridListTile key={tile.name}>
               <Paper className={classes.card}>
                 <Typography variant="h5" component="h3">
                   This is a sheet of paper.
                 </Typography>
                 <Typography component="p">
-                  Paper can be used to build surface or other elements for your
-                  application.
+                  Paper can be used to build surface or other elements for your application.
                 </Typography>
               </Paper>
 
@@ -76,7 +81,7 @@ const Hits = props => {
                 title={tile.title}
                 classes={{
                   root: classes.titleBar,
-                  title: classes.title
+                  title: classes.title,
                 }}
                 actionIcon={
                   <IconButton>
@@ -93,7 +98,7 @@ const Hits = props => {
 }
 
 Hits.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(Hits)

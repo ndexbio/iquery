@@ -35,7 +35,7 @@ var HIDE_SEARCHBAR = false
 var HIDE_VIEW_SOURCE_IN_NDEX_BUTTON = false
 var HIDE_SAVE_TO_NDEX_BUTTON = false
 
-var SOURCE_NAMES = ['enrichment', 'pathwayfigures', 'indra']
+var SOURCE_NAMES = ['enrichment', 'pathwayfigures', 'indra', 'ccmi']
 
 var PROTEIN_INTERACTIONS_NETWORKS = [
   '038fcfcf-e757-11ec-8bfe-0242c246b7fb',
