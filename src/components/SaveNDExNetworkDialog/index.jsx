@@ -21,6 +21,7 @@ import GoogleLogoDisabled from './assets/images/google-logo-disabled.svg'
 import NDExSave from '../NDExSave'
 
 import './style.css'
+import { AUTH_TYPE, isAuthenticated, logoutUserProfile } from '../../authentication'
 
 const PaperComponent = (props) => {
   return (
@@ -51,7 +52,26 @@ class GoogleSignOn extends React.Component {
         "2. Disable the 'BLOCK THIRD-PARTY COOKIES' option in your browser settings."
     const logo = googleSSO ? GoogleLogo : GoogleLogoDisabled
 
-    return <div className="google-button"></div>
+    return (
+      <div className="google-button">
+        <Button
+          id="googleSignInButtonId"
+          disabled={!googleSSO}
+          className={clsName}
+          title={title}
+          onClick={() => {
+            if (this.props.ndexSave.keycloak != null) {
+              this.props.ndexSave.keycloak.login().then((res) => {})
+            }
+          }}
+        >
+          <span className="google-sign-in-button-span">
+            <img src={logo} alt="" className="googleLogo" />
+            <div className="googleSignInText">Sign in with Google</div>
+          </span>
+        </Button>
+      </div>
+    )
   }
 }
 
@@ -158,6 +178,7 @@ export class NDExSignIn extends React.Component {
                         googleSSO={googleSSO}
                         onLoginSuccess={onLoginSuccess}
                         onSuccess={onSuccess}
+                        {...this.props}
                       />
                     </div>
                   </Paper>
@@ -190,14 +211,21 @@ export class NDExSignIn extends React.Component {
   }
 }
 
-class NDExSignInModal extends React.Component {
+class SaveNDExNetworkDialog extends React.Component {
   onLoginSuccess = () => {}
 
   onLogout = () => {
-    this.props.ndexSaveActions.setProfile(null)
-    // remove credentials from local storage
-    window.localStorage.removeItem('loggedInUser')
-    //this.handleClose()
+    if (isAuthenticated(this.props.ndexSave.profile)) {
+      window.localStorage.removeItem('loggedInUser')
+
+      if (this.props.ndexSave.profile.type === AUTH_TYPE.KEYCLOAK) {
+        this.props.ndexSaveActions.setProfile(logoutUserProfile())
+
+        this.props.ndexSave.keycloak.logout()
+      } else {
+        this.props.ndexSaveActions.setProfile(logoutUserProfile())
+      }
+    }
   }
 
   handleClose = () => {
@@ -225,6 +253,32 @@ class NDExSignInModal extends React.Component {
     const handleCredentialsSignOn = this.handleCredentialsSignOn
     const handleOnSuccess = this.handleOnSuccess
     const handleError = this.handleError
+
+    const profileContent = (
+      <div className="sign-in-header">
+        <Avatar className="ndex-account-avatar" src={this.props.ndexSave?.profile?.image ?? ''}>
+          U
+        </Avatar>
+        <Typography variant="h4" className="ndex-account-greeting">
+          Hi, {this.props.ndexSave?.profile?.name ?? ''}
+        </Typography>
+        <Button onClick={onLogout}>Logout</Button>
+      </div>
+    )
+
+    const signInContent = (
+      <NDExSignIn
+        handleClose={handleClose}
+        onLoginSuccess={onLoginSuccess}
+        onLogout={onLogout}
+        handleCredentialsSignOn={handleCredentialsSignOn}
+        onSuccess={handleOnSuccess}
+        handleError={handleError}
+        error={this.props.ndexSave.errorMessage}
+        {...this.props}
+      />
+    )
+
     return (
       <div>
         <Dialog
@@ -235,32 +289,12 @@ class NDExSignInModal extends React.Component {
           PaperComponent={PaperComponent}
           scroll="body"
         >
-          {this.props.ndexSave.profile ? (
-            <div className="sign-in-header">
-              <Avatar className="ndex-account-avatar" src={this.props.ndexSave.profile.image}>
-                U
-              </Avatar>
-              <Typography variant="h4" className="ndex-account-greeting">
-                Hi, {this.props.ndexSave.profile.name}
-              </Typography>
-              <Button onClick={onLogout}>Logout</Button>
-            </div>
-          ) : (
-            <NDExSignIn
-              handleClose={handleClose}
-              onLoginSuccess={onLoginSuccess}
-              onLogout={onLogout}
-              handleCredentialsSignOn={handleCredentialsSignOn}
-              onSuccess={handleOnSuccess}
-              handleError={handleError}
-              error={this.props.ndexSave.errorMessage}
-            />
-          )}
-          <NDExSave {...props} />
+          {isAuthenticated(this.props.ndexSave.profile) ? profileContent : signInContent}
+          {isAuthenticated(this.props.ndexSave.profile) ? <NDExSave {...props} /> : null}
         </Dialog>
       </div>
     )
   }
 }
 
-export default NDExSignInModal
+export default SaveNDExNetworkDialog

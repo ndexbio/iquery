@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './style.css'
+import Keycloak from 'keycloak-js'
 
 import Button from '@material-ui/core/Button'
 import SaveIcon from '@material-ui/icons/Save'
 import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
+
+import { KEYCLOAK_CONFIG } from '../../../api/config'
+import { getUserProfileInformation } from '../../../authentication'
 
 const styles = (theme) => ({
   buttonIcon: {
@@ -35,21 +39,26 @@ const BootstrapButton = withStyles({
 const SaveToNDExButton = (props) => {
   const { classes } = props
 
-  const handleImportNetwork = () => {
-    //checking if user has logged in already
-    let loggedInUserRaw = window.localStorage.getItem('loggedInUser')
-    if (loggedInUserRaw) {
-      let loggedInUser = JSON.parse(loggedInUserRaw)
-      if (loggedInUser !== null) {
-        let lProfile = {}
-        lProfile.name = loggedInUser.firstName
-        lProfile.image = loggedInUser.image
-        lProfile.authorization = {}
-        lProfile.authorization.type = 'ndex'
-        lProfile.authorization.token = 'Basic ' + window.btoa(loggedInUser.userName + ':' + loggedInUser.token)
-        props.ndexSaveActions.setProfile(lProfile)
-      }
-    }
+  const initializeAuthentication = () => {
+    const keycloak = new Keycloak(KEYCLOAK_CONFIG)
+    keycloak
+      .init({
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+      })
+      .then((authenticated) => {
+        const userProfileInfo = getUserProfileInformation(keycloak)
+        props.ndexSaveActions.setProfile(userProfileInfo)
+        props.ndexSaveActions.setKeycloak(keycloak)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  useEffect(initializeAuthentication, [])
+
+  const handleSaveNetworkToNDEx = () => {
     props.ndexSaveActions.setNDExModalOpen(true)
   }
 
@@ -62,7 +71,7 @@ const SaveToNDExButton = (props) => {
           className={classes.button}
           variant="outlined"
           disabled={disabled}
-          onClick={handleImportNetwork}
+          onClick={handleSaveNetworkToNDEx}
         >
           <SaveIcon color={disabled ? 'disabled' : 'inherit'} fontSize="large" className={classes.buttonIcon} />
         </BootstrapButton>
@@ -72,8 +81,3 @@ const SaveToNDExButton = (props) => {
 }
 
 export default withStyles(styles)(SaveToNDExButton)
-
-/*
-            color={disabled ? 'disabled' : 'inherit'}
-            className={classes.buttonIcon}
-            */

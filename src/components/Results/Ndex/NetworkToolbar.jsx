@@ -19,7 +19,7 @@ import OpenInCytoscapeButton from './OpenInCytoscapeButton'
 import ResetPathwayFigureZoomButton from './ResetPathwayFigureZoomButton'
 import Highlighter from './Highlighter'
 import SaveToNDExButton from './SaveToNDExButton'
-import NDExSignInModal from '../../NDExSignInModal'
+import SaveNDExNetworkDialog from '../../SaveNDExNetworkDialog'
 import NDExSave from '../../NDExSave'
 import OpenOriginalNetworkButton from './OpenOriginalNetworkButton'
 import LayoutSelector from './LayoutSelector'
@@ -236,12 +236,12 @@ const NetworkToolbar = (props) => {
                   <Highlighter {...other} />
                 </>
               ) : null}
-              {/* <NDExSignInModal {...other}>
-            <NDExSave {...other} />
-          </NDExSignInModal> */}
+              <SaveNDExNetworkDialog {...other}>
+                <NDExSave {...other} />
+              </SaveNDExNetworkDialog>
               {props.uiState.hideViewSourceInNdexButton ? null : <OpenOriginalNetworkButton {...other} />}
               <OpenInCytoscapeButton {...other} />
-              {/* {props.uiState.hideSaveToNdexButton ? null : <SaveToNDExButton {...other} />} */}
+              {props.uiState.hideSaveToNdexButton ? null : <SaveToNDExButton {...other} />}
               {props.uiState.selectedSource !== 'pathwayfigures' || props.uiState.pathwayFigure === false ? (
                 <>
                   <LegendToggle

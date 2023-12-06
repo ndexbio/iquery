@@ -14,6 +14,9 @@ export const setProfile = createAction(SET_PROFILE)
 export const CREDENTIALS_SIGN_ON = 'CREDENTIALS_SIGN_ON'
 export const credentialsSignOn = createAction(CREDENTIALS_SIGN_ON)
 
+export const SET_KEYCLOAK = 'SET_KEYCLOAK'
+export const setKeycloak = createAction(SET_KEYCLOAK)
+
 export const GOOGLE_SIGN_ON = 'GOOGLE_SIGN_ON'
 export const googleSignOn = createAction(GOOGLE_SIGN_ON)
 
