@@ -8,30 +8,30 @@ const getSource = () => {
   const searchUrl = BASE_URL + 'source'
   return fetch(searchUrl, {
     method: METHOD_GET,
-    mode: 'cors'
+    mode: 'cors',
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw Error('Failed to fetch source list:' + response.status)
       }
       return response
     })
-    .catch(error => ({ error }))
+    .catch((error) => ({ error }))
 }
 
-const checkStatus = jobId => {
+const checkStatus = (jobId) => {
   const checkJobStatusUrl = BASE_URL + jobId + '/status'
 
   return fetch(checkJobStatusUrl, {
-    method: METHOD_GET
+    method: METHOD_GET,
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw Error('Failed to fetch source list:' + response.status)
       }
       return response
     })
-    .catch(error => ({ error }))
+    .catch((error) => ({ error }))
 }
 
 const getResult = (jobId, sourceName = null) => {
@@ -44,41 +44,40 @@ const getResult = (jobId, sourceName = null) => {
   }
 
   return fetch(resultUrl, {
-    method: METHOD_GET
+    method: METHOD_GET,
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw Error('Failed to fetch search result:' + response.status)
       }
       return response
     })
-    .catch(error => ({ error }))
+    .catch((error) => ({ error }))
 }
 
 const postQuery = (geneList, sourceList) => {
   const searchUrl = BASE_URL
-
   const queryObject = {
     geneList,
-    sourceList
+    sourceList,
   }
 
   const header = new Headers({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   })
 
   return fetch(searchUrl, {
     method: METHOD_POST,
     headers: header,
-    body: JSON.stringify(queryObject)
+    body: JSON.stringify(queryObject),
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
         throw Error('Failed to send query:' + response.status)
       }
       return response
     })
-    .catch(error => ({ error }))
+    .catch((error) => ({ error }))
 }
 
 export { getResult, getSource, postQuery, checkStatus }

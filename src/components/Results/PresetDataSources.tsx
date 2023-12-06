@@ -45,10 +45,20 @@ const PresetDataSources = {
       </div>
     ),
   },
+  ccmi: {
+    label: 'Cancer Cell Map Initiative',
+    tooltip: (
+      <div style={tooltipStyle}>
+        Selected cancer maps developed under the Cancer Cell Map Initiative (CCMI). For more info: ccmi.org
+      </div>
+    ),
+  },
   'protein-interactions': {
     label: 'Interactomes',
-    tooltip: <div style={tooltipStyle}>Interaction networks from diverse sources (BioGRID, Human Protein Atlas, etc.)</div>,
-  }
+    tooltip: (
+      <div style={tooltipStyle}>Interaction networks from diverse sources (BioGRID, Human Protein Atlas, etc.)</div>
+    ),
+  },
 }
 
 export { PresetDataSources }

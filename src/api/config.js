@@ -18,7 +18,6 @@ var CYTOSCAPE_URL = 'https://cytoscape.org'
 var DEPLOY_ENVIRON = ' on localhost'
 var SERVICE_SERVER_URL = 'https://dev.ndexbio.org/v2'
 var BASE_URL = 'https://dev.ndexbio.org/integratedsearch/v1/'
-var GOOGLE_CLIENT_ID = ''
 var GOOGLE_ANALYTICS_ID = 'G-H5SCGJLM7Z'
 var COPYRIGHT =
   'Copyright © 2013-@@YEAR@@, The Regents of University of California, The Cytoscape Consortium. All rights reserved.'
@@ -36,7 +35,7 @@ var HIDE_SEARCHBAR = false
 var HIDE_VIEW_SOURCE_IN_NDEX_BUTTON = false
 var HIDE_SAVE_TO_NDEX_BUTTON = false
 
-var SOURCE_NAMES = ['enrichment', 'pathwayfigures', 'indra']
+var SOURCE_NAMES = ['enrichment', 'pathwayfigures', 'indra', 'ccmi']
 
 var PROTEIN_INTERACTIONS_NETWORKS = [
   '038fcfcf-e757-11ec-8bfe-0242c246b7fb',
@@ -79,7 +78,6 @@ if (window.ndexSettings === undefined) {
     DEPLOY_ENVIRON = window.ndexSettings.iQuery.deployEnvironment
     SERVICE_SERVER_URL = window.ndexSettings.ndexServerUri
     BASE_URL = window.ndexSettings.iQuery.baseUri
-    GOOGLE_CLIENT_ID = window.ndexSettings.googleClientId
     GOOGLE_ANALYTICS_ID = window.ndexSettings.iQuery.googleAnalyticsId
     GENESET_EXAMPLES = window.ndexSettings.iQuery.geneSetExamples
     UCSD_URL = window.ndexSettings.iQuery.ucsdUri
@@ -117,7 +115,6 @@ export {
   HELP_URL,
   FEEDBACK_URL,
   CYTOSCAPE_URL,
-  GOOGLE_CLIENT_ID,
   GOOGLE_ANALYTICS_ID,
   BASE_URL,
   SERVICE_SERVER_URL,

@@ -105,7 +105,7 @@ const NetworkList = (props) => {
   useEffect(() => {
     if (hits !== null) {
       const firstHit = cloneDeep(hits[0])
-      const sourcesToSort = ['enrichment', 'pathwayfigures', 'indra']
+      const sourcesToSort = ['enrichment', 'pathwayfigures', 'indra', 'ccmi']
       if (sourcesToSort.includes(props.uiState.selectedSource)) {
         hits = sortFns[props.uiState.sortBy](hits)
       }
