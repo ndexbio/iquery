@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
 
 import { KEYCLOAK_CONFIG } from '../../../api/config'
-import { getUserProfileInformation } from '../../../authentication'
+import { getUserProfileInformation, LOGGED_OUT_USER_PROFILE } from '../../../authentication'
 
 const styles = (theme) => ({
   buttonIcon: {
@@ -47,11 +47,18 @@ const SaveToNDExButton = (props) => {
         silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
       })
       .then((authenticated) => {
-        const userProfileInfo = getUserProfileInformation(keycloak)
-        props.ndexSaveActions.setProfile(userProfileInfo)
-        props.ndexSaveActions.setKeycloak(keycloak)
+        if (authenticated) {
+          const userProfileInfo = getUserProfileInformation(keycloak)
+          props.ndexSaveActions.setProfile(userProfileInfo)
+          props.ndexSaveActions.setKeycloak(keycloak)
+        } else {
+          props.ndexSaveActions.setProfile(LOGGED_OUT_USER_PROFILE)
+          props.ndexSaveActions.setKeycloak(keycloak)
+        }
       })
       .catch((err) => {
+        props.ndexSaveActions.setProfile(LOGGED_OUT_USER_PROFILE)
+        props.ndexSaveActions.setKeycloak(keycloak)
         console.log(err)
       })
   }
