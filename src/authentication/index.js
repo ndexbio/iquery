@@ -28,6 +28,12 @@ export const userIsLoggedIn = (keycloak, basicAuthLocalStorageKey = LOGGED_IN_US
   return basicAuthInfoExists(basicAuthLocalStorageKey) || keycloakUserInfoExists(keycloak)
 }
 
+export const LOGGED_OUT_USER_PROFILE = {
+  name: '',
+  image: '',
+  type: AUTH_TYPE.NONE,
+}
+
 export const getUserProfileInformation = (keycloak, basicAuthLocalStorageKey = LOGGED_IN_USER_LOCAL_STORAGE_KEY) => {
   if (keycloakUserInfoExists(keycloak)) {
     return {
@@ -48,11 +54,7 @@ export const getUserProfileInformation = (keycloak, basicAuthLocalStorageKey = L
     }
   }
 
-  return {
-    name: '',
-    image: '',
-    type: AUTH_TYPE.NONE,
-  }
+  return LOGGED_OUT_USER_PROFILE
 }
 
 export const getBasicAuthHeader = (userName, password) => {
@@ -77,7 +79,7 @@ export const getToken = (keycloak, userProfile) => {
 }
 
 export const isAuthenticated = (userProfile) => {
-  return userProfile?.type !== AUTH_TYPE.NONE
+  return userProfile == null || userProfile?.type !== AUTH_TYPE.NONE
 }
 
 export const logoutUserProfile = (userProfile) => {
