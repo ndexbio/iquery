@@ -53,6 +53,14 @@ const PresetDataSources = {
       </div>
     ),
   },
+  gocams: {
+    label: 'GO-CAMS',
+    tooltip: (
+      <div style={tooltipStyle}>
+        GO-CAMS networks which are a combination of standard GO annotations to produce a network of annotations (“model”), that is a more complete model of biological function than the separate annotations
+      </div>
+    ),
+  }, 
   'protein-interactions': {
     label: 'Interactomes',
     tooltip: (
