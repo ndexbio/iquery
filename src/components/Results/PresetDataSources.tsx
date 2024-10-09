@@ -54,10 +54,10 @@ const PresetDataSources = {
     ),
   },
   gocams: {
-    label: 'GO-CAMS',
+    label: 'GO-CAMs',
     tooltip: (
       <div style={tooltipStyle}>
-        GO-CAMS networks which are a combination of standard GO annotations to produce a network of annotations (“model”), that is a more complete model of biological function than the separate annotations
+        GO Causal Activity Model (GO-CAM) provide a structured framework to link standard GO annotations into a more complete model of  a biological system
       </div>
     ),
   }, 
