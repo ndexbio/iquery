@@ -25,6 +25,7 @@ export const camelCaseToTitleCase = (camelCaseString) => {
     .replace('Hpmi', 'HPMI')
     .replace('Ccmi', 'CCMI')
     .replace('Tcga', 'TCGA')
+    .replace('Ne ST', 'NeST')
     .replace('Querynode', 'Query Node');
   return result;
 };
