@@ -53,6 +53,14 @@ const PresetDataSources = {
       </div>
     ),
   },
+  gocams: {
+    label: 'GO-CAMs',
+    tooltip: (
+      <div style={tooltipStyle}>
+        GO Causal Activity Model (GO-CAM) provide a structured framework to link standard GO annotations into a more complete model of  a biological system
+      </div>
+    ),
+  }, 
   'protein-interactions': {
     label: 'Interactomes',
     tooltip: (

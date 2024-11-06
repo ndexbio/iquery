@@ -40,6 +40,7 @@ const styles = (theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    minWidth: '10em',
   },
   grow: {
     flexGrow: 1,
@@ -53,6 +54,7 @@ const styles = (theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
+    minWidth: '10em',
     cursor: 'pointer',
     overflowX: 'clip',
   },
@@ -61,6 +63,7 @@ const styles = (theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
+    minWidth: '10em',
     overflowX: 'clip',
   },
   search: {
