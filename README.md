@@ -64,8 +64,8 @@ IQuery is implemented using [React](https://reactjs.org/).
 ```
 git clone https://github.com/ndexbio/iquery.git
 cd iquery
-yarn install
-yarn build
+npm install
+npm build
 ```
 
 ### Configuration
@@ -123,8 +123,8 @@ The variable `SERVICE_SERVER_URL` should point to the NDEx server where the desi
 
 ```
 cd iquery
-yarn install
-yarn build
+npm install
+npm build
 ```
 The web app is built in the `build` directory.
 
@@ -155,8 +155,8 @@ docker run --name search-portal -d -p 80:80 portal
 
 ```
 cd iquery
-yarn install
-yarn build
+npm install
+npm build
 ```
 The web app is built in the `build` directory.
 
