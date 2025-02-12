@@ -126,7 +126,7 @@ const styles = (theme) => ({
     borderRadius: '4px',
     position: 'absolute',
     right: '6px',
-    width: 'min(25vw, 25vh)',
+    maxWidth: 'min(35vw, 35vh)',
     height: 'auto',
     zIndex: 10,
   },
