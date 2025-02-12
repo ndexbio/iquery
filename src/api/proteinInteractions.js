@@ -1,6 +1,7 @@
-import { PROTEIN_INTERACTIONS_NETWORKS, SERVICE_SERVER_URL } from './config'
+import { PROTEIN_INTERACTIONS_NETWORKS, SERVICE_SERVER_URL, DEFAULT_NETWORK_ICON } from './config'
 
 const NDEX_API_URL = SERVICE_SERVER_URL
+
 
 const getGeneOverlap = async (networkId, geneList) => {
   // send a query with the genelist to see which genes are found in the network
@@ -104,7 +105,7 @@ const getProteinInteractionsData = async (args) => {
   const { queryGenes, normalizedGenes, invalid } = geneInfo
   const validGenes = new Set(queryGenes)
   invalid.forEach((gene) => validGenes.delete(gene))
-  const defaultIcon = 'http://search.ndexbio.org/static/media/ndex-logo.04d7bf44.svg'
+  const defaultIcon = DEFAULT_NETWORK_ICON
 
   // const summaries = await Promise.all(proteinInteractomes.map(networkId => ndex.getNetworkSummary(networkId)));
   const summaries = await getNetworkSummaries(PROTEIN_INTERACTIONS_NETWORKS)

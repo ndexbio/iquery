@@ -10,6 +10,8 @@ var VALIDATE_GENES_WITH_MYGENE = true
 
 var NDEX_URL = 'https://dev.ndexbio.org'
 
+var DEFAULT_NETWORK_ICON = 'https://home.ndexbio.org/iqueryicons/ndex.png'
+
 var GENE_CARDS_URL = 'https://www.genecards.org/cgi-bin/carddisp.pl?gene='
 var HELP_URL = 'https://github.com/cytoscape/search-portal/blob/master/README.md'
 
@@ -95,6 +97,9 @@ if (window.ndexSettings === undefined) {
     NDEX_URL = window.ndexSettings.iQuery.ndexUri
     SOURCE_NAMES = window.ndexSettings.iQuery.sourceNames
     KEYCLOAK_CONFIG = window.ndexSettings.iQuery.keycloakConfig
+    if (window.ndexSettings.iQuery.defaultNetworkIcon !== undefined){
+      DEFAULT_NETWORK_ICON = window.ndexSettings.iQuery.defaultNetworkIcon
+    }
   }
 }
 
@@ -134,4 +139,5 @@ export {
   LANDING_PAGE_TEXT,
   NDEX_URL,
   SOURCE_NAMES,
+  DEFAULT_NETWORK_ICON
 }
